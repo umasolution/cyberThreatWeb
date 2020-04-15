@@ -1,0 +1,261 @@
+from bs4 import BeautifulSoup
+import requests
+import re
+import nltk
+import sys
+from lib.dbUpdate import dbUpdate
+import configparser
+
+
+class moniNginx():
+	def __init__(self):
+		self.productName = "nginx"
+		self.dbUpdate = dbUpdate()
+		
+		self.settings = configparser.ConfigParser()
+                self.settings.read('config.ini')
+
+                self.url = self.settings.get(self.productName, 'link')
+		self.nvdLink = self.settings.get(self.productName, 'nvdLink')
+
+
+        def getVersion(self, desc):
+                desc = desc.replace("'", "\'")
+                tokens = nltk.word_tokenize(desc)
+
+                i = 0
+                j = len(tokens)
+                values = []
+
+                while i < j:
+                    try:
+                        if re.findall(r'(?:(?:\d+)[.-]){1,}(?:\d+)-(?:(?:\d+)[.-]){1,}(?:\d+)', tokens[i]):
+                            valTemp = re.findall(r'(?:(?:\d+)[.-]){1,}(?:\d+)-(?:(?:\d+)[.-]){1,}(?:\d+)', tokens[i])
+
+                            for val in valTemp:
+                                vls = val.split('-')
+                                res = '%s-%s' % (vls[0], vls[1])
+                                values.append(str(res))
+                                i = i + 1
+
+			if j == 1:
+                		if re.findall(r'(?:(?:\d+)[.-]){1,}(?:\d+)', str(tokens[i])):
+                                        val = re.findall(r'(?:(?:\d+)[.-]){1,}(?:\d+)', str(tokens[i]))
+                                        res = '%s' % val[0]
+                                        values.append(res)
+
+                        if re.findall(r'(?:(?:\d+)[.-]){1,}(?:\d+)', str(tokens[i])) or re.findall(r'(?:(?:\d+)[.-]){1,}(?:\d+).(?i)x', str(tokens[i])):
+                                check = True
+                                val = re.findall(r'(?:(?:\d+)[.-]){1,}(?:\d+)', str(tokens[i]))
+                                if tokens[i + 1] == "to" or tokens[i + 1] == "-" or tokens[i + 1] == "throught":
+                                    if re.findall(r'(?:(?:\d+)[.-]){1,}(?:\d+)', str(tokens[i+2])):
+                                        val = re.findall(r'(?:(?:\d+)[.-]){1,}(?:\d+)', str(tokens[i]))
+                                        val1 = re.findall(r'(?:(?:\d+)[.-]){1,}(?:\d+)', str(tokens[i+2]))
+                                        res = '%s-%s' % (val[0], val1[0])
+                                        values.append(res)
+                                        i = i + 2
+                                        check = False
+
+                                if tokens[i - 1] == "to" or tokens[i - 2] == "to":
+                                        if tokens[i - 2] == "upgrade" or tokens[i - 3] == "upgrade" or tokens[i - 2] == "upgraded" or tokens[i - 3] == "upgraded":
+                                                res = '0.0-%s' % (val[0])
+                                                values.append(res)
+                                                check = False
+
+
+                                if tokens[i-1] == "before" or tokens[i-2] == "before":
+                                        val = re.findall(r'(?:(?:\d+)[.-]){1,}(?:\d+)', str(tokens[i]))
+                                        res = '0.0-%s' % val[0]
+                                        values.append(res)
+
+                                        if re.findall(r'(?:(?:\d+)[.-]){1,}(?:\d+).(?i)x', str(tokens[i])):
+                                                valT = re.findall(r'(?:(?:\d+)[.-]){1,}(?:\d+).(?i)x', str(tokens[i]))
+                                                val = valT.replace('x', '9999')
+                                                res = '0.0-%s' % val[0]
+                                                values.append(res)
+
+
+                                        while tokens[i+1] == ",":
+                                                if tokens[i+2] == "and":
+                                                        i = i + 1
+                                                        break
+                                                val = re.findall(r'(?:(?:\d+)[.-]){1,}(?:\d+)', str(tokens[i+2]))
+                                                res = '0.0-%s' % val[0]
+                                                values.append(res)
+                                                i = i + 2
+
+                                        if tokens[i+1] == "and":
+                                                val = re.findall(r'(?:(?:\d+)[.-]){1,}(?:\d+)', str(tokens[i+2]))
+                                                res = '0.0-%s' % val[0]
+                                                values.append(res)
+                                                i = i + 2
+                                        check = False
+
+                                if tokens[i-1] == "after" and tokens[i+2] == "before" :
+                                        val = re.findall(r'(?:(?:\d+)[.-]){1,}(?:\d+)', str(tokens[i]))
+                                        val1 = re.findall(r'(?:(?:\d+)[.-]){1,}(?:\d+)', str(tokens[i+3]))
+                                        res = '%s-%s' % (val[0], val1[0])
+                                        values.append(res)
+                                        i = i + 4
+
+                                if tokens[i-2] == "prior" or tokens[i-3] == "prior":
+                                        if tokens[i-1] == "to" or tokens[i-2] == "to":
+                                                val = re.findall(r'(?:(?:\d+)[.-]){1,}(?:\d+)', str(tokens[i]))
+                                                res = '0.0-%s' % val[0]
+                                                values.append(res)
+
+                                        if re.findall(r'(?:(?:\d+)[.-]){1,}(?:\d+).(?i)x', str(tokens[i])):
+                                                valT = re.findall(r'(?:(?:\d+)[.-]){1,}(?:\d+).(?i)x', str(tokens[i]))
+                                                val = valT.replace('x', '9999')
+                                                res = '0.0-%s' % val[0]
+                                                values.append(res)
+
+
+                                        while tokens[i+1] == ",":
+                                                if tokens[i+2] == "and":
+                                                        i = i + 1
+                                                        break
+                                                val = re.findall(r'(?:(?:\d+)[.-]){1,}(?:\d+)', str(tokens[i+2]))
+                                                res = '0.0-%s' % val[0]
+                                                values.append(res)
+                                                i = i + 2
+
+                                        if tokens[i+1] == "and":
+                                                val = re.findall(r'(?:(?:\d+)[.-]){1,}(?:\d+)', str(tokens[i+2]))
+                                                res = '0.0-%s' % val[0]
+                                                values.append(res)
+                                                i = i + 2
+                                        check = False
+
+
+                                if tokens[i+1] == "and" and tokens[i+2] == "prior":
+                                        if re.findall(r'(?:(?:\d+)[.-]){1,}(?:\d+)', str(tokens[i])):
+                                                valT = re.findall(r'(?:(?:\d+)[.-]){1,}(?:\d+)', str(tokens[i]))
+                                                val = valT[0]
+
+                                        if re.findall(r'(?:(?:\d+)[.-]){1,}(?:\d+).(?i)x', str(tokens[i])):
+                                                valT = re.findall(r'(?:(?:\d+)[.-]){1,}(?:\d+).(?i)x', str(tokens[i]))
+                                                val = valT[0].replace('x', '9999')
+
+                                        res = '0.0-%s' % val
+                                        values.append(res)
+                                        check = False
+
+                                if check:
+                                        while tokens[i+1] == "," or tokens[i+1] == "and":
+                                                val = re.findall(r'(?:(?:\d+)[.-]){1,}(?:\d+)', str(tokens[i]))
+                                                if val:
+                                                        res = '%s' % val[0]
+                                                        values.append(res)
+							check = False
+                                                i = i + 1
+                                                """
+                                                if tokens[i + 1] == "and":
+                                                        val = re.findall(r'(?:(?:\d+)[.-]){1,}(?:\d+)', str(tokens[i+2]))
+
+                                                        res = '%s' % val[0]
+                                                        values.append(res)
+                                                        break
+                                                if tokens[i] == "and":
+                                                        val = re.findall(r'(?:(?:\d+)[.-]){1,}(?:\d+)', str(tokens[i+1]))
+                                                        res = '%s' % val[0]
+                                                        values.append(res)
+                                                        break
+                                                """
+                                if check:
+                                    valX = False
+                                    if re.findall(r'(?:(?:\d+)[.-]){1,}(?:\d+).(?i)x', str(tokens[i])):
+                                        valT = re.findall(r'(?:(?:\d+)[.-]){1,}(?:\d+).(?i)x', str(tokens[i]))
+                                        valX = valT[0].replace('x', '9999')
+
+                                    if re.findall(r'(?:(?:\d+)[.-]){1,}(?:\d+)', str(tokens[i])):
+                                        valT = re.findall(r'(?:(?:\d+)[.-]){1,}(?:\d+)', str(tokens[i]))
+                                        val = valT[0]
+                                        if valX:
+                                                res = '%s-%s' % (val, valX)
+                                                values.append(res)
+                                        else:
+                                                res = '%s' % val
+                                                values.append(res)
+				    check = False
+
+
+                        else:
+                                pass
+
+
+                        i = i + 1
+                    except:
+			i = i + 1
+
+
+                return ','.join(values)
+
+
+
+	def initialize(self, date_update):
+		self.date_update = date_update
+    		url = self.url
+		cve_re = re.compile(r"CVE\W\w{4}\W\w+")
+		res_Array = []
+    		page = requests.get(url)
+    		soup = BeautifulSoup(page.content, "html.parser")
+		ulList = soup.findAll("li")
+
+		for ul in ulList:
+			if re.findall(cve_re, str(ul)):
+				cve = re.findall(cve_re, str(ul))[0]
+				tokens = nltk.word_tokenize(str(ul))	
+				i = 0
+				j = len(tokens)
+				values = []
+
+				severity = None
+				versions = None
+				description = None
+
+				while i < j:
+					if tokens[i] == "Severity":
+						severity = tokens[i]
+					
+					if tokens[i] == "Vulnerable" and tokens[i-1] == ">":
+						i = i + 2
+						ver = []
+						while tokens[i] != "<":
+							ver.append(tokens[i])
+							i = i + 1
+
+						versions = self.getVersion(" ".join(ver))
+						
+
+					if tokens[i] == "p" and tokens[i+1] == ">":
+						desc = []
+						i = i + 2
+						while tokens[i] != "<":
+							desc.append(tokens[i])
+							i = i + 1
+
+						description = " ".join(desc)
+						
+							
+					if severity and versions and description:
+						refe = "https://cve.mitre.org/cgi-bin/cvename.cgi?name=%s" % str(cve)
+						results = "%s|%s,%s|%s|%s|%s" % (cve, refe, str(self.url), versions, description, self.date_update)
+						if re.search(r"CVE\W\w{4}\W\w+", str(cve)) is not None:
+							if re.findall(r'\d+', str(versions)):
+								res_Array.append(results)
+								break
+							else:
+								f = open("tmp/adv_error_%s" % self.productName, "a")
+								f.write("ERROR-101 (Version Not Found) = %s" % results)
+								f.close()
+								break
+
+					i = i + 1	
+
+		print res_Array
+		self.dbUpdate.db_update_adv(res_Array, self.productName)
+    
+if __name__ == "__main__":
+	res = moniNginx()
+	res.initialize()
