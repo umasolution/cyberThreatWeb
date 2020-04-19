@@ -106,7 +106,6 @@ const CVE = () => {
             const url = `http://cyberthreatinfo.ca/cve?start_date=${moment(cveStartDateParam).format("YYYY-MM-DD")}&end_date=${moment(cveEndDateParam).format("YYYY-MM-DD")}`;
             const response = await Axios.get(url);
             if (!response.data) return;
-            console.log(response.data);
             setCVEResultByDate(response.data);
             updateSnackbar(true, CONSTANTS.FETCHING_DATA_SUCCESS);
             updateLoadingData(false);

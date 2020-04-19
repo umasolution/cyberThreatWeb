@@ -65,8 +65,6 @@ function Hero({ className, ...rest }) {
 
 const onSearchClicked = () => {
   const {history} = {...rest};
-  console.log(cveSearchStartDate);
-  console.log(cveSearchEndDate);
   
   if(searchByCVE){
     history.push(`/CVE/${cveInput}`);

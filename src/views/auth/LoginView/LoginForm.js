@@ -40,7 +40,7 @@ function LoginForm({ className, onSubmitSuccess, ...rest }) {
           await dispatch(login(values.email, values.password));
           onSubmitSuccess();
         } catch (error) {
-          console.log(error);
+          console.error(error);
           const message = error || 'Something went wrong';
           // const message = (error.response && error.response.data.message) || 'Something went wrong';
           setStatus({ success: false });

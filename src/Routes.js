@@ -87,13 +87,18 @@ const routesConfig = [
       },
       {
         exact: true,
-        path: '/app/management/customers',
-        component: lazy(() => import('src/views/management/CustomerListView'))
+        path: '/app/management/APIToken',
+        component: lazy(() => import('src/views/management/APIToken/APIToken')) 
       },
       {
         exact: true,
-        path: '/app/management/APIToken',
-        component: lazy(() => import('src/views/management/APIToken/APIToken')) 
+        path: '/app/ProjectsReports',
+        component: lazy(() => import('src/views/ProjectsReports/ProjectsReports'))
+      },
+      {
+        exact: true,
+        path: '/app/management/customers',
+        component: lazy(() => import('src/views/management/CustomerListView'))
       },
       {
         exact: true,

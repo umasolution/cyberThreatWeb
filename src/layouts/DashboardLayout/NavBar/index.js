@@ -86,6 +86,11 @@ const navConfig = [
         title: 'API Token',
         icon: UsersIcon,
         href: '/app/management/APIToken',
+      },
+      {
+        title: 'Projects Reports',
+        icon: UsersIcon,
+        href: '/app/ProjectsReports',
       }
      /*  {
         title: 'Customers',

@@ -81,7 +81,6 @@ export const Feed = (/* {   } */) => {
     }
 
     const expandPanel = (event, expanded, tabData) => {
-        console.log(event, expanded, tabData);
         if (expanded && !tabData.tableData) {
             fetchFeedData(tabData, tabIndex);
         }

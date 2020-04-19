@@ -42,7 +42,6 @@ const APIToken =  () => {
                 updateLoadingData(false);
                 return;
             }
-            console.log(response.data);
             setAPIResponse(response.data);
             updateLoadingData(false);
         } catch (error) {
@@ -65,7 +64,6 @@ const APIToken =  () => {
                 updateLoadingData(false);
                 return;
             }
-            console.log(response.data);
             setAPIResponse(response.data);
             updateLoadingData(false);
         } catch (error) {

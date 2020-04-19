@@ -18,7 +18,6 @@ export function login(email, password) {
       dispatch({ type: LOGIN_REQUEST });
 
       const user = await authService.loginWithEmailAndPassword(email, password)
-      console.log(user);
       dispatch({
         type: LOGIN_SUCCESS,
         payload: {
