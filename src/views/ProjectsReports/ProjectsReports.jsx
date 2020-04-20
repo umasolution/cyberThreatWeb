@@ -1,4 +1,8 @@
-import { Box, Container, Grid, LinearProgress, makeStyles, Typography } from '@material-ui/core';
+import {
+    Box, Container, Grid, LinearProgress, makeStyles, Typography, ExpansionPanel, ExpansionPanelSummary,
+    ListItem, ListItemIcon, ListItemText, ExpansionPanelDetails, Divider
+} from '@material-ui/core';
+import ExpandMoreIcon  from '@material-ui/icons/ExpandMore';
 import Axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import authService from 'src/services/authService';
@@ -59,6 +63,163 @@ const ProjectsReports = () => {
         return null;
     }
 
+    const getPanelDetails = (histories) => {
+        return histories.map(history => {
+            return Object.keys(history).map(historyKey => {
+                return (
+                    <>
+                    <div style={{ display: 'block' }}>
+                    <Typography
+                      variant="h6"
+                      color="textPrimary"
+                      style={{ display: 'inline' }}
+                    >
+                        {historyKey}
+                    </Typography>
+                    {' '}
+                            :
+                            {historyKey !== 'severity'
+                        ? (
+                            <>
+                            {
+                                historyKey !== 'Report Name' ? ( 
+                                     
+                                    history[historyKey] 
+                                    
+                                ) : (
+                                    history[historyKey] 
+                                )
+                            }
+                                
+                            </>
+                        )
+                        :
+                        Object.keys(history[historyKey]).map(severity => {
+                            return (
+                                <div style={{ display: 'block' }}>
+                                    <Typography
+                                      variant="h6"
+                                      color="textSecondary"
+                                      style={{ display: 'inline', marginLeft: '15px' }}
+                                    >
+                                        {severity}
+                                    </Typography>
+                                    {' '}
+                                    :
+                                    {' '}
+                                    {history[historyKey][severity]}
+                                </div>
+    
+                            )
+                        })}
+                </div>
+                <Divider/>
+                </>
+                         
+                )
+            })
+        })
+
+    }
+
+    const getHeader = (project) => {
+        return (
+        <ListItem key={project.header['Report Name']}>
+        <ListItemText
+          primary={project.header['Project Name']}
+          secondary={
+<div>
+                    {
+                        Object.keys(project.header).map(headerValue => {
+                            return (
+                                <>
+
+
+                                    <div>
+                                        <Typography
+                                          variant="h6"
+                                          color="textPrimary"
+                                          style={{ display: 'inline' }}
+                                        >
+                                            {headerValue}
+                                        </Typography>
+                                        {' '}
+                                                :
+                                                {headerValue !== 'severity'
+                                            ? (
+                                                <p>
+                                                    {' '}
+                                                    {project.header[headerValue]}
+                                                    {' '}
+                                                </p>
+                                            )
+                                            :
+                                            Object.keys(project.header[headerValue]).map(severity => {
+                                                return (
+                                                    <div style={{ display: 'block' }}>
+                                                        <Typography
+                                                          variant="h6"
+                                                          color="textSecondary"
+                                                          style={{ display: 'inline', marginLeft: '15px' }}
+                                                        >
+                                                            {severity}
+                                                        </Typography>
+                                                        {' '}
+                                                        :
+                                                        {' '}
+                                                        {project.header[headerValue][severity]}
+                                                    </div>
+
+                                                )
+                                            })}
+
+                                    </div>
+
+
+
+                                </>
+                            )
+                        })
+                    }
+
+            </div>
+          }
+        >
+            
+        </ListItemText>
+    </ListItem>);
+    }
+
+    const getProjectsResponses = () => {
+        return (
+<>
+            {
+                projectListResponse.map(project => {
+                    return (
+                        <>
+                        <ExpansionPanel
+                          key={project.header['Report Name']}
+                        >
+                            <ExpansionPanelSummary
+                              expandIcon={<ExpandMoreIcon />}
+                              aria-controls="panel1a-content"
+                              id="panel1a-header"
+                            >
+                                {getHeader(project)}
+                            </ExpansionPanelSummary>
+                            <ExpansionPanelDetails style={{display:'block'}}>
+                                 {getPanelDetails(project.history)} 
+                            </ExpansionPanelDetails>
+                        </ExpansionPanel>
+                    <Divider/>
+</>
+                    )
+                })
+            }
+</>
+);
+    }
+
 
     return (
         <Container className={classes.root} maxWidth="lg">
@@ -74,66 +235,10 @@ const ProjectsReports = () => {
                   style={{ marginTop: '25px' }}
                 >
                     {projectListResponse ?
-                        (
-                            <>
-                                {
-                                    projectListResponse.map(project => {
-                                        return (
-                                            <div>
-                                                {
-                                                    Object.keys(project).map(projectValue => {
-                                                        return (
-                                                            <>
+
+                        getProjectsResponses()
 
 
-                                                                <div>
-                                                                    <Typography
-                                                                      variant="h6"
-                                                                      color="textPrimary"
-                                                                      style={{ display: 'inline' }}
-                                                                    >
-                                                                        {projectValue}
-                                                                    </Typography>
-                                                                    {' '}
-                                                                            :
-                                                                            {projectValue !== 'severity'
-                                                                        ?
-                                                                       <> {' '} {project[projectValue]} </>
-                                                                        :
-                                                                        Object.keys(project[projectValue]).map(pValue => {
-                                                                            return (
-                                                                                <div style={{ display: 'block' }}>
-                                                                                    <Typography
-                                                                                      variant="h6"
-                                                                                      color="textSecondary"
-                                                                                      style={{ display: 'inline', marginLeft: '15px' }}
-                                                                                    >
-                                                                                        {pValue}
-                                                                                    </Typography>
-                                                                                    {' '}
-                                                                                    :
-                                                                                    {' '}
-                                                                                    {project[projectValue][pValue]}
-                                                                                </div>
-
-                                                                            )
-                                                                        })}
-
-                                                                </div>
-
-
-
-                                                            </>
-                                                        )
-                                                    })
-                                                }
-
-                                            </div>
-                                        )
-                                    })
-                                }
-                            </>
-                        )
                         : ''}
 
                     {loading ? getLoader() : null}
