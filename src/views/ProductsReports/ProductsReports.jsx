@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import { Box, Container, Divider, Grid, LinearProgress, makeStyles, Typography } from '@material-ui/core';
 import Axios from 'axios';
-import { LinearProgress, Container, Grid, Box, Divider } from '@material-ui/core';
-import CONSTANTS from "../../Util/Constants";
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import authService from 'src/services/authService';
 import MySnackbar from "../../Shared/Snackbar/MySnackbar";
-import ReportHeader from './ReportHeader/ReportHeader';
-
-import { makeStyles } from '@material-ui/core';
+import CONSTANTS from "../../Util/Constants";
 import Issues from './Issues/Issues';
-import authService  from 'src/services/authService';
-import { useParams, Link } from 'react-router-dom';
+import ReportHeader from './ReportHeader/ReportHeader';
+import JsonFiles from './JsonFiles/JsonFiles';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -81,12 +81,12 @@ const ProductsReports = () => {
                     (
                         <>
                     <ReportHeader header={productReportResponse.header} /> 
-                    <Divider/>
-
+                    <Divider />
                     <Issues issues={productReportResponse.Issues} />
-                    <Divider/>
+                    <Divider />
+                    <JsonFiles jsonFiles={productReportResponse.jsonFiles}/>
 
-                    </>
+                        </>
                     )
                     : ''}
 

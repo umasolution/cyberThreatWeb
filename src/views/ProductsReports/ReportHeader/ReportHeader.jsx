@@ -3,11 +3,10 @@ import { Grid, Box, Typography } from '@material-ui/core';
 
 const ReportHeader = ({header}) => {
     return (
-        <Typography component="div">
         <Grid
               container
               spacing={1}
-              style={{display: 'block'}}
+              style={{display: 'block', margin: '5px'}}
             >
                  
 
@@ -27,7 +26,6 @@ const ReportHeader = ({header}) => {
                  )
             }
                     </Grid>
-                    </Typography>
 
             
     );
