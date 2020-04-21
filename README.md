@@ -1,3 +1,3 @@
 # cyberThreatWeb
-#command
+#commands
 npm run install
