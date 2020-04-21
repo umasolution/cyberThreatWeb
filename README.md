@@ -1,1 +1,2 @@
 # cyberThreatWeb
+npm run install

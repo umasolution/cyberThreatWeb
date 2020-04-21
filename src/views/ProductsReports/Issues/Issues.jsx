@@ -14,11 +14,11 @@ const Issues = ({ issues }) => {
               style={{ display: 'block', margin: '5px' }}
             >
               <Typography
-                  variant="h2"
-                  color="primary"
-                >
+                variant="h2"
+                color="primary"
+              >
                     Issues
-                </Typography> 
+              </Typography> 
                 <Typography
                   variant="h4"
                   style={{ color: 'red' }}
