@@ -7,6 +7,8 @@ import ReportHeader from './ReportHeader/ReportHeader';
 
 import { makeStyles } from '@material-ui/core';
 import Issues from './Issues/Issues';
+import authService  from 'src/services/authService';
+import { useParams, Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
 const ProductsReports = () => {
     const classes = useStyles();
 
+    const { reportName } = useParams();
     const [loading, setLoading] = useState(false);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
@@ -27,14 +30,17 @@ const ProductsReports = () => {
 
     useEffect(() => {
         fetchProductsReports();
-    }, []);
+    }, [reportName]);
 
     const fetchProductsReports = async () => {
         try {
             setLoading(true);
             updateSnackbar(true, CONSTANTS.FETCHING_DATA);
-            const url = "http://cyberthreatinfo.ca/report";
-            const response = await Axios.get(url);
+            const url = `http://cyberthreatinfo.ca/report/project/reportname`;
+            const response = await Axios.post(url,{
+                emailAdd: authService.getUserName(),
+                reportName
+            });
             setProductReportResponse(response.data);
             updateSnackbar(true, CONSTANTS.FETCHING_DATA_SUCCESS);
             setLoading(false);

@@ -8,6 +8,7 @@ import React, { useEffect, useState } from 'react';
 import authService from 'src/services/authService';
 import MySnackbar from "../../Shared/Snackbar/MySnackbar";
 import CONSTANTS from "../../Util/Constants";
+import { useParams, Link } from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -87,7 +88,7 @@ const ProjectsReports = () => {
                                     history[historyKey] 
                                     
                                 ) : (
-                                    history[historyKey] 
+                                    <Link target="_blank" to={`/ProductsReports/${history[historyKey]}`}>{history[historyKey]}</Link>
                                 )
                             }
                                 
@@ -126,16 +127,15 @@ const ProjectsReports = () => {
         return (
         <ListItem key={project.header['Report Name']}>
         <ListItemText
-          primary={project.header['Project Name']}
+          primary={`Project Name ${project.header['Project Name']}`}
           secondary={
 <div>
                     {
                         Object.keys(project.header).map(headerValue => {
                             return (
+                                headerValue !== 'Project Name' ?
                                 <>
-
-
-                                    <div>
+                                    <div style={{ display: 'inline'}}>
                                         <Typography
                                           variant="h6"
                                           color="textPrimary"
@@ -147,7 +147,7 @@ const ProjectsReports = () => {
                                                 :
                                                 {headerValue !== 'severity'
                                             ? (
-                                                <p>
+                                                <p style={{ display: 'inline'}}>
                                                     {' '}
                                                     {project.header[headerValue]}
                                                     {' '}
@@ -156,7 +156,7 @@ const ProjectsReports = () => {
                                             :
                                             Object.keys(project.header[headerValue]).map(severity => {
                                                 return (
-                                                    <div style={{ display: 'block' }}>
+                                                    <div style={{ display: 'inline'}}>
                                                         <Typography
                                                           variant="h6"
                                                           color="textSecondary"
@@ -166,8 +166,11 @@ const ProjectsReports = () => {
                                                         </Typography>
                                                         {' '}
                                                         :
-                                                        {' '}
+                                                        (
+                                                        <p style={{ display: 'inline'}}>
                                                         {project.header[headerValue][severity]}
+                                                        </p>
+                                                        )
                                                     </div>
 
                                                 )
@@ -178,6 +181,7 @@ const ProjectsReports = () => {
 
 
                                 </>
+                                : ''
                             )
                         })
                     }
@@ -207,7 +211,7 @@ const ProjectsReports = () => {
                             >
                                 {getHeader(project)}
                             </ExpansionPanelSummary>
-                            <ExpansionPanelDetails style={{display:'block'}}>
+                            <ExpansionPanelDetails style={{display:'block', width: '100%'}}>
                                  {getPanelDetails(project.history)} 
                             </ExpansionPanelDetails>
                         </ExpansionPanel>
