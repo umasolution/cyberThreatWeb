@@ -57,6 +57,7 @@ function PricingView() {
     <Page
       className={classes.root}
       title="Pricing"
+      id="PricingView" 
     >
       <Container maxWidth="sm">
         <Typography

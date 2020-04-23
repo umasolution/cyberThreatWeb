@@ -302,11 +302,11 @@ function Routes() {
                   path="/home"
                   component={HomeView}
                 />
-                <Route
+                {/* <Route
                   exact
                   path="/pricing"
                   component={lazy(() => import('src/views/pages/PricingView'))}
-                />
+                /> */}
                 <Redirect to="/404" />
               </Switch>
             </MainLayout>

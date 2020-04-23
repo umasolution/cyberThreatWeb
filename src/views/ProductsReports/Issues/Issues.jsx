@@ -19,33 +19,11 @@ const Issues = ({ issues }) => {
               >
                     Issues
               </Typography> 
-                <Typography
-                  variant="h4"
-                  style={{ color: 'red' }}
-                >
-                    Severity
-                </Typography>
-                {/* <Severity severity={issues.severity} /> */}
-                <JSONTree hideRoot shouldExpandNode={() => true} data={issues.severity} />
+                <Severity severity={issues.severity} />
                 <Divider />
-                <Typography
-                  variant="h4"
-                  color="primary"
-                >
-                    package.json
-                </Typography>
-                {issues['package.json'] ? <JSONTree shouldExpandNode={() => true} data={issues['package.json']} /> : ''}
-                {/* {issues['package.json'] ? <PackageJSON jsonName="package.json" packageJSON={issues['package.json']}  /> : ''} */}
+                {issues['package.json'] ? <PackageJSON jsonName="package.json" packageJSON={issues['package.json']}  /> : ''}
                 <Divider />
-                <Typography
-                  variant="h4"
-                  color="primary"
-                >
-                    package-lock.json
-                </Typography>
-                {issues['package-lock.json'] ? <JSONTree shouldExpandNode={() => true} data={issues['package-lock.json']} /> : ''}
-
-                {/* {issues['package-lock.json'] ? <PackageJSON jsonName="package-lock.json" packageJSON={issues['package-lock.json']}  /> : ''} */}
+                {issues['package-lock.json'] ? <PackageJSON jsonName="package-lock.json" packageJSON={issues['package-lock.json']}  /> : ''}
 
             </Grid>
         )

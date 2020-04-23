@@ -354,11 +354,11 @@ const routesConfig = [
         path: '/CVE/:cveStartDate/:cveEndDate',
         component: lazy(() => import('src/views/CVE/CVE'))
       },
-      {
+      /* {
         exact: true,
         path: '/pricing',
         component: lazy(() => import('src/views/pages/PricingView'))
-      },
+      }, */
       {
         component: () => <Redirect to="/404" />
       }

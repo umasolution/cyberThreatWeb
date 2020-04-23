@@ -26,6 +26,7 @@ function Testimonials({ className, ...rest }) {
   return (
     <div
       className={clsx(classes.root, className)}
+      id="Testimonials"
       {...rest}
     >
       <Container maxWidth="md">

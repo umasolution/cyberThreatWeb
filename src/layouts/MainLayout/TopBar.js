@@ -14,6 +14,7 @@ import {
   makeStyles
 } from '@material-ui/core';
 import Logo from 'src/components/Logo';
+import ScrollTo from "react-scroll-into-view";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -82,6 +83,17 @@ function TopBar({ className, ...rest }) {
           Documentation
         </Link>
         <Divider className={classes.divider} />
+        <ScrollTo smooth selector="#PricingView">
+          <Link
+            className={classes.link}
+            color="textSecondary"
+            underline="none"
+            variant="body2"
+            style={{ cursor: 'pointer' }}
+          >
+            PricingView
+        </Link>
+        </ScrollTo>
         {/* <Button
           color="secondary"
           component="a"
