@@ -1,16 +1,14 @@
 import { LinearProgress } from '@material-ui/core';
-import AppBar from '@material-ui/core/AppBar';
 import Tab from '@material-ui/core/Tab';
-import Tabs from '@material-ui/core/Tabs';
 import Axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import MySnackbar from "../../Shared/Snackbar/MySnackbar";
+import CONSTANTS from "../../Util/Constants";
+import Copy from "../../Util/Copy";
 import './Feed.css';
 import useStyles from './FeedStyle';
 import TabsData from './TabsData/TabsData';
-import Copy from "../../Util/Copy";
-import CONSTANTS from "../../Util/Constants";
-import MySnackbar from "../../Shared/Snackbar/MySnackbar";
 
 
 export const Feed = (/* {   } */) => {

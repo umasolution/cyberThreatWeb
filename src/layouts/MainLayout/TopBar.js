@@ -91,7 +91,7 @@ function TopBar({ className, ...rest }) {
             variant="body2"
             style={{ cursor: 'pointer' }}
           >
-            PricingView
+            Pricing
         </Link>
         </ScrollTo>
         {/* <Button

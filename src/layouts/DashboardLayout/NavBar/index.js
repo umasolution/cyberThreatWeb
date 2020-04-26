@@ -274,11 +274,11 @@ const navConfig = [
         href: '/404',
         icon: AlertCircleIcon
       }, */
-      {
+      /* {
         title: 'Pricing',
         href: '/pricing',
         icon: DollarSignIcon
-      }
+      } */
     ]
   },
   /* {
