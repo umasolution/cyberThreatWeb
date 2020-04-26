@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
 const ProjectsReports = () => {
     const classes = useStyles();
 
+    const {reportType} = useParams();
     const [loading, setLoading] = useState(false);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
@@ -30,13 +31,13 @@ const ProjectsReports = () => {
 
     useEffect(() => {
         fetchProjectsList();
-    }, []);
+    }, [reportType]);
 
     const fetchProjectsList = async () => {
         try {
             setLoading(true);
             updateSnackbar(true, CONSTANTS.FETCHING_DATA);
-            const url = "http://cyberthreatinfo.ca/report/project/";
+            const url = "http://cyberthreatinfo.ca/report/project/" + reportType;
             const response = await Axios.post(url,
                 {
                     emailAdd: authService.getUserName()
@@ -88,7 +89,7 @@ const ProjectsReports = () => {
                                     history[historyKey] 
                                     
                                 ) : (
-                                    <Link target="_blank" to={`/ProductsReports/${history[historyKey]}`}>{history[historyKey]}</Link>
+                                    <Link target="_blank" to={`/ProductsReports/${reportType}/${history[historyKey]}`}>{history[historyKey]}</Link>
                                 )
                             }
                                 

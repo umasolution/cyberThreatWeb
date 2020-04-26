@@ -90,7 +90,17 @@ const navConfig = [
       {
         title: 'Projects Reports',
         icon: UsersIcon,
-        href: '/app/ProjectsReports',
+        href: '',
+        items: [
+          {
+            title: 'Language',
+            href: '/app/ProjectsReports/language'
+          },
+          {
+            title: 'Platform',
+            href: '/app/ProjectsReports/platform'
+          }
+        ]
       }
      /*  {
         title: 'Customers',

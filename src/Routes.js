@@ -92,7 +92,7 @@ const routesConfig = [
       },
       {
         exact: true,
-        path: '/app/ProjectsReports',
+        path: '/app/ProjectsReports/:reportType',
         component: lazy(() => import('src/views/ProjectsReports/ProjectsReports'))
       },
       {
@@ -346,7 +346,7 @@ const routesConfig = [
       },
       {
         exact: true,
-        path: '/ProductsReports/:reportName',
+        path: '/ProductsReports/:reportType/:reportName',
         component: lazy(() => import('src/views/ProductsReports/ProductsReports'))
       },
       {
