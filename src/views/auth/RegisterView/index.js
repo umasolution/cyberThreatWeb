@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import {
@@ -14,7 +14,9 @@ import {
 } from '@material-ui/core';
 import Page from 'src/components/Page';
 import Logo from 'src/components/Logo';
+import GenericDialog from 'src/views/Shared/GenericDialog';
 import RegisterForm from './RegisterForm';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,9 +35,16 @@ function RegisterView() {
   const classes = useStyles();
   const history = useHistory();
 
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+
   const handleSubmitSuccess = () => {
-    history.push('/app/login');
+    setIsDialogOpen(true);
   };
+
+  const dialogAgree = () => {
+    history.push('/app/login');
+  }
 
   return (
     <Page
@@ -88,6 +97,9 @@ function RegisterView() {
           </CardContent>
         </Card>
       </Container>
+      <GenericDialog isOpen={isDialogOpen} title="Verification Email Sent" 
+      description="A verificaiton link has been send to your email, Please click on the link to activate your account."
+      agreeActionText="Ok" agreeAction={dialogAgree} onCloseAction={dialogAgree} />
     </Page>
   );
 }

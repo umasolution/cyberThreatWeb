@@ -85,6 +85,7 @@ const ProductsReports = () => {
           </AppBar>
           <TabPanel value={tabValue} index={0}>
             <Issues reportType={reportType} reportName={reportName} issues={productReportResponse.Issues} />
+
           </TabPanel>
           <TabPanel value={tabValue} index={1}>
           <JsonFiles jsonFiles={productReportResponse.jsonFiles}/>
