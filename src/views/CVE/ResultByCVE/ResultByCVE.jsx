@@ -60,6 +60,12 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
     const getCVEExpansionPanel = () => {
         if (cveTables && cveTables.length > 0) {
             return cveTables.map((table) => {
+                table.columns.forEach(col => col.cellStyle = {
+                    // width: 50,
+                    maxWidth: 100,
+                    wordBreak: 'break-all' 
+                  }
+                );
                 return (
                     <ExpansionPanel
                       key={table.tableHeader}
@@ -81,7 +87,7 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                               title=""
                               columns={table.columns}
                               data={table.data}
-                            //   style={{ width: "100%" }}
+                              style={{ width: "1200px" }}
                             />
                         </ExpansionPanelDetails>
                     </ExpansionPanel>
@@ -96,7 +102,7 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
         return (
 <Grid item xs={12}>
             <Grid container spacing={1}>
-                <Grid item xs={2}>
+                <Grid item xs={4}>
                     <Paper color="primary.main" className={classes.paper}>
                         <Typography
                           variant="h1"
@@ -108,7 +114,7 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                 </Grid>
                 {
                     cveNVDDetails.Product ? (
-                        <Grid item xs={2}>
+                        <Grid item xs={4}>
                             <Paper className={classes.paper}>
 
                                 <Typography
@@ -125,7 +131,7 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                 }
                 {
                     cveNVDDetails.Vendor ? (
-                        <Grid item xs={2}>
+                        <Grid item xs={4}>
                             <Paper className={classes.paper}>
                                 <Typography
                                   variant="h5"

@@ -51,23 +51,23 @@ const CVE = () => {
             setSearchByCVE(true);
             fetchCVEData(cve);
         }
- 
+
     }, [cve]);
 
     useEffect(() => {
         if (cveStartDate) {
             setCVESearchStartDate(cveStartDate)
         }
- 
+
     }, [cveStartDate]);
 
     useEffect(() => {
         if (cveEndDate) {
             setCVESearchEndDate(cveEndDate);
             setSearchByCVE(false);
-            fetchCVEDataByDate(cveStartDate,cveEndDate);
+            fetchCVEDataByDate(cveStartDate, cveEndDate);
         }
- 
+
     }, [cveEndDate]);
 
     const updateLoadingData = (value) => {
@@ -94,12 +94,12 @@ const CVE = () => {
             updateSnackbar(true, CONSTANTS.FETCHING_DATA_FAILED);
             updateLoadingData(false);
         }
-        
+
     }
 
-    const fetchCVEDataByDate = async (cveStartDateParam,cveEndDateParam) => {
+    const fetchCVEDataByDate = async (cveStartDateParam, cveEndDateParam) => {
         try {
-            if(!cveStartDateParam || !cveEndDateParam) return;
+            if (!cveStartDateParam || !cveEndDateParam) return;
 
             updateLoadingData(true);
             updateSnackbar(true, CONSTANTS.FETCHING_DATA);
@@ -115,7 +115,7 @@ const CVE = () => {
             updateLoadingData(false);
         }
     }
-     
+
 
     const updateSnackbar = (open, message) => {
         setSnackbarOpen(open);
@@ -141,73 +141,71 @@ const CVE = () => {
 
 
     const onSearchClicked = () => {
-        if(searchByCVE){
+        if (searchByCVE) {
             fetchCVEData(cveInput);
         } else {
-            fetchCVEDataByDate(cveSearchStartDate,cveSearchEndDate);
+            fetchCVEDataByDate(cveSearchStartDate, cveSearchEndDate);
         }
-      }
+    }
 
     const changeSearchByCVE = (event) => {
         setSearchByCVE(event.target.checked);
     };
 
     const setCVESearchDate = (dateType, date) => {
-        if(dateType === 'startDate'){
-          setCVESearchStartDate(date);
-        } else{
-          setCVESearchEndDate(date);
+        if (dateType === 'startDate') {
+            setCVESearchStartDate(date);
+        } else {
+            setCVESearchEndDate(date);
         }
     }
 
     return (
         <Container maxWidth="lg">
             <Grid
-              container
-              spacing={1}
+                container
+                spacing={1}
             >
                 <Box
-                  display="flex"
-                  flexDirection="column"
-                  justifyContent="left"
-                  height="100%"
-                  style={{ marginTop: '25px' }}
+                    display="flex"
+                    flexDirection="column"
+                    justifyContent="left"
+                    height="100%"
+                    style={{ marginTop: '25px' }}
                 >
                     {isLoadingData && getLoader()}
 
-                    <CVEInput 
-                      searchByCVE={searchByCVE}
-                      cveInput={cveInput}
-                      changeSearchByCVE={changeSearchByCVE}
-                      keyPress={keyPress}
-                      handleChangeCVE={handleChangeCVE}
-                      onSearchClicked={onSearchClicked}
-                      isSearching={isLoadingData}
-                      setCVESearchDate={setCVESearchDate}
-                      cveSearchStartDate={cveSearchStartDate}
-                      cveSearchEndDate={cveSearchEndDate}
+                    <CVEInput
+                        searchByCVE={searchByCVE}
+                        cveInput={cveInput}
+                        changeSearchByCVE={changeSearchByCVE}
+                        keyPress={keyPress}
+                        handleChangeCVE={handleChangeCVE}
+                        onSearchClicked={onSearchClicked}
+                        isSearching={isLoadingData}
+                        setCVESearchDate={setCVESearchDate}
+                        cveSearchStartDate={cveSearchStartDate}
+                        cveSearchEndDate={cveSearchEndDate}
                     />
-                    {searchByCVE 
+                    <MySnackbar closeSnackbar={() => updateSnackbar(false, '')} snackbarMessage={snackbarMessage} snackbarOpen={snackbarOpen} />
+                </Box>
+                {searchByCVE
                     && !isLoadingData && cveTables
                     && (
-<ResultByCVE 
-  cveNVDDetails={cveNVDDetails}
-  cveTables={cveTables} 
-  cve={cveInput}
-/>
-)}
+                        <ResultByCVE
+                            cveNVDDetails={cveNVDDetails}
+                            cveTables={cveTables}
+                            cve={cveInput}
+                        />
+                    )}
 
-{!searchByCVE 
+                {!searchByCVE
                     && !isLoadingData && cveResultByDate
                     && (
-<ResultByCVEDate 
-  cveResultByDate={cveResultByDate}
-/>
-)}
-
-
-                    <MySnackbar closeSnackbar={() => updateSnackbar(false,'')} snackbarMessage={snackbarMessage} snackbarOpen={snackbarOpen} />
-                </Box>
+                        <ResultByCVEDate
+                            cveResultByDate={cveResultByDate}
+                        />
+                    )}
             </Grid>
         </Container>
     );

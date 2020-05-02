@@ -72,6 +72,24 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft: '1rem',
         borderLeft: '0.10rem solid skyblue',
         paddingRight: '1rem'
+    },
+    urlTable: {
+        width: "100%",
+        border: "1px solid black",
+        borderCollapse: "collapse"
+    },
+    urlTh: {
+        border: "1px solid black",
+        borderCollapse: "collapse",
+        padding: "5px",
+        textAlign: "left",
+        width: "350px"
+    },
+    urlTd: {
+        border: "1px solid black",
+        borderCollapse: "collapse",
+        padding: "5px",
+        textAlign: "left",
     }
 }));
 
@@ -87,17 +105,17 @@ const ResultByCVEDate = ({ cveResultByDate }) => {
                         return (
                             <Grid container spacing={1}>
                                 <ExpansionPanel
-                                  key={result.CVE_ID}
-                                  style={{ width: '100%' }}
+                                    key={result.CVE_ID}
+                                    style={{ width: '100%' }}
                                 >
                                     <ExpansionPanelSummary
-                                      expandIcon={<ExpandMoreIcon />}
-                                      aria-controls="panel1a-content"
-                                      id="panel1a-header"
+                                        expandIcon={<ExpandMoreIcon />}
+                                        aria-controls="panel1a-content"
+                                        id="panel1a-header"
                                     >
                                         <Typography
-                                          color="textPrimary"
-                                          variant="body1"
+                                            color="textPrimary"
+                                            variant="body1"
                                         >
                                             <Grid container alignItems="center">
                                                 {
@@ -106,9 +124,9 @@ const ResultByCVEDate = ({ cveResultByDate }) => {
                                                             (!(key === 'Description' || key === 'VectorString' || key === 'urls')) ? (
                                                                 <>
                                                                     <span className={classes.gridHeaderSpan}>
-                                                                        {key !== 'CVE_ID' ? `${key} : ` : ''}   
-{' '}
-{result[key]}
+                                                                        {key !== 'CVE_ID' ? `${key} : ` : ''}
+                                                                        {' '}
+                                                                        {result[key]}
                                                                     </span>
                                                                 </>
                                                             )
@@ -131,64 +149,75 @@ const ResultByCVEDate = ({ cveResultByDate }) => {
                                                                         key !== 'urls' ?
                                                                             (
                                                                                 <ListItemText
-                                                                                  primary={`${key} :  ${result[key]}`}
+                                                                                    primary={`${key} :  ${result[key]}`}
                                                                                 />
                                                                             )
                                                                             :
                                                                             result[key].length > 0 ?
-                                                                            (
-                                                                                <ExpansionPanel
-                                                                                  key={key}
-                                                                                >
-                                                                                    <ExpansionPanelSummary
-                                                                                      expandIcon={<ExpandMoreIcon />}
-                                                                                      aria-controls="panel1a-content"
-                                                                                      id="panel1a-header"
+                                                                                (
+                                                                                    <ExpansionPanel
+                                                                                        key={key}
                                                                                     >
-                                                                                        <ListItem key={key}>
-                                                                                            <ListItemText
-                                                                                              primary={key}
-                                                                                            />
-                                                                                        </ListItem>
-                                                                                    </ExpansionPanelSummary>
-                                                                                    <ExpansionPanelDetails style={{ display: 'inline-block' }}>
-                                                                                        {result[key].map(url => {
-                                                                                            return (
-                                                                                                
-                                                                                                
-                                                                                                <div>
-                                                                                                    <div>
-                                                                                                        <ListItem key={url}>
-                                                                                                            <ListItemText
-                                                                                                              primary={url.name}
-                                                                                                            />
-                                                                                                        </ListItem>
-                                                                                                        <List className={classes.list} dense={false}>
-                                                                                                            {
-                                                                                                                url.url.map(u => {
-                                                                                                                    return (
-                                                                                                                        <>
-                                                                                                                            <ListItem key={u}>
-                                                                                                                                <ListItemText
-                                                                                                                                  primary={<a target="_blank" href={u}>{u}</a>}
-                                                                                                                                />
-                                                                                                                            </ListItem>
-                                                                                                                            <br />
-                                                                                                                        </>
-                                                                                                                    )
-                                                                                                                })
-                                                                                                            }
+                                                                                        <ExpansionPanelSummary
+                                                                                            expandIcon={<ExpandMoreIcon />}
+                                                                                            aria-controls="panel1a-content"
+                                                                                            id="panel1a-header"
+                                                                                        >
+                                                                                            <ListItem key={key}>
+                                                                                                <ListItemText
+                                                                                                    primary={key}
+                                                                                                />
+                                                                                            </ListItem>
+                                                                                        </ExpansionPanelSummary>
+                                                                                        <ExpansionPanelDetails style={{ display: 'inline-block' }}>
+                                                                                            {result[key].map(url => {
+                                                                                                return (
+                                                                                                    <table className={classes.urlTable}>
 
-                                                                                                        </List>
-                                                                                                    </div>
-                                                                                                    <br />
-                                                                                                </div>
-                                                                                            )
-                                                                                        })}
-                                                                                    </ExpansionPanelDetails>
-                                                                                </ExpansionPanel>
-                                                                            )
-                                                                            : ''
+                                                                                                        <tr>
+                                                                                                            <th className={classes.urlTh} rowspan={url.url.length}>
+
+
+                                                                                                                <ListItemText
+                                                                                                                    primary={url.name}
+                                                                                                                />
+
+
+                                                                                                            </th>
+
+                                                                                                            <td className={classes.urlTd}>
+                                                                                                                <ListItemText
+                                                                                                                    primary={<a target="_blank" href={url.url[0]}>{url.url[0]}</a>}
+                                                                                                                />
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                        {
+                                                                                                            url.url.map((u, index) => {
+                                                                                                                return (
+                                                                                                                    index !== 0 ?
+                                                                                                                        <>
+                                                                                                                            <tr>
+                                                                                                                                <td className={classes.urlTd}>
+                                                                                                                                    <ListItemText
+                                                                                                                                        primary={<a target="_blank" href={u}>{u}</a>}
+                                                                                                                                    />
+                                                                                                                                </td>
+                                                                                                                            </tr>
+
+                                                                                                                        </>
+                                                                                                                        : ''
+                                                                                                                )
+                                                                                                            })
+                                                                                                        }
+
+                                                                                                    </table>
+
+                                                                                                )
+                                                                                            })}
+                                                                                        </ExpansionPanelDetails>
+                                                                                    </ExpansionPanel>
+                                                                                )
+                                                                                : ''
                                                                     }
 
                                                                 </ListItem>
