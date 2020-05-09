@@ -1,5 +1,6 @@
 import React from 'react';
 import { Grid, Box, Typography } from '@material-ui/core';
+import Severity from './../Issues/Severity/Severity';
 
 const ReportHeader = ({header}) => {
     return (
@@ -12,8 +13,10 @@ const ReportHeader = ({header}) => {
 
             {
                 Object.keys(header).map(title => {
-                    
-                    return (<div>  
+                  
+                    return (
+                      title !== 'severity' ?
+                    <div>  
                         <Typography
                         variant="h6"
                         color="textPrimary"
@@ -21,10 +24,13 @@ const ReportHeader = ({header}) => {
                       > 
                         {title}
                         </Typography>
-                         : {header[title]}</div>)
+                         : {header[title]}</div>
+                         : ''
+                         )
                 }
                  )
             }
+             <Severity severity={header.severity} />
                     </Grid>
 
             

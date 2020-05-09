@@ -1,102 +1,47 @@
 import React from 'react';
 import { Typography, Divider } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+    borderDiv: {
+      border: '1px',
+      borderStyle: 'solid',
+      borderRadius: '10px',
+      borderColor: 'brown',
+      marginTop: '5px',
+      width: '1000px',
+      overflow: 'scroll',
+      scrollBehavior: 'auto'
+    }
+  }));
 
 const PackageJSON = ({ packageJSON, jsonName }) => {
 
-    const printValues = (key) => {
-        const values = packageJSON[key];
-        return (
-            <>
-                {Object.keys(values.header).map(headerKey => {
-                    return (
-                        <>
-                            <Typography
-                                variant="h6"
-                                style={{width: '60%', overflow: 'auto'}}
-                            >
-                                {headerKey}
-                                {' '}
-:
-{values.header[headerKey]}
-                            </Typography>
-                        </>
-                    )
-                }
-                )}
+  const classes = useStyles();
 
-                <Typography
-                    variant="h6"
-                    color="primary"
-                >
-                    Modules
-                </Typography>
-                {Object.keys(values.modules).map(moduleKey => {
+
+    const printValues = (key) => {
+        return (
+            
+                 Object.keys(key).map(moduleKey => {
                     return (
                         <>
-                            {Object.keys(values.modules[moduleKey]).map(loadeshKey => {
-                                return (
-                                    loadeshKey !== 'Dependancy' ? (
-                                        <>
+                   
                                             <Typography
                                                 variant="h6"
                                                 style={{ color: '#ab396a', display: 'inline', marginLeft: '10px' }}
                                             >
-                                                {loadeshKey}
+                                                {moduleKey}
                                                 {' '}
 :
-{values.modules[moduleKey][loadeshKey]}
+{key[moduleKey]}
                                             </Typography>
-                                        </>
-                                    )
-                                        : (
-                                            <>
-                                            </>
-                                        )
-                                )
-                            })}
-                            {Object.keys(values.modules[moduleKey]).map(loadeshKey => {
-                                return (
-                                    loadeshKey !== 'Dependancy' ? (
-                                        <>
-                                        </>
-                                    )
-                                        : (
-                                            <>
-                                                <Typography
-                                                    variant="h6"
-                                                    color="primary"
-                                                style={{  marginLeft: '10px' }}
-
-                                                >
-                                                    Dependancy
-                                            </Typography>
-                                                <Divider />
-                                                {values.modules[moduleKey][loadeshKey].map(dependency => {
-                                                    return dependency.map(dep => {
-                                                        return (
-                                                            <>
-                                                                <Typography
-                                                                    variant="h6"
-                                                                    color="primary"
-                                                                    style={{ color: '#ab396a', display: 'inline', marginLeft: '20px' }}
-                                                                >
-                                                                    {dep}
-                                                                </Typography>
-                                                            </>
-                                                        )
-                                                    })
-
-                                                })}
-                                            </>
-                                        )
-                                )
-                            })}
+                                        
                             <Divider />
                         </>
                     )
                 }
-                )}
-            </>
+                ) 
         )
 
     }
@@ -104,18 +49,10 @@ const PackageJSON = ({ packageJSON, jsonName }) => {
     return (
         <div>
             {
-                Object.keys(packageJSON).map(value => {
+                packageJSON.map(value => {
                     return (
                         <>
-                            <div style={{ marginLeft: '25px' }}>
-                                <Typography
-                                    variant="h5"
-                                    color="primary"
-                                >
-                                    {value}
-                                </Typography>
-                            </div>
-                            <div style={{ marginLeft: '50px' }}>
+                            <div   className={classes.borderDiv}>
                                 {printValues(value)}
                             </div>
                         </>

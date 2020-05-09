@@ -46,10 +46,10 @@ const JsonFiles = ({ jsonFiles }) => {
           <Tab label="package-lock.json" />
         </Tabs>
         <TabPanel style={{minWidth: '655px'}}  value={value} index={0}>
-          {jsonFiles['package.json'] ? <JSONTree hideRoot shouldExpandNode={() => true} data={jsonFiles['package.json']} /> : ''}
+          {jsonFiles[0] ? <JSONTree hideRoot shouldExpandNode={() => true} data={jsonFiles[0]} /> : ''}
         </TabPanel>
         <TabPanel style={{minWidth: '655px'}}  value={value} index={1}>
-          {jsonFiles['package-lock.json'] ? <JSONTree shouldExpandNode={() => true} data={jsonFiles['package-lock.json']} /> : ''}
+          {jsonFiles[1] ? <JSONTree shouldExpandNode={() => true} data={jsonFiles[1]} /> : ''}
         </TabPanel>
 
       </div>

@@ -7,13 +7,16 @@ import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import TabPanel from './../../Feed/TabPanel/TabPanel';
-
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 const useStyles = makeStyles((theme) => ({
   root: { 
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
-    display: 'flex',
+    display: 'block',
     height: 224,
   },
   tabs: {
@@ -33,6 +36,11 @@ const Issues = ({ issues, reportName, reportType }) => {
 
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const [state, setState] = React.useState({
+    isHighIssueChecked: true,
+    isLowIssueChecked: true,
+    isMediumIssueChecked: true,
+  });
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -89,10 +97,78 @@ const Issues = ({ issues, reportName, reportType }) => {
     )
   }
 
+  const handleCheckBoxChange = (event) => {
+    setState({ ...state, [event.target.name]: event.target.checked });
+  };
+
   const getLanguageReport = () => {
     return (
       <>
-    <Tabs
+       <div className={classes.root}>
+         <div style={{display: 'flex'}}>
+      <List component="nav" aria-label="main mailbox folders">
+      <ListItem button>
+        <FormControlLabel
+        control={
+          <Checkbox
+            checked={state.isHighIssueChecked}
+            onChange={handleCheckBoxChange}
+            name="isHighIssueChecked"
+            color="primary"
+          />
+        }
+        label="High"
+      />
+          </ListItem>
+          <ListItem button>
+        
+        <FormControlLabel
+        control={
+          <Checkbox
+            checked={state.isMediumIssueChecked}
+            onChange={handleCheckBoxChange}
+            name="isMediumIssueChecked"
+            color="primary"
+          />
+        }
+        label="Medium"
+      />
+            </ListItem>
+        
+            <ListItem button>
+        <FormControlLabel
+        control={
+          <Checkbox
+            checked={state.isLowIssueChecked}
+            onChange={handleCheckBoxChange}
+            name="isLowIssueChecked"
+            color="primary"
+          />
+        }
+        label="Low"
+      />
+           </ListItem>
+        
+         </List>
+         <div>
+
+        
+         {state.isHighIssueChecked &&  
+     issues['High'] ? <PackageJSON jsonName="High" packageJSON={issues['High']}  /> : '' 
+     }
+    <Divider style={{display: 'block'}}/>
+    {state.isMediumIssueChecked &&  
+     issues['Medium'] ? <PackageJSON jsonName="Medium" packageJSON={issues['Medium']}  /> : '' 
+     }
+    <Divider style={{display: 'block'}}/>
+    {state.isLowIssueChecked &&  
+  issues['Low'] ? <PackageJSON jsonName="Low" packageJSON={issues['Low']}  /> : '' 
+    }
+     </div>
+         </div>
+    </div>
+    
+    {/* <Tabs
       orientation="vertical"
       variant="scrollable"
       value={value}
@@ -100,17 +176,22 @@ const Issues = ({ issues, reportName, reportType }) => {
       aria-label="Vertical tabs example"
       className={classes.tabs}
     >
-      <Tab label="package.json"   />
-      <Tab label="package-lock.json"   />
+      <Tab label="High"   />
+      <Tab label="Medium"   />
+      <Tab label="Low"   />
        
     </Tabs>
     <TabPanel value={value} index={0}>
-    {issues['package.json'] ? <PackageJSON jsonName="package.json" packageJSON={issues['package.json']}  /> : ''}
+    {issues['High'] ? <PackageJSON jsonName="High" packageJSON={issues['High']}  /> : ''}
 
     </TabPanel>
     <TabPanel value={value} index={1}>
-    {issues['package-lock.json'] ? <PackageJSON jsonName="package-lock.json" packageJSON={issues['package-lock.json']}  /> : ''}
+    {issues['Medium'] ? <PackageJSON jsonName="Medium" packageJSON={issues['Medium']}  /> : ''}
     </TabPanel>
+    <TabPanel value={value} index={2}>
+    {issues['Low'] ? <PackageJSON jsonName="Low" packageJSON={issues['Low']}  /> : ''}
+    </TabPanel> */}
+
     </>
   );
   }
@@ -121,7 +202,6 @@ const Issues = ({ issues, reportName, reportType }) => {
               spacing={1}
               style={{ display: 'block', margin: '5px' }}
             >
-                <Severity severity={issues.severity} />
                 <Divider />
                 
            { 
