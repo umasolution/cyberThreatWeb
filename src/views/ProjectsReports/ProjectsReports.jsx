@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
         width: '100%',
-        backgroundColor: theme.palette.background.paper,
+        backgroundColor: 'inherit' //theme.palette.background.paper,
     },
 }));
 
@@ -42,6 +42,12 @@ const ProjectsReports = () => {
                 {
                     emailAdd: authService.getUserName()
                 });
+                // check response exist
+            if (Object.keys(response.data.results).length === 0) {
+                updateSnackbar(true, CONSTANTS.DATA_NOT_FOUND);
+                setLoading(false);
+                return;
+            }
             setProjectListResponse(response.data.results);
             console.log(response.data.results);
             updateSnackbar(true, CONSTANTS.FETCHING_DATA_SUCCESS);

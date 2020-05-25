@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import {
@@ -6,19 +6,21 @@ import {
   Container,
   Grid,
   Typography,
-  makeStyles
+  makeStyles,
+  Button,
+  TextField
 } from '@material-ui/core';
 import {
   withRouter
 } from 'react-router-dom';
-import CVEInput from "../../CVE/CVEInput/CVEInput";
 import moment from 'moment';
+import CVEInput from './../../CVE/CVEInput/CVEInput';
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.dark,
-    paddingTop: 200,
+    paddingTop: 20,
     paddingBottom: 200,
     [theme.breakpoints.down('md')]: {
       paddingTop: 60,
@@ -45,12 +47,35 @@ const useStyles = makeStyles((theme) => ({
       maxWidth: '90%',
       height: 'auto'
     }
+  },
+  container: {
+    marginTop: '50px'
+  },
+  mainContent: {
+    background: '-webkit-linear-gradient(330.58deg,#70389f,#31358e 79.71%)',
+    padding: '10px'
+  },
+  mainContentH3: {
+    fontFamily: 'PrentonRPProLight,sans-serif',
+    fontWeight: '200',
+    fontSize: '48px',
+    color: '#fff'
+  },
+  mainContentH2: {
+    fontSize: '48px',
+    color: '#fff',
+    marginBottom: '25px'
+  },
+  mainContentP: {
+    color: '#fff'
   }
+
 }));
 
 function Hero({ className, ...rest }) {
   const classes = useStyles();
 
+  const { history } = { ...rest };
   const [searchByCVE, setSearchByCVE] = useState(true);
   const [cveInput, setCVEInput] = useState("");
   const [cveSearchStartDate, setCVESearchStartDate] = useState(new Date());
@@ -58,35 +83,37 @@ function Hero({ className, ...rest }) {
 
   const handleChangeCVE = (event) => {
     setCVEInput(event.target.value);
-}
+  }
   const changeSearchByCVE = (event) => {
     setSearchByCVE(event.target.checked);
-};
+  };
 
-const onSearchClicked = () => {
-  const {history} = {...rest};
-  
-  if(searchByCVE){
-    history.push(`/CVE/${cveInput}`);
-  } else {
-  // history.push(`/CVE/${moment(cveSearchStartDate).format("YYYY-MM-DD")}/${moment(cveSearchEndDate).format("YYYY-MM-DD")}`);
-  history.push(`/CVE/${cveSearchStartDate}/${cveSearchEndDate}`);
+  const onSearchClicked = () => {
+    if (searchByCVE) {
+      history.push(`/CVE/${cveInput}`);
+    } else {
+      // history.push(`/CVE/${moment(cveSearchStartDate).format("YYYY-MM-DD")}/${moment(cveSearchEndDate).format("YYYY-MM-DD")}`);
+      history.push(`/CVE/${cveSearchStartDate}/${cveSearchEndDate}`);
+    }
   }
-}
 
-const keyPress = (event) => {
-  if (event.keyCode === 13) {
-    onSearchClicked();
+  const keyPress = (event) => {
+    if (event.keyCode === 13) {
+      onSearchClicked();
+    }
   }
-}
 
-const setCVESearchDate = (dateType, date) => {
-  if(dateType === 'startDate'){
-    setCVESearchStartDate(date);
-  } else{
-    setCVESearchEndDate(date);
+  const setCVESearchDate = (dateType, date) => {
+    if (dateType === 'startDate') {
+      setCVESearchStartDate(date);
+    } else {
+      setCVESearchEndDate(date);
+    }
   }
-}
+
+  const gotoRegister = () => {
+    history.replace('/register')
+  }
 
 
   return (
@@ -95,9 +122,22 @@ const setCVESearchDate = (dateType, date) => {
       {...rest}
     >
       <Container maxWidth="lg">
+        <TextField
+          required
+          value={cveInput}
+          onKeyDown={keyPress}
+          onChange={handleChangeCVE}
+          style={{
+            width: '500px'
+          }}
+          id="cve"
+          placeholder="Search Vulnerabilities"
+          label="Search Vulnerabilities"
+        />
         <Grid
           container
           spacing={3}
+          className={classes.container}
         >
           <Grid
             item
@@ -110,24 +150,11 @@ const setCVESearchDate = (dateType, date) => {
               justifyContent="center"
               height="100%"
             >
-              <Typography
-                variant="overline"
-                color="secondary"
-              >
-                Search CVE
-              </Typography>
-              <CVEInput 
-                searchByCVE={searchByCVE}
-                cveInput={cveInput}
-                changeSearchByCVE={changeSearchByCVE}
-                keyPress={keyPress}
-                handleChangeCVE={handleChangeCVE}
-                onSearchClicked={onSearchClicked}
-                isSearching={false}
-                setCVESearchDate={setCVESearchDate}
-                cveSearchStartDate={cveSearchStartDate}
-                cveSearchEndDate={cveSearchEndDate}
-              />
+              <div className={classes.mainContent}>
+                <h3 className={classes.mainContentH3}>Develop fast.</h3>
+                <h2 className={classes.mainContentH2}>Stay secure.</h2>
+                <p className={classes.mainContentP}>Enabling more than 400,000 developers to continuously find and fix vulnerabilities in open source libraries and containers.</p>
+              </div>
               <Box mt={3}>
                 <Grid
                   container
@@ -177,6 +204,15 @@ const setCVESearchDate = (dateType, date) => {
                   </Grid>
                 </Grid>
               </Box>
+              <Button
+                color="secondary"
+                size="large"
+                type="button"
+                variant="contained"
+                onClick={gotoRegister}
+              >
+                SIGN UP FOR A FREE ACCOUNT
+        </Button>
             </Box>
           </Grid>
           <Grid

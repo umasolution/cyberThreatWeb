@@ -42,16 +42,15 @@ const JsonFiles = ({ jsonFiles }) => {
           aria-label="Vertical tabs example"
           className={classes.tabs}
         >
-          <Tab label="package.json" />
-          <Tab label="package-lock.json" />
+          {
+            jsonFiles.map(jsonFile =>  <Tab label={jsonFile.name} />)
+          }
         </Tabs>
-        <TabPanel style={{minWidth: '655px'}}  value={value} index={0}>
-          {jsonFiles[0] ? <JSONTree hideRoot shouldExpandNode={() => true} data={jsonFiles[0]} /> : ''}
-        </TabPanel>
-        <TabPanel style={{minWidth: '655px'}}  value={value} index={1}>
-          {jsonFiles[1] ? <JSONTree shouldExpandNode={() => true} data={jsonFiles[1]} /> : ''}
-        </TabPanel>
-
+        {
+            jsonFiles.map((jsonFile, index) =>  <TabPanel style={{minWidth: '655px'}}  value={value} index={index}>
+            <JSONTree hideRoot shouldExpandNode={() => true} data={jsonFile.data} /> 
+          </TabPanel>)
+          }
       </div>
     </Grid>
   );

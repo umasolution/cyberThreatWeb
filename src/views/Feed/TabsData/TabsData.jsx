@@ -28,7 +28,7 @@ const TabsData = ({ tab, tabsData, expandPanel }) => {
   return (
     <TabPanel value={tab} index={tab}>
       <Grid container spacing={1}>
-            <List dense={false}>
+            <List style={{width: '100%'}} dense={false}>
               {tabsData[tab].map((tabData) => {
                 return (
                   <ExpansionPanel

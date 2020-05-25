@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
@@ -12,13 +12,26 @@ import {
   Typography,
   Link,
   makeStyles
+
 } from '@material-ui/core';
 import Logo from 'src/components/Logo';
 import ScrollTo from "react-scroll-into-view";
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Grow from '@material-ui/core/Grow';
+import Paper from '@material-ui/core/Paper';
+import Popper from '@material-ui/core/Popper';
+import MenuList from '@material-ui/core/MenuList';
+import { withStyles } from '@material-ui/core/styles';
+import ListItemText from '@material-ui/core/ListItemText';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.default
+  },
+  paper: {
+    marginRight: theme.spacing(2),
   },
   toolbar: {
     height: 64
@@ -40,8 +53,57 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+const StyledMenu = withStyles({
+  paper: {
+    border: '1px solid #d3d4d5',
+  },
+})((props) => (
+  <Menu
+    elevation={0}
+    getContentAnchorEl={null}
+    anchorOrigin={{
+      vertical: 'bottom',
+      horizontal: 'center',
+    }}
+    transformOrigin={{
+      vertical: 'top',
+      horizontal: 'center',
+    }}
+    {...props}
+  />
+));
+
+const StyledMenuItem = withStyles((theme) => ({
+  root: {
+    '&:focus': {
+      /* backgroundColor: theme.palette.primary.main, */
+      '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+        /* color: theme.palette.common.white, */
+      },
+    },
+  },
+}))(MenuItem);
+
 function TopBar({ className, ...rest }) {
   const classes = useStyles();
+
+  const [menuState, setMenuState] = useState({ anchorEl: null, open: false, });
+  const anchorRef = React.useRef(null);
+
+  const handleClick = event => {
+    // setMenuState({ open: true, anchorEl: event.currentTarget });
+    if (menuState.anchorEl !== event.currentTarget) {
+      setMenuState({ open: true, anchorEl: event.currentTarget });
+    }
+  };
+
+
+  const handleClose = (event) => {
+    setMenuState(prevState => {
+      return { ...prevState, open: false,anchorEl: null }
+    });
+  };
+
 
   return (
     <AppBar
@@ -63,6 +125,35 @@ function TopBar({ className, ...rest }) {
         </Hidden>
         <Box flexGrow={1} />
         <Link
+          aria-controls="customized-menu"
+          aria-haspopup="true"
+          onClick={handleClick}
+          onMouseOver={handleClick}
+          style={{marginRight: '10px'}}
+          className={classes.link}
+          color="textSecondary"
+          underline="none"
+          variant="body2"
+        >
+          Products
+      </Link>
+        <StyledMenu
+          id="customized-menu"
+          anchorEl={menuState.anchorEl}
+          keepMounted
+          open={Boolean(menuState.anchorEl)}
+          onClose={handleClose}
+          MenuListProps={{ onMouseLeave: handleClose }}
+        >
+          <StyledMenuItem>
+            <ListItemText
+
+             primary="Open Source Vulnerability Scanner"
+            secondary="Enabling developers to easily find and automatically fix open source vulnerabilities"
+            />
+          </StyledMenuItem>
+        </StyledMenu>
+        <Link
           className={classes.link}
           color="textSecondary"
           component={RouterLink}
@@ -80,7 +171,7 @@ function TopBar({ className, ...rest }) {
           underline="none"
           variant="body2"
         >
-          Documentation
+          Support
         </Link>
         <Divider className={classes.divider} />
         <ScrollTo smooth selector="#PricingView">

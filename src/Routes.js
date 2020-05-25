@@ -97,6 +97,16 @@ const routesConfig = [
       },
       {
         exact: true,
+        path: '/app/admin/:panelType',
+        component: lazy(() => import('src/views/Admin/Language/Language'))
+      },
+      {
+        exact: true,
+        path: '/app/admin/editLanguage/:panelType/:panel',
+        component: lazy(() => import('src/views/Admin/Language/EditLanguage/EditLanguage'))
+      },
+      {
+        exact: true,
         path: '/app/management/customers',
         component: lazy(() => import('src/views/management/CustomerListView'))
       },

@@ -43,31 +43,48 @@ import {
 } from 'react-feather';
 import Logo from 'src/components/Logo';
 import NavItem from './NavItem';
+import authService from './../../../services/authService';
+
+const userName = authService.getUserName();
 
 const navConfig = [
   {
-    subheader: 'Reports',
+    subheader: '',
     items: [
       {
         title: 'Dashboard',
         icon: PieChartIcon,
         href: '/app/reports/dashboard'
-      },
-      {
-        title: 'Dashboard Alternative',
-        icon: BarChartIcon,
-        href: '/app/reports/dashboard-alternative'
-      }
+      } 
     ]
   },
   {
     subheader: 'Management',
     items: [
       {
-        title: 'Vulnerability DB',
+        title: 'My Projects',
         icon: UsersIcon,
-        // href: '/app/management/customers',
-        items: [
+        href: '/app/ProjectsReports/language',
+        /* items: [
+          {
+            title: 'Language',
+            href: '/app/ProjectsReports/language'
+          },
+          {
+            title: 'Platform',
+            href: '/app/ProjectsReports/platform'
+          },
+          {
+            title: 'Application',
+            href: '/app/ProjectsReports/application'
+          }
+        ] */
+      },
+      {
+        title: 'Manage Vulnerabilities',
+        icon: UsersIcon,
+        href: '/app/feedDB/application',
+        /* items: [
           {
             title: 'Application',
             href: '/app/feedDB/application'
@@ -80,92 +97,18 @@ const navConfig = [
             title: 'CMS',
             href: '/'
           }
-        ]
+        ] */
       },
       {
-        title: 'API Token',
+        title: 'Manage Token',
         icon: UsersIcon,
         href: '/app/management/APIToken',
       },
       {
-        title: 'Projects Reports',
-        icon: UsersIcon,
-        href: '',
-        items: [
-          {
-            title: 'Language',
-            href: '/app/ProjectsReports/language'
-          },
-          {
-            title: 'Platform',
-            href: '/app/ProjectsReports/platform'
-          }
-        ]
+        title: 'Account',
+        href: '/app/account',
+        icon: UserIcon
       }
-     /*  {
-        title: 'Customers',
-        icon: UsersIcon,
-        href: '/app/management/customers',
-        items: [
-          {
-            title: 'List Customers',
-            href: '/app/management/customers'
-          },
-          {
-            title: 'View Customer',
-            href: '/app/management/customers/1'
-          },
-          {
-            title: 'Edit Customer',
-            href: '/app/management/customers/1/edit'
-          }
-        ]
-      },
-      {
-        title: 'Products',
-        icon: ShoppingCartIcon,
-        href: '/app/management/products',
-        items: [
-          {
-            title: 'List Products',
-            href: '/app/management/products'
-          },
-          {
-            title: 'Create Product',
-            href: '/app/management/products/create'
-          }
-        ]
-      },
-      {
-        title: 'Orders',
-        icon: FolderIcon,
-        href: '/app/management/orders',
-        items: [
-          {
-            title: 'List Orders',
-            href: '/app/management/orders'
-          },
-          {
-            title: 'View Order',
-            href: '/app/management/orders/1'
-          }
-        ]
-      },
-      {
-        title: 'Invoices',
-        icon: ReceiptIcon,
-        href: '/app/management/invoices',
-        items: [
-          {
-            title: 'List Invoices',
-            href: '/app/management/invoices'
-          },
-          {
-            title: 'View Invoice',
-            href: '/app/management/invoices/1'
-          }
-        ]
-      } */
     ]
   },
  /*  {
@@ -270,27 +213,27 @@ const navConfig = [
       }
     ]
   }, */
-  {
-    subheader: 'Pages',
-    href: '/app/pages',
-    items: [
-      {
-        title: 'Account',
-        href: '/app/account',
-        icon: UserIcon
-      },
-     /*  {
-        title: 'Error',
-        href: '/404',
-        icon: AlertCircleIcon
-      }, */
-      /* {
-        title: 'Pricing',
-        href: '/pricing',
-        icon: DollarSignIcon
-      } */
-    ]
-  },
+  // {
+  //   subheader: 'Pages',
+  //   href: '/app/pages',
+  //   items: [
+  //     {
+  //       title: 'Account',
+  //       href: '/app/account',
+  //       icon: UserIcon
+  //     },
+  //    /*  {
+  //       title: 'Error',
+  //       href: '/404',
+  //       icon: AlertCircleIcon
+  //     }, */
+  //     /* {
+  //       title: 'Pricing',
+  //       href: '/pricing',
+  //       icon: DollarSignIcon
+  //     } */
+  //   ]
+  // },
   /* {
     subheader: 'Extra',
     items: [
@@ -338,6 +281,34 @@ const navConfig = [
     ]
   } */
 ];
+
+if(userName === 'jay.net.in@gmail.com'){
+  navConfig.push({
+    subheader: 'Admin',
+    items: [
+      {
+        title: 'Language',
+        icon: UsersIcon,
+        href: '/app/admin/language',
+      },
+      {
+        title: 'Github Issue Tracker',
+        icon: UsersIcon,
+        href: '/app/admin/github',
+      },
+      {
+        title: 'NVD',
+        icon: UsersIcon,
+        href: '/app/admin/nvd',
+      },
+      {
+        title: 'Application',
+        icon: UsersIcon,
+        href: '/app/admin/application',
+      },
+    ]
+  });
+}
 
 function renderNavItems({ items, ...rest }) {
   return (
@@ -442,7 +413,7 @@ function NavBar({ openMobile, onMobileClose, }) {
             </RouterLink>
           </Box>
         </Hidden>
-        <Box p={2}>
+        {/* <Box p={2}>
           <Box
             display="flex"
             justifyContent="center"
@@ -467,7 +438,7 @@ function NavBar({ openMobile, onMobileClose, }) {
               underline="none"
             >
               {/* {`${user.firstName} ${user.lastName}`} */}
-              {`${user}`}
+              {/* {`${user}`}
             </Link>
             <Typography
               variant="body2"
@@ -477,7 +448,7 @@ function NavBar({ openMobile, onMobileClose, }) {
             </Typography>
           </Box>
         </Box>
-        <Divider />
+        <Divider /> */} 
         <Box p={2}>
           {navConfig.map((config) => (
             <List
@@ -496,7 +467,7 @@ function NavBar({ openMobile, onMobileClose, }) {
           ))}
         </Box>
         <Divider />
-        <Box p={2}>
+       {/*  <Box p={2}>
           <Box
             p={2}
             borderRadius="borderRadius"
@@ -517,7 +488,7 @@ function NavBar({ openMobile, onMobileClose, }) {
               Check our docs
             </Link>
           </Box>
-        </Box>
+        </Box> */}
       </PerfectScrollbar>
     </Box>
   );

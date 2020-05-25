@@ -1,6 +1,5 @@
 import React from 'react';
-import { Typography, Divider } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, Typography, Divider, TextField, Button } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     borderDiv: {
@@ -14,16 +13,15 @@ const useStyles = makeStyles((theme) => ({
       scrollBehavior: 'auto'
     }
   }));
-
-const PackageJSON = ({ packageJSON, jsonName }) => {
-
-  const classes = useStyles();
+  
+const EditLanguageForm = ({data, propertyChange, type, onApprovOrReject}) => {
+    const classes = useStyles();
 
 
     const printValues = (key) => {
         return (
-            
-                 Object.keys(key).map(moduleKey => {
+            <>
+                { Object.keys(key).map(moduleKey => {
                     return (
                         <>
                    
@@ -34,14 +32,40 @@ const PackageJSON = ({ packageJSON, jsonName }) => {
                                                 {moduleKey}
                                                 {' '}
 :
-{key[moduleKey]}
+<TextField disabled={moduleKey === 'id'}  label="Standard" 
+style={ moduleKey === 'description' || moduleKey === 'recommendation'
+ || moduleKey === 'reference' || moduleKey === 'versions' ? {width: '800px'} : {width: 'auto'}} name={moduleKey} value={key[moduleKey]} onChange={event => propertyChange(event,type,key['id'])}  />
                                             </Typography>
                                         
                             <Divider />
                         </>
                     )
                 }
-                ) 
+                )}
+                <Button
+               color="primary"
+               size="large"
+               type="button"
+               variant="contained"
+               onClick={(event) => onApprovOrReject(type,key['id'], 'approved')}
+               style={{marginLeft: '10px'}}
+             >
+               Approv
+             </Button> 
+             <Button
+               color="secondary"
+               size="large"
+               type="button"
+               variant="contained"
+               onClick={(event) => onApprovOrReject(type,key['id'], 'rejected')}
+               style={{marginLeft: '10px'}}
+             >
+               Reject
+             </Button> 
+                </>
+                 
+                   
+                        
         )
 
     }
@@ -49,7 +73,7 @@ const PackageJSON = ({ packageJSON, jsonName }) => {
     return (
         <div>
             {
-                packageJSON.map(value => {
+                data.map(value => {
                     return (
                         <>
                             <div   className={classes.borderDiv}>
@@ -65,4 +89,4 @@ const PackageJSON = ({ packageJSON, jsonName }) => {
     );
 };
 
-export default PackageJSON;
+export default EditLanguageForm;

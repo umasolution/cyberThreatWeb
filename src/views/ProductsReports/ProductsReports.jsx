@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     width: '100%',
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: 'inherit' // theme.palette.background.paper,
   },
   tabRoot: {
     flexGrow: 1,
@@ -77,17 +77,20 @@ const ProductsReports = () => {
   const getTabs = () => {
     const jsonFiles = [];
     if(productReportResponse && productReportResponse['package.json']){
-      jsonFiles.push(productReportResponse['package.json']);
+      jsonFiles.push({name: 'package.json' , data: productReportResponse['package.json']});
     }
     if(productReportResponse && productReportResponse['package-lock.json']){
-      jsonFiles.push(productReportResponse['package-lock.json']);
+      jsonFiles.push({name: 'package-lock.json' , data: productReportResponse['package-lock.json']});
+    }
+    if(productReportResponse && productReportResponse['applications']){
+      jsonFiles.push({name: 'applications' , data: productReportResponse['applications']});
     }
     return (
       <div className={classes.root}>
         <AppBar style={{ minWidth: '900px' }} position="static">
           <Tabs value={tabValue} onChange={handleChange} aria-label="simple tabs example">
             <Tab label="Issues" />
-            {reportType === 'language' ? <Tab label="Dependencies" /> : ''}
+            {reportType === 'language' ? <Tab label="Dependencies" /> : reportType === 'application' ? <Tab label="Applications" /> :''}
           </Tabs>
         </AppBar>
         <TabPanel value={tabValue} index={0}>
