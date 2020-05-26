@@ -29,7 +29,7 @@ const TabsData = ({ tab, tabsData, expandPanel }) => {
     <TabPanel value={tab} index={tab}>
       <Grid container spacing={1}>
             <List style={{width: '100%'}} dense={false}>
-              {tabsData[tab].map((tabData) => {
+              {tabsData.map((tabData) => {
                 return (
                   <ExpansionPanel
                     key={tabData.appName}

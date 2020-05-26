@@ -41,6 +41,7 @@ export const Feed = (/* {   } */) => {
                 })
                 setTabsData(tempTabsData);
             }
+            setTabsData(response.data['report type']);
             setTabsName([feedType]);
             updateSnackbar(true, CONSTANTS.FETCHING_DATA_SUCCESS);
             setLoadingTabs(false);
@@ -85,7 +86,7 @@ export const Feed = (/* {   } */) => {
     }
 
     const getTabsData = (tab) => {
-        return <TabsData tab={tab} tabsData={tabsData} expandPanel={expandPanel} />
+        return tabsData.map(data => <TabsData tab={tab} tabsData={data.results} expandPanel={expandPanel} />)
     }
 
     const getLoader = () => {

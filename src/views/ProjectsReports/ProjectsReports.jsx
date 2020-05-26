@@ -37,19 +37,19 @@ const ProjectsReports = () => {
         try {
             setLoading(true);
             updateSnackbar(true, CONSTANTS.FETCHING_DATA);
-            const url = "http://cyberthreatinfo.ca/report/project/" + reportType;
+            const url = "http://cyberthreatinfo.ca/report/project";
             const response = await Axios.post(url,
                 {
                     emailAdd: authService.getUserName()
                 });
                 // check response exist
-            if (Object.keys(response.data.results).length === 0) {
+            if (Object.keys(response.data['report type']).length === 0) {
                 updateSnackbar(true, CONSTANTS.DATA_NOT_FOUND);
                 setLoading(false);
                 return;
             }
-            setProjectListResponse(response.data.results);
-            console.log(response.data.results);
+            setProjectListResponse(response.data['report type']);
+            console.log(response.data['report type']);
             updateSnackbar(true, CONSTANTS.FETCHING_DATA_SUCCESS);
             setLoading(false);
         } catch (error) {
@@ -206,26 +206,32 @@ const ProjectsReports = () => {
 <>
             {
                 projectListResponse.map(project => {
-                    return (
-                        <>
-                        <ExpansionPanel
-                          key={project.header['Report Name']}
-                        >
-                            <ExpansionPanelSummary
-                              expandIcon={<ExpandMoreIcon />}
-                              aria-controls="panel1a-content"
-                              id="panel1a-header"
-                            >
-                                {getHeader(project)}
-                            </ExpansionPanelSummary>
-                            <ExpansionPanelDetails style={{display:'block', width: '100%'}}>
-                                 {getPanelDetails(project.history)} 
-                            </ExpansionPanelDetails>
-                        </ExpansionPanel>
-                    <Divider/>
-</>
-                    )
+                   return project.results.map(result => {
+                            return (
+                                <>
+                                <ExpansionPanel
+                                  key={result.header['Report Name']}
+                                  style={{background: project['bgcolor']}}
+                                >
+                                    <ExpansionPanelSummary
+                                      expandIcon={<ExpandMoreIcon />}
+                                      aria-controls="panel1a-content"
+                                      id="panel1a-header"
+                                    >
+                                        
+                                        {getHeader(result)}
+                                    </ExpansionPanelSummary>
+                                    <ExpansionPanelDetails style={{display:'block', width: '100%'}}>
+                                         {getPanelDetails(result.history)} 
+                                    </ExpansionPanelDetails>
+                                </ExpansionPanel>
+                            <Divider/>
+        </>
+                            )
+                         
+                    })
                 })
+                
             }
 </>
 );
