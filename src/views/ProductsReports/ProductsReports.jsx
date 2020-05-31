@@ -87,7 +87,7 @@ const ProductsReports = () => {
     }
     return (
       <div className={classes.root}>
-        <AppBar style={{ minWidth: '900px' }} position="static">
+        <AppBar style={{ width: '100%' }} position="static">
           <Tabs value={tabValue} onChange={handleChange} aria-label="simple tabs example">
             <Tab label="Issues" />
             {reportType === 'language' ? <Tab label="Dependencies" /> : reportType === 'application' ? <Tab label="Applications" /> :''}

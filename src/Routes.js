@@ -88,7 +88,7 @@ const routesConfig = [
       {
         exact: true,
         path: '/app/management/APIToken',
-        component: lazy(() => import('src/views/management/APIToken/APIToken')) 
+        component: lazy(() => import('src/views/management/APIToken/APIToken'))
       },
       {
         exact: true,
@@ -348,6 +348,11 @@ const routesConfig = [
         exact: true,
         path: '/home',
         component: HomeView
+      },
+      {
+        exact: true,
+        path: '/vulDB/:feedType',
+        component: lazy(() => import('src/views/Feed/Feed'))
       },
       {
         exact: true,

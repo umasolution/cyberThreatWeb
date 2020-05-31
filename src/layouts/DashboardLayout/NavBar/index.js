@@ -59,45 +59,23 @@ const navConfig = [
     ]
   },
   {
+    subheader: '',
+    href: '',
+    items: [
+      {
+        title: 'Vulnerabilities DB',
+        icon: UsersIcon,
+        href: '/app/feedDB/application',
+      },
+    ]
+  },
+  {
     subheader: 'Management',
     items: [
       {
         title: 'My Projects',
         icon: UsersIcon,
         href: '/app/ProjectsReports/language',
-        /* items: [
-          {
-            title: 'Language',
-            href: '/app/ProjectsReports/language'
-          },
-          {
-            title: 'Platform',
-            href: '/app/ProjectsReports/platform'
-          },
-          {
-            title: 'Application',
-            href: '/app/ProjectsReports/application'
-          }
-        ] */
-      },
-      {
-        title: 'Manage Vulnerabilities',
-        icon: UsersIcon,
-        href: '/app/feedDB/application',
-        /* items: [
-          {
-            title: 'Application',
-            href: '/app/feedDB/application'
-          },
-          {
-            title: 'Language',
-            href: '/app/feedDB/language'
-          },
-          {
-            title: 'CMS',
-            href: '/'
-          }
-        ] */
       },
       {
         title: 'Manage Token',

@@ -1,16 +1,11 @@
-import React from 'react';
-import { Typography, Grid, Divider } from '@material-ui/core';
-import JSONTree from 'react-json-tree';
-import { makeStyles } from '@material-ui/core/styles';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
+import { Divider, Grid, Typography } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import TabPanel from "../../Feed/TabPanel/TabPanel";
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import { makeStyles } from '@material-ui/core/styles';
+import React from 'react';
 import PackageJSON from './PackageJSON/PackageJSON';
-import Severity from './Severity/Severity';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -104,7 +99,7 @@ const Issues = ({ issues, reportName, reportType }) => {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
 
-  const getLanguageReport = () => {
+  const getLanguageReport =  () => {
     return (
       <>
         <div className={classes.root}>
@@ -178,8 +173,6 @@ const Issues = ({ issues, reportName, reportType }) => {
       spacing={1}
       style={{ display: 'block', margin: '5px' }}
     >
-      <Divider />
-
       {
         reportType === 'language' || reportType === 'application' ?
           (

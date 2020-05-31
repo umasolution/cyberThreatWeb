@@ -9,7 +9,9 @@ import authService from 'src/services/authService';
 import MySnackbar from "../../Shared/Snackbar/MySnackbar";
 import CONSTANTS from "../../Util/Constants";
 import { useParams, Link } from 'react-router-dom';
-
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Copy from '../../Util/Copy';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -17,28 +19,43 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
         backgroundColor: 'inherit' //theme.palette.background.paper,
     },
+    projectHeader: {
+        color: theme.palette.primary.light
+    },
+    panelMainDiv: {
+        border: '1px solid',
+        borderRadius: '10px',
+        padding: '10px',
+        marginBottom: '5px'
+    },
+    checkBoxes: {
+        display: 'inline',
+        margin: '0 10px 10px 0',
+      textTransform: 'capitalize'
+
+    }
 }));
 
 const ProjectsReports = () => {
     const classes = useStyles();
 
-    const {reportType} = useParams();
     const [loading, setLoading] = useState(false);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
     const [projectListResponse, setProjectListResponse] = useState();
+    const [reportTypes, setReportTypes] = useState([]);
 
 
     useEffect(() => {
         fetchProjectsList();
-    }, [reportType]);
+    }, []);
 
     const fetchProjectsList = async () => {
         try {
             setLoading(true);
             updateSnackbar(true, CONSTANTS.FETCHING_DATA);
             const url = "http://cyberthreatinfo.ca/report/project";
-            const response = await Axios.post(url,
+            let response = await Axios.post(url,
                 {
                     emailAdd: authService.getUserName()
                 });
@@ -48,8 +65,11 @@ const ProjectsReports = () => {
                 setLoading(false);
                 return;
             }
-            setProjectListResponse(response.data['report type']);
-            console.log(response.data['report type']);
+            response = response.data['report type'];
+            response.forEach(res => res.isShowing = true);
+            setProjectListResponse(response);
+            const reportTypes = response.map(d => d['report type'])
+            setReportTypes(reportTypes);
             updateSnackbar(true, CONSTANTS.FETCHING_DATA_SUCCESS);
             setLoading(false);
         } catch (error) {
@@ -71,9 +91,9 @@ const ProjectsReports = () => {
         return null;
     }
 
-    const getPanelDetails = (histories) => {
+    const getPanelDetails = (histories, reportType) => {
         return histories.map(history => {
-            return Object.keys(history).map(historyKey => {
+            return <div className={classes.panelMainDiv}>{Object.keys(history).map(historyKey => {
                 return (
                     <>
                     <div style={{ display: 'block' }}>
@@ -82,10 +102,8 @@ const ProjectsReports = () => {
                       color="textPrimary"
                       style={{ display: 'inline' }}
                     >
-                        {historyKey}
+                        {historyKey} {' '}
                     </Typography>
-                    {' '}
-                            :
                             {historyKey !== 'severity'
                         ? (
                             <>
@@ -104,66 +122,64 @@ const ProjectsReports = () => {
                         :
                         Object.keys(history[historyKey]).map(severity => {
                             return (
-                                <div style={{ display: 'block' }}>
+                                <div style={{ display: 'inline' }}>
                                     <Typography
                                       variant="h6"
                                       color="textSecondary"
-                                      style={{ display: 'inline', marginLeft: '15px' }}
+                                      style={{ display: 'inline', marginLeft: '15px' , marginRight: '5px' }}
                                     >
-                                        {severity}
+                                        {severity} 
                                     </Typography>
-                                    {' '}
-                                    :
-                                    {' '}
                                     {history[historyKey][severity]}
                                 </div>
     
                             )
                         })}
                 </div>
-                <Divider/>
                 </>
                          
                 )
-            })
+            })}
+            </div>
         })
 
     }
 
-    const getHeader = (project) => {
+    const getHeader = (project, reportType) => {
         return (
         <ListItem key={project.header['Report Name']}>
         <ListItemText
-          primary={`Project Name ${project.header['Project Name']}`}
+          primary={<Typography type="body2" className={classes.projectHeader}>
+          <Link target="_blank" to={`/ProductsReports/${reportType}/${project.header['Report Name']}`}>{`${project.header['Project Name']}`}</Link>
+          </Typography>}
           secondary={
 <div>
                     {
                         Object.keys(project.header).map(headerValue => {
                             return (
-                                headerValue !== 'Project Name' ?
+                                headerValue !== 'Project Name' && headerValue !== 'Report Name' ?
                                 <>
                                     <div style={{ display: 'inline'}}>
                                         <Typography
                                           variant="h6"
                                           color="textPrimary"
-                                          style={{ display: 'inline' }}
+                                          style={{ display: 'inline', textTransform: 'capitalize', marginRight: '5px' }}
                                         >
-                                            {headerValue}
+                                            {headerValue !== 'dependencies' ? headerValue : `Scanned ${headerValue}` }
                                         </Typography>
-                                        {' '}
-                                                :
+                                       
                                                 {headerValue !== 'severity'
                                             ? (
-                                                <p style={{ display: 'inline'}}>
-                                                    {' '}
+                                                <p style={{ display: 'inline', marginRight: '10px'}}>
+                                                   
                                                     {project.header[headerValue]}
-                                                    {' '}
+                                                   
                                                 </p>
                                             )
                                             :
                                             Object.keys(project.header[headerValue]).map(severity => {
                                                 return (
-                                                    <div style={{ display: 'inline'}}>
+                                                    <div style={{ display: 'inline', marginRight: '10px'}}>
                                                         <Typography
                                                           variant="h6"
                                                           color="textSecondary"
@@ -171,8 +187,6 @@ const ProjectsReports = () => {
                                                         >
                                                             {severity}
                                                         </Typography>
-                                                        {' '}
-                                                        :
                                                         (
                                                         <p style={{ display: 'inline'}}>
                                                         {project.header[headerValue][severity]}
@@ -201,17 +215,46 @@ const ProjectsReports = () => {
     </ListItem>);
     }
 
+    const handleCheckBoxChange = (event, type) => {
+        const copy = Copy(projectListResponse);
+        const report = copy.find(data => data['report type'] === type);
+        if(report){
+            report.isShowing = event.target.checked;
+            setProjectListResponse(copy);
+        }
+        
+    }
+
     const getProjectsResponses = () => {
         return (
 <>
+<div className={classes.checkBoxes}>
+{
+    reportTypes.map(type => <FormControlLabel
+                  control={(
+                    <Checkbox
+                    color="red"
+                      checked={projectListResponse.findIndex(res => res['report type'] === type && res.isShowing ) !== -1}
+                      onChange={(event) => handleCheckBoxChange(event,type)}
+                      name={type}
+                      color="primary"
+                    />
+                  )}
+                  label={type}
+                  
+                />
+                )
+}
+</div>
+
             {
                 projectListResponse.map(project => {
-                   return project.results.map(result => {
+                   return project.isShowing ? project.results.map(result => {
                             return (
                                 <>
                                 <ExpansionPanel
                                   key={result.header['Report Name']}
-                                  style={{background: project['bgcolor']}}
+                                  style={{borderLeft: `15px solid  ${project['bgcolor']}`}}
                                 >
                                     <ExpansionPanelSummary
                                       expandIcon={<ExpandMoreIcon />}
@@ -219,17 +262,17 @@ const ProjectsReports = () => {
                                       id="panel1a-header"
                                     >
                                         
-                                        {getHeader(result)}
+                                        {getHeader(result, project['report type'])}
                                     </ExpansionPanelSummary>
                                     <ExpansionPanelDetails style={{display:'block', width: '100%'}}>
-                                         {getPanelDetails(result.history)} 
+                                         {getPanelDetails(result.history, project['report type'])} 
                                     </ExpansionPanelDetails>
                                 </ExpansionPanel>
                             <Divider/>
         </>
                             )
                          
-                    })
+                    }) : ''
                 })
                 
             }
@@ -249,7 +292,7 @@ const ProjectsReports = () => {
                   flexDirection="column"
                   justifyContent="left"
                   height="100%"
-                  style={{ marginTop: '25px' }}
+                  style={{ marginTop: '25px', width: '100%' }}
                 >
                     {projectListResponse ?
 

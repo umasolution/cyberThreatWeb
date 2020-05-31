@@ -1,47 +1,99 @@
-import React from 'react';
-import { Typography, Divider } from '@material-ui/core';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import React from 'react';
 
 const useStyles = makeStyles((theme) => ({
     borderDiv: {
-      border: '1px',
-      borderStyle: 'solid',
-      borderRadius: '10px',
-      borderColor: 'brown',
-      marginTop: '5px',
-      width: '1000px',
-      overflow: 'auto',
-      scrollBehavior: 'auto'
+        border: '1px',
+        borderStyle: 'solid',
+        borderRadius: '10px',
+        borderColor: 'brown',
+        marginTop: '5px',
+        width: '1000px',
+        overflow: 'auto',
+        scrollBehavior: 'auto',
+        textTransform: 'capitalize'
+    },
+    title: {
+        color: theme.palette.primary.light,
+        display: 'inline',
+        marginRight: '5px'
+    },
+    secondaryText: {
+        color: "inherit",
+        display: 'inline',
+        marginRight: '5px'
     }
-  }));
+}));
 
-const PackageJSON = ({ packageJSON, jsonName }) => {
+const PackageJSON = ({ packageJSON }) => {
 
-  const classes = useStyles();
+    const classes = useStyles();
 
 
     const printValues = (key) => {
         return (
-            
-                 Object.keys(key).map(moduleKey => {
-                    return (
-                        <>
-                   
-                                            <Typography
-                                                variant="h6"
-                                                style={{ color: '#ab396a', display: 'inline', marginLeft: '10px' }}
-                                            >
-                                                {moduleKey}
-                                                {' '}
-:
-{key[moduleKey]}
-                                            </Typography>
-                                        
-                            <Divider />
-                        </>
-                    )
-                }
-                ) 
+            <ExpansionPanel>
+                <ExpansionPanelSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+
+                    {Object.keys(key).map(moduleKey => {
+                        return (
+                            (moduleKey === 'cve_id' || moduleKey === 'vuln_name' || moduleKey === 'product' || moduleKey === 'vendor'
+                                || moduleKey === 'severity') ? (
+                                    <>
+                                        <Typography
+                                          variant="h6"
+                                          color="textPrimary"
+                                          className={classes.title}
+                                        >
+                                            {moduleKey}
+                                        </Typography>
+
+                                        {' '}
+                                        <Typography className={classes.secondaryText}>
+                                            {key[moduleKey]}
+                                        </Typography>
+                                    </>
+                                ) : ''
+                        )
+                    })}
+                </ExpansionPanelSummary>
+                <ExpansionPanelDetails style={{ display: 'block' }}>
+                    {Object.keys(key).map(moduleKey => {
+                        return (
+                            !(moduleKey === 'cve_id' || moduleKey === 'vuln_name' || moduleKey === 'product' || moduleKey === 'vendor'
+                                || moduleKey === 'severity') ? (
+                                    <div>
+                                        <Typography
+                                          variant="h6"
+                                          color="textPrimary"
+                                          className={classes.title}
+                                        >
+                                            {moduleKey}
+                                        </Typography>
+                                        <Typography className={classes.secondaryText}>
+                                            {key[moduleKey]}
+                                        </Typography>
+                                        {' '}
+
+                                    </div>
+                                )
+
+
+                                : ''
+                        )
+                    })}
+                </ExpansionPanelDetails>
+            </ExpansionPanel>
+
         )
 
     }
@@ -52,7 +104,7 @@ const PackageJSON = ({ packageJSON, jsonName }) => {
                 packageJSON.map(value => {
                     return (
                         <>
-                            <div   className={classes.borderDiv}>
+                            <div className={classes.borderDiv}>
                                 {printValues(value)}
                             </div>
                         </>

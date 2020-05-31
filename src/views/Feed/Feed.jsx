@@ -1,4 +1,4 @@
-import { LinearProgress } from '@material-ui/core';
+import { LinearProgress, makeStyles, Container, Grid } from '@material-ui/core';
 import Tab from '@material-ui/core/Tab';
 import Axios from 'axios';
 import React, { useEffect, useState } from 'react';
@@ -7,9 +7,24 @@ import MySnackbar from "../../Shared/Snackbar/MySnackbar";
 import CONSTANTS from "../../Util/Constants";
 import Copy from "../../Util/Copy";
 import './Feed.css';
-import useStyles from './FeedStyle';
 import TabsData from './TabsData/TabsData';
+import  FormControlLabel from '@material-ui/core/FormControlLabel';
+import  Checkbox  from '@material-ui/core/Checkbox';
 
+
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+      flexGrow: 1,
+      width: '100%',
+      backgroundColor: 'inherit',
+    },
+    checkBoxes: {
+      display: 'inline',
+      margin: '20px',
+      textTransform: 'capitalize'
+  }
+  }));
 
 export const Feed = (/* {   } */) => {
 
@@ -21,6 +36,7 @@ export const Feed = (/* {   } */) => {
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
     const {feedType} = useParams();
+    const [reportTypes, setReportTypes] = useState([]);
 
     useEffect(() => {
         fetchFeed();
@@ -31,17 +47,12 @@ export const Feed = (/* {   } */) => {
             setLoadingTabs(true);
             updateSnackbar(true, CONSTANTS.FETCHING_DATA);
             const url = "http://cyberthreatinfo.ca/vuln";
-            const response = await Axios.get(url);
-            if (Object.keys(response.data).length > 0) {
-                const tempTabsData = [];
-                Object.keys(response.data).forEach(key => {
-                    if(key === feedType){
-                        tempTabsData.push(response.data[key])
-                    }
-                })
-                setTabsData(tempTabsData);
-            }
-            setTabsData(response.data['report type']);
+            let response = await Axios.get(url);
+            response = response.data['report type'];
+            response.forEach(res => res.isShowing = true);
+            setTabsData(response);
+            const reportTypes = response.map(d => d['report type'])
+            setReportTypes(reportTypes);
             setTabsName([feedType]);
             updateSnackbar(true, CONSTANTS.FETCHING_DATA_SUCCESS);
             setLoadingTabs(false);
@@ -64,29 +75,68 @@ export const Feed = (/* {   } */) => {
         }
     }
 
-    const fetchFeedData = async (data, tabIndexParams) => {
+    const fetchFeedData = async (data, tabIndexParams, reportType) => {
         const url = `http://cyberthreatinfo.ca${data.uri}`;;
         const response = await Axios.get(url);
         if (response.data) {
-            const copyData = Copy(tabsData);
-            const orginalData = copyData[tabIndexParams].find((d) => d.appName === data.appName);
+            const copy = Copy(tabsData);
+            const copyData = copy.find(d => d['report type'] === reportType);
+            const orginalData = copyData.results.find((d) => d.appName === data.appName);
             orginalData.tableData = response.data;
             const linkColumn = orginalData.tableData.columns[0];
             linkColumn.render = (rowData) => {
                 return <Link target="_blank" to={`/CVE/${rowData.cve_id}`}>{rowData.cve_id}</Link>
             }
-            setTabsData(copyData);
+            setTabsData(copy);
         }
     }
 
-    const expandPanel = (event, expanded, tabData) => {
+    const expandPanel = (event, expanded, tabData, reportType) => {
         if (expanded && !tabData.tableData) {
-            fetchFeedData(tabData, tabIndex);
+            fetchFeedData(tabData, tabIndex, reportType);
         }
     }
 
-    const getTabsData = (tab) => {
-        return tabsData.map(data => <TabsData tab={tab} tabsData={data.results} expandPanel={expandPanel} />)
+    const handleCheckBoxChange = (event, type) => {
+        const copy = Copy(tabsData);
+        const report = copy.find(data => data['report type'] === type);
+        if(report){
+            report.isShowing = event.target.checked;
+            setTabsData(copy);
+        }
+        
+    }
+
+    const getTabsData = () => {
+        return (
+            <>
+            <div className={classes.checkBoxes}>
+{
+    reportTypes.map(type => (
+<FormControlLabel
+  control={(
+                    <Checkbox
+                      checked={tabsData.findIndex(res => res['report type'] === type && res.isShowing ) !== -1}
+                      onChange={(event) => handleCheckBoxChange(event,type)}
+                      name={type}
+                      color="primary"
+                    />
+                  )}
+  label={type}
+/>
+)
+                )
+}
+            </div>
+            {
+            tabsData.map(data => 
+            data.isShowing ?
+            <TabsData bgcolor={data.bgcolor} reportType={data['report type']} tabsData={data.results} expandPanel={expandPanel} />
+            : ''
+            )
+            }
+            </>
+            )
     }
 
     const getLoader = () => {
@@ -102,11 +152,13 @@ export const Feed = (/* {   } */) => {
     }
 
     return (
-        <div className={classes.root}>
+        <Container className={classes.root} maxWidth="lg">
+        <Grid style={{width: '100%'}} container spacing={1}>
             {loadingTabs ? getLoader() : null}
-            {tabsData.length > 0 && getTabsData(tabIndex)}
+            {tabsData.length > 0 && getTabsData()}
             <MySnackbar closeSnackbar={() => updateSnackbar(false,'')} snackbarMessage={snackbarMessage} snackbarOpen={snackbarOpen} />
-        </div>
+        </Grid>
+        </Container>
     );
 };
 

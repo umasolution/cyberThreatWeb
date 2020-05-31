@@ -7,13 +7,27 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  ExpansionPanelDetails
+  ExpansionPanelDetails,
+  Container, makeStyles
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MaterialTable from 'material-table';
 import TabPanel from '../TabPanel/TabPanel';
 
-const TabsData = ({ tab, tabsData, expandPanel }) => {
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+      flexGrow: 1,
+      width: '100%',
+      backgroundColor: 'inherit' //theme.palette.background.paper,
+  }
+}));
+
+const TabsData = ({ reportType, tabsData, expandPanel, bgcolor }) => {
+
+  const classes = useStyles();
+
+
   const getTable = (tabData) => {
     return (
       <MaterialTable
@@ -26,15 +40,16 @@ const TabsData = ({ tab, tabsData, expandPanel }) => {
   };
 
   return (
-    <TabPanel value={tab} index={tab}>
-      <Grid container spacing={1}>
+    <Container className={classes.root} maxWidth="lg">
+      <Grid style={{width: '100%'}} container spacing={1}>
             <List style={{width: '100%'}} dense={false}>
               {tabsData.map((tabData) => {
                 return (
                   <ExpansionPanel
                     key={tabData.appName}
+                    style={{borderLeft: `15px solid  ${bgcolor}`, width: '100%'}} 
                     onChange={(event, expanded) =>
-                      expandPanel(event, expanded, tabData)
+                      expandPanel(event, expanded, tabData, reportType)
                     }
                   >
                     <ExpansionPanelSummary
@@ -66,7 +81,7 @@ const TabsData = ({ tab, tabsData, expandPanel }) => {
               })}
             </List>
       </Grid>
-    </TabPanel>
+    </Container>
   );
 };
 

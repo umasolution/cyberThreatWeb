@@ -100,7 +100,7 @@ function TopBar({ className, ...rest }) {
 
   const handleClose = (event) => {
     setMenuState(prevState => {
-      return { ...prevState, open: false,anchorEl: null }
+      return { ...prevState, open: false, anchorEl: null }
     });
   };
 
@@ -125,11 +125,21 @@ function TopBar({ className, ...rest }) {
         </Hidden>
         <Box flexGrow={1} />
         <Link
+          className={classes.link}
+          color="textSecondary"
+          component={RouterLink}
+          to="/vulDB/application"
+          underline="none"
+          variant="body2"
+        >
+          Vulnerabilities DB
+        </Link>
+        <Link
           aria-controls="customized-menu"
           aria-haspopup="true"
           onClick={handleClick}
           onMouseOver={handleClick}
-          style={{marginRight: '10px'}}
+          style={{ marginRight: '10px' }}
           className={classes.link}
           color="textSecondary"
           underline="none"
@@ -148,8 +158,8 @@ function TopBar({ className, ...rest }) {
           <StyledMenuItem>
             <ListItemText
 
-             primary="Open Source Vulnerability Scanner"
-            secondary="Enabling developers to easily find and automatically fix open source vulnerabilities"
+              primary="Open Source Vulnerability Scanner"
+              secondary="Enabling developers to easily find and automatically fix open source vulnerabilities"
             />
           </StyledMenuItem>
         </StyledMenu>
@@ -161,7 +171,7 @@ function TopBar({ className, ...rest }) {
           underline="none"
           variant="body2"
         >
-          Dashboard
+          Sign In
         </Link>
         <Link
           className={classes.link}

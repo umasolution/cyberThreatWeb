@@ -1,2 +1,4 @@
-const Copy = (obj: any) => JSON.parse(JSON.stringify(obj));
+import _ from 'lodash';
+
+const Copy = (obj: any) => _.cloneDeep(obj);;
 export default Copy;

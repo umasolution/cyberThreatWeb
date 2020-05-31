@@ -1,12 +1,17 @@
-import { Divider, Grid, Typography } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import Tab from '@material-ui/core/Tab';
+import Tabs from '@material-ui/core/Tabs';
 import React from 'react';
 import JSONTree from 'react-json-tree';
-import { makeStyles } from '@material-ui/core/styles';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import TabPanel from './../../Feed/TabPanel/TabPanel';
+import TabPanel from "../../Feed/TabPanel/TabPanel";
+import { JSONTreeTheme } from "../../../Util/Constants";
 
 const useStyles = makeStyles((theme) => ({
+  mainGrid: {
+    display: 'block',
+    margin: '5px'
+  },
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
@@ -31,7 +36,7 @@ const JsonFiles = ({ jsonFiles }) => {
     <Grid
       container
       spacing={1}
-      style={{ display: 'block', margin: '5px' }}
+      className={classes.mainGrid}
     >
       <div className={classes.root}>
         <Tabs
@@ -43,14 +48,16 @@ const JsonFiles = ({ jsonFiles }) => {
           className={classes.tabs}
         >
           {
-            jsonFiles.map(jsonFile =>  <Tab label={jsonFile.name} />)
+            jsonFiles.map(jsonFile => <Tab label={jsonFile.name} />)
           }
         </Tabs>
         {
-            jsonFiles.map((jsonFile, index) =>  <TabPanel style={{minWidth: '655px'}}  value={value} index={index}>
-            <JSONTree hideRoot shouldExpandNode={() => true} data={jsonFile.data} /> 
-          </TabPanel>)
-          }
+          jsonFiles.map((jsonFile, index) => (
+            <TabPanel style={{ minWidth: '655px' }} value={value} index={index}>
+              <JSONTree theme={JSONTreeTheme} invertTheme hideRoot shouldExpandNode={() => true} data={jsonFile.data} />
+            </TabPanel>
+          ))
+        }
       </div>
     </Grid>
   );

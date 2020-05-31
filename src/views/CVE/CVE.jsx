@@ -15,12 +15,12 @@ import Axios from 'axios';
 import MaterialTable from 'material-table';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import moment from 'moment';
 import MySnackbar from "../../Shared/Snackbar/MySnackbar";
 import CONSTANTS from "../../Util/Constants";
 import ResultByCVE from './ResultByCVE/ResultByCVE';
 import CVEInput from './CVEInput/CVEInput';
 import ResultByCVEDate from './ResultByCVEDate/ResultByCVEDate';
-import moment from 'moment';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -163,29 +163,29 @@ const CVE = () => {
     return (
         <Container maxWidth="lg">
             <Grid
-                container
-                spacing={1}
+              container
+              spacing={1}
             >
                 <Box
-                    display="flex"
-                    flexDirection="column"
-                    justifyContent="left"
-                    height="100%"
-                    style={{ marginTop: '25px' }}
+                  display="flex"
+                  flexDirection="column"
+                  justifyContent="left"
+                  height="100%"
+                  style={{ marginTop: '25px' }}
                 >
                     {isLoadingData && getLoader()}
 
                     <CVEInput
-                        searchByCVE={searchByCVE}
-                        cveInput={cveInput}
-                        changeSearchByCVE={changeSearchByCVE}
-                        keyPress={keyPress}
-                        handleChangeCVE={handleChangeCVE}
-                        onSearchClicked={onSearchClicked}
-                        isSearching={isLoadingData}
-                        setCVESearchDate={setCVESearchDate}
-                        cveSearchStartDate={cveSearchStartDate}
-                        cveSearchEndDate={cveSearchEndDate}
+                      searchByCVE={searchByCVE}
+                      cveInput={cveInput}
+                      changeSearchByCVE={changeSearchByCVE}
+                      keyPress={keyPress}
+                      handleChangeCVE={handleChangeCVE}
+                      onSearchClicked={onSearchClicked}
+                      isSearching={isLoadingData}
+                      setCVESearchDate={setCVESearchDate}
+                      cveSearchStartDate={cveSearchStartDate}
+                      cveSearchEndDate={cveSearchEndDate}
                     />
                     <MySnackbar closeSnackbar={() => updateSnackbar(false, '')} snackbarMessage={snackbarMessage} snackbarOpen={snackbarOpen} />
                 </Box>
@@ -193,9 +193,9 @@ const CVE = () => {
                     && !isLoadingData && cveTables
                     && (
                         <ResultByCVE
-                            cveNVDDetails={cveNVDDetails}
-                            cveTables={cveTables}
-                            cve={cveInput}
+                          cveNVDDetails={cveNVDDetails}
+                          cveTables={cveTables}
+                          cve={cveInput}
                         />
                     )}
 
@@ -203,7 +203,7 @@ const CVE = () => {
                     && !isLoadingData && cveResultByDate
                     && (
                         <ResultByCVEDate
-                            cveResultByDate={cveResultByDate}
+                          cveResultByDate={cveResultByDate}
                         />
                     )}
             </Grid>

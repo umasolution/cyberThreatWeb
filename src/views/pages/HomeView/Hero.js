@@ -52,13 +52,13 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '50px'
   },
   mainContent: {
-    background: '-webkit-linear-gradient(330.58deg,#70389f,#31358e 79.71%)',
+    background: '-webkit-linear-gradient(330.58deg,#50649f,#31468e 79.71%)',
     padding: '10px'
   },
   mainContentH3: {
     fontFamily: 'PrentonRPProLight,sans-serif',
     fontWeight: '200',
-    fontSize: '48px',
+    fontSize: '40px',
     color: '#fff'
   },
   mainContentH2: {
@@ -151,9 +151,9 @@ function Hero({ className, ...rest }) {
               height="100%"
             >
               <div className={classes.mainContent}>
-                <h3 className={classes.mainContentH3}>Develop fast.</h3>
-                <h2 className={classes.mainContentH2}>Stay secure.</h2>
-                <p className={classes.mainContentP}>Enabling more than 400,000 developers to continuously find and fix vulnerabilities in open source libraries and containers.</p>
+                <h3 className={classes.mainContentH3}>Continues Integration.</h3>
+                <h3 className={classes.mainContentH3}>Contineous Development.</h3>
+                <h3 className={classes.mainContentH3}>Continues Confidence.</h3>
               </div>
               <Box mt={3}>
                 <Grid
