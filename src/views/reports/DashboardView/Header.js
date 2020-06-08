@@ -80,7 +80,7 @@ function Header({ className, ...rest }) {
           variant="h3"
           color="textPrimary"
         >
-          Here&apos;s what&apos;s happening
+         Insights from your scans with XXX
         </Typography>
       </Grid>
       <Grid item>

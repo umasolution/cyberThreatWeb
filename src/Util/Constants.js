@@ -28,3 +28,5 @@ export const JSONTreeTheme = {
 };
 
 export default CONSTANTS;
+
+export const Plotly = window['Plotly'];

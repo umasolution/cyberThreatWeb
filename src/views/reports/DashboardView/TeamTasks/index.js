@@ -12,7 +12,10 @@ import {
   CardHeader,
   Divider,
   List,
-  makeStyles
+  makeStyles,
+  ListItem,
+  ListItemText,
+  Typography
 } from '@material-ui/core';
 import axios from 'src/utils/axios';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
@@ -23,52 +26,38 @@ const useStyles = makeStyles(() => ({
   root: {}
 }));
 
-function TeamTasks({ className, ...rest }) {
+function TeamTasks({ className,project_vuln_details, ...rest }) {
   const classes = useStyles();
-  const isMountedRef = useIsMountedRef();
-  const [tasks, setTasks] = useState(null);
-
-  const getTasks = useCallback(() => {
-    axios
-      .get('/api/reports/tasks')
-      .then((response) => {
-        if (isMountedRef.current) {
-          setTasks(response.data.tasks);
-        }
-      });
-  }, [isMountedRef]);
-
-  useEffect(() => {
-    getTasks();
-  }, [getTasks]);
-
-  if (!tasks) {
-    return null;
-  }
 
   return (
     <Card
       className={clsx(classes.root, className)}
       {...rest}
+      style={{ width: 'fit-content'}}
     >
       <CardHeader
-        action={<GenericMoreButton />}
-        title="Team Tasks"
+        classes={{ action: classes.current }}
+        subheaderTypographyProps={{ color: 'textSecondary', variant: 'body2' }}
+        title="Projects with most vulnerabilities"
+        titleTypographyProps={{ color: 'textPrimary' }}
       />
-      <Divider />
-      <PerfectScrollbar>
-        <Box minWidth={400}>
-          <List>
-            {tasks.map((task, i) => (
-              <TaskItem
-                divider={i < tasks.length - 1}
-                key={task.id}
-                task={task}
-              />
-            ))}
-          </List>
-        </Box>
-      </PerfectScrollbar>
+      <List>
+        {project_vuln_details.map((page) => (
+          <ListItem
+            classes={{ divider: classes.itemDivider }}
+            divider
+            key={page.project}
+          >
+            <ListItemText
+              primary={page.project}
+              primaryTypographyProps={{ color: 'textSecondary', variant: 'body2' }}
+            />
+            <Typography color="inherit">
+              {page.count}
+            </Typography>
+          </ListItem>
+        ))}
+      </List>
     </Card>
   );
 }

@@ -15,28 +15,28 @@ export const UPDATE_PROFILE = '@account/update-profile';
 export function login(email, password) {
   return async (dispatch) => {
     // try {
-      dispatch({ type: LOGIN_REQUEST });
+    dispatch({ type: LOGIN_REQUEST });
 
-      const user = await authService.loginWithEmailAndPassword(email, password)
+    const user = await authService.loginWithEmailAndPassword(email, password)
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: {
+        user
+      }
+    });
+    /* .then(response => {
       dispatch({
         type: LOGIN_SUCCESS,
         payload: {
-          user
+          response
         }
       });
-      /* .then(response => {
-        dispatch({
-          type: LOGIN_SUCCESS,
-          payload: {
-            response
-          }
-        });
-      }).catch(error => {
-        dispatch({ type: LOGIN_FAILURE });
-      throw error;
-      }); */
+    }).catch(error => {
+      dispatch({ type: LOGIN_FAILURE });
+    throw error;
+    }); */
 
-      
+
     /* } catch (error) {
       dispatch({ type: LOGIN_FAILURE });
       throw error;
@@ -82,12 +82,34 @@ export function register(values) {
 
 
 export function updateProfile(update) {
-  const request = axios.post('/api/account/profile', { update });
 
-  return (dispatch) => {
-    request.then((response) => dispatch({
+  return async (dispatch) => {
+    await axios.post('http://cyberthreatinfo.ca/profile/general/edit', { ...update });
+    dispatch({
       type: UPDATE_PROFILE,
-      payload: response.data
-    }));
+      payload: { user: authService.getUserName() }
+    })
+  };
+}
+
+export function updateNotifications(update) {
+  return async (dispatch) => {
+    await axios.post('http://cyberthreatinfo.ca/profile/notification/edit', { ...update, emailAdd: authService.getUserName() });
+    dispatch({
+      type: UPDATE_PROFILE,
+      payload: { user: authService.getUserName() }
+    })
+
+  };
+}
+
+export function updatePassword(update) {
+
+  return async (dispatch) => {
+    await axios.post('http://cyberthreatinfo.ca/profile/security/edit', { passWord: update.password,oldPassword: update.oldPassword, emailAdd: authService.getUserName() });
+    dispatch({
+      type: UPDATE_PROFILE,
+      payload: { user: authService.getUserName() }
+    })
   };
 }

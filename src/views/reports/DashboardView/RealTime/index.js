@@ -37,56 +37,10 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function RealTime({ className, ...rest }) {
+function RealTime({ className,lib_details,  ...rest }) {
   const classes = useStyles();
   const isMountedRef = useIsMountedRef();
-  const [data, setData] = useState([
-    163,
-    166,
-    161,
-    159,
-    99,
-    163,
-    173,
-    166,
-    167,
-    183,
-    176,
-    172
-  ]);
 
-  const getData = useCallback(() => {
-    if (isMountedRef.current) {
-      setData((prevData) => {
-        const newData = [...prevData];
-
-        newData.shift();
-        newData.push(0);
-
-        return newData;
-      });
-    }
-
-    setTimeout(() => {
-      if (isMountedRef.current) {
-        setData((prevData) => {
-          const newData = [...prevData];
-          const random = getRandomInt(100, 200);
-
-          newData.pop();
-          newData.push(random);
-
-          return newData;
-        });
-      }
-    }, 500);
-  }, [isMountedRef]);
-
-  useEffect(() => {
-    setInterval(() => getData(), 2000);
-  }, [getData]);
-
-  const labels = data.map((value, i) => i);
 
   const pages = [
     {
@@ -113,41 +67,24 @@ function RealTime({ className, ...rest }) {
       {...rest}
     >
       <CardHeader
-        action={(
-          <Typography
-            color="inherit"
-            variant="h3"
-          >
-            {
-              data[data.length - 1] === 0
-                ? data[data.length - 2]
-                : data[data.length - 1]
-            }
-          </Typography>
-        )}
         classes={{ action: classes.current }}
-        subheader="Page views per second"
         subheaderTypographyProps={{ color: 'textSecondary', variant: 'body2' }}
-        title="Active users"
+        title="Libraries with most vulnerabilities"
         titleTypographyProps={{ color: 'textPrimary' }}
       />
-      <Chart
-        data={data}
-        labels={labels}
-      />
       <List>
-        {pages.map((page) => (
+        {lib_details.map((page) => (
           <ListItem
             classes={{ divider: classes.itemDivider }}
             divider
-            key={page.pathname}
+            key={page.product}
           >
             <ListItemText
-              primary={page.pathname}
+              primary={page.product}
               primaryTypographyProps={{ color: 'textSecondary', variant: 'body2' }}
             />
             <Typography color="inherit">
-              {page.views}
+              {page.count}
             </Typography>
           </ListItem>
         ))}

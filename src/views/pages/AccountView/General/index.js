@@ -10,7 +10,7 @@ const useStyles = makeStyles(() => ({
   root: {}
 }));
 
-function General({ className, ...rest }) {
+function General({ className,general, ...rest }) {
   const classes = useStyles();
   const { user } = useSelector((state) => state.account);
 
@@ -28,7 +28,7 @@ function General({ className, ...rest }) {
         xl={3}
         xs={12}
       >
-        <ProfileDetails user={user} />
+        <ProfileDetails user={general} />
       </Grid>
       <Grid
         item
@@ -37,7 +37,7 @@ function General({ className, ...rest }) {
         xl={9}
         xs={12}
       >
-        <GeneralSettings user={user} />
+        <GeneralSettings user={general} />
       </Grid>
     </Grid>
   );

@@ -17,18 +17,23 @@ import {
   makeStyles
 } from '@material-ui/core';
 import wait from 'src/utils/wait';
+import { useDispatch } from 'react-redux';
+import { updatePassword } from './../../../actions/accountActions';
+
 
 const useStyles = makeStyles(() => ({
   root: {}
 }));
 
-function Security({ className, ...rest }) {
+function Security({ className,security, ...rest }) {
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
+  const dispatch = useDispatch();
 
   return (
     <Formik
       initialValues={{
+        oldPassword:'',
         password: '',
         passwordConfirm: ''
       }}
@@ -49,8 +54,8 @@ function Security({ className, ...rest }) {
       }) => {
         try {
           // Make API request
-          await wait(500);
-          resetForm();
+          await dispatch(updatePassword(values));
+          // resetForm();
           setStatus({ success: true });
           setSubmitting(false);
           enqueueSnackbar('Password updated', {
@@ -84,6 +89,25 @@ function Security({ className, ...rest }) {
                 container
                 spacing={3}
               >
+                <Grid
+                  item
+                  md={4}
+                  sm={6}
+                  xs={12}
+                >
+                  <TextField
+                    error={Boolean(touched.oldPassword && errors.oldPassword)}
+                    fullWidth
+                    helperText={touched.oldPassword && errors.oldPassword}
+                    label="Old Password"
+                    name="oldPassword"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    type="oldPassword"
+                    value={values.oldPassword}
+                    variant="outlined"
+                  />
+                </Grid>
                 <Grid
                   item
                   md={4}

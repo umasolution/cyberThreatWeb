@@ -1,18 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Container,
   Divider,
   Tab,
   Tabs,
-  makeStyles
+  makeStyles,
+  LinearProgress
 } from '@material-ui/core';
 import Page from 'src/components/Page';
+import Axios from 'axios';
 import Header from './Header';
 import General from './General';
 import Subscription from './Subscription';
 import Notifications from './Notifications';
 import Security from './Security';
+import CONSTANTS from "../../../Util/Constants";
+import authService from "../../../services/authService";
+import MySnackbar from './../../../Shared/Snackbar/MySnackbar';
+
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,16 +33,58 @@ const useStyles = makeStyles((theme) => ({
 function AccountView() {
   const classes = useStyles();
   const [currentTab, setCurrentTab] = useState('general');
+  const [userProfileData, setUserProfileData] = useState();
   const tabs = [
     { value: 'general', label: 'General' },
-    { value: 'subscription', label: 'Subscription' },
+    // { value: 'subscription', label: 'Subscription' },
     { value: 'notifications', label: 'Notifications' },
     { value: 'security', label: 'Security' }
   ];
+  const [loading, setLoading] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+
+
+  useEffect(() => {
+    const updateSnackbar = (open, message) => {
+      setSnackbarOpen(open);
+      setSnackbarMessage(message)
+    }
+    const fetchUserProfile = async () => {
+      try {
+        setLoading(true);
+        updateSnackbar(true, CONSTANTS.FETCHING_DATA);
+        const url = `http://cyberthreatinfo.ca/getProfile?emailAdd=${authService.getUserName()}`;
+        let response = await Axios.get(url);
+        setUserProfileData(response.data);
+        updateSnackbar(true, CONSTANTS.FETCHING_DATA_SUCCESS);
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+        updateSnackbar(true, CONSTANTS.FETCHING_DATA_FAILED);
+        setLoading(false);
+      }
+    }
+    fetchUserProfile();
+  }, []);
+
+
 
   const handleTabsChange = (event, value) => {
     setCurrentTab(value);
   };
+
+  const getLoader = () => {
+    if (loading) {
+        return <LinearProgress style={{ margin: '15px' }} />
+    }
+    return null;
+}
+
+const updateSnackbar = (open, message) => {
+  setSnackbarOpen(open);
+  setSnackbarMessage(message)
+}
 
   return (
     <Page
@@ -64,11 +113,14 @@ function AccountView() {
         </Box>
         <Divider />
         <Box mt={3}>
-          {currentTab === 'general' && <General />}
-          {currentTab === 'subscription' && <Subscription />}
-          {currentTab === 'notifications' && <Notifications />}
-          {currentTab === 'security' && <Security />}
+          {currentTab === 'general' && userProfileData && <General general={userProfileData.General} />}
+          {/* {currentTab === 'subscription' && userProfileData && <Subscription />} */}
+          {currentTab === 'notifications' && userProfileData && <Notifications notification={userProfileData.Notification} />}
+          {currentTab === 'security' && userProfileData && <Security security={userProfileData.Security} />}
         </Box>
+        {loading ? getLoader() : null}
+        <MySnackbar closeSnackbar={() => updateSnackbar(false, '')} snackbarMessage={snackbarMessage} snackbarOpen={snackbarOpen} />
+
       </Container>
     </Page>
   );

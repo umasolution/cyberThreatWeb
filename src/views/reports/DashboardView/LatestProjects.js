@@ -29,6 +29,7 @@ import axios from 'src/utils/axios';
 import getInitials from 'src/utils/getInitials';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import GenericMoreButton from 'src/components/GenericMoreButton';
+import MaterialTable from 'material-table';
 
 const technologyMap = {
   'html-css': '/static/images/technologies/html.svg',
@@ -52,42 +53,27 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function LatestProjects({ className, ...rest }) {
+function LatestProjects({ className, project_details, ...rest }) {
   const classes = useStyles();
-  const isMountedRef = useIsMountedRef();
-  const [projects, setProjects] = useState(null);
-
-  const getProjects = useCallback(() => {
-    axios
-      .get('/api/reports/latest-projects')
-      .then((response) => {
-        if (isMountedRef.current) {
-          setProjects(response.data.projects);
-        }
-      });
-  }, [isMountedRef]);
-
-  useEffect(() => {
-    getProjects();
-  }, [getProjects]);
-
-  if (!projects) {
-    return null;
-  }
 
   return (
     <Card
       className={clsx(classes.root, className)}
       {...rest}
     >
-      <CardHeader
+      {/* <CardHeader
         action={<GenericMoreButton />}
         title="Latest Projects"
-      />
-      <Divider />
-      <PerfectScrollbar>
-        <Box minWidth={900}>
-          <Table>
+      /> */}
+      {/* <Divider /> */}
+      <Box minWidth={900}>
+        <MaterialTable
+          title="Open Vulnerabilities"
+          columns={project_details.columns}
+          data={project_details.data}
+          style={{ width: '100%' }}
+        />
+        {/* <Table>
             <TableHead>
               <TableRow>
                 <TableCell sortDirection="desc">
@@ -163,22 +149,7 @@ function LatestProjects({ className, ...rest }) {
                 </TableRow>
               ))}
             </TableBody>
-          </Table>
-        </Box>
-      </PerfectScrollbar>
-      <Box
-        p={2}
-        display="flex"
-        justifyContent="flex-end"
-      >
-        <Button
-          component={RouterLink}
-          size="small"
-          to="/app/projects"
-        >
-          See all
-          <NavigateNextIcon className={classes.navigateNextIcon} />
-        </Button>
+          </Table> */}
       </Box>
     </Card>
   );

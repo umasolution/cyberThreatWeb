@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function TodaysMoney({ className, ...rest }) {
+function TodaysMoney({ className,header, value, ...rest }) {
   const classes = useStyles();
   const data = {
     value: '24,000',
@@ -49,7 +49,7 @@ function TodaysMoney({ className, ...rest }) {
           variant="overline"
           color="textSecondary"
         >
-          Todays money
+         {header}
         </Typography>
         <Box
           display="flex"
@@ -60,22 +60,15 @@ function TodaysMoney({ className, ...rest }) {
             variant="h3"
             color="textPrimary"
           >
-            {data.currency}
-            {data.value}
+            {value}
+           
           </Typography>
-          <Label
-            className={classes.label}
-            color={data.difference > 0 ? 'success' : 'error'}
-          >
-            {data.difference > 0 ? '+' : ''}
-            {data.difference}
-            %
-          </Label>
+          
         </Box>
       </Box>
-      <Avatar className={classes.avatar}>
+     {/*  <Avatar className={classes.avatar}>
         <AttachMoneyIcon />
-      </Avatar>
+      </Avatar> */}
     </Card>
   );
 }

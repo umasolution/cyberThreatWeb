@@ -48,21 +48,21 @@ function ProfileDetails({ user, className, ...rest }) {
             variant="h3"
             color="textPrimary"
           >
-            {/* {`${user.firstName} ${user.lastName}`} */}
-            {`${user}`}
+            {`${user.fName} ${user.lName}`}
+            {/* {`${user}`} */}
           </Typography>
-          <Typography
+         {/*  <Typography
             color="textPrimary"
             variant="body1"
           >
             {`${user.state}, ${user.country}`}
-          </Typography>
-          <Typography
+          </Typography> */}
+         {/*  <Typography
             color="textSecondary"
             variant="body2"
           >
             {user.timezone}
-          </Typography>
+          </Typography> */}
         </Box>
       </CardContent>
       <CardActions>
