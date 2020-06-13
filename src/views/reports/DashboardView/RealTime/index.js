@@ -1,21 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Box, Card, CardHeader, ListItem, ListItemText, makeStyles, TextField, Typography } from '@material-ui/core';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import {
-  Box,
-  Button,
-  Card,
-  CardHeader,
-  List,
-  ListItem,
-  ListItemText,
-  Typography,
-  makeStyles
-} from '@material-ui/core';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import React, { useRef, useState } from 'react';
+import { List as VirtualizedList } from 'react-virtualized';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
-import Chart from './Chart';
+import Copy from "../../../../Util/Copy";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -37,9 +26,15 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function RealTime({ className,lib_details,  ...rest }) {
+function RealTime({ className, lib_details, ...rest }) {
   const classes = useStyles();
   const isMountedRef = useIsMountedRef();
+
+  const originalLibDetails = useRef(lib_details);
+
+  const [searchedLibDetails, setSearchedLibDetails] = useState(Copy(lib_details));
+  const [searchInput, setSearchInput] = useState();
+
 
 
   const pages = [
@@ -61,6 +56,38 @@ function RealTime({ className,lib_details,  ...rest }) {
     }
   ];
 
+  const height = 309;
+  const rowHeight = 40;
+  const width = 266;
+
+  const rowRenderer = ({ index, isScrolling, key, style }) => {
+    return searchedLibDetails && (
+      <div key={key} style={style}>
+        <ListItem
+          classes={{ divider: classes.itemDivider }}
+          divider
+          key={searchedLibDetails[index].product}
+        >
+          <ListItemText
+            primary={searchedLibDetails[index].product}
+            primaryTypographyProps={{ color: 'textSecondary', variant: 'body2' }}
+          />
+          <Typography color="inherit">
+            {searchedLibDetails[index].count}
+          </Typography>
+        </ListItem>
+      </div>
+    )
+      ;
+  };
+
+  const handleChangeSearch = (event) => {
+    const filteredResult = originalLibDetails.current.filter(details => details.product.toLowerCase().includes(event.target.value)
+      || details.count.toString().toLowerCase().includes(event.target.value));
+    setSearchedLibDetails(filteredResult);
+    setSearchInput(event.target.value);
+  }
+
   return (
     <Card
       className={clsx(classes.root, className)}
@@ -72,7 +99,28 @@ function RealTime({ className,lib_details,  ...rest }) {
         title="Libraries with most vulnerabilities"
         titleTypographyProps={{ color: 'textPrimary' }}
       />
-      <List>
+      <TextField
+        required
+        value={searchInput}
+        onChange={handleChangeSearch}
+        style={{
+          marginLeft: '15px'
+        }}
+        id="search"
+        placeholder="Search"
+        label="Search"
+      />
+      {searchedLibDetails && (
+        <VirtualizedList
+          rowCount={searchedLibDetails.length}
+          width={width}
+          height={height}
+          rowHeight={rowHeight}
+          rowRenderer={rowRenderer}
+          overscanRowCount={3}
+        />
+      )}
+      {/* <List>
         {lib_details.map((page) => (
           <ListItem
             classes={{ divider: classes.itemDivider }}
@@ -88,20 +136,20 @@ function RealTime({ className,lib_details,  ...rest }) {
             </Typography>
           </ListItem>
         ))}
-      </List>
+      </List> */}
       <Box
         p={2}
         display="flex"
         justifyContent="flex-end"
       >
-        <Button
+        {/* <Button
           component={RouterLink}
           size="small"
           to="#"
         >
           See all
           <NavigateNextIcon className={classes.navigateNextIcon} />
-        </Button>
+        </Button> */}
       </Box>
     </Card>
   );
