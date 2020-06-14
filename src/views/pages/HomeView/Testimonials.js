@@ -12,8 +12,8 @@ import {
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.dark,
-    paddingTop: 128,
-    paddingBottom: 128
+    paddingTop: 20,
+    paddingBottom: 20
   },
   title: {
     fontWeight: theme.typography.fontWeightRegular
@@ -31,37 +31,48 @@ function Testimonials({ className, ...rest }) {
     >
       <Container maxWidth="md">
         <Typography
-          variant="h2"
+          variant="body1"
           align="center"
           color="textPrimary"
           className={classes.title}
         >
-          &quot;Devias builds some of the best templates you can find for React.
-          <br />
-          They will save you time.&quot;
+          Your goal is to deliver fast. Our goal is to ensure that you deliver secure. To ensure your goals meet the security goals too, we bring you the best in class tools that integrate with your CI/CD tools to detect and fix vulnerabilities as early as you can.
         </Typography>
         <Box
-          mt={6}
+          mt={2}
           display="flex"
           justifyContent="center"
           alignItems="center"
         >
-          <Avatar src="/static/home/olivier.png" />
-          <Box ml={2}>
+          <Typography
+              variant="h1"
+              color="secondary"
+            >
+          Not just detect vulnerabilities. Fix them!
+        </Typography>
+          
+        </Box>
+        <Box ml={2} mt={2}>
             <Typography
               variant="body1"
               color="textPrimary"
             >
-              Olivier Tassinari
-              <Typography
-                color="textSecondary"
-                display="inline"
-                component="span"
-              >
-                , co-creator of @MaterialUI
-              </Typography>
+              Fixing vulnerablities can be a tedious process. Once a developer is informed of vulnerablities in a certain library, their next task is to find the fixed versions of the library. Versions that won't break their applications. Our tools enable you to update your code directly. A pull request is automatically generated to fix the code.
             </Typography>
           </Box>
+          <Box
+          mt={2}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Typography
+              variant="h1"
+              color="secondary"
+            >
+          Shift Left. Detect Early.
+        </Typography>
+          
         </Box>
       </Container>
     </div>

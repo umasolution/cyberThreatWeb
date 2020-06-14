@@ -8,7 +8,8 @@ import {
   Typography,
   makeStyles,
   Button,
-  TextField
+  TextField,
+  Paper
 } from '@material-ui/core';
 import {
   withRouter
@@ -20,8 +21,8 @@ import CVEInput from './../../CVE/CVEInput/CVEInput';
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.dark,
-    paddingTop: 20,
-    paddingBottom: 200,
+    paddingTop: 5,
+    paddingBottom: 20,
     [theme.breakpoints.down('md')]: {
       paddingTop: 60,
       paddingBottom: 60
@@ -49,14 +50,14 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   container: {
-    marginTop: '50px'
+    marginTop: '10px'
   },
   mainContent: {
     background: '-webkit-linear-gradient(330.58deg,#50649f,#31468e 79.71%)',
     padding: '10px'
   },
   mainContentH3: {
-    fontFamily: 'PrentonRPProLight,sans-serif',
+    // fontFamily: 'PrentonRPProLight,sans-serif',
     fontWeight: '200',
     fontSize: '40px',
     color: '#fff'
@@ -151,10 +152,11 @@ function Hero({ className, ...rest }) {
               height="100%"
             >
               <div className={classes.mainContent}>
-                <h3 className={classes.mainContentH3}>Continues Integration.</h3>
-                <h3 className={classes.mainContentH3}>Contineous Development.</h3>
-                <h3 className={classes.mainContentH3}>Continues Confidence.</h3>
+                <h3 className={classes.mainContentH3}>Continuous Integration.</h3>
+                <h3 className={classes.mainContentH3}>Continuous Development.</h3>
+                <h3 className={classes.mainContentH3}>Continuous Confidence.</h3>
               </div>
+
               <Box mt={3}>
                 <Grid
                   container
@@ -162,57 +164,30 @@ function Hero({ className, ...rest }) {
                 >
                   <Grid item>
                     <Typography
-                      variant="h1"
+                      variant="h5"
                       color="secondary"
                     >
-                      30+
-                    </Typography>
-                    <Typography
-                      variant="overline"
-                      color="textSecondary"
-                    >
-                      Demo Pages
+                      Add confidence to your CI/CD process. Develop securely while you deploy continously with confidence.
                     </Typography>
                   </Grid>
                   <Grid item>
                     <Typography
-                      variant="h1"
+                      variant="h5"
                       color="secondary"
                     >
-                      UX
-                    </Typography>
-                    <Typography
-                      variant="overline"
-                      color="textSecondary"
-                    >
-                      Complete Flows
+                      Confidently scan for vulnerablities in your source code, container image, virtual machine or physical servers.
                     </Typography>
                   </Grid>
-                  <Grid item>
+                  <Grid item style={{ width: '100%' }}>
                     <Typography
-                      variant="h1"
+                      variant="h5"
                       color="secondary"
                     >
-                      300+
-                    </Typography>
-                    <Typography
-                      variant="overline"
-                      color="textSecondary"
-                    >
-                      Components
+                      Make every check in a secure checkin
                     </Typography>
                   </Grid>
                 </Grid>
               </Box>
-              <Button
-                color="secondary"
-                size="large"
-                type="button"
-                variant="contained"
-                onClick={gotoRegister}
-              >
-                SIGN UP FOR A FREE ACCOUNT
-        </Button>
             </Box>
           </Grid>
           <Grid
@@ -230,14 +205,95 @@ function Hero({ className, ...rest }) {
               <div className={classes.image}>
                 <img
                   alt="Presentation"
-                  src="/static/home/dark-light.png"
+                  src="/static/home/dark-light-typing.png"
                 />
               </div>
             </Box>
           </Grid>
+          <Grid
+            item
+            xs={12}
+          >
+            <Box
+              display="flex"
+              flexDirection="column"
+              justifyContent="center"
+              height="100%"
+            >
+          
+          </Box>
+          </Grid>
         </Grid>
+      <Grid item xs={12}>
+        <Grid container    spacing={2}>
+          
+        <Grid item>
+            <Typography
+              variant="h1"
+              color="secondary"
+            >
+              10%
+                    </Typography>
+            <Typography
+              variant="overline"
+              color="textSecondary"
+            >
+              more vulnerabilities than NVD
+                    </Typography>
+          </Grid>
+          <Grid item>
+            <Typography
+              variant="h1"
+              color="secondary"
+            >
+              300+
+                    </Typography>
+            <Typography
+              variant="overline"
+              color="textSecondary"
+            >
+              projects scanned
+                    </Typography>
+          </Grid>
+          <Grid item>
+            <Typography
+              variant="h1"
+              color="secondary"
+            >
+              500+
+                    </Typography>
+            <Typography
+              variant="overline"
+              color="textSecondary"
+            >
+              vulnerabilities discovered for developers like you.
+                    </Typography>
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid item>
+          <Typography
+              variant="h4"
+              color="textSecondary"
+            >
+              A more reliable scoring system to prioritize the most important vulnerabilities
+            </Typography>
+             
+          </Grid>
+          
+          <Button
+                color="secondary"
+                size="large"
+                type="button"
+                variant="contained"
+                onClick={gotoRegister}
+                style={{marginTop: '8px'}}
+              >
+                SIGN UP FOR A FREE ACCOUNT
+        </Button>
       </Container>
-    </div>
+      
+    </div >
   );
 }
 

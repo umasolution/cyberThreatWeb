@@ -22,10 +22,9 @@ function HomeView() {
     >
       <Hero />
       <Features />
-      <PricingView />
       <Testimonials />
+      <PricingView />
       <CTA />
-      <FAQS />
     </Page>
   );
 }

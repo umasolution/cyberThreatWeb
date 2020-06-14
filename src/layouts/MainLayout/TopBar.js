@@ -50,6 +50,13 @@ const useStyles = makeStyles((theme) => ({
     height: 32,
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2)
+  },
+  typography: {
+    fontFamily: [
+      'Consolas',
+      '"Courier New"',
+      'monospace',
+    ].join(','),
   }
 }));
 

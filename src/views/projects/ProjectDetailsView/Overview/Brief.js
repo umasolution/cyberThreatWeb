@@ -15,7 +15,7 @@ import Markdown from 'react-markdown/with-html';
 const useStyles = makeStyles((theme) => ({
   root: {},
   markdown: {
-    fontFamily: theme.typography.fontFamily,
+    // fontFamily: theme.typography.fontFamily,
     '& p': {
       marginBottom: theme.spacing(2)
     }

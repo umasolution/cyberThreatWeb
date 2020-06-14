@@ -11,9 +11,9 @@ import {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: theme.palette.background.default,
-    paddingTop: 128,
-    paddingBottom: 128
+    backgroundColor: theme.palette.background.dark,
+    paddingTop: 20,
+    paddingBottom: 20
   },
   browseButton: {
     marginLeft: theme.spacing(2)
@@ -34,29 +34,29 @@ function CTA({ className, ...rest }) {
           align="center"
           color="textPrimary"
         >
-          Ready to start building?
+          Start Clean
         </Typography>
         <Typography
-          variant="h1"
-          align="center"
+          variant="h3"
+          align="left"
+          mt={4}
           color="secondary"
         >
-          Download Devias Material Kit today.
+          Use our certified base images to start building your applications.
         </Typography>
         <Box
-          mt={6}
+          mt={2}
           display="flex"
-          justifyContent="center"
-          alignItems="center"
+          justifyContent="left"
+          alignItems="left"
         >
-          <Button
+          <Typography
+            variant="h5"
+            align="left"
             color="secondary"
-            component="a"
-            href="https://material-ui.com/store/items/devias-kit-pro"
-            variant="contained"
           >
-            Get the kit
-          </Button>
+            Know before you use an image from Dockerhub or other public sources. Our pre-scanned reports provide you a report on vulnerabilities in popular dockerhub images.
+           </Typography>
         </Box>
       </Container>
     </div>

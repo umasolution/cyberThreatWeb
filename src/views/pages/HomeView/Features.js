@@ -14,8 +14,8 @@ import {
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.default,
-    paddingTop: 128,
-    paddingBottom: 128
+    paddingTop: 20,
+    paddingBottom: 20
   },
   avatar: {
     backgroundColor: theme.palette.secondary.main,
@@ -32,30 +32,15 @@ function Features({ className, ...rest }) {
       {...rest}
     >
       <Container maxWidth="lg">
-        <Typography
-          component="p"
-          variant="overline"
-          color="secondary"
-          align="center"
-        >
-          Explore Feed
-        </Typography>
-        <Typography
-          variant="h1"
-          align="center"
-          color="textPrimary"
-        >
-          Not just a pretty face
-        </Typography>
-        <Box mt={8}>
+        <Box mt={2}>
           <Grid
             container
-            spacing={3}
+            spacing={1}
           >
             <Grid
               item
               xs={12}
-              md={4}
+              md={3}
             >
               <Box display="flex">
                 <Avatar className={classes.avatar}>
@@ -67,14 +52,14 @@ function Features({ className, ...rest }) {
                     gutterBottom
                     color="textPrimary"
                   >
-                    Complete User Flows
+                    Develop using open source...with confidence
                   </Typography>
                   <Typography
                     variant="body1"
                     color="textPrimary"
                   >
-                    Not just a set of tools, the package includes the most common use cases of
-                    user flows like User Management, Second Level Layout.
+                    {/* Not just a set of tools, the package includes the most common use cases of
+                    user flows like User Management, Second Level Layout. */}
                   </Typography>
                 </Box>
               </Box>
@@ -82,7 +67,7 @@ function Features({ className, ...rest }) {
             <Grid
               item
               xs={12}
-              md={4}
+              md={3}
             >
               <Box display="flex">
                 <Avatar className={classes.avatar}>
@@ -94,14 +79,14 @@ function Features({ className, ...rest }) {
                     gutterBottom
                     color="textPrimary"
                   >
-                    Support for Plugins
+                    Use public container images...with confidence.
                   </Typography>
                   <Typography
                     variant="body1"
                     color="textPrimary"
                   >
-                    The kit provides support for multiple third-party plugins right out of the box
-                    like Chart.js, Dropzone.js, Kanban Plugin and many more.
+                    {/* The kit provides support for multiple third-party plugins right out of the box
+                    like Chart.js, Dropzone.js, Kanban Plugin and many more. */}
                   </Typography>
                 </Box>
               </Box>
@@ -109,7 +94,7 @@ function Features({ className, ...rest }) {
             <Grid
               item
               xs={12}
-              md={4}
+              md={3}
             >
               <Box display="flex">
                 <Avatar className={classes.avatar}>
@@ -121,28 +106,47 @@ function Features({ className, ...rest }) {
                     gutterBottom
                     color="textPrimary"
                   >
-                    Designers, we got you
+                   Scan your containers...with confidence
                   </Typography>
                   <Typography
                     variant="body1"
                     color="textPrimary"
                     gutterBottom
                   >
-                    We&apos;ve included the source Sketch &amp; Figma files to Plus &amp;
-                    Extended licenses so you can get creative! Build layouts with confidence.
+                    {/* We&apos;ve included the source Sketch &amp; Figma files to Plus &amp;
+                    Extended licenses so you can get creative! Build layouts with confidence. */}
                   </Typography>
-                  <Button
-                    variant="outlined"
-                    component="a"
-                    href="https://sketch.cloud/s/q4a8e"
-                    target="_blank"
+                </Box>
+              </Box>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              md={3}
+            >
+              <Box display="flex">
+                <Avatar className={classes.avatar}>
+                  04
+                </Avatar>
+                <Box ml={2}>
+                  <Typography
+                    variant="h4"
+                    gutterBottom
+                    color="textPrimary"
                   >
-                    Preview Design
-                  </Button>
+                   Don't stop at scanning your code and containers. Scan your Virtual Machines and Servers...with confidence.
+                  </Typography>
                 </Box>
               </Box>
             </Grid>
           </Grid>
+          <Typography
+                    variant="body1"
+                    color="textPrimary"
+                    gutterBottom
+                  >
+                    With our powerful scanning technology detect vulnerabilities in your code, standard applications, containers and operating system. Consolidate tools for better ROI.
+                  </Typography>
         </Box>
       </Container>
     </div>

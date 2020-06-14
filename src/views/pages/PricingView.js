@@ -14,11 +14,11 @@ import Page from 'src/components/Page';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: theme.palette.background.dark,
+    backgroundColor: theme.palette.background.default,
     minHeight: '100%',
     height: '100%',
-    paddingTop: 120,
-    paddingBottom: 120
+    paddingTop: 20,
+    paddingBottom: 20
   },
   product: {
     position: 'relative',

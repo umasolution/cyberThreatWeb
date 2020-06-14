@@ -101,7 +101,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 'auto'
   },
   label: {
-    fontFamily: theme.typography.fontFamily,
+    // fontFamily: theme.typography.fontFamily,
     fontSize: theme.typography.pxToRem(12),
     color: theme.palette.common.white,
     paddingLeft: 4,

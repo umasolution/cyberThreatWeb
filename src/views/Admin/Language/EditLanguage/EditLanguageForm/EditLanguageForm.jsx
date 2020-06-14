@@ -27,6 +27,7 @@ const EditLanguageForm = ({data, propertyChange, type, onApprovOrReject}) => {
                    
                                             <Typography
                                                 variant="h6"
+                                                key={moduleKey}
                                                 style={{ color: '#ab396a', display: 'inline', marginLeft: '10px' }}
                                             >
                                                 {moduleKey}

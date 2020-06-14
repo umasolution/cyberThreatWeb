@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
     '& .ql-container': {
       border: 'none',
       '& .ql-editor': {
-        fontFamily: theme.typography.fontFamily,
+        // fontFamily: theme.typography.fontFamily,
         fontSize: 16,
         color: theme.palette.text.primary,
         '&.ql-blank::before': {

@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    fontFamily: theme.typography.fontFamily,
+    // fontFamily: theme.typography.fontFamily,
     '& .rdw-option-wrapper': {
       background: 'transparent',
       border: 'none',

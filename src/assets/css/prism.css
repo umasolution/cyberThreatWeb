@@ -9,7 +9,7 @@ pre {
 code[class*="language-"],
 pre[class*="language-"] {
   color: rgb(191, 199, 213);
-  font-family: Inconsolata, Monaco, Consolas, 'Courier New', Courier, monospace;
+  font-family: Consolas, 'Courier New', monospace;
   direction: ltr;
   text-align: left;
   white-space: pre;

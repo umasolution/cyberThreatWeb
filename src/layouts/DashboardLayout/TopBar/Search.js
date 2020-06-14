@@ -146,7 +146,7 @@ function Search() {
               ) : (
                 <>
                   {results && results.map((result) => (
-                    <Box mb={2}>
+                    <Box mb={2} key={result.title}>
                       <Link
                         variant="h4"
                         color="textPrimary"

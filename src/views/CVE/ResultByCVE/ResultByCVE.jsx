@@ -83,7 +83,7 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
         if (cveTables && cveTables.length > 0) {
             return cveTables.map((table) => {
                 return (
-                    <div style={{ margin: '10px 0 10px 0'}}>
+                    <div key={table} style={{ margin: '10px 0 10px 0'}}>
                         <Typography
                             variant="h5"
                             className={classes.title}
@@ -93,10 +93,10 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                         {
                             table.data.map(data => {
                                 return (
-                                    <div className={classes.borderDiv} style={{ width: '100%' }}>
+                                    <div key={data} className={classes.borderDiv} style={{ width: '100%' }}>
                                         {Object.keys(data).map(lan => {
                                             return (
-                                                <p>
+                                                <p key={lan}>
                                                     <span style={{ marginRight: '10px' }}>
                                                       
                                                         

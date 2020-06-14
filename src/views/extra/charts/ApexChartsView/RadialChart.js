@@ -29,7 +29,7 @@ function RadialChart() {
           },
           dataLabels: {
             name: {
-              fontFamily: theme.typography.fontFamily,
+              // fontFamily: theme.typography.fontFamily,
               color: theme.palette.text.primary
             },
             value: {

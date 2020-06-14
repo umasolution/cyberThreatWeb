@@ -156,7 +156,7 @@ const EditLanguage = () => {
                             <RadioGroup aria-label="gender" name="gender1" value={value} onChange={handleChange}>
                                 {
                                     Object.keys(languageData).map(lang => {
-                                        return <ListItem button>
+                                        return <ListItem key={lang} button>
                                         <FormControlLabel value={lang} control={<Radio />} label={lang} />
                                     </ListItem>;
                                     })
@@ -170,6 +170,7 @@ const EditLanguage = () => {
                                             {lang === value ?  
                                              <EditLanguageForm
                                              type={lang}
+                                             key={lang}
                                              data={languageData[lang]}
                                              propertyChange={propertyChange}
                                              onApprovOrReject={onApprovOrReject}

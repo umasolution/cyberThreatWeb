@@ -45,6 +45,13 @@ const useStyles = makeStyles(() => createStyles({
     '#root': {
       height: '100%',
       width: '100%'
+    },
+    typography: {
+      fontFamily: [
+        'Consolas',
+        '"Courier New"',
+        'monospace',
+      ].join(','),
     }
   }
 }));
