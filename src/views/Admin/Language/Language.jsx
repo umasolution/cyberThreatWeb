@@ -77,7 +77,7 @@ const Language = () => {
             <>
                 {languages.map((language, index) => {
                     return (
-                        <div key={`language-${index}`} className={classes.borderDiv}>
+                        <div key={`language-${index}`} >
                             {Object.keys(language).map(lan => {
                                 return (
                                     <p>

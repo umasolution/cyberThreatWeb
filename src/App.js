@@ -21,6 +21,7 @@ import ScrollReset from 'src/components/ScrollReset';
 import useSettings from 'src/hooks/useSettings';
 import { createTheme } from 'src/theme';
 import Routes from 'src/Routes';
+import './App.css';
 
 const history = createBrowserHistory();
 const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
@@ -52,7 +53,8 @@ const useStyles = makeStyles(() => createStyles({
         '"Courier New"',
         'monospace',
       ].join(','),
-    }
+    },
+    
   }
 }));
 

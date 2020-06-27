@@ -140,7 +140,20 @@ export function createTheme(settings = {}) {
       {},
       baseConfig,
       themeConfig,
-      { direction: settings.direction }
+      { direction: settings.direction },
+      {
+        typography: {
+          h6: {
+            fontSize: 16,
+            fontFamily: 'DIN,sans-serif',
+            color: '#546e7a',
+          },
+          body1: {
+            fontSize: 13,
+            fontFamily: 'DIN,sans-serif',
+          }
+        }
+      }
     )
   );
 

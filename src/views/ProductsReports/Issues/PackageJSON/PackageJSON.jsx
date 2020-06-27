@@ -5,13 +5,14 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import React from 'react';
+import Paper  from '@material-ui/core/Paper';
 
 const useStyles = makeStyles((theme) => ({
     borderDiv: {
-        border: '1px',
-        borderStyle: 'solid',
-        borderRadius: '10px',
-        borderColor: 'brown',
+        // border: '1px',
+        // borderStyle: 'solid',
+        // borderRadius: '10px',
+        // borderColor: 'brown',
         marginTop: '5px',
         width: '1000px',
         overflow: 'auto',
@@ -104,9 +105,9 @@ const PackageJSON = ({ packageJSON }) => {
                 packageJSON.map(value => {
                     return (
                         <>
-                            <div className={classes.borderDiv}>
+                            <Paper className={classes.borderDiv}>
                                 {printValues(value)}
-                            </div>
+                            </Paper>
                         </>
                     )
                 }

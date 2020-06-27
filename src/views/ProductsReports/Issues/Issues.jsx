@@ -60,7 +60,7 @@ const Issues = ({ issues, reportName, reportType }) => {
                     {
                       issues[issue].map(iss => {
                         return (
-                          <div className={classes.borderDiv}>
+                          <div >
                             {Object.keys(iss).map(i => {
                               return (
                                 <Typography

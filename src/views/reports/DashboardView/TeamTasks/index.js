@@ -13,9 +13,9 @@ const useStyles = makeStyles(() => ({
 function TeamTasks({ className, project_vuln_details, ...rest }) {
   const classes = useStyles();
 
-  const height = 309;
-  const rowHeight = 40;
-  const width = 266;
+  const height = 448;
+  const rowHeight = 25;
+  const width = 265;
 
   const originalLibDetails = useRef(project_vuln_details);
 
@@ -28,13 +28,16 @@ function TeamTasks({ className, project_vuln_details, ...rest }) {
         <ListItem
           classes={{ divider: classes.itemDivider }}
           divider
+          className="spaceBetween"
           key={searchedLibDetails[index].project}
         >
-          <ListItemText
-            primary={searchedLibDetails[index].project}
-            primaryTypographyProps={{ color: 'textSecondary', variant: 'body2' }}
-          />
-          <Typography color="inherit">
+          <Typography color="inherit"
+            className="secondary"
+          >
+            {searchedLibDetails[index].project}
+          </Typography>
+          <Typography color="inherit"
+            className="secondary">
             {searchedLibDetails[index].count}
           </Typography>
         </ListItem>
@@ -57,23 +60,26 @@ function TeamTasks({ className, project_vuln_details, ...rest }) {
       {...rest}
       style={{ width: 'fit-content' }}
     >
-      <CardHeader
-        classes={{ action: classes.current }}
-        subheaderTypographyProps={{ color: 'textSecondary', variant: 'body2' }}
-        title="Projects with most vulnerabilities"
-        titleTypographyProps={{ color: 'textPrimary' }}
-      />
+        <Typography
+        component="h4"
+        gutterBottom
+        variant="overline"
+        className="margin-general fontsize"
+        color="textSecondary"
+      >
+       Projects with most vulnerabilities
+        </Typography>
 
       <TextField
-        required
         value={searchInput}
         onChange={handleChangeSearch}
         style={{
           marginLeft: '15px'
         }}
+        className="secondary"
+        labelClassName="secondary"
         id="search"
-        placeholder="Search"
-        label="Search"
+        label="..."
       />
 
       {searchedLibDetails && (

@@ -5,16 +5,13 @@ import React, { useRef, useState } from 'react';
 import { List as VirtualizedList } from 'react-virtualized';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import Copy from "../../../../Util/Copy";
+import './index.css';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
-  current: {
-    marginTop: theme.spacing(0.5),
-    marginRight: theme.spacing(0.5)
-  },
   navigateNextIcon: {
     marginLeft: theme.spacing(1)
-  }
+  },
 }));
 
 function getRandomInt(min, max) {
@@ -57,8 +54,8 @@ function RealTime({ className, lib_details, ...rest }) {
   ];
 
   const height = 309;
-  const rowHeight = 40;
-  const width = 266;
+  const rowHeight = 25;
+  const width = 285;
 
   const rowRenderer = ({ index, isScrolling, key, style }) => {
     return searchedLibDetails && (
@@ -66,13 +63,17 @@ function RealTime({ className, lib_details, ...rest }) {
         <ListItem
           classes={{ divider: classes.itemDivider }}
           divider
+          className="spaceBetween"
           key={searchedLibDetails[index].product}
         >
-          <ListItemText
-            primary={searchedLibDetails[index].product}
-            primaryTypographyProps={{ color: 'textSecondary', variant: 'body2' }}
-          />
-          <Typography color="inherit">
+          <Typography color="inherit"
+            className="secondary"
+          >
+            {searchedLibDetails[index].product}
+          </Typography>
+          <Typography color="inherit"
+            className="secondary"
+          >
             {searchedLibDetails[index].count}
           </Typography>
         </ListItem>
@@ -93,22 +94,26 @@ function RealTime({ className, lib_details, ...rest }) {
       className={clsx(classes.root, className)}
       {...rest}
     >
-      <CardHeader
-        classes={{ action: classes.current }}
-        subheaderTypographyProps={{ color: 'textSecondary', variant: 'body2' }}
-        title="Libraries with most vulnerabilities"
-        titleTypographyProps={{ color: 'textPrimary' }}
-      />
+      <Typography
+        component="h4"
+        gutterBottom
+        variant="overline"
+        className="margin-general fontsize"
+        color="textSecondary"
+      >
+        Libraries with most vulnerabilities
+        </Typography>
       <TextField
         required
         value={searchInput}
         onChange={handleChangeSearch}
+        className="secondary"
+        labelClassName="secondary"
         style={{
           marginLeft: '15px'
         }}
         id="search"
-        placeholder="Search"
-        label="Search"
+        placeholder="..."
       />
       {searchedLibDetails && (
         <VirtualizedList

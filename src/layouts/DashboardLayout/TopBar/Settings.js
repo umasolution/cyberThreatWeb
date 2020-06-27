@@ -130,7 +130,7 @@ function Settings() {
             label="Responsive font sizes"
           />
         </Box>
-        {/* <Box mt={2}>
+        <Box mt={2}>
           <TextField
             fullWidth
             label="Theme"
@@ -150,7 +150,7 @@ function Settings() {
               </option>
             ))}
           </TextField>
-        </Box> */}
+        </Box>
         <Box mt={2}>
           <Button
             variant="contained"

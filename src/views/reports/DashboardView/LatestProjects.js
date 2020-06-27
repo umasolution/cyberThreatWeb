@@ -22,7 +22,9 @@ import {
   TableRow,
   TableSortLabel,
   Tooltip,
-  makeStyles
+  makeStyles,
+  ThemeProvider,
+  createMuiTheme
 } from '@material-ui/core';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import axios from 'src/utils/axios';
@@ -53,6 +55,19 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+const theme = createMuiTheme({
+  overrides: {
+    MuiTypography: {
+      h6: {
+        fontSize: 16,
+        fontFamily: 'DIN,sans-serif',
+        color: '#546e7a',
+      },
+    },
+  },
+});
+
+
 function LatestProjects({ className, project_details, ...rest }) {
   const classes = useStyles();
 
@@ -67,12 +82,26 @@ function LatestProjects({ className, project_details, ...rest }) {
       /> */}
       {/* <Divider /> */}
       <Box minWidth={900}>
-        <MaterialTable
-          title="Open Vulnerabilities"
-          columns={project_details.columns}
-          data={project_details.data}
-          style={{ width: '100%' }}
-        />
+        <ThemeProvider theme={theme}>
+          <MaterialTable
+            title="Open Vulnerabilities"
+            columns={project_details.columns}
+            data={project_details.data}
+            style={{ width: '100%' }}
+            className="secondary"
+            options={{
+              cellStyle: {
+                fontSize: 13,
+                fontFamily: 'DIN,sans-serif',
+              },
+              headerStyle: {
+                fontSize: 16,
+                fontFamily: 'DIN,sans-serif',
+                color: '#546e7a',
+              }
+            }}
+          />
+        </ThemeProvider>
         {/* <Table>
             <TableHead>
               <TableRow>

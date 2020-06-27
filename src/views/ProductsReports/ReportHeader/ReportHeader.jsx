@@ -1,12 +1,19 @@
 import { Grid, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 import Severity from './Severity/Severity';
+import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles((theme) => ({
   mainGrid: {
-    display: 'block',
+    display: 'flex',
     margin: '5px',
-    textTransform: 'capitalize'
+    textTransform: 'capitalize',
+    flexWrap: 'wrap',
+    '& > *': {
+      margin: theme.spacing(1),
+      padding: theme.spacing(1),
+
+    },
   },
   title: {
     color: theme.palette.primary.light,
@@ -35,7 +42,7 @@ const ReportHeader = ({ header }) => {
 
           return (
             title !== 'severity' ? (
-              <div>
+              <Paper>
                 <Typography
                   variant="h6"
                   color="textPrimary"
@@ -46,15 +53,16 @@ const ReportHeader = ({ header }) => {
                 <Typography className={classes.secondaryText}>
                   {header[title]}
                 </Typography>
-
-              </div>
+              </Paper>
             )
               : ''
           )
         }
         )
       }
-      <Severity severity={header.severity} />
+      <Paper>
+        <Severity severity={header.severity} />
+      </Paper>
     </Grid>
 
 

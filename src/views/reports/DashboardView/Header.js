@@ -56,7 +56,7 @@ function Header({ className, ...rest }) {
       className={clsx(classes.root, className)}
       {...rest}
     >
-      <Grid item>
+      {/* <Grid item>
         <Breadcrumbs
           separator={<NavigateNextIcon fontSize="small" />}
           aria-label="breadcrumb"
@@ -69,20 +69,8 @@ function Header({ className, ...rest }) {
           >
             Dashboard
           </Link>
-          <Typography
-            variant="body1"
-            color="textPrimary"
-          >
-            Reports
-          </Typography>
         </Breadcrumbs>
-        <Typography
-          variant="h3"
-          color="textPrimary"
-        >
-         Insights from your scans with XXX
-        </Typography>
-      </Grid>
+      </Grid> */}
       <Grid item>
         <Button
           ref={actionRef}
