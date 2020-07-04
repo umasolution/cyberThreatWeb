@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
         // borderRadius: '10px',
         // borderColor: 'brown',
         marginTop: '5px',
-        width: '1000px',
+        maxWidth: '1000px',
         overflow: 'auto',
         scrollBehavior: 'auto',
         textTransform: 'capitalize'
@@ -49,7 +49,7 @@ const PackageJSON = ({ packageJSON }) => {
                         return (
                             (moduleKey === 'cve_id' || moduleKey === 'vuln_name' || moduleKey === 'product' || moduleKey === 'vendor'
                                 || moduleKey === 'severity') ? (
-                                    <>
+                                    <div key={moduleKey}>
                                         <Typography
                                           variant="h6"
                                           color="textPrimary"
@@ -62,7 +62,7 @@ const PackageJSON = ({ packageJSON }) => {
                                         <Typography className={classes.secondaryText}>
                                             {key[moduleKey]}
                                         </Typography>
-                                    </>
+                                    </div>
                                 ) : ''
                         )
                     })}
@@ -72,7 +72,7 @@ const PackageJSON = ({ packageJSON }) => {
                         return (
                             !(moduleKey === 'cve_id' || moduleKey === 'vuln_name' || moduleKey === 'product' || moduleKey === 'vendor'
                                 || moduleKey === 'severity') ? (
-                                    <div>
+                                    <div key={moduleKey}>
                                         <Typography
                                           variant="h6"
                                           color="textPrimary"
@@ -104,11 +104,11 @@ const PackageJSON = ({ packageJSON }) => {
             {
                 packageJSON.map(value => {
                     return (
-                        <>
+                        <div key={value}>
                             <Paper className={classes.borderDiv}>
                                 {printValues(value)}
                             </Paper>
-                        </>
+                        </div>
                     )
                 }
                 )

@@ -12,6 +12,8 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import TabPanel from './../Feed/TabPanel/TabPanel';
+import Dependencies from './Issues/Dependencies';
+import DockerIssues from './DockerIssues/DockerIssues';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,6 +36,8 @@ const ProductsReports = () => {
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [productReportResponse, setProductReportResponse] = useState();
   const [tabValue, setTabValue] = React.useState(0);
+  const [isDocker, setIsDocker] = React.useState(false);
+  
 
   const handleChange = (event, newValue) => {
     setTabValue(newValue);
@@ -52,7 +56,90 @@ const ProductsReports = () => {
         emailAdd: authService.getUserName(),
         reportName
       });
-      setProductReportResponse(response.data);
+      const res = response.data;
+      // const res = {
+      //   "header": {
+      //     "Date": "28-06-2020_22:50:39",
+      //     "Owner": "jays",
+      //     "Project": "composerDocker",
+      //     "Severity": {
+      //       "Critical": 0,
+      //       "High": 2,
+      //       "Low": 0,
+      //       "Medium": 0
+      //     },
+      //     "Target": "azure",
+      //     "Tested With": "composer.json,composer.lock",
+      //     "Total Scanned Dependancies": 26,
+      //     "Total Scanned Images": 7,
+      //     "Total Scanned Namespaces": 2,
+      //     "Total Vulnerabilities": 2,
+      //     "Total Vulnerable Dependencies": 2,
+      //     "docker": "True"
+      //   },
+      //   "images": {
+      //     "jaysnpael.azurecr.io/jaysnpael/debian": {
+      //       "Issues": {}
+      //     },
+      //     "jaysnpael.azurecr.io/jaysnpael/django": {
+      //       "Issues": {}
+      //     },
+      //     "jaysnpael.azurecr.io/jaysnpael/drupal": {
+      //       "Issues": {}
+      //     },
+      //     "jaysnpael.azurecr.io/jaysnpael/flask-hello": {
+      //       "Issues": {}
+      //     },
+      //     "jaysnpael.azurecr.io/jaysnpael/node": {
+      //       "Issues": {}
+      //     },
+      //     "jaysnpael.azurecr.io/jaysnpael/wordpress": {
+      //       "Issues": {
+      //         "High": [
+      //           {
+      //             "Introduced through": "",
+      //             "Versions": "7.5.20",
+      //             "cve_id": "CVE-2017-9841",
+      //             "patch": "None",
+      //             "product": "phpunit",
+      //             "pub_date": "13 Nov, 2016",
+      //             "recommendation": "None",
+      //             "reference": "https://packagist.org/packages/phpunit/phpunit,",
+      //             "severity": "High",
+      //             "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+      //             "vendor": "phpunit",
+      //             "vuln_name": "Arbitrary Code Execution"
+      //           }
+      //         ]
+      //       }
+      //     },
+      //     "jaysnpael.azurecr.io/jaysnpael1/drupal": {
+      //       "Issues": {
+      //         "High": [
+      //           {
+      //             "Introduced through": "",
+      //             "Versions": "3.7.38",
+      //             "cve_id": "CVE-2017-9841",
+      //             "patch": "None",
+      //             "product": "PHPUnit",
+      //             "pub_date": "13 Nov, 2016",
+      //             "recommendation": "None",
+      //             "reference": "https://packagist.org/packages/phpunit/phpunit,",
+      //             "severity": "High",
+      //             "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+      //             "vendor": "phpunit",
+      //             "vuln_name": "Arbitrary Code Execution"
+      //           }
+      //         ]
+      //       }
+      //     }
+      //   }
+      // }
+      // setProductReportResponse(res);
+      if(res.header['docker'] && res.header['docker'] === 'True'){
+        setIsDocker(true);
+      }
+      setProductReportResponse(res);
       updateSnackbar(true, CONSTANTS.FETCHING_DATA_SUCCESS);
       setLoading(false);
     } catch (error) {
@@ -76,29 +163,33 @@ const ProductsReports = () => {
 
   const getTabs = () => {
     const jsonFiles = [];
-    if(productReportResponse && productReportResponse['package.json']){
-      jsonFiles.push({name: 'package.json' , data: productReportResponse['package.json']});
+    if (productReportResponse && productReportResponse['package.json']) {
+      jsonFiles.push({ name: 'package.json', data: productReportResponse['package.json'] });
     }
-    if(productReportResponse && productReportResponse['package-lock.json']){
-      jsonFiles.push({name: 'package-lock.json' , data: productReportResponse['package-lock.json']});
+    if (productReportResponse && productReportResponse['package-lock.json']) {
+      jsonFiles.push({ name: 'package-lock.json', data: productReportResponse['package-lock.json'] });
     }
-    if(productReportResponse && productReportResponse['applications']){
-      jsonFiles.push({name: 'applications' , data: productReportResponse['applications']});
+    if (productReportResponse && productReportResponse['applications']) {
+      jsonFiles.push({ name: 'applications', data: productReportResponse['applications'] });
     }
     return (
       <div className={classes.root}>
         <AppBar style={{ width: '100%' }} position="static">
           <Tabs value={tabValue} onChange={handleChange} aria-label="simple tabs example">
             <Tab label="Issues" />
-            {reportType === 'language' ? <Tab label="Dependencies" /> : reportType === 'application' ? <Tab label="Applications" /> :''}
+            {(reportType === 'language' && !isDocker )? <Tab label="Dependencies" /> : reportType === 'application' ? <Tab label="Applications" /> : ''}
           </Tabs>
         </AppBar>
         <TabPanel value={tabValue} index={0}>
-          <Issues reportType={reportType} reportName={reportName} issues={productReportResponse.Issues} />
+          {!isDocker 
+          ? <Issues reportType={reportType} reportName={reportName} issues={productReportResponse.Issues} />
+        : <DockerIssues reportType={reportType} reportName={reportName} issues={productReportResponse.images}/>
+        }
 
         </TabPanel>
         <TabPanel value={tabValue} index={1}>
-          <JsonFiles jsonFiles={jsonFiles} />
+          {/* <JsonFiles jsonFiles={jsonFiles} /> */}
+          <Dependencies issues={productReportResponse.files} reportType={reportType} reportName={reportName}/>
         </TabPanel>
       </div>
     );

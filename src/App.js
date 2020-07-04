@@ -49,12 +49,16 @@ const useStyles = makeStyles(() => createStyles({
     },
     typography: {
       fontFamily: [
-        'Consolas',
-        '"Courier New"',
-        'monospace',
+        'Montserrat',
+        'sans-serif',
       ].join(','),
     },
-    
+    panelMainDiv: {
+      border: '1px solid',
+      borderRadius: '10px',
+      padding: '10px',
+      marginBottom: '5px'
+  }
   }
 }));
 

@@ -1,7 +1,7 @@
 import { Grid, makeStyles, Typography } from '@material-ui/core';
+import Paper from '@material-ui/core/Paper';
 import React from 'react';
 import Severity from './Severity/Severity';
-import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles((theme) => ({
   mainGrid: {
@@ -41,8 +41,8 @@ const ReportHeader = ({ header }) => {
         Object.keys(header).map(title => {
 
           return (
-            title !== 'severity' ? (
-              <Paper>
+            (title !== 'Severity' && title !== 'docker') ? (
+              <Paper key={title}>
                 <Typography
                   variant="h6"
                   color="textPrimary"
@@ -61,7 +61,7 @@ const ReportHeader = ({ header }) => {
         )
       }
       <Paper>
-        <Severity severity={header.severity} />
+        <Severity severity={header.Severity} />
       </Paper>
     </Grid>
 

@@ -1,0 +1,27 @@
+.display-div {
+  display: flex;
+  justify-content: flex-start;
+  
+}
+
+.details {
+  margin: 0 5px 0 5px;
+}
+
+.details-header {
+  display: inline;
+  color: #263238;
+  font-size: 16px;
+  font-family: DIN,sans-serif;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: -0.05px;
+  text-transform: capitalize;
+  margin-right: 3px;
+  color: rgb(96, 109, 187);
+}
+
+.packages{
+  display: flex;
+  flex-direction: column;
+}

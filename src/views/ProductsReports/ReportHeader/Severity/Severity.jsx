@@ -1,5 +1,5 @@
+import { makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
-import { Typography, makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   mainGrid: {
@@ -30,7 +30,7 @@ const Severity = ({ severity }) => {
       {
         Object.keys(severity).map(value => {
           return (
-            <div style={{ display: 'inline' }}>
+            <div style={{ display: 'inline' }} key={value}>
               <Typography
                 variant="h6"
                 color="textSecondary"
