@@ -37,15 +37,18 @@ const useStyles = makeStyles(() => createStyles({
       '-webkit-font-smoothing': 'antialiased',
       '-moz-osx-font-smoothing': 'grayscale',
       height: '100%',
-      width: '100%'
+      width: '100%',
+      backgroundColor: '#f1f1f1'
     },
     body: {
       height: '100%',
-      width: '100%'
+      width: '100%',
+      backgroundColor: '#f1f1f1',
     },
     '#root': {
       height: '100%',
-      width: '100%'
+      width: '100%',
+      backgroundColor: '#f1f1f1'
     },
     typography: {
       fontFamily: [
@@ -68,7 +71,7 @@ function App() {
   const { settings } = useSettings();
 
   return (
-    <ThemeProvider theme={createTheme(settings)}>
+    <ThemeProvider id="id1" theme={createTheme(settings)}>
       <StylesProvider jss={jss}>
         <MuiPickersUtilsProvider utils={MomentUtils}>
           <SnackbarProvider maxSnack={1}>

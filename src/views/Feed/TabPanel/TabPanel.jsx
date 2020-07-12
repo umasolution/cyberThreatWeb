@@ -13,7 +13,8 @@ const TabPanel = ({
       id={`scrollable-force-tabpanel-${index}`}
       aria-labelledby={`scrollable-force-tab-${index}`}
       {...other}
-      style={{width: '100%'}}
+      style={{width: '100%', backgroundColor: '#f1f1f1'}}
+      
     >
       {value === index && <Box p={3}>{children}</Box>}
     </Typography>

@@ -17,7 +17,24 @@
 
  .panelMainDiv {
   border: 1px solid;
-  border-radius: 10px;
+  border-bottom: 0px;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.panelMainDiv:last-child
+{
+    border-bottom:1px solid;
+}
+
+.paper {
   padding: 10px;
-  margin-bottom: 5px;
+  text-align: 'left';
+  overflow: 'auto';
+}
+
+.red-font {
+  color: red !important;
+    font-size: 18px !important;
+    font-family: 'Montserrat', sans-serif !important;
 }

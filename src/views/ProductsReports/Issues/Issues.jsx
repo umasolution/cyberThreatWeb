@@ -10,7 +10,7 @@ import PackageJSON from './PackageJSON/PackageJSON';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: '#f1f1f1',
     display: 'block',
     height: 224,
   },
@@ -99,7 +99,7 @@ const Issues = ({ issues, reportName, reportType }) => {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
 
-  const getLanguageReport =  () => {
+  const getLanguageReport = () => {
     return (
       <>
         <div className={classes.root}>
@@ -148,17 +148,36 @@ const Issues = ({ issues, reportName, reportType }) => {
               </ListItem>
 
             </List>
-            <div>
+            <div style={{ width: '100%' }}>
 
 
               {state.isHighIssueChecked &&
-                issues.High ? <PackageJSON jsonName="High" packageJSON={issues.High} /> : ''}
-              <Divider style={{ display: 'block' }} />
+                issues.High ?
+                <>
+                  <h6 className="details-header" style={{ display: 'block' }}>
+                    High
+                 </h6>
+                  <PackageJSON jsonName="High" packageJSON={issues.High} />
+
+                </>
+                : ''}
               {state.isMediumIssueChecked &&
-                issues.Medium ? <PackageJSON jsonName="Medium" packageJSON={issues.Medium} /> : ''}
-              <Divider style={{ display: 'block' }} />
+                (issues.Medium || issues.medium) ?
+                <>
+                  <h6 className="details-header" style={{ display: 'block' }}>
+                    Medium
+                 </h6>
+                  <PackageJSON jsonName="Medium" packageJSON={issues.Medium ? issues.Medium : issues.medium} />
+                </>
+                : ''}
               {state.isLowIssueChecked &&
-                issues.Low ? <PackageJSON jsonName="Low" packageJSON={issues.Low} /> : ''}
+                issues.Low ? <>
+                  <h6 className="details-header" style={{ display: 'block' }}>
+                    Low
+                 </h6>
+                  <PackageJSON jsonName="Low" packageJSON={issues.Low} />
+                </>
+                : ''}
             </div>
           </div>
         </div>
@@ -174,7 +193,7 @@ const Issues = ({ issues, reportName, reportType }) => {
       style={{ display: 'block', margin: '5px' }}
     >
       {
-        reportType === 'language' || reportType === 'application' ?
+        reportType === 'language' || reportType === 'application' || reportType === 'platform' ?
           (
             <div className={classes.root}>
               {getLanguageReport()}

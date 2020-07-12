@@ -34,7 +34,7 @@ const DockerIssue = ({ fileName, issues }) => {
     <div className="panelMainDiv">
       <div className="dockerIssue">
       <h6 className="details-header">
-        {fileName}
+      {`${fileName} (${Object.keys(issues).map(issue => issues[issue].length).reduce((total,num) => total + num)})`}
       </h6>
       <List component="nav" aria-label="main mailbox folders">
         {

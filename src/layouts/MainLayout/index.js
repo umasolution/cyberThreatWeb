@@ -5,6 +5,7 @@ import TopBar from './TopBar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    // todo:
     backgroundColor: theme.palette.background.default,
     display: 'flex',
     height: '100%',
@@ -35,7 +36,7 @@ function MainLayout({ children }) {
   return (
     <div className={classes.root}>
       <TopBar />
-      <div className={classes.wrapper}>
+      <div className={classes.wrapper} style={{ backgroundColor: '#f1f1f1' }}>
         <div className={classes.contentContainer}>
           <div className={classes.content}>
             {children}

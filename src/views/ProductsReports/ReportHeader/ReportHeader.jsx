@@ -39,7 +39,6 @@ const ReportHeader = ({ header }) => {
     >
       {
         Object.keys(header).map(title => {
-
           return (
             (title !== 'Severity' && title !== 'docker') ? (
               <Paper key={title}>

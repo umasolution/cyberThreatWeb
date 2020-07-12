@@ -44,7 +44,7 @@ function DashboardLayout({ children }) {
         onMobileClose={() => setMobileNavOpen(false)}
         openMobile={isMobileNavOpen}
       />
-      <div className={classes.wrapper}>
+      <div className={classes.wrapper} style={{ backgroundColor: '#f1f1f1' }}>
         <div className={classes.contentContainer}>
           <div className={classes.content}>
             {children}

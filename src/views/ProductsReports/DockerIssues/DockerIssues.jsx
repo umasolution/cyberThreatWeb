@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import List  from '@material-ui/core/List';
-import  FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox  from '@material-ui/core/Checkbox';
-import ListItem  from '@material-ui/core/ListItem';
+import List from '@material-ui/core/List';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import ListItem from '@material-ui/core/ListItem';
 import PackageJSON from "../Issues/PackageJSON/PackageJSON";
 import { Divider, Grid, Typography } from '@material-ui/core';
 import DockerIssue from './DockerIssue';
@@ -38,7 +38,7 @@ const DockerIssues = ({ issues, reportType }) => {
               {
                 Object.keys(state).length === fileNames.length ? fileNames.map(name => {
                   return (
-                    <ListItem button>
+                    <ListItem style={{ paddingTop: '0px', paddingBottom: '0px' }}>
                       <FormControlLabel
                         control={(
                           <Checkbox
@@ -48,7 +48,7 @@ const DockerIssues = ({ issues, reportType }) => {
                             color="primary"
                           />
                         )}
-                        label={name}
+                        label={`${name} (${Object.keys(issues[name].Issues).map(issue => issues[name].Issues[issue].length).reduce((total, num) => total + num, 0)})`}
                       />
                     </ListItem>
                   );
@@ -56,27 +56,19 @@ const DockerIssues = ({ issues, reportType }) => {
               }
 
             </List>
-            <div style={{width:'100%'}}>
+            <div style={{ width: '100%' }}>
 
               {
                 Object.keys(state).map(key => {
                   return (
                     state[key] && Object.keys(issues[key].Issues).length > 0 ? (
                       <>
-                          <DockerIssue fileName={key} issues={issues[key].Issues}/>
+                        <DockerIssue fileName={key} issues={issues[key].Issues} />
                       </>
                     ) : ''
                   )
                 })
               }
-              {/* {state.isHighIssueChecked &&
-                issues.High ? <PackageJSON jsonName="High" packageJSON={issues.High} /> : ''}
-              <Divider style={{ display: 'block' }} />
-              {state.isMediumIssueChecked &&
-                issues.Medium ? <PackageJSON jsonName="Medium" packageJSON={issues.Medium} /> : ''}
-              <Divider style={{ display: 'block' }} />
-              {state.isLowIssueChecked &&
-                issues.Low ? <PackageJSON jsonName="Low" packageJSON={issues.Low} /> : ''} */}
             </div>
           </div>
         </div>
@@ -92,7 +84,7 @@ const DockerIssues = ({ issues, reportType }) => {
       spacing={1}
       style={{ display: 'block', margin: '5px' }}
     >
-      {
+      {/* {
         reportType === 'language' || reportType === 'application' ?
           (
             <div>
@@ -100,8 +92,8 @@ const DockerIssues = ({ issues, reportType }) => {
             </div>
           )
           : ''
-      }
-
+      } */}
+      {getLanguageReport()}
     </Grid>
   );
 };

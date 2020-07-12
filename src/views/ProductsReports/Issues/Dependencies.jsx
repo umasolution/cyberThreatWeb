@@ -173,7 +173,7 @@ const Dependencies = ({ issues, reportName, reportType }) => {
       style={{ display: 'block', margin: '5px' }}
     >
       {
-        reportType === 'language' || reportType === 'application' ?
+        reportType === 'language' || reportType === 'application' || reportType === 'platform' ?
           (
             <div className={classes.root}>
               {getLanguageReport()}
