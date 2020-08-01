@@ -17,6 +17,8 @@ import DockerIssues from './DockerIssues/DockerIssues';
 import File from './Issues/File/File';
 import Remediation from './Remediation/Remediation';
 import ReportSummary from './ReportSummary/ReportSummary';
+import DockerSummaries from './DockerSummaries/DockerSummaries';
+import DockerPackages from './DockerPackages/DockerPackages';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,7 +56,7 @@ const ProductsReports = () => {
     try {
       setLoading(true);
       updateSnackbar(true, CONSTANTS.FETCHING_DATA);
-      const url = `http://cyberthreatinfo.ca/report/project/reportname`;
+      const url = `http://cyberthreatinfo.ca/api/report/project/reportname`;
       const response = await Axios.post(url, {
         emailAdd: authService.getUserName(),
         reportName
@@ -85,10 +87,44 @@ const ProductsReports = () => {
     return null;
   }
 
-  const getTabs = () => {
+  const getDockerTabs = () => {
     return (
-      <div className={classes.root}>
+      <>
         <AppBar style={{ width: '100%' }} position="static">
+          <Tabs value={tabValue} onChange={handleChange} aria-label="simple tabs example">
+            <Tab label="Summary" />
+            <Tab label="Issues" />
+            <Tab label={productReportResponse.packages ? "Packages" : "Dependencies"} />
+          </Tabs>
+        </AppBar>
+        <TabPanel value={tabValue} index={0}>
+          <DockerSummaries
+            reportType={reportType}
+            reportName={reportName}
+            summary={productReportResponse.images}
+            headerDate={productReportResponse.header.Date}
+            projectName={productReportResponse.header.Project}
+          />
+        </TabPanel>
+        <TabPanel value={tabValue} index={1}>
+          <DockerIssues reportType={reportType} reportName={reportName} issues={productReportResponse.images} />
+        </TabPanel>
+        <TabPanel value={tabValue} index={2}>
+          <DockerPackages
+            reportType={reportType}
+            packages={productReportResponse.packages}
+          />
+
+        </TabPanel>
+      </>
+    );
+  }
+
+  const getNonDockerTabs = () => {
+    return (
+      <>
+        <AppBar style={{ width: '100%' }} position="static">
+
           <Tabs value={tabValue} onChange={handleChange} aria-label="simple tabs example">
             {productReportResponse.summary ? <Tab label="Summary" /> : ''}
             <Tab label="Issues" />
@@ -97,10 +133,13 @@ const ProductsReports = () => {
           </Tabs>
         </AppBar>
         <TabPanel value={tabValue} index={0}>
-          {productReportResponse.summary ? <ReportSummary 
-          summary={productReportResponse.summary}
-          headerDate={productReportResponse.header.Date}
-          projectName={productReportResponse.header.Project} /> : ''}
+          {productReportResponse.summary ? (
+            <ReportSummary
+              summary={productReportResponse.summary}
+              headerDate={productReportResponse.header.Date}
+              projectName={productReportResponse.header.Project}
+            />
+          ) : ''}
         </TabPanel>
         <TabPanel value={tabValue} index={1}>
           {!isDocker
@@ -111,18 +150,34 @@ const ProductsReports = () => {
         <TabPanel value={tabValue} index={2}>
           {(reportType === 'language' || reportType === 'application') ?
 
-            productReportResponse.filesArray ? <File name={''} file={productReportResponse.filesArray} />
+            productReportResponse.filesArray ? <File name="" file={productReportResponse.filesArray} />
               :
               <Dependencies issues={reportType === 'application' ? productReportResponse.applications : productReportResponse.files} reportType={reportType} reportName={reportName} />
 
             :
             reportType === 'platform' ?
-              <File name={''} file={productReportResponse.packages?.pkgDetails} />
+              <File name="" file={productReportResponse.packages?.pkgDetails} />
               : ''}
         </TabPanel>
         <TabPanel value={tabValue} index={3}>
           <Remediation data={productReportResponse.remediation} />
         </TabPanel>
+      </>
+    );
+  }
+
+  const getTabs = () => {
+    return (
+      <div className={classes.root}>
+
+        {
+          isDocker ?
+            getDockerTabs()
+            :
+            getNonDockerTabs()
+        }
+
+
       </div>
     );
   }

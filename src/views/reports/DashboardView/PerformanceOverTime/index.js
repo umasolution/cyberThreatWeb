@@ -13,6 +13,11 @@ import {
 import GenericMoreButton from 'src/components/GenericMoreButton';
 import Chart from './Chart';
 import { Plotly } from '../../../../Util/Constants'
+import isEmpty from './../../../../Util/Util';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -21,98 +26,63 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-function PerformanceOverTime({ className, ...rest }) {
+function PerformanceOverTime({ className, chartsData, ...rest }) {
   const classes = useStyles();
-  const performance = {
-    thisWeek: {
-      data: [],
-      labels: []
-    },
-    thisMonth: {
-      data: [],
-      labels: []
-    },
-    thisYear: {
-      data: [101, 51, 121, 202, 132, 282, 182, 42, 132, 122, 132, 52],
-      data1: [100, 50, 110, 200, 130, 280, 180, 40, 130, 120, 130, 50],
-      labels: [
-        'Jan',
-        'Feb',
-        'Mar',
-        'Apr',
-        'May',
-        'Jun',
-        'Jul',
-        'Aug',
-        'Sep',
-        'Oct',
-        'Nov',
-        'Dec'
-      ]
-    }
-  };
+  const apps = Object.keys(chartsData['Progress Chart'])
+  const [app, setApp] = React.useState(apps[0]);
 
   useEffect(() => {
-    var high = {
-      x: ['Jan',
-        'Feb',
-        'Mar',
-        'Apr',
-        'May',
-        'Jun',
-        'Jul',
-        'Aug',
-        'Sep',
-        'Oct',
-        'Nov',
-        'Dec'],
-      y: [160, 50, 110, 90, 900, 120, 302, 102, 203, 3330, 3320, 2110],
-      type: 'scatter',
-      name: 'High Vulnerabilities'
-    };
+    createChart();
+  }, [app]);
 
-    var mid = {
-      x: ['Jan',
-        'Feb',
-        'Mar',
-        'Apr',
-        'May',
-        'Jun',
-        'Jul',
-        'Aug',
-        'Sep',
-        'Oct',
-        'Nov',
-        'Dec'],
-      y: [2111, 51, 71, 829, 30, 22, 62, 1622, 263, 33, 132, 1111],
-      type: 'scatter',
-      name: 'Midium Vulnerabilities'
-    };
+  const createChart = () => {
+    let progressChartData = chartsData['Progress Chart'];
+    progressChartData = progressChartData[app];
+    console.log(progressChartData);
+    const xAxis = [];
+    const yAxises = new Map();
+    for (let i = 0; i < progressChartData.length; i++) {
+      const progress = progressChartData[i];
+      const keys = Object.keys(progress);
+      for (let j = 0; j < keys.length; j++) {
+        const key = keys[j];
+        if (key.toLowerCase() === 'date') {
+          xAxis.push(progress[key]);
+          continue;
+        }
+        let entry = yAxises.get(key);
+        if (isEmpty(entry)) {
+          entry = [];
+        }
+        entry.push(progress[key]);
+        yAxises.set(key, entry);
+      }
 
-    var low = {
-      x: ['Jan',
-        'Feb',
-        'Mar',
-        'Apr',
-        'May',
-        'Jun',
-        'Jul',
-        'Aug',
-        'Sep',
-        'Oct',
-        'Nov',
-        'Dec'],
-      y: [16, 5, 11, 9, 90, 12, 32, 12, 23, 333, 332, 211],
-      type: 'scatter',
-      name: 'Low Vulnerabilities'
-    };
+    }
+    var dd = [];
+    for (let [key, value] of yAxises.entries()) {
+      console.log(key + " = " + value)
+      dd.push({
+        x: xAxis,
+        y: value,
+        type: 'scatter',
+        name: key,
+        automargin: true,
+      })
+    }
     var layout = {
-      title: 'Performance Over Time'
+      title: 'Performance Over Time',
+      margin: {
+        b: 120,
+      },
     };
-    var dd = [high, mid, low];
+    const config = { responsive: true };
+    Plotly.newPlot('myDiv', dd, layout, config);
+  }
 
-    Plotly.newPlot('myDiv', dd, layout);
-  });
+  const handleChange = (event) => {
+    setApp(event.target.value);
+  };
 
   return (
     <Card
@@ -120,14 +90,25 @@ function PerformanceOverTime({ className, ...rest }) {
       {...rest}
     >
       <CardContent>
-        
-          <Box
-            height={375}
-            minWidth={500}
-          >
-            <div id='myDiv'></div>
-          </Box>
-        
+
+        <Box
+          height={375}
+          minWidth={500}
+        >
+          <FormControl style={{ width: '20%' }}>
+            <InputLabel id="demo-simple-select-label">Progress Chart</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={app}
+              onChange={handleChange}
+            >
+              {apps.map(appp => <MenuItem value={appp}>{appp}</MenuItem>)}
+            </Select>
+          </FormControl>
+          <div id='myDiv' />
+        </Box>
+
       </CardContent>
     </Card>
   );

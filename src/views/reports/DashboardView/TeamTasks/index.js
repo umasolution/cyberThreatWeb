@@ -79,7 +79,7 @@ function TeamTasks({ className, project_vuln_details, ...rest }) {
         className="secondary"
         labelClassName="secondary"
         id="search"
-        label="..."
+        label="Search"
       />
 
       {searchedLibDetails && (
@@ -92,23 +92,6 @@ function TeamTasks({ className, project_vuln_details, ...rest }) {
           overscanRowCount={3}
         />
       )}
-      {/* <List>
-        {project_vuln_details.map((page) => (
-          <ListItem
-            classes={{ divider: classes.itemDivider }}
-            divider
-            key={page.project}
-          >
-            <ListItemText
-              primary={page.project}
-              primaryTypographyProps={{ color: 'textSecondary', variant: 'body2' }}
-            />
-            <Typography color="inherit">
-              {page.count}
-            </Typography>
-          </ListItem>
-        ))}
-      </List> */}
     </Card>
   );
 }

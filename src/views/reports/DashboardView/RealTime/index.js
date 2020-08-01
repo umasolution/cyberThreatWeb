@@ -113,7 +113,7 @@ function RealTime({ className, lib_details, ...rest }) {
           marginLeft: '15px'
         }}
         id="search"
-        placeholder="..."
+        placeholder="Search"
       />
       {searchedLibDetails && (
         <VirtualizedList

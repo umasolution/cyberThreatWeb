@@ -60,7 +60,7 @@ const theme = createMuiTheme({
     MuiTypography: {
       h6: {
         fontSize: 16,
-        fontFamily: 'DIN,sans-serif',
+        fontFamily: '"Montserrat", sans-serif',
         color: '#546e7a',
       },
     },
@@ -81,7 +81,7 @@ function LatestProjects({ className, project_details, ...rest }) {
         title="Latest Projects"
       /> */}
       {/* <Divider /> */}
-      <Box minWidth={900}>
+      <Box>
         <ThemeProvider theme={theme}>
           <MaterialTable
             title="Open Vulnerabilities"
@@ -92,11 +92,11 @@ function LatestProjects({ className, project_details, ...rest }) {
             options={{
               cellStyle: {
                 fontSize: 13,
-                fontFamily: 'DIN,sans-serif',
+                fontFamily: '"Montserrat", sans-serif',
               },
               headerStyle: {
                 fontSize: 16,
-                fontFamily: 'DIN,sans-serif',
+                fontFamily: '"Montserrat", sans-serif',
                 color: '#546e7a',
               }
             }}

@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import React from 'react';
-import Paper  from '@material-ui/core/Paper';
+import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles((theme) => ({
     borderDiv: {
@@ -40,9 +40,9 @@ const PackageJSON = ({ packageJSON }) => {
         return (
             <ExpansionPanel>
                 <ExpansionPanelSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
                 >
 
                     {Object.keys(key).map(moduleKey => {
@@ -51,9 +51,9 @@ const PackageJSON = ({ packageJSON }) => {
                                 || moduleKey === 'severity') ? (
                                     <div key={moduleKey}>
                                         <Typography
-                                          variant="h6"
-                                          color="textPrimary"
-                                          className={classes.title}
+                                            variant="h6"
+                                            color="textPrimary"
+                                            className={classes.title}
                                         >
                                             {moduleKey}
                                         </Typography>
@@ -67,16 +67,16 @@ const PackageJSON = ({ packageJSON }) => {
                         )
                     })}
                 </ExpansionPanelSummary>
-                <ExpansionPanelDetails style={{ display: 'block' }}>
+                <ExpansionPanelDetails style={{ display: 'flex', flexWrap: 'wrap' }}>
                     {Object.keys(key).map(moduleKey => {
                         return (
                             !(moduleKey === 'cve_id' || moduleKey === 'vuln_name' || moduleKey === 'product' || moduleKey === 'vendor'
                                 || moduleKey === 'severity') ? (
                                     <div key={moduleKey}>
                                         <Typography
-                                          variant="h6"
-                                          color="textPrimary"
-                                          className={classes.title}
+                                            variant="h6"
+                                            color="textPrimary"
+                                            className={classes.title}
                                         >
                                             {moduleKey}
                                         </Typography>

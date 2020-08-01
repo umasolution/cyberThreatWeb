@@ -59,9 +59,11 @@ const ReportHeader = ({ header }) => {
         }
         )
       }
-      <Paper>
-        <Severity severity={header.Severity} />
-      </Paper>
+      {header.Severity ?
+        <Paper>
+          <Severity severity={header.Severity} />
+        </Paper>
+        : ''}
     </Grid>
 
 

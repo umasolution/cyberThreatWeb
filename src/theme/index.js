@@ -142,17 +142,34 @@ export function createTheme(settings = {}) {
       themeConfig,
       { direction: settings.direction },
       {
-        typography: {
-          h6: {
-            fontSize: 16,
-            fontFamily: 'DIN,sans-serif',
-            color: '#546e7a',
-          },
-          body1: {
-            fontSize: 13,
-            fontFamily: 'DIN,sans-serif',
+        typography:  {
+          fontFamily: '"Montserrat", sans-serif',
+            h1: {
+          fontFamily: '"Montserrat", sans-serif',
+
+            },
+            h2: {
+              fontFamily: '"Montserrat", sans-serif',
+            },
+            h3: {
+              fontFamily: '"Montserrat", sans-serif',
+            },
+            h4: {
+              fontFamily: '"Montserrat", sans-serif',
+            },
+            h5: {
+              fontFamily: '"Montserrat", sans-serif',
+            },
+            h6: {
+              fontSize: 16,
+              fontFamily: '"Montserrat", sans-serif',
+              color: '#546e7a',
+            },
+            body1: {
+              fontSize: 13,
+              fontFamily: '"Montserrat", sans-serif',
+            }
           }
-        }
       }
     )
   );

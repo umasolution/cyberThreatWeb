@@ -53,9 +53,8 @@ const useStyles = makeStyles((theme) => ({
   },
   typography: {
     fontFamily: [
-      'Consolas',
-      '"Courier New"',
-      'monospace',
+      '"Montserrat"',
+      'sans-serif',
     ].join(','),
   }
 }));

@@ -1,25 +1,33 @@
-import React from 'react';
 import {
-  Grid,
+  Container, ExpansionPanel,
+
+
+
+
+  ExpansionPanelDetails, ExpansionPanelSummary, Grid,
   List,
-  ExpansionPanel,
-  ExpansionPanelSummary,
+
+
   ListItem,
   ListItemIcon,
   ListItemText,
-  ExpansionPanelDetails,
-  Container, makeStyles
+
+  makeStyles,
+  Paper
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { cloneDeep } from 'lodash';
 import MaterialTable from 'material-table';
-import TabPanel from '../TabPanel/TabPanel';
-
+import React from 'react';
+import CWEPieChart from "../../ProductsReports/ReportSummary/CWEPieChart/CWEPieChart";
+import SeverityBarChart from "../../ProductsReports/ReportSummary/SeverityBarChart/SeverityBarChart";
+import './TabsData.css';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-      flexGrow: 1,
-      width: '100%',
-      backgroundColor: 'inherit' //theme.palette.background.paper,
+    flexGrow: 1,
+    width: '100%',
+    backgroundColor: 'inherit' // theme.palette.background.paper,
   }
 }));
 
@@ -29,57 +37,111 @@ const TabsData = ({ reportType, tabsData, expandPanel, bgcolor }) => {
 
 
   const getTable = (tabData) => {
+    if (!tabData.tableData) return;
+    const columns = cloneDeep(tabData.tableData.columns);
+    const severityColumn = columns.find(column => column.field === 'severity');
+    severityColumn.render = rowData => {
+      const backgroundColor = rowData.severity.toLowerCase() === 'high' ? 'red'
+        : rowData.severity.toLowerCase() === 'medium' ? 'yellow'
+          : 'blue';
+      const color = rowData.severity.toLowerCase() === 'medium' ? 'black' : 'white';
+      return (
+        <div
+          style={{
+            backgroundColor,
+            color,
+            textAlign: 'center'
+          }}
+        >
+          {rowData.severity}
+        </div>
+      )
+    };
+
     return (
       <MaterialTable
-        title={tabData.appName}
-        columns={tabData.tableData.columns}
+        title={null}
+        columns={columns}
         data={tabData.tableData.data}
         style={{ width: '100%' }}
       />
     );
   };
 
+  const getHeader = (headers) => {
+    return (
+      <div className="flex">
+        {
+          headers.map(header => {
+            return (
+              <Paper>
+                <h6 className="details-header">
+                  {Object.keys(header)[0]}
+                </h6>
+                {header[Object.keys(header)[0]]}
+              </Paper>
+            )
+          })
+        }
+      </div>
+    )
+
+  }
+
+  const getCharts = (tabData, appName) => {
+    return (
+      <div className="flex justifyAround">
+        {tabData.severity ? <SeverityBarChart severity={tabData.severity} divId={`${appName}-barChart`}/> : ''}
+        {tabData.CWE ? <CWEPieChart cwe={tabData.CWE} divId={`${appName}-pieChart`} /> : ''}
+      </div>
+    )
+  }
+
   return (
     <Container className={classes.root} maxWidth="lg">
-      <Grid style={{width: '100%'}} container spacing={1}>
-            <List style={{width: '100%'}} dense={false}>
-              {tabsData.map((tabData) => {
-                return (
-                  <ExpansionPanel
-                    key={tabData.appName}
-                    style={{borderLeft: `15px solid  ${bgcolor}`, width: '100%'}} 
-                    onChange={(event, expanded) =>
-                      expandPanel(event, expanded, tabData, reportType)
-                    }
-                  >
-                    <ExpansionPanelSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls="panel1a-content"
-                      id="panel1a-header"
-                    >
-                      <ListItem key={tabData.appName}>
-                        <ListItemIcon>
-                          <img
-                            className="languageImg"
-                            src={`${process.env.PUBLIC_URL}/static/images1/${tabData.imageName}`}
-                            alt="t"
-                          />
-                        </ListItemIcon>
-                        <ListItemText
-                          primary={tabData.appName}
-                          secondary={tabData.description}
-                        />
-                      </ListItem>
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
-                      {tabData.tableData
-                        ? getTable(tabData)
-                        : 'Loading Data...'}
-                    </ExpansionPanelDetails>
-                  </ExpansionPanel>
-                );
-              })}
-            </List>
+      <Grid style={{ width: '100%' }} container spacing={1}>
+        <List style={{ width: '100%' }} dense={false}>
+          {tabsData.map((tabData) => {
+            return (
+              <ExpansionPanel
+                key={tabData.appName}
+                style={{ borderLeft: `15px solid  ${bgcolor}`, width: '100%' }}
+                onChange={(event, expanded) =>
+                  expandPanel(event, expanded, tabData, reportType)}
+              >
+                <ExpansionPanelSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+                  <ListItem key={tabData.appName}>
+                    <ListItemIcon>
+                      <img
+                        className="languageImg"
+                        src={`${process.env.PUBLIC_URL}/static/images1/${tabData.imageName}`}
+                        alt="t"
+                      />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={tabData.appName}
+                      secondary={tabData.description}
+                    />
+                  </ListItem>
+                </ExpansionPanelSummary>
+                <ExpansionPanelDetails>
+                  <div style={{ width: '100%' }}>
+                    {tabData.tableData?.header ? getHeader(tabData.tableData?.header) : null}
+                    {tabData.tableData ? getCharts(tabData.tableData, tabData.appName) : null}
+                    {tabData.tableData
+                      ? getTable(tabData)
+                      : 'Loading Data...'}
+                  </div>
+
+                </ExpansionPanelDetails>
+              </ExpansionPanel>
+            );
+          })}
+        </List>
       </Grid>
     </Container>
   );

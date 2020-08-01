@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Plotly } from "../../../../Util/Constants";
 
-const CWEPieChart = ({ cwe }) => {
+const CWEPieChart = ({ cwe, divId }) => {
   useEffect(() => {
     if (cwe) {
       const labels = [];
@@ -28,12 +28,13 @@ const CWEPieChart = ({ cwe }) => {
         plot_bgcolor:"#f1f1f1",
       paper_bgcolor:"#f1f1f1"
       };
-      Plotly.newPlot('CWEPieChartDiv', data, layout);
+      var config = { responsive: true }
+      Plotly.newPlot(`CWEPieChartDiv-${divId}`, data, layout, config);
     }
   }, [])
 
   return (
-    <div id='CWEPieChartDiv' />
+    <div id={`CWEPieChartDiv-${divId}`} />
   );
 };
 

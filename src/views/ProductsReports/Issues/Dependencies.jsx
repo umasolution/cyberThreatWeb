@@ -11,7 +11,7 @@ import File from './File/File';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: '#f1f1f1',
     display: 'block',
     height: 224,
   },

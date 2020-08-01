@@ -58,14 +58,16 @@ const useStyles = makeStyles((theme) => ({
   },
   mainContentH3: {
     // fontFamily: 'PrentonRPProLight,sans-serif',
+    fontFamily: '"Montserrat", sans-serif',
     fontWeight: '200',
-    fontSize: '40px',
+    fontSize: '22px',
     color: '#fff'
   },
   mainContentH2: {
     fontSize: '48px',
     color: '#fff',
-    marginBottom: '25px'
+    marginBottom: '25px',
+    fontFamily: '"Montserrat", sans-serif',
   },
   mainContentP: {
     color: '#fff'

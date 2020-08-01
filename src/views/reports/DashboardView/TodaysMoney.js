@@ -13,7 +13,7 @@ import Label from 'src/components/Label';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    padding: theme.spacing(3),
+    padding: theme.spacing(1),
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between'

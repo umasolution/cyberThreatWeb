@@ -1,19 +1,18 @@
-import React, { useEffect } from 'react';
-import List from '@material-ui/core/List';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { Grid, Divider } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import PackageJSON from "../Issues/PackageJSON/PackageJSON";
-import { Divider, Grid, Typography } from '@material-ui/core';
-import DockerIssue from './DockerIssue';
+import React, { useEffect } from 'react';
+import ReportSummary from './../ReportSummary/ReportSummary';
 
 
-const DockerIssues = ({ issues, reportType }) => {
+const DockerSummaries = ({ summary, reportType, headerDate, projectName }) => {
 
   const [state, setState] = React.useState({
   });
 
-  const fileNames = Object.keys(issues);
+  const fileNames = Object.keys(summary);
 
   useEffect(() => {
     const stateObject = {};
@@ -35,6 +34,11 @@ const DockerIssues = ({ issues, reportType }) => {
         <div>
           <div style={{ display: 'flex' }}>
             <List component="nav" aria-label="main mailbox folders">
+              <ListItem style={{ paddingTop: '0px', paddingBottom: '5px' }}>
+                <h6 className="details-header">
+                  Docker Images
+              </h6>
+              </ListItem>
               {
                 Object.keys(state).length === fileNames.length ? fileNames.map(name => {
                   return (
@@ -42,14 +46,14 @@ const DockerIssues = ({ issues, reportType }) => {
                       <FormControlLabel
                         control={(
                           <Checkbox
-                            checked={state[name] && Object.keys(issues[name].Issues).map(issue => issues[name].Issues[issue].length).reduce((total, num) => total + num, 0) !== 0}
+                            checked={state[name] && Object.keys(summary[name].Issues).map(issue => summary[name].Issues[issue].length).reduce((total, num) => total + num, 0) !== 0}
                             onChange={handleCheckBoxChange}
                             name={name}
                             color="primary"
-                            disabled={Object.keys(issues[name].Issues).map(issue => issues[name].Issues[issue].length).reduce((total, num) => total + num, 0) === 0}
+                            disabled={Object.keys(summary[name].Issues).map(issue => summary[name].Issues[issue].length).reduce((total, num) => total + num, 0) === 0}
                           />
                         )}
-                        label={`${name} (${Object.keys(issues[name].Issues).map(issue => issues[name].Issues[issue].length).reduce((total, num) => total + num, 0)})`}
+                        label={`${name} (${Object.keys(summary[name].Issues).map(issue => summary[name].Issues[issue].length).reduce((total, num) => total + num, 0)})`}
                       />
                     </ListItem>
                   );
@@ -62,9 +66,19 @@ const DockerIssues = ({ issues, reportType }) => {
               {
                 Object.keys(state).map(key => {
                   return (
-                    state[key] && Object.keys(issues[key].Issues).length > 0 ? (
+                    state[key] && Object.keys(summary[key].Issues).length > 0 ? (
                       <>
-                        <DockerIssue fileName={key} issues={issues[key].Issues} />
+                        <h6 className="details-header" style={{color: 'red'}}> 
+                          {key}
+                        </h6>
+                        <Divider className="divider"/>
+                        <ReportSummary
+                          summary={summary[key].summary}
+                          headerDate={headerDate}
+                          projectName={projectName}
+                          isDocker={true}
+                          divId={key}
+                           />
                       </>
                     ) : ''
                   )
@@ -99,4 +113,4 @@ const DockerIssues = ({ issues, reportType }) => {
   );
 };
 
-export default DockerIssues;
+export default DockerSummaries;

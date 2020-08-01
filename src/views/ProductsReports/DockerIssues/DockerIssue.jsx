@@ -5,6 +5,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import './DockerIssue.css';
 import PackageJSON from './../Issues/PackageJSON/PackageJSON';
+import { Divider } from '@material-ui/core';
+
 
 const DockerIssue = ({ fileName, issues }) => {
   console.log(fileName, issues);
@@ -31,34 +33,35 @@ const DockerIssue = ({ fileName, issues }) => {
 
 
   return (
-    <div className="panelMainDiv">
+    <div>
       <div className="dockerIssue">
-      <h6 className="details-header">
-      {`${fileName} (${Object.keys(issues).map(issue => issues[issue].length).reduce((total,num) => total + num)})`}
-      </h6>
-      <List component="nav" aria-label="main mailbox folders">
-        {
-          Object.keys(state).length === fileNames.length ? fileNames.map(name => {
-            return (
-              <ListItem button style={{ display: 'inline' }}>
-                <FormControlLabel
-                  control={(
-                    <Checkbox
-                      checked={state[name]}
-                      onChange={handleCheckBoxChange}
-                      name={name}
-                      color="primary"
-                    />
-                  )}
-                  label={name}
-                />
-              </ListItem>
-            );
-          }) : ''
-        }
+        <h6 className="details-header" style={{ color: 'red' }}>
+          {`${fileName} (${Object.keys(issues).map(issue => issues[issue].length).reduce((total, num) => total + num)})`}
+        </h6>
+        <List component="nav" aria-label="main mailbox folders">
+          {
+            Object.keys(state).length === fileNames.length ? fileNames.map(name => {
+              return (
+                <ListItem button style={{ display: 'inline' }}>
+                  <FormControlLabel
+                    control={(
+                      <Checkbox
+                        checked={state[name]}
+                        onChange={handleCheckBoxChange}
+                        name={name}
+                        color="primary"
+                      />
+                    )}
+                    label={name}
+                  />
+                </ListItem>
+              );
+            }) : ''
+          }
 
-      </List>
+        </List>
       </div>
+      <Divider className="divider"/>
       {
         Object.keys(issues).map(issue => {
           return state[issue] ? <PackageJSON packageJSON={issues[issue]} /> : ''

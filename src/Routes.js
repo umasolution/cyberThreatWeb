@@ -16,6 +16,7 @@ import HomeView from 'src/views/pages/HomeView';
 import LoadingScreen from 'src/components/LoadingScreen';
 import AuthGuard from 'src/components/AuthGuard';
 import GuestGuard from 'src/components/GuestGuard';
+import CheckBrowserVul from './views/CheckBrowserVul/CheckBrowserVul';
 
 const routesConfig = [
   {
@@ -44,6 +45,12 @@ const routesConfig = [
     guard: GuestGuard,
     path: '/register',
     component: lazy(() => import('src/views/auth/RegisterView'))
+  },
+  {
+    exact: true,
+    path: '/check-browser-vulnerability',
+    // component: lazy(() => import('src/views/CheckBrowserVul/CheckBrowserVul'))
+    component: CheckBrowserVul
   },
   {
     exact: true,
@@ -374,6 +381,7 @@ const routesConfig = [
         path: '/pricing',
         component: lazy(() => import('src/views/pages/PricingView'))
       }, */
+
       {
         component: () => <Redirect to="/404" />
       }

@@ -1,0 +1,9 @@
+.flex {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 5px;
+}
+
+.justifyAround {
+  justify-content: space-around !important;
+}

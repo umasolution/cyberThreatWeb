@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
   root: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: '#f1f1f1',
     display: 'flex',
     height: 224,
   },

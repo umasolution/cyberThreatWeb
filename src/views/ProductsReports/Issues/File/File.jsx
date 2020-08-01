@@ -9,7 +9,7 @@ const File = ({ name, file }) => {
         Object.keys(file).map(obj => {
           return (
             obj !== 'packages' ? (
-              <div className="panelMainDiv display-div">
+              <div className="display-div">
                 {Object.keys(file[obj]).map(o => {
                   return (
                     <p className="details">
@@ -39,7 +39,7 @@ const File = ({ name, file }) => {
               <div className="">
               {file[obj].map(o => {
                 return (
-                  <div className="packages panelMainDiv">
+                  <div className="packages">
                     {Object.keys(o).map(oo => {
                       return (
                         <p className="details">
