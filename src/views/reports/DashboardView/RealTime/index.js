@@ -6,6 +6,7 @@ import { List as VirtualizedList } from 'react-virtualized';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import Copy from "../../../../Util/Copy";
 import './index.css';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -69,8 +70,14 @@ function RealTime({ className, lib_details, ...rest }) {
           <Typography color="inherit"
             className="secondary"
           >
-            {searchedLibDetails[index].product}
+            <Link target="_blank" to={`/library/${searchedLibDetails[index].product}/${searchedLibDetails[index].app}`}
+              style={{ textDecoration: 'none' }}
+            >
+              {`${searchedLibDetails[index].product} (${searchedLibDetails[index].app})`}
+            </Link>
+
           </Typography>
+
           <Typography color="inherit"
             className="secondary"
           >

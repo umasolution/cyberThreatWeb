@@ -1,5 +1,6 @@
 import React from 'react';
 import './File.css';
+import { Paper } from '@material-ui/core';
 
 const File = ({ name, file }) => {
   return (
@@ -9,6 +10,7 @@ const File = ({ name, file }) => {
         Object.keys(file).map(obj => {
           return (
             obj !== 'packages' ? (
+              <Paper className="paper">
               <div className="display-div">
                 {Object.keys(file[obj]).map(o => {
                   return (
@@ -34,11 +36,13 @@ const File = ({ name, file }) => {
                   )
                 })}
               </div>
+              </Paper>
             )
               : 
               <div className="">
               {file[obj].map(o => {
                 return (
+                  <Paper className="paper">
                   <div className="packages">
                     {Object.keys(o).map(oo => {
                       return (
@@ -53,6 +57,7 @@ const File = ({ name, file }) => {
                       )
                     })}
                   </div>
+                  </Paper>
                 )
               }
               )}

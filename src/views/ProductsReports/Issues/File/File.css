@@ -27,3 +27,8 @@
   flex-direction: row;
   flex-wrap: wrap;
 }
+
+.paper {
+  padding: 10px;
+  margin: 10px;
+}

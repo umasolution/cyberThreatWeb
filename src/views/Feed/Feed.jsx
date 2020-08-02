@@ -46,7 +46,7 @@ export const Feed = (/* {   } */) => {
         try {
             setLoadingTabs(true);
             updateSnackbar(true, CONSTANTS.FETCHING_DATA);
-            const url = "http://cyberthreatinfo.ca/api/vuln";
+            const url = "/vuln";
             let response = await Axios.get(url);
             response = response.data['report type'];
             response.forEach(res => res.isShowing = true);
@@ -76,7 +76,7 @@ export const Feed = (/* {   } */) => {
     }
 
     const fetchFeedData = async (data, tabIndexParams, reportType) => {
-        const url = `http://cyberthreatinfo.ca/api${data.uri}`;;
+        const url = `${data.uri}`;;
         const response = await Axios.get(url);
         if (response.data) {
             const copy = Copy(tabsData);

@@ -56,7 +56,7 @@ const ProductsReports = () => {
     try {
       setLoading(true);
       updateSnackbar(true, CONSTANTS.FETCHING_DATA);
-      const url = `http://cyberthreatinfo.ca/api/report/project/reportname`;
+      const url = `/report/project/reportname`;
       const response = await Axios.post(url, {
         emailAdd: authService.getUserName(),
         reportName
@@ -94,7 +94,7 @@ const ProductsReports = () => {
           <Tabs value={tabValue} onChange={handleChange} aria-label="simple tabs example">
             <Tab label="Summary" />
             <Tab label="Issues" />
-            <Tab label={productReportResponse.packages ? "Packages" : "Dependencies"} />
+            <Tab label={"Inventory"} />
           </Tabs>
         </AppBar>
         <TabPanel value={tabValue} index={0}>
@@ -128,7 +128,7 @@ const ProductsReports = () => {
           <Tabs value={tabValue} onChange={handleChange} aria-label="simple tabs example">
             {productReportResponse.summary ? <Tab label="Summary" /> : ''}
             <Tab label="Issues" />
-            {((reportType === 'language' || reportType === 'platform') && !isDocker) ? <Tab label="Dependencies" /> : (reportType === 'application' && !isDocker) ? <Tab label="Application" /> : ''}
+            {!isDocker ? <Tab label="Inventory" />  : ''}
             {((reportType === 'platform') && !isDocker) ? <Tab label="Remediation" /> : ''}
           </Tabs>
         </AppBar>

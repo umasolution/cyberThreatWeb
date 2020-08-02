@@ -36,7 +36,7 @@ const PackageJSON = ({ packageJSON }) => {
     const classes = useStyles();
 
 
-    const printValues = (key) => {
+    const printValues = (key,index,data) => {
         return (
             <ExpansionPanel>
                 <ExpansionPanelSummary
@@ -47,8 +47,6 @@ const PackageJSON = ({ packageJSON }) => {
 
                     {Object.keys(key).map(moduleKey => {
                         return (
-                            (moduleKey === 'cve_id' || moduleKey === 'vuln_name' || moduleKey === 'product' || moduleKey === 'vendor'
-                                || moduleKey === 'severity') ? (
                                     <div key={moduleKey}>
                                         <Typography
                                             variant="h6"
@@ -63,15 +61,14 @@ const PackageJSON = ({ packageJSON }) => {
                                             {key[moduleKey]}
                                         </Typography>
                                     </div>
-                                ) : ''
+                                 
                         )
                     })}
                 </ExpansionPanelSummary>
-                <ExpansionPanelDetails style={{ display: 'flex', flexWrap: 'wrap' }}>
-                    {Object.keys(key).map(moduleKey => {
+                <ExpansionPanelDetails style={{ display: 'block', flexWrap: 'wrap' }}>
+                    {Object.keys(data).map(moduleKey => {
                         return (
-                            !(moduleKey === 'cve_id' || moduleKey === 'vuln_name' || moduleKey === 'product' || moduleKey === 'vendor'
-                                || moduleKey === 'severity') ? (
+                            
                                     <div key={moduleKey}>
                                         <Typography
                                             variant="h6"
@@ -81,15 +78,11 @@ const PackageJSON = ({ packageJSON }) => {
                                             {moduleKey}
                                         </Typography>
                                         <Typography className={classes.secondaryText}>
-                                            {key[moduleKey]}
+                                            {data[moduleKey]}
                                         </Typography>
                                         {' '}
 
                                     </div>
-                                )
-
-
-                                : ''
                         )
                     })}
                 </ExpansionPanelDetails>
@@ -102,11 +95,11 @@ const PackageJSON = ({ packageJSON }) => {
     return (
         <div>
             {
-                packageJSON.map(value => {
+                packageJSON.header.map((value,index) => {
                     return (
-                        <div key={value}>
+                        <div /* key={value} */>
                             <Paper className={classes.borderDiv}>
-                                {printValues(value)}
+                                {printValues(value,index,packageJSON.data[index])}
                             </Paper>
                         </div>
                     )

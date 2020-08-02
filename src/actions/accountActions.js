@@ -84,7 +84,7 @@ export function register(values) {
 export function updateProfile(update) {
 
   return async (dispatch) => {
-    await axios.post('http://cyberthreatinfo.ca/profile/general/edit', { ...update });
+    await axios.post('/profile/general/edit', { ...update });
     dispatch({
       type: UPDATE_PROFILE,
       payload: { user: authService.getUserName() }
@@ -94,7 +94,7 @@ export function updateProfile(update) {
 
 export function updateNotifications(update) {
   return async (dispatch) => {
-    await axios.post('http://cyberthreatinfo.ca/profile/notification/edit', { ...update, emailAdd: authService.getUserName() });
+    await axios.post('/profile/notification/edit', { ...update, emailAdd: authService.getUserName() });
     dispatch({
       type: UPDATE_PROFILE,
       payload: { user: authService.getUserName() }
@@ -106,7 +106,7 @@ export function updateNotifications(update) {
 export function updatePassword(update) {
 
   return async (dispatch) => {
-    await axios.post('http://cyberthreatinfo.ca/profile/security/edit', { passWord: update.password,oldPassword: update.oldPassword, emailAdd: authService.getUserName() });
+    await axios.post('/profile/security/edit', { passWord: update.password,oldPassword: update.oldPassword, emailAdd: authService.getUserName() });
     dispatch({
       type: UPDATE_PROFILE,
       payload: { user: authService.getUserName() }

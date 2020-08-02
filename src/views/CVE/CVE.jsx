@@ -78,7 +78,7 @@ const CVE = () => {
         try {
             updateLoadingData(true);
             updateSnackbar(true, CONSTANTS.FETCHING_DATA);
-            const url = `http://cyberthreatinfo.ca/cve?cve=${cveParams}`;
+            const url = `/cve?cve=${cveParams}`;
             const response = await Axios.get(url);
             if (!response.data) return;
             if (response.data.tables) {
@@ -103,7 +103,7 @@ const CVE = () => {
 
             updateLoadingData(true);
             updateSnackbar(true, CONSTANTS.FETCHING_DATA);
-            const url = `http://cyberthreatinfo.ca/cve?start_date=${moment(cveStartDateParam).format("YYYY-MM-DD")}&end_date=${moment(cveEndDateParam).format("YYYY-MM-DD")}`;
+            const url = `/cve?start_date=${moment(cveStartDateParam).format("YYYY-MM-DD")}&end_date=${moment(cveEndDateParam).format("YYYY-MM-DD")}`;
             const response = await Axios.get(url);
             if (!response.data) return;
             setCVEResultByDate(response.data);

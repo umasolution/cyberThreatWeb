@@ -1,11 +1,13 @@
 import React from 'react';
+import { Paper } from '@material-ui/core';
 
 const DockerPackage = ({file}) => {
   return (
     <div className="">
               {file.map(o => {
                 return (
-                  <div className="packages">
+                  <Paper>
+                  <div>
                     {Object.keys(o).map(oo => {
                       return (
                         <p className="details">
@@ -19,6 +21,7 @@ const DockerPackage = ({file}) => {
                       )
                     })}
                   </div>
+                  </Paper>
                 )
               }
               )}

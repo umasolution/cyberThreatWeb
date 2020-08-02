@@ -35,7 +35,7 @@ class AuthService {
   }
 
   registerUser = (values) => new Promise((resolve, reject) => {
-    axios.post('http://cyberthreatinfo.ca/profile/register',
+    axios.post('/profile/register',
       { fName: values.firstName, lName: values.lastName, emailAdd: values.email, passWord: values.password })
       .then((response) => {
         if (response.data.response) {
@@ -51,7 +51,7 @@ class AuthService {
   })
 
   loginWithEmailAndPassword = (username, password) => new Promise((resolve, reject) => {
-    axios.post('http://cyberthreatinfo.ca/auth', { username, password })
+    axios.post('/auth', { username, password })
       .then((response) => {
         if (response.data.access_token) {
           this.setSession(response.data.access_token);

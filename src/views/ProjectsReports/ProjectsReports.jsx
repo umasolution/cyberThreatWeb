@@ -54,7 +54,7 @@ const ProjectsReports = () => {
         try {
             setLoading(true);
             updateSnackbar(true, CONSTANTS.FETCHING_DATA);
-            const url = "http://cyberthreatinfo.ca/api/report/project";
+            const url = "/report/project";
             let response = await Axios.post(url,
                 {
                     emailAdd: authService.getUserName()

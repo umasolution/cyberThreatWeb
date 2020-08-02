@@ -1,0 +1,30 @@
+.container{
+  display: flex;
+}
+
+.header{
+  text-align: center;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.total-vul{
+  padding: 10px;
+  width: fit-content;
+  margin-bottom: 10px;
+}
+
+.flex{
+  display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.paper-elevation {
+    box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.31), 1px 1px 1px 1px rgba(0,0,0,0.25);
+}
+
+.space {
+  margin-bottom: 10px;
+    padding: 10px;
+}

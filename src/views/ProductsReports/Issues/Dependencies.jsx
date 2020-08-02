@@ -30,19 +30,19 @@ const useStyles = makeStyles((theme) => ({
 
 const Dependencies = ({ issues, reportName, reportType }) => {
 
-  
+
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
   const [state, setState] = React.useState({
   });
 
-  
+
   const fileNames = issues ? Object.keys(issues) : [];
 
   useEffect(() => {
     let stateObject = {};
-     fileNames.forEach(name => {
+    fileNames.forEach(name => {
       stateObject[name] = true;
     })
     setState(stateObject);
@@ -121,27 +121,27 @@ const Dependencies = ({ issues, reportName, reportType }) => {
           <div style={{ display: 'flex' }}>
             <List component="nav" aria-label="main mailbox folders">
               {
-               Object.keys(state).length === fileNames.length ? fileNames.map(name => {
+                Object.keys(state).length === fileNames.length ? fileNames.map(name => {
                   return (
                     <ListItem button>
-                    <FormControlLabel
-                      control={(
-                        <Checkbox
-                          checked={state[name]}
-                          onChange={handleCheckBoxChange}
-                          name={name}
-                          color="primary"
-                        />
-                      )}
-                      label={name}
-                    />
-                  </ListItem>
+                      <FormControlLabel
+                        control={(
+                          <Checkbox
+                            checked={state[name]}
+                            onChange={handleCheckBoxChange}
+                            name={name}
+                            color="primary"
+                          />
+                        )}
+                        label={name}
+                      />
+                    </ListItem>
                   );
                 }) : ''
               }
 
             </List>
-            <div style={{width: '100%'}}>
+            <div style={{ width: '100%' }}>
 
               {
                 Object.keys(state).map(key => {
@@ -172,20 +172,9 @@ const Dependencies = ({ issues, reportName, reportType }) => {
       spacing={1}
       style={{ display: 'block', margin: '5px' }}
     >
-      {
-        reportType === 'language' || reportType === 'application' || reportType === 'platform' ?
-          (
-            <div className={classes.root}>
-              {getLanguageReport()}
-            </div>
-          )
-          : (
-            <div>
-              {getPlatformResult()}
-            </div>
-          )
-      }
-
+      <div className={classes.root}>
+        {getLanguageReport()}
+      </div>
     </Grid>
   );
 };

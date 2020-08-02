@@ -54,7 +54,7 @@ function AccountView() {
       try {
         setLoading(true);
         updateSnackbar(true, CONSTANTS.FETCHING_DATA);
-        const url = `http://cyberthreatinfo.ca/getProfile?emailAdd=${authService.getUserName()}`;
+        const url = `/getProfile?emailAdd=${authService.getUserName()}`;
         let response = await Axios.get(url);
         setUserProfileData(response.data);
         updateSnackbar(true, CONSTANTS.FETCHING_DATA_SUCCESS);

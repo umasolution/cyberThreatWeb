@@ -368,6 +368,11 @@ const routesConfig = [
       },
       {
         exact: true,
+        path: '/library/:product/:app',
+        component: lazy(() => import('src/views/Library/Library'))
+      },
+      {
+        exact: true,
         path: '/ProductsReports/:reportType/:reportName',
         component: lazy(() => import('src/views/ProductsReports/ProductsReports'))
       },

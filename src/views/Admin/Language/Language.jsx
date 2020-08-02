@@ -38,7 +38,7 @@ const Language = () => {
         try {
             updateLoadingData(true);
             updateSnackbar(true, CONSTANTS.FETCHING_DATA);
-            const url = `http://cyberthreatinfo.ca/admin/api/${panelType}`;
+            const url = `/admin/api/${panelType}`;
             const response = await Axios.get(url);
             // check response exist
             if (Object.keys(response.data).length === 0 && response.data.constructor === Object) {

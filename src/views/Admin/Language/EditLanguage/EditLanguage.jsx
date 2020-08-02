@@ -62,7 +62,7 @@ const EditLanguage = () => {
         try {
             updateLoadingData(true);
             updateSnackbar(true, CONSTANTS.FETCHING_DATA);
-            let url = `http://cyberthreatinfo.ca/admin/api/${panelType}/${panel}`;
+            let url = `/admin/api/${panelType}/${panel}`;
             const response = await Axios.get(url);
             // check response exist
             if (Object.keys(response.data).length === 0 && response.data.constructor === Object) {
@@ -122,7 +122,7 @@ const EditLanguage = () => {
         const langData = languageDataTypeCopy.find(l => l.id === id);
         if (langData) {
             langData.action = action;
-            let url = `http://cyberthreatinfo.ca/admin/api/${panelType}/${panel}/edit`;
+            let url = `/admin/api/${panelType}/${panel}/edit`;
             const response = await Axios.post(url,
                 langData);
             if (!response.data) {

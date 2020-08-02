@@ -43,7 +43,7 @@ const TabsData = ({ reportType, tabsData, expandPanel, bgcolor }) => {
     severityColumn.render = rowData => {
       const backgroundColor = rowData.severity.toLowerCase() === 'high' ? 'red'
         : rowData.severity.toLowerCase() === 'medium' ? 'yellow'
-          : 'blue';
+          : 'green';
       const color = rowData.severity.toLowerCase() === 'medium' ? 'black' : 'white';
       return (
         <div
@@ -74,10 +74,12 @@ const TabsData = ({ reportType, tabsData, expandPanel, bgcolor }) => {
         {
           headers.map(header => {
             return (
-              <Paper>
-                <h6 className="details-header">
-                  {Object.keys(header)[0]}
-                </h6>
+              <Paper style={{ padding: '10px' }}>
+                <div>
+                  <h6 className="details-header">
+                    {Object.keys(header)[0]}
+                  </h6>
+                </div>
                 {header[Object.keys(header)[0]]}
               </Paper>
             )
@@ -89,10 +91,23 @@ const TabsData = ({ reportType, tabsData, expandPanel, bgcolor }) => {
   }
 
   const getCharts = (tabData, appName) => {
+    const width = 200;
+    const height = 200;
     return (
       <div className="flex justifyAround">
-        {tabData.severity ? <SeverityBarChart severity={tabData.severity} divId={`${appName}-barChart`}/> : ''}
-        {tabData.CWE ? <CWEPieChart cwe={tabData.CWE} divId={`${appName}-pieChart`} /> : ''}
+        {tabData.severity ? <SeverityBarChart
+          severity={tabData.severity}
+          divId={`${appName}-barChart`}
+          bgColor="white"
+           
+        /> : ''}
+        {tabData.CWE ? <CWEPieChart
+          cwe={tabData.CWE}
+          divId={`${appName}-pieChart`}
+          bgColor="white"
+          width={width}
+          height={height}
+        /> : ''}
       </div>
     )
   }

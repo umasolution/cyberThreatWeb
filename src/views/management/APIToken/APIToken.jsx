@@ -33,7 +33,7 @@ const APIToken =  () => {
     const getAPIToken =  async () => {
         try {
             updateLoadingData(true);
-            const url = `http://cyberthreatinfo.ca/getAPIToken`;
+            const url = `/getAPIToken`;
             const response = await Axios.post(url,
                 {
                   "emailAdd" :   authService.getUserName()
@@ -53,7 +53,7 @@ const APIToken =  () => {
     const generateAPIToken = async () => {
         try {
             updateLoadingData(true);
-            const url = `http://cyberthreatinfo.ca/genAPIToken`;
+            const url = `/genAPIToken`;
             const response = await Axios.post(url,
                 {
                   "emailAdd" :   authService.getUserName(),

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Plotly } from "../../../../Util/Constants";
 
-const SeverityBarChart = ({ severity, divId }) => {
+const SeverityBarChart = ({ severity, divId, bgColor = "#f1f1f1", width = 360, height= 280 }) => {
 
   useEffect(() => {
     if (severity) {
@@ -21,11 +21,12 @@ const SeverityBarChart = ({ severity, divId }) => {
       ];
       var layout = {
         title: 'Severity',
-        width: 360,
-        height: 280,
+        width:  width,
+        height: height,
+        // margin: { "t": 0, "b": 0, "l": 0, "r": 0 },
         showlegend: false,
-        plot_bgcolor: "#f1f1f1",
-        paper_bgcolor: "#f1f1f1"
+        plot_bgcolor: bgColor,
+        paper_bgcolor: bgColor
       };
       const config = { responsive: true };
       Plotly.newPlot(`SeverityBarChartDiv-${divId}`, data, layout, config);

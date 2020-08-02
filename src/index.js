@@ -17,8 +17,13 @@ import { SettingsProvider } from 'src/context/SettingsContext';
 import { configureStore } from 'src/store';
 import { restoreSettings } from 'src/utils/settings';
 import App from 'src/App';
+import Axios from 'axios';
+
 
 enableES5();
+
+
+Axios.defaults.baseURL = 'http://cyberthreatinfo.ca/api';
 
 const store = configureStore();
 const settings = restoreSettings();
