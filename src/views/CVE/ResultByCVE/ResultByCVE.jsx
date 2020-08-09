@@ -13,6 +13,7 @@ import {
 import MaterialTable from 'material-table';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Link } from 'react-router-dom';
+import './ResultByCVE.css';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -83,7 +84,7 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
         if (cveTables && cveTables.length > 0) {
             return cveTables.map((table) => {
                 return (
-                    <div key={table} style={{ margin: '10px 0 10px 0'}}>
+                    <div key={table} style={{ margin: '10px 0 10px 0' }}>
                         <Typography
                             variant="h5"
                             className={classes.title}
@@ -93,34 +94,36 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                         {
                             table.data.map(data => {
                                 return (
-                                    <div key={data} className={classes.borderDiv} style={{ width: '100%' }}>
+                                    // <div key={data} className={classes.borderDiv} style={{ width: '100%' }}>
+                                    <Paper className="paper">
                                         {Object.keys(data).map(lan => {
                                             return (
                                                 <p key={lan}>
                                                     <span style={{ marginRight: '10px' }}>
-                                                      
-                                                        
+
+
                                                         <Typography
-                                                    variant="h6"
-                                                    className={classes.title}
-                                                >
-                                                   {lan}
-                                                </Typography>
-                                                        
+                                                            variant="h6"
+                                                            className={classes.title}
+                                                        >
+                                                            {lan}
+                                                        </Typography>
+
                                                     </span>
                                                     <Typography
-                                                    className={classes.secondaryText}
-                                                >
-                                                   {!(data[lan].includes && (data[lan].includes('https://') || data[lan].includes('http://'))) ? (data[lan]) :
-                                                        (
-                                                            <a target="_blank" rel="noopener noreferrer" href={data[lan]}>{data[lan]}</a>
-                                                        )}
-                                                </Typography>
-                                                   
+                                                        className={classes.secondaryText}
+                                                    >
+                                                        {!(data[lan].includes && (data[lan].includes('https://') || data[lan].includes('http://'))) ? (data[lan]) :
+                                                            (
+                                                                <a target="_blank" rel="noopener noreferrer" href={data[lan]}>{data[lan]}</a>
+                                                            )}
+                                                    </Typography>
+
                                                 </p>
                                             )
                                         })}
-                                    </div>
+                                    </Paper>
+                                    // {/* </div> */ }
                                 )
                             })
                         }
@@ -245,14 +248,14 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                                         <Paper elevation={3} className={classes.paper}>
                                             <Typography
                                                 variant="h5"
-                                                style={{ display: 'inline', marginRight: '5px' }}
+                                                className="base-score"
                                             >
                                                 Base Score
                                             </Typography>
                                             <Typography
                                                 variant="h1"
                                                 color="secondary"
-                                                style={{ display: 'inline' }}
+                                                className="base-score-value"
                                             >
                                                 {cveNVDDetails.Metadata['Base Score']}
                                             </Typography>

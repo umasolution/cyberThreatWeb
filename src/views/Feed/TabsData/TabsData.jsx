@@ -1,17 +1,10 @@
 import {
   Container, ExpansionPanel,
-
-
-
-
   ExpansionPanelDetails, ExpansionPanelSummary, Grid,
   List,
-
-
   ListItem,
   ListItemIcon,
   ListItemText,
-
   makeStyles,
   Paper
 } from '@material-ui/core';
@@ -41,16 +34,18 @@ const TabsData = ({ reportType, tabsData, expandPanel, bgcolor }) => {
     const columns = cloneDeep(tabData.tableData.columns);
     const severityColumn = columns.find(column => column.field === 'severity');
     severityColumn.render = rowData => {
-      const backgroundColor = rowData.severity.toLowerCase() === 'high' ? 'red'
-        : rowData.severity.toLowerCase() === 'medium' ? 'yellow'
+      const rowDataSeverity = rowData.severity?.toLowerCase();
+      const backgroundColor = rowDataSeverity === 'high' ? 'red'
+        : rowDataSeverity === 'medium' ? 'yellow'
           : 'green';
-      const color = rowData.severity.toLowerCase() === 'medium' ? 'black' : 'white';
+      const color = rowDataSeverity === 'medium' ? 'black' : 'white';
       return (
         <div
           style={{
             backgroundColor,
             color,
-            textAlign: 'center'
+            textAlign: 'center',
+            padding: '10px'
           }}
         >
           {rowData.severity}
@@ -68,38 +63,48 @@ const TabsData = ({ reportType, tabsData, expandPanel, bgcolor }) => {
     );
   };
 
-  const getHeader = (headers) => {
-    return (
-      <div className="flex">
-        {
-          headers.map(header => {
-            return (
-              <Paper style={{ padding: '10px' }}>
-                <div>
-                  <h6 className="details-header">
-                    {Object.keys(header)[0]}
-                  </h6>
-                </div>
-                {header[Object.keys(header)[0]]}
-              </Paper>
-            )
-          })
-        }
-      </div>
-    )
+  // const getHeader = (headers) => {
+  //   return (
+  //     <div className="flex">
+  //       {
+  //         headers.map(header => {
+  //           return (
+  //             <Paper style={{ padding: '10px' }}>
+  //               <div>
+  //                 <h6 className="details-header">
+  //                   {Object.keys(header)[0]}
+  //                 </h6>
+  //               </div>
+  //               {header[Object.keys(header)[0]]}
+  //             </Paper>
+  //           )
+  //         })
+  //       }
+  //     </div>
+  //   )
 
-  }
+  // }
 
   const getCharts = (tabData, appName) => {
     const width = 200;
     const height = 200;
     return (
       <div className="flex justifyAround">
+        {
+          tabData.header && <CWEPieChart
+            cwe={tabData.header}
+            divId={`${appName}-header-pieChart`}
+            bgColor="white"
+            width={width}
+            height={height}
+            title="Vulnerabilities"
+          />
+        }
         {tabData.severity ? <SeverityBarChart
           severity={tabData.severity}
           divId={`${appName}-barChart`}
           bgColor="white"
-           
+
         /> : ''}
         {tabData.CWE ? <CWEPieChart
           cwe={tabData.CWE}
@@ -145,7 +150,7 @@ const TabsData = ({ reportType, tabsData, expandPanel, bgcolor }) => {
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
                   <div style={{ width: '100%' }}>
-                    {tabData.tableData?.header ? getHeader(tabData.tableData?.header) : null}
+                    {/* {tabData.tableData?.header ? getHeader(tabData.tableData?.header) : null} */}
                     {tabData.tableData ? getCharts(tabData.tableData, tabData.appName) : null}
                     {tabData.tableData
                       ? getTable(tabData)

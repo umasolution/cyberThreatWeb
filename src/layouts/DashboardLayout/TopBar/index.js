@@ -1,7 +1,7 @@
-import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import clsx from 'clsx';
+import React, { useState } from "react";
+import { Link as RouterLink } from "react-router-dom";
+import PropTypes from "prop-types";
+import clsx from "clsx";
 import {
   AppBar,
   Box,
@@ -9,45 +9,66 @@ import {
   IconButton,
   Toolbar,
   makeStyles,
-  SvgIcon
-} from '@material-ui/core';
-import { Menu as MenuIcon } from 'react-feather';
-import Logo from 'src/components/Logo';
-import { THEMES } from 'src/constants';
-import Account from './Account';
-import Contacts from './Contacts';
-import Notifications from './Notifications';
-import Search from './Search';
-import Settings from './Settings';
+  SvgIcon,
+  TextField,
+} from "@material-ui/core";
+import { Menu as MenuIcon } from "react-feather";
+import Logo from "src/components/Logo";
+import { THEMES } from "src/constants";
+import { useHistory } from "react-router";
+import Account from "./Account";
+import Contacts from "./Contacts";
+import Notifications from "./Notifications";
+import Search from "./Search";
+import Settings from "./Settings";
+import "./index.css";
+import CVETextField from './../../../views/CVE/CVEInput/CVETextField';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     zIndex: theme.zIndex.drawer + 100,
-    ...theme.name === THEMES.LIGHT ? {
-      boxShadow: 'none',
-      backgroundColor: theme.palette.primary.main
-    } : {},
-    ...theme.name === THEMES.ONE_DARK ? {
-      backgroundColor: theme.palette.background.default
-    } : {}
+    ...(theme.name === THEMES.LIGHT
+      ? {
+          boxShadow: "none",
+          backgroundColor: theme.palette.primary.main,
+        }
+      : {}),
+    ...(theme.name === THEMES.ONE_DARK
+      ? {
+          backgroundColor: theme.palette.background.default,
+        }
+      : {}),
   },
   toolbar: {
-    minHeight: 64
-  }
+    minHeight: 64,
+  },
 }));
 
-function TopBar({
-  className,
-  onMobileNavOpen,
-  ...rest
-}) {
+function TopBar({ className, onMobileNavOpen, ...rest }) {
   const classes = useStyles();
+  const history = useHistory();
+
+  const [searchByCVE, setSearchByCVE] = useState(true);
+  const [cveInput, setCVEInput] = useState("");
+
+  const keyPress = (event) => {
+    if (event.keyCode === 13) {
+      onSearchClicked();
+    }
+  };
+
+  const onSearchClicked = () => {
+    if (searchByCVE) {
+      history.push(`/app/CVE/${cveInput}`);
+    }
+  };
+
+  const handleChangeCVE = (event) => {
+    setCVEInput(event.target.value);
+}
 
   return (
-    <AppBar
-      className={clsx(classes.root, className)}
-      {...rest}
-    >
+    <AppBar className={clsx(classes.root, className)} {...rest}>
       <Toolbar className={classes.toolbar}>
         <Hidden lgUp>
           <IconButton
@@ -65,11 +86,12 @@ function TopBar({
             <Logo />
           </RouterLink>
         </Hidden>
-        <Box
-          ml={2}
-          flexGrow={1}
-        />
-        <Search />
+        <Box ml={2} flexGrow={1} />
+         <CVETextField cveInput={cveInput}
+            keyPress={keyPress}
+            handleChangeCVE={handleChangeCVE}
+            />
+        {/* <Search /> */}
         <Contacts />
         <Notifications />
         <Settings />
@@ -83,7 +105,7 @@ function TopBar({
 
 TopBar.propTypes = {
   className: PropTypes.string,
-  onMobileNavOpen: PropTypes.func
+  onMobileNavOpen: PropTypes.func,
 };
 
 export default TopBar;

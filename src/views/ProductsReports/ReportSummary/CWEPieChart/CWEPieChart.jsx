@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Plotly } from "../../../../Util/Constants";
 
-const CWEPieChart = ({ cwe, divId, bgColor = "#f1f1f1", width = 360, height= 280 }) => {
+const CWEPieChart = ({ cwe, divId, bgColor = "#f1f1f1", width = 360, height= 280, title="CWE" }) => {
   useEffect(() => {
     if (cwe) {
       const labels = [];
@@ -19,7 +19,7 @@ const CWEPieChart = ({ cwe, divId, bgColor = "#f1f1f1", width = 360, height= 280
         }
       ];
       var layout = {
-        title: 'CWE',
+        title: title,
         width:  width,
         height: height,
         margin: { "t": 30, "b": 0, "l": 0, "r": 0 },

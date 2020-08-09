@@ -21,7 +21,8 @@ import CONSTANTS from "../../Util/Constants";
 import ResultByCVE from './ResultByCVE/ResultByCVE';
 import CVEInput from './CVEInput/CVEInput';
 import ResultByCVEDate from './ResultByCVEDate/ResultByCVEDate';
-
+import authService from 'src/services/authService';
+import { useLocation } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
 }));
@@ -38,12 +39,17 @@ const CVE = () => {
     const [cveNVDDetails, setCVENVDDetails] = useState();
     const [cveTables, setCVETables] = useState();
     const [cveResultByDate, setCVEResultByDate] = useState();
-    const [snackbarOpen, setSnackbarOpen] = useState(false);
-    const [snackbarMessage, setSnackbarMessage] = useState("");
+    const [snackbar, setSnackbar] = useState({
+        open: false,
+        message: ""
+    });
     const [searchByCVE, setSearchByCVE] = useState(true);
     const [cveSearchStartDate, setCVESearchStartDate] = useState(null);
     const [cveSearchEndDate, setCVESearchEndDate] = useState(null);
-
+    let location = useLocation();
+    const [isAuthenticatedURL, setIsAuthenticatedURL] = useState(location.pathname.includes('/app/'));
+    const [canSetAlert, setCanSetAlert] = useState(false);
+    const [alarmAlreadySet, setAlarmAlreadySet] = useState(false);
 
     useEffect(() => {
         if (cve) {
@@ -78,12 +84,17 @@ const CVE = () => {
         try {
             updateLoadingData(true);
             updateSnackbar(true, CONSTANTS.FETCHING_DATA);
-            const url = `/cve?cve=${cveParams}`;
+            let url = `/cve?cve=${cveParams}`;
+            if (isAuthenticatedURL) {
+                url = `/auth/cve?cve=${cveParams}&emailId=${authService.getUserName()}`;
+            }
+
             const response = await Axios.get(url);
             if (!response.data) return;
             if (response.data.tables) {
                 setCVETables(response.data.tables);
             }
+            setAlarmAlreadySet(response.data.alert);
             if (response.data.NVD) {
                 setCVENVDDetails(response.data.NVD);
             }
@@ -118,8 +129,10 @@ const CVE = () => {
 
 
     const updateSnackbar = (open, message) => {
-        setSnackbarOpen(open);
-        setSnackbarMessage(message)
+        setSnackbar({
+            open,
+            message
+        })
     }
 
     const getLoader = () => {
@@ -160,42 +173,66 @@ const CVE = () => {
         }
     }
 
+    const setAlert = async () => {
+        try {
+            setloadingData(true);
+            const response = await Axios.post(!alarmAlreadySet ? '/setalert' : '/status/delalert',
+                {
+                    "emailAdd": authService.getUserName(),
+                    "cve_id": cveInput
+                });
+            updateSnackbar(true, response.data.message);
+            setAlarmAlreadySet(!alarmAlreadySet);
+            setloadingData(false);
+        } catch (error) {
+            console.error(error);
+            updateSnackbar(true, 'Error while setting Alert');
+            setloadingData(false);
+        }
+    }
+
     return (
         <Container maxWidth="lg">
             <Grid
-              container
-              spacing={1}
+                container
+                spacing={1}
             >
                 <Box
-                  display="flex"
-                  flexDirection="column"
-                  justifyContent="left"
-                  height="100%"
-                  style={{ marginTop: '25px' }}
+                    display="flex"
+                    flexDirection="column"
+                    justifyContent="left"
+                    height="100%"
+                    style={{ marginTop: '25px' }}
                 >
                     {isLoadingData && getLoader()}
 
                     <CVEInput
-                      searchByCVE={searchByCVE}
-                      cveInput={cveInput}
-                      changeSearchByCVE={changeSearchByCVE}
-                      keyPress={keyPress}
-                      handleChangeCVE={handleChangeCVE}
-                      onSearchClicked={onSearchClicked}
-                      isSearching={isLoadingData}
-                      setCVESearchDate={setCVESearchDate}
-                      cveSearchStartDate={cveSearchStartDate}
-                      cveSearchEndDate={cveSearchEndDate}
+                        searchByCVE={searchByCVE}
+                        cveInput={cveInput}
+                        changeSearchByCVE={changeSearchByCVE}
+                        keyPress={keyPress}
+                        handleChangeCVE={handleChangeCVE}
+                        onSearchClicked={onSearchClicked}
+                        isSearching={isLoadingData}
+                        setCVESearchDate={setCVESearchDate}
+                        cveSearchStartDate={cveSearchStartDate}
+                        cveSearchEndDate={cveSearchEndDate}
+                        setAlert={setAlert}
+                        canSetAlert={isAuthenticatedURL && cveNVDDetails && !isLoadingData}
+                        alarmAlreadySet={alarmAlreadySet}
                     />
-                    <MySnackbar closeSnackbar={() => updateSnackbar(false, '')} snackbarMessage={snackbarMessage} snackbarOpen={snackbarOpen} />
+                    <MySnackbar
+                        closeSnackbar={() => updateSnackbar(false, '')}
+                        snackbarMessage={snackbar.message}
+                        snackbarOpen={snackbar.open} />
                 </Box>
                 {searchByCVE
                     && !isLoadingData && cveTables
                     && (
                         <ResultByCVE
-                          cveNVDDetails={cveNVDDetails}
-                          cveTables={cveTables}
-                          cve={cveInput}
+                            cveNVDDetails={cveNVDDetails}
+                            cveTables={cveTables}
+                            cve={cveInput}
                         />
                     )}
 
@@ -203,7 +240,7 @@ const CVE = () => {
                     && !isLoadingData && cveResultByDate
                     && (
                         <ResultByCVEDate
-                          cveResultByDate={cveResultByDate}
+                            cveResultByDate={cveResultByDate}
                         />
                     )}
             </Grid>

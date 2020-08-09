@@ -1,7 +1,12 @@
 import React from 'react';
-import { Typography, Grid, TextField, Box, Button, makeStyles } from '@material-ui/core';
+import { Typography, Grid, TextField, Box, Button, makeStyles, Tooltip } from '@material-ui/core';
 import Switch from '@material-ui/core/Switch';
 import { KeyboardDatePicker } from '@material-ui/pickers';
+import './CVEInput.css';
+import AddAlertIcon from '@material-ui/icons/AddAlert';
+import NotificationsOffIcon from '@material-ui/icons/NotificationsOff';
+import CVETextField from './CVETextField';
+
 const useStyles = makeStyles((theme) => ({
   root: {},
   datePicker: {
@@ -12,13 +17,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CVEInput = ({ searchByCVE, cveInput, changeSearchByCVE, keyPress, handleChangeCVE,
-   onSearchClicked, isSearching,
-    cveSearchStartDate, setCVESearchDate, cveSearchEndDate }) => {
+  onSearchClicked, isSearching,
+  cveSearchStartDate, setCVESearchDate, cveSearchEndDate, setAlert, canSetAlert = false, alarmAlreadySet = false }) => {
 
   const classes = useStyles();
 
 
-  const getDateInput = () => {
+  /* const getDateInput = () => {
     return (
 <Box mt={2}>
         <KeyboardDatePicker
@@ -41,12 +46,12 @@ const CVEInput = ({ searchByCVE, cveInput, changeSearchByCVE, keyPress, handleCh
         />
 </Box>
     );
-  }
+  } */
 
   return (
     <>
 
-      <Typography component="div">
+      {/* <Typography component="div">
         <Grid component="label" container alignItems="center" spacing={1}>
           <Grid item>Search By Date</Grid>
           <Grid item>
@@ -59,23 +64,36 @@ const CVEInput = ({ searchByCVE, cveInput, changeSearchByCVE, keyPress, handleCh
           </Grid>
           <Grid item>CVE</Grid>
         </Grid>
-      </Typography>
+      </Typography> */}
 
-      {!searchByCVE && getDateInput()}
+      {/* {!searchByCVE && getDateInput()} */}
       {
         searchByCVE && (
-          <TextField
-            required
-            value={cveInput}
-            onKeyDown={keyPress}
-            onChange={handleChangeCVE}
-            style={{
-              width: '500px'
-            }}
-            id="cve"
-            placeholder="CVE"
-            label="CVE"
-          />
+          <div className="text-field">
+            <CVETextField
+              cveInput={cveInput}
+              keyPress={keyPress}
+              handleChangeCVE={handleChangeCVE}
+            />
+            {canSetAlert ?
+              alarmAlreadySet ? (
+                <Tooltip title="Remove Alert">
+                  <NotificationsOffIcon
+                    style={{ marginLeft: '10px' }}
+                    onClick={setAlert}
+                  />
+                </Tooltip>
+              )
+                : (
+                  <Tooltip title="Set Alert">
+                    <AddAlertIcon
+                      style={{ marginLeft: '10px' }}
+                      onClick={setAlert}
+                    />
+                  </Tooltip>
+                )
+              : null}
+          </div>
         )
       }
       <Box mt={2}>

@@ -44,6 +44,7 @@ import {
 import Logo from 'src/components/Logo';
 import NavItem from './NavItem';
 import authService from './../../../services/authService';
+import NotificationsIcon from '@material-ui/icons/Notifications';
 
 const userName = authService.getUserName();
 
@@ -75,7 +76,12 @@ const navConfig = [
       {
         title: 'My Projects',
         icon: UsersIcon,
-        href: '/app/ProjectsReports/language',
+        href: '/app/management/ProjectsReports/language',
+      },
+      {
+        title: 'Alerts',
+        icon: NotificationsIcon,
+        href: '/app/management/Alerts',
       },
       {
         title: 'Manage Token',

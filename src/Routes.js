@@ -94,12 +94,22 @@ const routesConfig = [
       },
       {
         exact: true,
+        path: '/app/CVE/:cve',
+        component: lazy(() => import('src/views/CVE/CVE'))
+      },
+      {
+        exact: true,
         path: '/app/management/APIToken',
         component: lazy(() => import('src/views/management/APIToken/APIToken'))
       },
       {
         exact: true,
-        path: '/app/ProjectsReports/:reportType',
+        path: '/app/management/Alerts',
+        component: lazy(() => import('src/views/management/Alerts/Alerts'))
+      },
+      {
+        exact: true,
+        path: '/app/management/ProjectsReports/:reportType',
         component: lazy(() => import('src/views/ProjectsReports/ProjectsReports'))
       },
       {

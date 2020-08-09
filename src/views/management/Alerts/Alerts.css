@@ -1,0 +1,22 @@
+.root {
+  flexgrow: 1;
+  width: "100%";
+  backgroundcolor: "inherit";
+}
+
+.header1 {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header2 {
+  display: flex;
+}
+
+.MuiExpansionPanelSummary-content {
+  display: block;
+}
+
+.updated-detail{
+  margin: 10px 10px 0 0;
+}
