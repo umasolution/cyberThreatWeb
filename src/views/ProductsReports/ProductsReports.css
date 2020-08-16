@@ -1,0 +1,67 @@
+.tabs {
+  background-color: #f1f1f1;
+}
+
+.summary-tab {
+  background: rebeccapurple;
+  margin-bottom: 2px;
+  border-radius: 25px 25px 0 0;
+}
+
+.issue-tab {
+  background: #315c93;
+  margin-bottom: 2px;
+  border-radius: 25px 25px 0 0;
+}
+
+.inventory-tab {
+  background: #8e9933;
+  margin-bottom: 2px;
+  border-radius: 25px 25px 0 0;
+}
+
+.remediation-tab {
+  background: #339972;
+  margin-bottom: 2px;
+  border-radius: 25px 25px 0 0;
+}
+
+.summary-tab:active  {
+  border-bottom: 2px solid;
+  border-color: white;
+}
+
+.summary-tab:focus {
+  border-bottom: 2px solid;
+  border-color: white;
+}
+
+.issue-tab:active  {
+  border-bottom: 2px solid;
+  border-color: white;
+}
+
+.issue-tab:focus {
+  border-bottom: 2px solid;
+  border-color: white;
+}
+
+.inventory-tab:active  {
+  border-bottom: 2px solid;
+  border-color: white;
+}
+
+.inventory-tab:focus  {
+  border-bottom: 2px solid;
+  border-color: white;
+}
+
+.remediation-tab:active {
+  border-bottom: 2px solid;
+  border-color: white;
+}
+
+.remediation-tab:focus {
+  border-bottom: 2px solid;
+  border-color: white;
+}

@@ -58,7 +58,6 @@ function TeamTasks({ className, project_vuln_details, ...rest }) {
     <Card
       className={clsx(classes.root, className)}
       {...rest}
-      style={{ width: 'fit-content' }}
     >
         <Typography
         component="h4"

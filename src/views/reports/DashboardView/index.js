@@ -27,13 +27,14 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.dark,
     minHeight: '100%',
     paddingTop: theme.spacing(3),
-    paddingBottom: theme.spacing(3)
+    paddingBottom: theme.spacing(3),
+    paddingLeft: '0px !important', 
+    paddingRight: '0px !important',
   },
   container: {
     [theme.breakpoints.up('lg')]: {
-      paddingLeft: 64,
-      paddingRight: 64
-    }
+    },
+    paddingLeft: '8px !important', 
   }
 }));
 

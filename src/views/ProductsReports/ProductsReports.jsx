@@ -19,6 +19,7 @@ import Remediation from './Remediation/Remediation';
 import ReportSummary from './ReportSummary/ReportSummary';
 import DockerSummaries from './DockerSummaries/DockerSummaries';
 import DockerPackages from './DockerPackages/DockerPackages';
+import './ProductsReports.css';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -90,7 +91,7 @@ const ProductsReports = () => {
   const getDockerTabs = () => {
     return (
       <>
-        <AppBar style={{ width: '100%' }} position="static">
+        <AppBar style={{ width: '100%' }} className="tabs" position="static">
           <Tabs value={tabValue} onChange={handleChange} aria-label="simple tabs example">
             <Tab label="Summary" />
             <Tab label="Issues" />
@@ -123,13 +124,13 @@ const ProductsReports = () => {
   const getNonDockerTabs = () => {
     return (
       <>
-        <AppBar style={{ width: '100%' }} position="static">
+        <AppBar style={{ width: '100%' }} className="tabs" position="static">
 
           <Tabs value={tabValue} onChange={handleChange} aria-label="simple tabs example">
-            {productReportResponse.summary ? <Tab label="Summary" /> : ''}
-            <Tab label="Issues" />
-            {!isDocker ? <Tab label="Inventory" />  : ''}
-            {((reportType === 'platform') && !isDocker) ? <Tab label="Remediation" /> : ''}
+            {productReportResponse.summary ? <Tab  className="summary-tab" label="Summary" /> : ''}
+            <Tab className="issue-tab" label="Issues" />
+            {!isDocker ? <Tab className="inventory-tab" label="Inventory" />  : ''}
+            {((reportType === 'platform') && !isDocker) ? <Tab className="remediation-tab" label="Remediation" /> : ''}
           </Tabs>
         </AppBar>
         <TabPanel value={tabValue} index={0}>

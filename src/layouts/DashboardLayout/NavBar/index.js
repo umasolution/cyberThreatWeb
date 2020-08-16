@@ -71,7 +71,7 @@ const navConfig = [
     ]
   },
   {
-    subheader: 'Management',
+    subheader: '',
     items: [
       {
         title: 'My Projects',

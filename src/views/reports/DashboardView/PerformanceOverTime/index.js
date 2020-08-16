@@ -67,7 +67,7 @@ function PerformanceOverTime({ className, chartsData, ...rest }) {
         y: value,
         type: 'scatter',
         name: key,
-        automargin: true,
+        // automargin: true,
       })
     }
     var layout = {
@@ -93,7 +93,7 @@ function PerformanceOverTime({ className, chartsData, ...rest }) {
 
         <Box
           height={375}
-          minWidth={500}
+           
         >
           <FormControl style={{ width: '20%' }}>
             <InputLabel id="demo-simple-select-label">Progress Chart</InputLabel>

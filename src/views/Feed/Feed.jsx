@@ -153,7 +153,7 @@ export const Feed = (/* {   } */) => {
     }
 
     return (
-        <Container className={classes.root} maxWidth="lg">
+        <Container style={{paddingLeft: '0px', paddingRight: '0px',maxWidth: 'unset'}} maxWidth="lg">
             <Grid style={{ width: '100%' }} container spacing={1}>
                 {loadingTabs ? getLoader() : null}
                 {tabsData.length > 0 && getTabsData()}

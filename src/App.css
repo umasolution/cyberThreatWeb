@@ -65,3 +65,7 @@
   border-style: outset;
   padding: 5px;
 }
+
+.MuiContainer-maxWidthLg{
+  max-width: none !important;
+}

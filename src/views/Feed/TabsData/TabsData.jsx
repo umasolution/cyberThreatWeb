@@ -21,7 +21,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     width: '100%',
-    backgroundColor: 'inherit' // theme.palette.background.paper,
+    backgroundColor: 'inherit', // theme.palette.background.paper,
+    paddingLeft: '16px !important', 
+    paddingRight: '8px !important',
   }
 }));
 
