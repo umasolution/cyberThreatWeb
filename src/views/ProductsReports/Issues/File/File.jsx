@@ -5,7 +5,7 @@ import { Paper } from '@material-ui/core';
 const File = ({ name, file }) => {
   return (
     <div>
-      <h5 className="details-header">{name}</h5>
+      {/* <h5 className="details-header">{name}</h5> */}
       {
         Object.keys(file).map(obj => {
           return (
@@ -14,7 +14,7 @@ const File = ({ name, file }) => {
               <div className="display-div">
                 {Object.keys(file[obj]).map(o => {
                   return (
-                    <p className="details">
+                    <p className="details odd-even-background">
                       {o !== 'depend' ? (
                         <>
                           <h6 className="details-header">
@@ -46,7 +46,7 @@ const File = ({ name, file }) => {
                   <div className="packages">
                     {Object.keys(o).map(oo => {
                       return (
-                        <p className="details">
+                        <p className="details odd-even-background">
                           <div>
                             <h6 className="details-header">
                               {oo}

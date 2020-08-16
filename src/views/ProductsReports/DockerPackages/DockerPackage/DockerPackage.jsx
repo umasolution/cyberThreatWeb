@@ -10,7 +10,7 @@ const DockerPackage = ({file}) => {
                   <div>
                     {Object.keys(o).map(oo => {
                       return (
-                        <p className="details">
+                        <p className="details odd-even-background">
                           <div>
                             <h6 className="details-header">
                               {oo}

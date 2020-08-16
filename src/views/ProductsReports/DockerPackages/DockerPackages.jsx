@@ -64,12 +64,9 @@ const DockerPackages = ({ packages, reportType }) => {
                   return (
                     state[key] && packages[key].length > 0 ? (
                       <>
-                      <h6 className="details-header" style={{color: 'red'}}> 
-                          {key}
-                      </h6>
+                        <DockerPackage file={packages[key]} />
                         <Divider className="divider" />
 
-                        <DockerPackage file={packages[key]} />
                       </>
                     ) : ''
                   )

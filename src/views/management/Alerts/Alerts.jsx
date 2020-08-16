@@ -11,6 +11,9 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import NotificationsOffIcon from '@material-ui/icons/NotificationsOff';
 import { cloneDeep } from 'lodash';
 import Copy from './../../../Util/Copy';
+import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+import isEmpty from './../../../Util/Util';
+import { Link } from 'react-router-dom';
 
 const Alerts = () => {
 
@@ -35,61 +38,6 @@ const Alerts = () => {
         {
           "emailAdd": authService.getUserName()
         });
-      const res = {
-        data: [
-          [
-            {
-              "message": "Exploit-DB PoC Available",
-              "pub date": "2020-01-09",
-              "reference": "https://exploit-db/111"
-            },
-            {
-              "message": "NVD PoC Available",
-              "pub date": "2020-01-09",
-              "reference": "https://nvd-db/111"
-            }
-          ],
-          [
-            {
-              "message": "Exploit-DB PoC Available1",
-              "pub date": "2020-01-09",
-              "reference": "https://exploit-db/111"
-            },
-            {
-              "message": "NVD PoC Available1",
-              "pub date": "2020-01-09",
-              "reference": "https://nvd-db/111"
-            }
-          ]
-        ],
-        header: [
-          {
-            "CVEID": "CVE-2020-12345",
-            "Status": "unread",
-            "Updated Details": [
-              {
-                "message": "NVD PoC Available",
-                "pub date": "2020-01-09",
-                "reference": "https://nvd-db/111"
-              }
-            ],
-            "Updated On": "2020-08-07 15:36:43"
-          },
-          {
-            "CVEID": "CVE-2020-123456",
-            "Status": "unread",
-            "Updated Details": [
-              {
-                "message": "NVD PoC Available",
-                "pub date": "2020-01-09",
-                "reference": "https://nvd-db/111"
-              }
-            ],
-            "Updated On": "2020-08-07 15:36:43"
-          }
-        ]
-      };
-      // setAlertsResponse(res);
       if (!response.data) {
         updateLoadingData(false);
         return;
@@ -122,18 +70,28 @@ const Alerts = () => {
     })
   }
 
-  const setAlert = async (alert) => {
+  const setAlert = async (alert, deleteAlert) => {
     try {
       setloadingData(true);
-      const response = await Axios.post('/status/delalert',
+      let url = `/status/delalert`;
+      if (!deleteAlert) {
+        url = `/status/setalert`;
+      }
+      const response = await Axios.post(url,
         {
           "emailAdd": authService.getUserName(),
           "cve_id": alert.CVEID
         });
       let alerts = Copy(alertsResponse);
-      const index = alerts.header.findIndex(a => a.CVEID === alert.CVEID);
-      alerts.header.splice(index,1);
-      alerts.data.splice(index,1);
+      if (deleteAlert) {
+        const index = alerts.header.findIndex(a => a.CVEID === alert.CVEID);
+        alerts.header.splice(index, 1);
+        alerts.data.splice(index, 1);
+      } else {
+        const index = alerts.header.findIndex(a => a.CVEID === alert.CVEID);
+        alerts.header[index].Status = 'read';
+      }
+
       setAlertsResponse(alerts);
       updateSnackbar(true, response.data.message);
       setloadingData(false);
@@ -156,10 +114,12 @@ const Alerts = () => {
                     (
                       <span>
                         <h6 className="details-header">
-                          {key}
+                          {key !== 'Updated On' ? key : !isEmpty(alert[key]) ? key : null}
                         </h6>
-                        {' '}
-                        {alert[key]}
+                        {
+                          key === 'Status' && isEmpty(alert[key]) ? 'No Updates' :
+                            key === 'CVEID' ? <Link target="_blank" to={`/app/CVE/${alert[key]}`}>{alert[key]}</Link> : alert[key]
+                        }
                       </span>
                     )
                   }
@@ -170,7 +130,7 @@ const Alerts = () => {
           <Tooltip title="Remove Alert">
             <NotificationsOffIcon
               style={{ marginLeft: '10px' }}
-              onClick={() => setAlert(alert)}
+              onClick={() => setAlert(alert, true)}
             />
           </Tooltip>
         </div>
@@ -181,6 +141,7 @@ const Alerts = () => {
                 <>
                   {key === 'Updated Details' &&
                     <div className="header2">
+                      {alert[key].length > 0 && <ArrowRightIcon className="right-arrow-icon" />}
                       {alert[key].map(updatedDetails => {
                         return (
                           Object.keys(updatedDetails).map(updatedDetail => {
@@ -213,7 +174,8 @@ const Alerts = () => {
           data?.map(dataObj => {
             return (
               <>
-                <div className="header2">
+                <div className="header2 odd-even-background">
+                  {Object.keys(dataObj).length > 0 && <ArrowRightIcon className="right-arrow-icon" />}
                   {
                     Object.keys(dataObj).map(key => {
                       return (
@@ -237,13 +199,19 @@ const Alerts = () => {
   }
 
   const expandPanel = async (event, expanded, alert) => {
-    if (!alert.Status || alert.Status === 'unread') {
-      const url = `/status/setalert`;
-      await Axios.post(url,
-        {
-          "emailAdd": authService.getUserName(),
-          "cve_id": alert.CVEID
-        });
+    if (alert.Status === 'unread') {
+      setAlert(alert, false)
+      /*  try {
+         const url = `/status/setalert`;
+         await Axios.post(url,
+           {
+             "emailAdd": authService.getUserName(),
+             "cve_id": alert.CVEID
+           });
+ 
+       } catch (error) {
+         console.error(error);
+       } */
 
     }
   }
@@ -274,6 +242,7 @@ const Alerts = () => {
                     aria-controls="panel1a-content"
                     id="panel1a-header"
                     onex
+                    className={alert?.Status === 'unread' ? 'bold-font' : null}
                   >
                     {getSummary(alert, index)}
                   </ExpansionPanelSummary>

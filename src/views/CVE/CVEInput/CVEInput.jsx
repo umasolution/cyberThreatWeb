@@ -79,7 +79,7 @@ const CVEInput = ({ searchByCVE, cveInput, changeSearchByCVE, keyPress, handleCh
               alarmAlreadySet ? (
                 <Tooltip title="Remove Alert">
                   <NotificationsOffIcon
-                    style={{ marginLeft: '10px' }}
+                    style={{ marginLeft: '10px', color:'red' }}
                     onClick={setAlert}
                   />
                 </Tooltip>
@@ -87,7 +87,7 @@ const CVEInput = ({ searchByCVE, cveInput, changeSearchByCVE, keyPress, handleCh
                 : (
                   <Tooltip title="Set Alert">
                     <AddAlertIcon
-                      style={{ marginLeft: '10px' }}
+                      style={{ marginLeft: '10px', color:'#3949ab' }}
                       onClick={setAlert}
                     />
                   </Tooltip>

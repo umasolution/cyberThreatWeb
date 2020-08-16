@@ -13,6 +13,7 @@ const CVETextField = ({ cveInput, keyPress, handleChangeCVE }) => {
       style={{
         width: "200px",
         background: "white",
+        borderRadius: '8px',
       }}
       id="cve"
       placeholder="Search CVEs"

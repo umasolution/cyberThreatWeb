@@ -6,6 +6,8 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import React from 'react';
 import Paper from '@material-ui/core/Paper';
+import './PackageJSON.css';
+import { getFontColorBySeverity, getBackgroundColorBySeverity } from './../../../../Util/Util';
 
 const useStyles = makeStyles((theme) => ({
     borderDiv: {
@@ -36,53 +38,65 @@ const PackageJSON = ({ packageJSON }) => {
     const classes = useStyles();
 
 
-    const printValues = (key,index,data) => {
+    const printValues = (key, index, data) => {
         return (
             <ExpansionPanel>
                 <ExpansionPanelSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header-custom"
                 >
 
                     {Object.keys(key).map(moduleKey => {
                         return (
-                                    <div key={moduleKey}>
-                                        <Typography
-                                            variant="h6"
-                                            color="textPrimary"
-                                            className={classes.title}
-                                        >
-                                            {moduleKey}
-                                        </Typography>
+                            moduleKey !== 'Severity' ? (
+                                <div key={moduleKey}>
+                                    <Typography
+                                      variant="h6"
+                                      color="textPrimary"
+                                      className={classes.title}
+                                    >
+                                        {moduleKey}
+                                    </Typography>
 
-                                        {' '}
-                                        <Typography className={classes.secondaryText}>
-                                            {key[moduleKey]}
-                                        </Typography>
-                                    </div>
-                                 
+                                    {' '}
+                                    <Typography className={classes.secondaryText}>
+                                        {key[moduleKey]}
+                                    </Typography>
+                                </div>
+                            ) : null
                         )
                     })}
+                    <div
+                        style={{
+                            backgroundColor: getBackgroundColorBySeverity(key.Severity),
+                 color: getFontColorBySeverity(key.Severity),
+                }}
+                      className="severity-end severity-div"
+                    >
+                        <Typography className={classes.secondaryText}>
+                            {key.Severity}
+                        </Typography>
+                    </div>
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails style={{ display: 'block', flexWrap: 'wrap' }}>
                     {Object.keys(data).map(moduleKey => {
                         return (
-                            
-                                    <div key={moduleKey}>
-                                        <Typography
-                                            variant="h6"
-                                            color="textPrimary"
-                                            className={classes.title}
-                                        >
-                                            {moduleKey}
-                                        </Typography>
-                                        <Typography className={classes.secondaryText}>
-                                            {data[moduleKey]}
-                                        </Typography>
-                                        {' '}
 
-                                    </div>
+                            <div key={moduleKey} className="odd-even-background">
+                                <Typography
+                                  variant="h6"
+                                  color="textPrimary"
+                                  className={classes.title}
+                                >
+                                    {moduleKey}
+                                </Typography>
+                                <Typography className={classes.secondaryText}>
+                                    {data[moduleKey]}
+                                </Typography>
+                                {' '}
+
+                            </div>
                         )
                     })}
                 </ExpansionPanelDetails>
@@ -95,11 +109,11 @@ const PackageJSON = ({ packageJSON }) => {
     return (
         <div>
             {
-                packageJSON.header.map((value,index) => {
+                packageJSON.header.map((value, index) => {
                     return (
-                        <div /* key={value} */>
+                        <div>
                             <Paper className={classes.borderDiv}>
-                                {printValues(value,index,packageJSON.data[index])}
+                                {printValues(value, index, packageJSON.data[index])}
                             </Paper>
                         </div>
                     )

@@ -17,6 +17,16 @@
   display: block;
 }
 
-.updated-detail{
+.updated-detail {
   margin: 10px 10px 0 0;
 }
+
+.right-arrow-icon {
+  margin-top: 15px;
+}
+
+.bold-font {
+  font-weight: bold !important;
+}
+
+

@@ -1,6 +1,6 @@
 import {
     Box, Container, Grid, LinearProgress, makeStyles, Typography, ExpansionPanel, ExpansionPanelSummary,
-    ListItem, ListItemIcon, ListItemText, ExpansionPanelDetails, Divider
+    ListItem, ListItemIcon, ListItemText, ExpansionPanelDetails, Divider, Paper
 } from '@material-ui/core';
 import ExpandMoreIcon  from '@material-ui/icons/ExpandMore';
 import Axios from 'axios';
@@ -93,10 +93,11 @@ const ProjectsReports = () => {
 
     const getPanelDetails = (histories, reportType) => {
         return histories.map(history => {
-            return <div className={classes.panelMainDiv}>{Object.keys(history).map(historyKey => {
+            return <Paper elevation={3} style={{padding: '8px'}}>
+                {Object.keys(history).map(historyKey => {
                 return (
                     <>
-                    <div style={{ display: 'block' }}>
+                    <div className="odd-even-background" style={{ display: 'block' }}>
                     <Typography
                       variant="h6"
                       color="textPrimary"
@@ -140,7 +141,7 @@ const ProjectsReports = () => {
                          
                 )
             })}
-            </div>
+            </Paper>
         })
 
     }

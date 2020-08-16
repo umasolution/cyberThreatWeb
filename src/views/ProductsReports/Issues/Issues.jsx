@@ -154,27 +154,17 @@ const Issues = ({ issues, reportName, reportType }) => {
               {state.isHighIssueChecked &&
                 issues.High ?
                 <>
-                  <h6 className="details-header" style={{ display: 'block' }}>
-                    High
-                 </h6>
                   <PackageJSON jsonName="High" packageJSON={issues.High} />
-
                 </>
                 : ''}
               {state.isMediumIssueChecked &&
                 (issues.Medium || issues.medium) ?
                 <>
-                  <h6 className="details-header" style={{ display: 'block' }}>
-                    Medium
-                 </h6>
                   <PackageJSON jsonName="Medium" packageJSON={issues.Medium ? issues.Medium : issues.medium} />
                 </>
                 : ''}
               {state.isLowIssueChecked &&
                 issues.Low ? <>
-                  <h6 className="details-header" style={{ display: 'block' }}>
-                    Low
-                 </h6>
                   <PackageJSON jsonName="Low" packageJSON={issues.Low} />
                 </>
                 : ''}
@@ -192,20 +182,9 @@ const Issues = ({ issues, reportName, reportType }) => {
       spacing={1}
       style={{ display: 'block', margin: '5px' }}
     >
-      {
-        reportType === 'language' || reportType === 'application' || reportType === 'platform' ?
-          (
-            <div className={classes.root}>
-              {getLanguageReport()}
-            </div>
-          )
-          : (
-            <div>
-              {getPlatformResult()}
-            </div>
-          )
-      }
-
+      <div className={classes.root}>
+        {getLanguageReport()}
+      </div>
     </Grid>
   );
 };

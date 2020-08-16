@@ -24,7 +24,7 @@ function TeamTasks({ className, project_vuln_details, ...rest }) {
 
   const rowRenderer = ({ index, isScrolling, key, style }) => {
     return searchedLibDetails && (
-      <div key={key} style={style}>
+      <div className="odd-even-background"  key={key} style={style}>
         <ListItem
           classes={{ divider: classes.itemDivider }}
           divider

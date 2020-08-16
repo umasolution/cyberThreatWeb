@@ -68,17 +68,15 @@ const DockerSummaries = ({ summary, reportType, headerDate, projectName }) => {
                   return (
                     state[key] && Object.keys(summary[key].Issues).length > 0 ? (
                       <>
-                        <h6 className="details-header" style={{color: 'red'}}> 
-                          {key}
-                        </h6>
-                        <Divider className="divider"/>
+
                         <ReportSummary
                           summary={summary[key].summary}
                           headerDate={headerDate}
                           projectName={projectName}
                           isDocker={true}
                           divId={key}
-                           />
+                        />
+                        <Divider className="divider" />
                       </>
                     ) : ''
                   )

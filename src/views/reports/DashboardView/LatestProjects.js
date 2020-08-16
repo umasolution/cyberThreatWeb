@@ -98,7 +98,12 @@ function LatestProjects({ className, project_details, ...rest }) {
                 fontSize: 16,
                 fontFamily: '"Montserrat", sans-serif',
                 color: '#546e7a',
-              }
+              },
+              rowStyle: x => {
+                if (x.tableData.id % 2 === 0) {
+                    return {backgroundColor: "#e7e7ef"}
+                }
+            }
             }}
           />
         </ThemeProvider>

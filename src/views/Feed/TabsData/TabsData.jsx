@@ -15,6 +15,7 @@ import React from 'react';
 import CWEPieChart from "../../ProductsReports/ReportSummary/CWEPieChart/CWEPieChart";
 import SeverityBarChart from "../../ProductsReports/ReportSummary/SeverityBarChart/SeverityBarChart";
 import './TabsData.css';
+import { getBackgroundColorBySeverity, getFontColorBySeverity } from './../../../Util/Util';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,18 +36,15 @@ const TabsData = ({ reportType, tabsData, expandPanel, bgcolor }) => {
     const severityColumn = columns.find(column => column.field === 'severity');
     severityColumn.render = rowData => {
       const rowDataSeverity = rowData.severity?.toLowerCase();
-      const backgroundColor = rowDataSeverity === 'high' ? 'red'
-        : rowDataSeverity === 'medium' ? 'yellow'
-          : 'green';
-      const color = rowDataSeverity === 'medium' ? 'black' : 'white';
+      const backgroundColor = getBackgroundColorBySeverity(rowDataSeverity);
+      const color = getFontColorBySeverity(rowDataSeverity);
       return (
         <div
           style={{
-            backgroundColor,
-            color,
-            textAlign: 'center',
-            padding: '10px'
+            backgroundColor: backgroundColor,
+            color: color,
           }}
+          className="severity-div"
         >
           {rowData.severity}
         </div>
@@ -59,6 +57,22 @@ const TabsData = ({ reportType, tabsData, expandPanel, bgcolor }) => {
         columns={columns}
         data={tabData.tableData.data}
         style={{ width: '100%' }}
+        options={{
+          cellStyle: {
+            fontSize: 13,
+            fontFamily: '"Montserrat", sans-serif',
+          },
+          headerStyle: {
+            fontSize: 16,
+            fontFamily: '"Montserrat", sans-serif',
+            color: '#546e7a',
+          },
+          rowStyle: x => {
+            if (x.tableData.id % 2 === 0) {
+                return {backgroundColor: "#e7e7ef"}
+            }
+        }
+        }}
       />
     );
   };
@@ -97,7 +111,7 @@ const TabsData = ({ reportType, tabsData, expandPanel, bgcolor }) => {
             bgColor="white"
             width={width}
             height={height}
-            title="Vulnerabilities"
+            title="CVE vs Non-CVE"
           />
         }
         {tabData.severity ? <SeverityBarChart

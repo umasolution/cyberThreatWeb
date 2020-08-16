@@ -98,7 +98,7 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                                     <Paper className="paper">
                                         {Object.keys(data).map(lan => {
                                             return (
-                                                <p key={lan}>
+                                                <p key={lan} className="odd-even-background">
                                                     <span style={{ marginRight: '10px' }}>
 
 
@@ -265,7 +265,7 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                                     </>
                                 )
                                     : ''}
-                                <Grid container spacing={1}>
+                                <Grid container spacing={0}>
                                     <Grid item xs={6}>
                                         {Object.keys(cveNVDDetails.Metadata).map((key, index) => {
                                             return index > 4 && key !== 'Base Score' ? (

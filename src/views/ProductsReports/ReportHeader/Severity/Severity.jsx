@@ -1,5 +1,7 @@
 import { makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
+import { getBackgroundColorBySeverity, getFontColorBySeverity } from './../../../../Util/Util';
+
 
 const useStyles = makeStyles((theme) => ({
   mainGrid: {
@@ -38,7 +40,10 @@ const Severity = ({ severity }) => {
               >
                 {value}
               </Typography>
-              {severity[value]}
+              <span className="severity-div" style={{backgroundColor: getBackgroundColorBySeverity(value),
+                 color: getFontColorBySeverity(value) }}>
+                {severity[value]}
+              </span>
             </div>
           )
         }

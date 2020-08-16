@@ -8,8 +8,6 @@ const Remediation = ({data}) => {
         Object.keys(data).map(key => {
           return (
             <div className="panelMainDiv">
-             <h5 style={{display: 'block'}} className="details-header">  {key} </h5>
-             <br/>
               <div className="panelMainDiv display-div">
               {
                 Object.keys(data[key]).map(dataKey => {

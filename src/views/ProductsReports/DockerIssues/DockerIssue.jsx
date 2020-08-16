@@ -35,9 +35,6 @@ const DockerIssue = ({ fileName, issues }) => {
   return (
     <div>
       <div className="dockerIssue">
-        <h6 className="details-header" style={{ color: 'red' }}>
-          {`${fileName} (${Object.keys(issues).map(issue => issues[issue].length).reduce((total, num) => total + num)})`}
-        </h6>
         <List component="nav" aria-label="main mailbox folders">
           {
             Object.keys(state).length === fileNames.length ? fileNames.map(name => {
