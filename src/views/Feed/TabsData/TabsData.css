@@ -7,3 +7,8 @@
 .justifyAround {
   justify-content: space-around !important;
 }
+
+.language-icon {
+  margin-top: -66px;
+  margin-left: -35px;
+}

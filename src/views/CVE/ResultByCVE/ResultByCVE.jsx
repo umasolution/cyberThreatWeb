@@ -58,21 +58,16 @@ const useStyles = makeStyles((theme) => ({
         marginRight: '5px',
         textTransform: 'capitalize'
     },
-    secondaryText: {
-        color: "inherit",
-        display: 'inline',
-        textTransform: 'capitalize'
-    },
-    borderDiv: {
-        border: '1px',
-        borderStyle: 'solid',
-        borderRadius: '10px',
-        borderColor: 'brown',
-        marginTop: '5px',
-        overflow: 'auto',
-        scrollBehavior: 'auto',
-        padding: '10px'
-    }
+    // borderDiv: {
+    //     border: '1px',
+    //     borderStyle: 'solid',
+    //     borderRadius: '10px',
+    //     borderColor: 'brown',
+    //     marginTop: '5px',
+    //     overflow: 'auto',
+    //     scrollBehavior: 'auto',
+    //     padding: '10px'
+    // }
 }));
 
 const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
@@ -84,18 +79,15 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
         if (cveTables && cveTables.length > 0) {
             return cveTables.map((table) => {
                 return (
-                    <div key={table} style={{ margin: '10px 0 10px 0' }}>
-                        <Typography
-                            variant="h5"
-                            className={classes.title}
-                        >
-                            {table.tableHeader}
-                        </Typography>
+                    <div key={table} style={{ margin: '16px 0 10px 0' }}>
                         {
                             table.data.map(data => {
                                 return (
                                     // <div key={data} className={classes.borderDiv} style={{ width: '100%' }}>
-                                    <Paper className="paper">
+                                    <Paper style={{ overflow: 'inherit',  }} className="paper">
+                                        <div className="background-shadow background-margin">
+                                            {table.tableHeader}
+                                        </div>
                                         {Object.keys(data).map(lan => {
                                             return (
                                                 <p key={lan} className="odd-even-background">
@@ -141,33 +133,31 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
             <Grid item xs={12}>
                 <Grid container spacing={1}>
                     <Grid item xs={4}>
-                        <Paper color="primary.main" className={[classes.paper, classes.borderDiv].join(' ')}>
-                            <Typography
-                                variant="h5"
-                                color="textPrimary"
-                                className={classes.title}
-                            >
-                                CVE
-                            </Typography>
-                            <Typography className={classes.secondaryText}>
-                                {cve}
-                            </Typography>
+                        <Paper color="primary.main" style={{ overflow: 'inherit' }} className={[classes.paper].join(' ')}>
+                            <div className="flex">
+                                <div className="background-shadow background-margin">
+                                    C
+                            </div>
+                                <Typography className="secondaryText right-p" >
+                                    {cve}
+                                </Typography>
+                            </div>
+
                         </Paper>
                     </Grid>
                     {
                         cveNVDDetails.Product ? (
                             <Grid item xs={4}>
-                                <Paper className={[classes.paper, classes.borderDiv].join(' ')}>
-                                    <Typography
-                                        variant="h5"
-                                        color="textPrimary"
-                                        className={classes.title}
-                                    >
-                                        Product
-                                    </Typography>
-                                    <Typography className={classes.secondaryText}>
-                                        {cveNVDDetails.Product}
-                                    </Typography>
+                                <Paper style={{ overflow: 'inherit' }} className={[classes.paper].join(' ')}>
+                                    <div className="flex">
+                                        <div className="background-shadow background-margin">
+                                            P
+                            </div>
+                                        <Typography className="secondaryText right-p" >
+                                            {cveNVDDetails.Product}
+                                        </Typography>
+                                    </div>
+
                                 </Paper>
                             </Grid>
                         )
@@ -176,18 +166,15 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                     {
                         cveNVDDetails.Vendor ? (
                             <Grid item xs={4}>
-                                <Paper className={[classes.paper, classes.borderDiv].join(' ')}>
-                                    <Typography
-                                        variant="h5"
-                                        color="textPrimary"
-                                        className={classes.title}
-                                    >
-                                        Vendor
-                                    </Typography>
-                                    <Typography className={classes.secondaryText}>
-                                        {cveNVDDetails.Vendor}
-                                    </Typography>
-
+                                <Paper style={{ overflow: 'inherit' }} className={[classes.paper, classes.borderDiv].join(' ')}>
+                                    <div className="flex">
+                                        <div className="background-shadow background-margin">
+                                            V
+                            </div>
+                                        <Typography className="secondaryText right-p" >
+                                            {cveNVDDetails.Vendor}
+                                        </Typography>
+                                    </div>
                                 </Paper>
                             </Grid>
                         )
@@ -219,13 +206,11 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                                 {Object.keys(cveNVDDetails.Dashboard).map(key => {
                                     return (
                                         <>
-                                            <Paper key={key} elevation={3} className={classes.paper}>
-                                                <Typography
-                                                    variant="h5"
-                                                    className={classes.title}
-                                                >
+                                            <Paper style={{ overflow: 'inherit', marginTop: '16px' }} key={key} elevation={3} className={classes.paper}>
+                                                <div className="background-shadow background-margin">
                                                     {key}
-                                                </Typography>
+                                                </div>
+
                                                 {
                                                     key === 'Reference' ? getReference(cveNVDDetails, key) : (
                                                         <Typography className={classes.secondaryText}>
@@ -245,21 +230,19 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                             <Grid item xs={6}>
                                 {cveNVDDetails.Metadata['Base Score'] ? (
                                     <>
-                                        <Paper elevation={3} className={classes.paper}>
-                                            <Typography
-                                                variant="h5"
-                                                className="base-score"
-                                            >
-                                                Base Score
-                                            </Typography>
-                                            <Typography
-                                                variant="h1"
-                                                color="secondary"
-                                                className="base-score-value"
-                                            >
-                                                {cveNVDDetails.Metadata['Base Score']}
-                                            </Typography>
-
+                                        <Paper style={{ overflow: 'inherit', marginTop: '16px', marginLeft: '2px', }} elevation={3} className={classes.paper}>
+                                            <div className="flex">
+                                                <div className="background-shadow background-margin">
+                                                    Base Score
+                                                </div>
+                                                <Typography
+                                                    variant="h1"
+                                                    color="secondary"
+                                                    className="base-score-value"
+                                                >
+                                                    {cveNVDDetails.Metadata['Base Score']}
+                                                </Typography>
+                                            </div>
                                         </Paper>
                                         <Divider />
                                     </>
@@ -270,19 +253,19 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                                         {Object.keys(cveNVDDetails.Metadata).map((key, index) => {
                                             return index > 4 && key !== 'Base Score' ? (
                                                 <>
-                                                    <Paper key={key} elevation={3} className={classes.paper}>
-                                                        <Typography
-                                                            variant="h5"
-                                                            className={classes.title}
-                                                        >
-                                                            {key}
-                                                        </Typography>
+                                                    <Paper style={{ overflow: 'inherit', marginTop: '16px', marginLeft: '2px', }} key={key} elevation={3} className={classes.paper}>
+                                                        <div className="flex">
+                                                            <div className="background-shadow background-margin">
+                                                                {key}
+                                                            </div>
+                                                            <Typography
+                                                                className={classes.secondaryText}
 
-                                                        <Typography
-                                                            className={classes.secondaryText}
-                                                        >
-                                                            {cveNVDDetails.Metadata[key]}
-                                                        </Typography>
+                                                            >
+                                                                {cveNVDDetails.Metadata[key]}
+                                                            </Typography>
+                                                        </div>
+
                                                     </Paper>
                                                     <Divider />
                                                 </>
@@ -293,18 +276,17 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                                         {Object.keys(cveNVDDetails.Metadata).map((key, index) => {
                                             return index < 4 && key !== 'Base Score' ? (
                                                 <>
-                                                    <Paper key={key} elevation={3} className={classes.paper}>
-                                                        <Typography
-                                                            variant="h5"
-                                                            className={classes.title}
-                                                        >
-                                                            {key}
-                                                        </Typography>
-                                                        <Typography
-                                                            className={classes.secondaryText}
-                                                        >
-                                                            {cveNVDDetails.Metadata[key]}
-                                                        </Typography>
+                                                    <Paper style={{ overflow: 'inherit', marginTop: '16px', marginLeft: '10px', }} key={key} elevation={3} className={classes.paper}>
+                                                        <div className="flex">
+                                                            <div className="background-shadow background-margin">
+                                                                {key}
+                                                            </div>
+                                                            <Typography
+                                                                className={classes.secondaryText}
+                                                            >
+                                                                {cveNVDDetails.Metadata[key]}
+                                                            </Typography>
+                                                        </div>
 
                                                     </Paper>
                                                     <Divider />

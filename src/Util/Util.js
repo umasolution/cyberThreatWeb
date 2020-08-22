@@ -10,9 +10,9 @@ const isEmpty = (value) => {
 export default isEmpty;
 
 export const getBackgroundColorBySeverity = (severity) => {
-  return severity.toLowerCase() === "critical" ? "#b90000" : severity.toLowerCase() === "high" ? "red" : severity.toLowerCase() === "medium" ? "yellow" : "green";
+  return severity.toLowerCase() === "critical" ? "#b90000" : severity.toLowerCase() === "high" ? "red" : severity.toLowerCase() === "medium" ? "#ef9424" : "green";
 };
 
 export const getFontColorBySeverity = (severity) => {
-  return severity.toLowerCase() === 'medium' ? 'black' : 'white';
+  return 'white';
 };

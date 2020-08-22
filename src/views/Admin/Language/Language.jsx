@@ -8,16 +8,16 @@ import { useParams } from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme) => ({
-    borderDiv: {
-        border: '1px',
-        borderStyle: 'solid',
-        borderRadius: '10px',
-        borderColor: 'brown',
-        marginTop: '5px',
-        width: '1000px',
-        overflow: 'auto',
-        scrollBehavior: 'auto'
-    }
+    // borderDiv: {
+    //     border: '1px',
+    //     borderStyle: 'solid',
+    //     borderRadius: '10px',
+    //     borderColor: 'brown',
+    //     marginTop: '5px',
+    //     width: '1000px',
+    //     overflow: 'auto',
+    //     scrollBehavior: 'auto'
+    // }
 }));
 
 const Language = () => {

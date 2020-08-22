@@ -18,13 +18,13 @@ const useStyles = makeStyles((theme) => ({
     borderRight: `1px solid ${theme.palette.divider}`,
     width: '100%'
   },
-  borderDiv: {
-    border: '1px',
-    borderStyle: 'solid',
-    borderRadius: '10px',
-    borderColor: 'brown',
-    marginTop: '5px'
-  }
+  // borderDiv: {
+  //   border: '1px',
+  //   borderStyle: 'solid',
+  //   borderRadius: '10px',
+  //   borderColor: 'brown',
+  //   marginTop: '5px'
+  // }
 }));
 
 const Issues = ({ issues, reportName, reportType }) => {

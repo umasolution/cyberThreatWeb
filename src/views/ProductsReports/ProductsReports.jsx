@@ -124,7 +124,7 @@ const ProductsReports = () => {
   const getNonDockerTabs = () => {
     return (
       <>
-        <AppBar style={{ width: '100%' }} className="tabs" position="static">
+        <AppBar style={{ width: '100%',    boxShadow: 'none' }} className="tabs" position="static">
 
           <Tabs value={tabValue} onChange={handleChange} aria-label="simple tabs example">
             {productReportResponse.summary ? <Tab  className="summary-tab" label="Summary" /> : ''}
@@ -201,7 +201,6 @@ const ProductsReports = () => {
             (
               <>
                 <ReportHeader header={productReportResponse.header} />
-                <Divider />
                 {getTabs()}
               </>
             )

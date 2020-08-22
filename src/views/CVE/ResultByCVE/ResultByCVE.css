@@ -1,18 +1,48 @@
 .paper {
-    padding: 10px;
+  padding: 10px;
 }
 
 .base-score {
-    display: inline;
-    background: #3a75f9;
-    color: white;
-    padding: 5px;
+  display: inline;
+  background: #3a75f9;
+  color: white;
+  padding: 5px;
 }
 
 .base-score-value {
+  display: inline;
+  background: #f93a43;
+  color: white;
+  padding: 5px;
+  margin-left: 5px;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.background-shadow {
+  background: linear-gradient(60deg, #ec407a, #d81b60);
+  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14),
+    0 7px 10px -5px rgba(233, 30, 99, 0.4);
+  color: white;
+}
+
+.background-margin {
+  width: fit-content;
+  padding: 8px;
+  margin-top: -20px;
+  margin-left: -13px;
+  height: fit-content;
+}
+
+.secondaryText {
+    color: inherit;
     display: inline;
-    background: #f93a43;
-    color: white;
-    padding: 5px;
-    margin-left: 5px;
+    text-transform: capitalize;
+}
+
+.right-p {
+  margin-top: 18px;
 }

@@ -10,6 +10,7 @@ import './Feed.css';
 import TabsData from './TabsData/TabsData';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import CVETextField from './../CVE/CVEInput/CVETextField';
 
 
 
@@ -127,6 +128,11 @@ export const Feed = (/* {   } */) => {
                         )
                         )
                     }
+                    {/* <CVETextField
+                        cveInput={cveInput}
+                        keyPress={keyPress}
+                        handleChangeCVE={handleChangeCVE}
+                    /> */}
                 </div>
                 {
                     tabsData.map(data =>
@@ -153,7 +159,7 @@ export const Feed = (/* {   } */) => {
     }
 
     return (
-        <Container style={{paddingLeft: '0px', paddingRight: '0px',maxWidth: 'unset'}} maxWidth="lg">
+        <Container style={{ paddingLeft: '0px', paddingRight: '0px', maxWidth: 'unset' }} maxWidth="lg">
             <Grid style={{ width: '100%' }} container spacing={1}>
                 {loadingTabs ? getLoader() : null}
                 {tabsData.length > 0 && getTabsData()}

@@ -10,17 +10,17 @@ import './PackageJSON.css';
 import { getFontColorBySeverity, getBackgroundColorBySeverity } from './../../../../Util/Util';
 
 const useStyles = makeStyles((theme) => ({
-    borderDiv: {
-        // border: '1px',
-        // borderStyle: 'solid',
-        // borderRadius: '10px',
-        // borderColor: 'brown',
-        marginTop: '5px',
-        maxWidth: '1000px',
-        overflow: 'auto',
-        scrollBehavior: 'auto',
-        textTransform: 'capitalize'
-    },
+    // borderDiv: {
+    //     // border: '1px',
+    //     // borderStyle: 'solid',
+    //     // borderRadius: '10px',
+    //     // borderColor: 'brown',
+    //     marginTop: '5px',
+    //     maxWidth: '1000px',
+    //     overflow: 'auto',
+    //     scrollBehavior: 'auto',
+    //     textTransform: 'capitalize'
+    // },
     title: {
         color: theme.palette.primary.light,
         display: 'inline',

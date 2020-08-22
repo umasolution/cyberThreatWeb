@@ -6,7 +6,8 @@ import {
   ListItemIcon,
   ListItemText,
   makeStyles,
-  Paper
+  Paper,
+  Typography,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { cloneDeep } from 'lodash';
@@ -141,7 +142,7 @@ const TabsData = ({ reportType, tabsData, expandPanel, bgcolor }) => {
             return (
               <ExpansionPanel
                 key={tabData.appName}
-                style={{ borderLeft: `15px solid  ${bgcolor}`, width: '100%' }}
+                style={{ borderLeft: `15px solid  ${bgcolor}`, width: '100%', marginBottom: '16px' }}
                 onChange={(event, expanded) =>
                   expandPanel(event, expanded, tabData, reportType)}
               >
@@ -151,7 +152,7 @@ const TabsData = ({ reportType, tabsData, expandPanel, bgcolor }) => {
                   id="panel1a-header"
                 >
                   <ListItem key={tabData.appName}>
-                    <ListItemIcon>
+                    <ListItemIcon className="language-icon">
                       <img
                         className="languageImg"
                         src={`${process.env.PUBLIC_URL}/static/images1/${tabData.imageName}`}
@@ -159,7 +160,7 @@ const TabsData = ({ reportType, tabsData, expandPanel, bgcolor }) => {
                       />
                     </ListItemIcon>
                     <ListItemText
-                      primary={tabData.appName}
+                      primary={<Typography type="body2"  style={{ color: 'red', fontSize: '16px' }}>{tabData.appName}</Typography>}
                       secondary={tabData.description}
                     />
                   </ListItem>

@@ -61,9 +61,8 @@
 
 .severity-div {
   text-align: center;
-  border-radius: 10px solid;
-  border-style: outset;
   padding: 5px;
+  width: fit-content;
 }
 
 .MuiContainer-maxWidthLg{

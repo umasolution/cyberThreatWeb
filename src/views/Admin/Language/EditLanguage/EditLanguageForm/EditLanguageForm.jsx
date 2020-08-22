@@ -2,16 +2,16 @@ import React from 'react';
 import { makeStyles, Typography, Divider, TextField, Button } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
-    borderDiv: {
-      border: '1px',
-      borderStyle: 'solid',
-      borderRadius: '10px',
-      borderColor: 'brown',
-      marginTop: '5px',
-      width: '1000px',
-      overflow: 'auto',
-      scrollBehavior: 'auto'
-    }
+    // borderDiv: {
+    //   border: '1px',
+    //   borderStyle: 'solid',
+    //   borderRadius: '10px',
+    //   borderColor: 'brown',
+    //   marginTop: '5px',
+    //   width: '1000px',
+    //   overflow: 'auto',
+    //   scrollBehavior: 'auto'
+    // }
   }));
   
 const EditLanguageForm = ({data, propertyChange, type, onApprovOrReject}) => {

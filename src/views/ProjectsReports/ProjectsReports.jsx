@@ -2,23 +2,24 @@ import {
     Box, Container, Grid, LinearProgress, makeStyles, Typography, ExpansionPanel, ExpansionPanelSummary,
     ListItem, ListItemIcon, ListItemText, ExpansionPanelDetails, Divider, Paper
 } from '@material-ui/core';
-import ExpandMoreIcon  from '@material-ui/icons/ExpandMore';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import authService from 'src/services/authService';
-import MySnackbar from "../../Shared/Snackbar/MySnackbar";
-import CONSTANTS from "../../Util/Constants";
 import { useParams, Link } from 'react-router-dom';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import CONSTANTS from "../../Util/Constants";
+import MySnackbar from "../../Shared/Snackbar/MySnackbar";
 import Copy from '../../Util/Copy';
+import { getBackgroundColorBySeverity, getFontColorBySeverity } from '../../Util/Util';
 
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
         width: '100%',
-        backgroundColor: 'inherit', //theme.palette.background.paper,
-        paddingLeft: '16px !important', 
+        backgroundColor: 'inherit', // theme.palette.background.paper,
+        paddingLeft: '16px !important',
         paddingRight: '16px !important',
     },
     projectHeader: {
@@ -33,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     checkBoxes: {
         display: 'inline',
         margin: '0 10px 10px 0',
-      textTransform: 'capitalize'
+        textTransform: 'capitalize'
 
     }
 }));
@@ -61,7 +62,7 @@ const ProjectsReports = () => {
                 {
                     emailAdd: authService.getUserName()
                 });
-                // check response exist
+            // check response exist
             if (Object.keys(response.data['report type']).length === 0) {
                 updateSnackbar(true, CONSTANTS.DATA_NOT_FOUND);
                 setLoading(false);
@@ -95,192 +96,217 @@ const ProjectsReports = () => {
 
     const getPanelDetails = (histories, reportType) => {
         return histories.map(history => {
-            return <Paper elevation={3} style={{padding: '8px'}}>
+            return (
+<Paper elevation={3} style={{ padding: '8px' }}>
                 {Object.keys(history).map(historyKey => {
-                return (
-                    <>
-                    <div className="odd-even-background" style={{ display: 'block' }}>
-                    <Typography
-                      variant="h6"
-                      color="textPrimary"
-                      style={{ display: 'inline' }}
-                    >
-                        {historyKey} {' '}
-                    </Typography>
-                            {historyKey !== 'severity'
-                        ? (
-                            <>
-                            {
-                                historyKey !== 'Report Name' ? ( 
-                                     
-                                    history[historyKey] 
-                                    
-                                ) : (
-                                    <Link target="_blank" to={`/ProductsReports/${reportType}/${history[historyKey]}`}>{history[historyKey]}</Link>
-                                )
-                            }
-                                
-                            </>
-                        )
-                        :
-                        Object.keys(history[historyKey]).map(severity => {
-                            return (
-                                <div style={{ display: 'inline' }}>
-                                    <Typography
-                                      variant="h6"
-                                      color="textSecondary"
-                                      style={{ display: 'inline', marginLeft: '15px' , marginRight: '5px' }}
-                                    >
-                                        {severity} 
-                                    </Typography>
-                                    {history[historyKey][severity]}
-                                </div>
-    
-                            )
-                        })}
-                </div>
-                </>
-                         
-                )
-            })}
-            </Paper>
+                    return (
+                        <>
+                            <div className="odd-even-background" style={{ display: 'block' }}>
+                                <Typography
+                                  variant="h6"
+                                  color="textPrimary"
+                                  style={{ display: 'inline' }}
+                                >
+                                    {historyKey} 
+{' '}
+{' '}
+                                </Typography>
+                                {historyKey !== 'severity'
+                                    ? (
+                                        <>
+                                            {
+                                                historyKey !== 'Report Name' ? (
+
+                                                    history[historyKey]
+
+                                                ) : (
+                                                        <Link target="_blank" to={`/ProductsReports/${reportType}/${history[historyKey]}`}>{history[historyKey]}</Link>
+                                                    )
+                                            }
+
+                                        </>
+                                    )
+                                    :
+                                    Object.keys(history[historyKey]).map(severity => {
+                                        return (
+                                            <div style={{ display: 'inline' }}>
+                                                <Typography
+                                                  variant="h6"
+                                                  color="textSecondary"
+                                                  style={{ display: 'inline', marginLeft: '15px', marginRight: '5px' }}
+                                                >
+                                                    {severity}
+                                                </Typography>
+                                                <span
+                                                  className="severity-div"
+                                                  style={{
+                                                    backgroundColor: getBackgroundColorBySeverity(severity),
+                                                    color: getFontColorBySeverity(severity)
+                                                }}
+                                                >
+                                                    {history[historyKey][severity]}
+                                                </span>
+
+                                            </div>
+
+                                        )
+                                    })}
+                            </div>
+                        </>
+
+                    )
+                })}
+</Paper>
+)
         })
 
     }
 
     const getHeader = (project, reportType) => {
         return (
-        <ListItem key={project.header['Report Name']}>
-        <ListItemText
-          primary={<Typography type="body2" className={classes.projectHeader}>
-          <Link target="_blank" to={`/ProductsReports/${reportType}/${project.header['Report Name']}`}>{`${project.header['Project Name']}`}</Link>
-          </Typography>}
-          secondary={
-<div>
-                    {
-                        Object.keys(project.header).map(headerValue => {
-                            return (
-                                headerValue !== 'Project Name' && headerValue !== 'Report Name' ?
-                                <>
-                                    <div style={{ display: 'inline'}}>
-                                        <Typography
-                                          variant="h6"
-                                          color="textPrimary"
-                                          style={{ display: 'inline', textTransform: 'capitalize', marginRight: '5px' }}
-                                        >
-                                            {headerValue !== 'dependencies' ? headerValue : `Scanned ${headerValue}` }
-                                        </Typography>
-                                       
-                                                {headerValue !== 'severity'
-                                            ? (
-                                                <p style={{ display: 'inline', marginRight: '10px'}}>
-                                                   
-                                                    {project.header[headerValue]}
-                                                   
-                                                </p>
-                                            )
-                                            :
-                                            Object.keys(project.header[headerValue]).map(severity => {
-                                                return (
-                                                    <div style={{ display: 'inline', marginRight: '10px'}}>
-                                                        <Typography
-                                                          variant="h6"
-                                                          color="textSecondary"
-                                                          style={{ display: 'inline', marginLeft: '15px' }}
-                                                        >
-                                                            {severity}
-                                                        </Typography>
-                                                        (
-                                                        <p style={{ display: 'inline'}}>
-                                                        {project.header[headerValue][severity]}
-                                                        </p>
+            <ListItem key={project.header['Report Name']}>
+                <ListItemText
+                  primary={(
+<Typography type="body2" className={classes.projectHeader}>
+                        <Link target="_blank" to={`/ProductsReports/${reportType}/${project.header['Report Name']}`}>{`${project.header['Project Name']}`}</Link>
+</Typography>
+)}
+                  secondary={(
+                        <div>
+                            {
+                                Object.keys(project.header).map(headerValue => {
+                                    return (
+                                        headerValue !== 'Project Name' && headerValue !== 'Report Name' ? (
+                                            <>
+                                                <div style={{ display: 'inline' }}>
+                                                    <Typography
+                                                      variant="h6"
+                                                      color="textPrimary"
+                                                      style={{ display: 'inline', textTransform: 'capitalize', marginRight: '5px' }}
+                                                    >
+                                                        {headerValue !== 'dependencies' ? headerValue : `Scanned ${headerValue}`}
+                                                    </Typography>
+
+                                                    {headerValue !== 'severity'
+                                                        ? (
+                                                            <p style={{ display: 'inline', marginRight: '10px' }}>
+
+                                                                {project.header[headerValue]}
+
+                                                            </p>
                                                         )
-                                                    </div>
+                                                        :
+                                                        Object.keys(project.header[headerValue]).map(severity => {
+                                                            return (
+                                                                <div style={{ display: 'inline', marginRight: '10px' }}>
+                                                                    <Typography
+                                                                      variant="h6"
+                                                                      color="textSecondary"
+                                                                      style={{ display: 'inline', marginLeft: '15px' }}
+                                                                    >
+                                                                        {severity}
+                                                                    </Typography>
 
-                                                )
-                                            })}
+                                                                    <p style={{ display: 'inline' }}>
+                                                                        <span
+                                                                          className="severity-div"
+                                                                          style={{
+                                                                            backgroundColor: getBackgroundColorBySeverity(severity),
+                                                                            color: getFontColorBySeverity(severity)
+                                                                        }}
+                                                                        >
+                                                                            {project.header[headerValue][severity]}
+                                                                        </span>
 
-                                    </div>
+                                                                    </p>
+
+                                                                </div>
+
+                                                            )
+                                                        })}
+
+                                                </div>
 
 
 
-                                </>
-                                : ''
-                            )
-                        })
-                    }
+                                            </>
+                                          )
+                                            : ''
+                                    )
+                                })
+                            }
 
-            </div>
-          }
-        >
-            
-        </ListItemText>
-    </ListItem>);
+                        </div>
+                      )}
+                />
+            </ListItem>
+);
     }
 
     const handleCheckBoxChange = (event, type) => {
         const copy = Copy(projectListResponse);
         const report = copy.find(data => data['report type'] === type);
-        if(report){
+        if (report) {
             report.isShowing = event.target.checked;
             setProjectListResponse(copy);
         }
-        
+
     }
 
     const getProjectsResponses = () => {
         return (
-<>
-<div className={classes.checkBoxes}>
-{
-    reportTypes.map(type => <FormControlLabel
-                  control={(
-                    <Checkbox
-                    color="red"
-                      checked={projectListResponse.findIndex(res => res['report type'] === type && res.isShowing ) !== -1}
-                      onChange={(event) => handleCheckBoxChange(event,type)}
-                      name={type}
-                      color="primary"
-                    />
-                  )}
-                  label={type}
-                  
-                />
-                )
-}
-</div>
+            <>
+                <div className={classes.checkBoxes}>
+                    {
+                        reportTypes.map(type => (
+<FormControlLabel
+  control={(
+                                <Checkbox
+                                  color="red"
+                                  checked={projectListResponse.findIndex(res => res['report type'] === type && res.isShowing) !== -1}
+                                  onChange={(event) => handleCheckBoxChange(event, type)}
+                                  name={type}
+                                  color="primary"
+                                />
+                            )}
+  label={type}
+/>
+)
+                        )
+                    }
+                </div>
 
-            {
-                projectListResponse.map(project => {
-                   return project.isShowing ? project.results.map(result => {
+                {
+                    projectListResponse.map(project => {
+                        return project.isShowing ? project.results.map(result => {
                             return (
                                 <>
-                                <ExpansionPanel
-                                  key={result.header['Report Name']}
-                                  style={{borderLeft: `15px solid  ${project['bgcolor']}`}}
-                                >
-                                    <ExpansionPanelSummary
-                                      expandIcon={<ExpandMoreIcon />}
-                                      aria-controls="panel1a-content"
-                                      id="panel1a-header"
+                                    <ExpansionPanel
+                                      key={result.header['Report Name']}
+                                      style={{ borderLeft: `15px solid  ${project.bgcolor}` }}
                                     >
-                                        
-                                        {getHeader(result, project['report type'])}
-                                    </ExpansionPanelSummary>
-                                    <ExpansionPanelDetails style={{display:'block', width: '100%'}}>
-                                         {getPanelDetails(result.history, project['report type'])} 
-                                    </ExpansionPanelDetails>
-                                </ExpansionPanel>
-                            <Divider/>
-        </>
+                                        <ExpansionPanelSummary
+                                          expandIcon={<ExpandMoreIcon />}
+                                          aria-controls="panel1a-content"
+                                          id="panel1a-header"
+                                        >
+
+                                            {getHeader(result, project['report type'])}
+                                        </ExpansionPanelSummary>
+                                        <ExpansionPanelDetails style={{ display: 'block', width: '100%' }}>
+                                            {getPanelDetails(result.history, project['report type'])}
+                                        </ExpansionPanelDetails>
+                                    </ExpansionPanel>
+                                    <Divider />
+                                </>
                             )
-                         
-                    }) : ''
-                })
-                
-            }
-</>
-);
+
+                        }) : ''
+                    })
+
+                }
+            </>
+        );
     }
 
 

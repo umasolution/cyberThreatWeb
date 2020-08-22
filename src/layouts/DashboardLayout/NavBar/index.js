@@ -17,7 +17,8 @@ import {
   List,
   ListSubheader,
   Typography,
-  makeStyles
+  makeStyles,
+  IconButton
 } from '@material-ui/core';
 import ReceiptIcon from '@material-ui/icons/ReceiptOutlined';
 import {
@@ -45,6 +46,8 @@ import Logo from 'src/components/Logo';
 import NavItem from './NavItem';
 import authService from './../../../services/authService';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
 const userName = authService.getUserName();
 
@@ -477,6 +480,11 @@ function NavBar({ openMobile, onMobileClose, }) {
     </Box>
   );
 
+  const [open, setOpen] = React.useState(false);
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
   return (
     <>
       <Hidden lgUp>
@@ -487,6 +495,11 @@ function NavBar({ openMobile, onMobileClose, }) {
           open={openMobile}
           variant="temporary"
         >
+        {/*   <div className={classes.toolbar}>
+          <IconButton onClick={handleDrawerClose}>
+              <ChevronLeftIcon />  
+          </IconButton>
+        </div> */}
           {content}
         </Drawer>
       </Hidden>
@@ -497,6 +510,11 @@ function NavBar({ openMobile, onMobileClose, }) {
           open
           variant="persistent"
         >
+         {/*  <div className={classes.toolbar}>
+          <IconButton onClick={handleDrawerClose}>
+            <ChevronLeftIcon /> 
+          </IconButton>
+        </div> */}
           {content}
         </Drawer>
       </Hidden>
