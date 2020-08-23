@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Plotly } from "../../../../Util/Constants";
 import { getBackgroundColorBySeverity } from '../../../../Util/Util';
 
-const SeverityBarChart = ({ severity, divId, bgColor = "#f1f1f1", width = 360, height = 280 }) => {
+const SeverityBarChart = ({ severity, divId, displayModeBar = true, title = 'Severity', bgColor = "#f1f1f1", width = 360, height = 280 }) => {
 
   useEffect(() => {
     if (severity) {
@@ -20,22 +20,22 @@ const SeverityBarChart = ({ severity, divId, bgColor = "#f1f1f1", width = 360, h
           x,
           y,
           type: 'bar',
-          automargin: true,
+          // automargin: true,
           marker: {
             color: colors
           }
         }
       ];
       const layout = {
-        title: 'Severity',
+        title,
         width,
         height,
-        // margin: { "t": 0, "b": 0, "l": 0, "r": 0 },
+        margin: { "t": 10, "b": 20, "l": 30, "r": 0 },
         showlegend: false,
         plot_bgcolor: bgColor,
         paper_bgcolor: bgColor
       };
-      const config = { responsive: true };
+      const config = { responsive: true, displayModeBar };
       Plotly.newPlot(`SeverityBarChartDiv-${divId}`, data, layout, config);
     }
   }, [])

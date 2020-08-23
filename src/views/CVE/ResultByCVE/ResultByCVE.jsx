@@ -84,7 +84,7 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                             table.data.map(data => {
                                 return (
                                     // <div key={data} className={classes.borderDiv} style={{ width: '100%' }}>
-                                    <Paper style={{ overflow: 'inherit',  }} className="paper">
+                                    <Paper className="paper paper-border">
                                         <div className="background-shadow background-margin">
                                             {table.tableHeader}
                                         </div>
@@ -133,7 +133,7 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
             <Grid item xs={12}>
                 <Grid container spacing={1}>
                     <Grid item xs={4}>
-                        <Paper color="primary.main" style={{ overflow: 'inherit' }} className={[classes.paper].join(' ')}>
+                        <Paper color="primary.main"  className={[classes.paper, 'paper-border'].join(' ')}>
                             <div className="flex">
                                 <div className="background-shadow background-margin">
                                     C
@@ -148,7 +148,7 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                     {
                         cveNVDDetails.Product ? (
                             <Grid item xs={4}>
-                                <Paper style={{ overflow: 'inherit' }} className={[classes.paper].join(' ')}>
+                                <Paper  className={[classes.paper, 'paper-border'].join(' ')}>
                                     <div className="flex">
                                         <div className="background-shadow background-margin">
                                             P
@@ -166,7 +166,7 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                     {
                         cveNVDDetails.Vendor ? (
                             <Grid item xs={4}>
-                                <Paper style={{ overflow: 'inherit' }} className={[classes.paper, classes.borderDiv].join(' ')}>
+                                <Paper   className={[classes.paper, 'paper-border'].join(' ')}>
                                     <div className="flex">
                                         <div className="background-shadow background-margin">
                                             V
@@ -206,7 +206,7 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                                 {Object.keys(cveNVDDetails.Dashboard).map(key => {
                                     return (
                                         <>
-                                            <Paper style={{ overflow: 'inherit', marginTop: '16px' }} key={key} elevation={3} className={classes.paper}>
+                                            <Paper style={{ overflow: 'inherit', marginTop: '16px' }} key={key} elevation={3} className={[classes.paper, 'paper-border'].join(' ')}>
                                                 <div className="background-shadow background-margin">
                                                     {key}
                                                 </div>
@@ -230,7 +230,7 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                             <Grid item xs={6}>
                                 {cveNVDDetails.Metadata['Base Score'] ? (
                                     <>
-                                        <Paper style={{ overflow: 'inherit', marginTop: '16px', marginLeft: '2px', }} elevation={3} className={classes.paper}>
+                                        <Paper style={{ overflow: 'inherit', marginTop: '16px', marginLeft: '2px', }} elevation={3} className={[classes.paper, 'paper-border'].join(' ')}>
                                             <div className="flex">
                                                 <div className="background-shadow background-margin">
                                                     Base Score
@@ -253,7 +253,7 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                                         {Object.keys(cveNVDDetails.Metadata).map((key, index) => {
                                             return index > 4 && key !== 'Base Score' ? (
                                                 <>
-                                                    <Paper style={{ overflow: 'inherit', marginTop: '16px', marginLeft: '2px', }} key={key} elevation={3} className={classes.paper}>
+                                                    <Paper style={{ overflow: 'inherit', marginTop: '16px', marginLeft: '2px', }} key={key} elevation={3} className={[classes.paper, 'paper-border'].join(' ')}>
                                                         <div className="flex">
                                                             <div className="background-shadow background-margin">
                                                                 {key}
@@ -276,7 +276,7 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                                         {Object.keys(cveNVDDetails.Metadata).map((key, index) => {
                                             return index < 4 && key !== 'Base Score' ? (
                                                 <>
-                                                    <Paper style={{ overflow: 'inherit', marginTop: '16px', marginLeft: '10px', }} key={key} elevation={3} className={classes.paper}>
+                                                    <Paper style={{ overflow: 'inherit', marginTop: '16px', marginLeft: '10px', }} key={key} elevation={3} className={[classes.paper, 'paper-border'].join(' ')}>
                                                         <div className="flex">
                                                             <div className="background-shadow background-margin">
                                                                 {key}

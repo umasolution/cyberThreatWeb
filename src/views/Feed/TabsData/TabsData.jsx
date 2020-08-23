@@ -6,8 +6,8 @@ import {
   ListItemIcon,
   ListItemText,
   makeStyles,
-  Paper,
-  Typography,
+
+  Typography
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { cloneDeep } from 'lodash';
@@ -15,15 +15,15 @@ import MaterialTable from 'material-table';
 import React from 'react';
 import CWEPieChart from "../../ProductsReports/ReportSummary/CWEPieChart/CWEPieChart";
 import SeverityBarChart from "../../ProductsReports/ReportSummary/SeverityBarChart/SeverityBarChart";
-import './TabsData.css';
 import { getBackgroundColorBySeverity, getFontColorBySeverity } from './../../../Util/Util';
+import './TabsData.css';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     width: '100%',
     backgroundColor: 'inherit', // theme.palette.background.paper,
-    paddingLeft: '16px !important', 
+    paddingLeft: '16px !important',
     paddingRight: '8px !important',
   }
 }));
@@ -72,9 +72,9 @@ const TabsData = ({ reportType, tabsData, expandPanel, bgcolor }) => {
           },
           rowStyle: x => {
             if (x.tableData.id % 2 === 0) {
-                return {backgroundColor: "#e7e7ef"}
+              return { backgroundColor: "#e7e7ef" }
             }
-        }
+          }
         }}
       />
     );
@@ -107,29 +107,57 @@ const TabsData = ({ reportType, tabsData, expandPanel, bgcolor }) => {
     const height = 200;
     return (
       <div className="flex justifyAround">
-        {
-          tabData.header && <CWEPieChart
-            cwe={tabData.header}
-            divId={`${appName}-header-pieChart`}
-            bgColor="white"
-            width={width}
-            height={height}
-            title="CVE vs Non-CVE"
-          />
-        }
-        {tabData.severity ? <SeverityBarChart
-          severity={tabData.severity}
-          divId={`${appName}-barChart`}
-          bgColor="white"
+        <div className="cve-pie-chart">
+          <div className="cve-pie-chart-right">
+            {
+              tabData.header && <CWEPieChart
+                cwe={tabData.header}
+                divId={`${appName}-header-pieChart`}
+                bgColor="darkorange"
+                width={width}
+                height={height}
+                title=""
+              />
+            }
+          </div>
+          <div className="cve-pie-chart-title">
+            CVE vs Non-CVE
+          </div>
+        </div>
+        <div className="cve-pie-chart">
+          <div className="cve-pie-chart-right">
+            {tabData.severity ? <SeverityBarChart
+              severity={tabData.severity}
+              divId={`${appName}-barChart`}
+              bgColor="#00c4ff"
+              title=''
+              width={width}
+                height={height}
+                displayModeBar={false}
+            /> : ''}
+          </div>
+          <div className="cve-pie-chart-title">
+            Severity
+          </div>
+        </div>
 
-        /> : ''}
-        {tabData.CWE ? <CWEPieChart
-          cwe={tabData.CWE}
-          divId={`${appName}-pieChart`}
-          bgColor="white"
-          width={width}
-          height={height}
-        /> : ''}
+        <div className="cve-pie-chart">
+          <div className="cve-pie-chart-right">
+            {tabData.CWE ? <CWEPieChart
+              cwe={tabData.CWE}
+              divId={`${appName}-pieChart`}
+              bgColor="#f35caf"
+              width={width}
+              height={height}
+              title=''
+            /> : ''}
+          </div>
+          <div className="cve-pie-chart-title">
+            CWE
+          </div>
+        </div>
+
+
       </div>
     )
   }
@@ -160,7 +188,7 @@ const TabsData = ({ reportType, tabsData, expandPanel, bgcolor }) => {
                       />
                     </ListItemIcon>
                     <ListItemText
-                      primary={<Typography type="body2"  style={{ color: 'red', fontSize: '16px' }}>{tabData.appName}</Typography>}
+                      primary={<Typography type="body2" style={{ color: 'red', fontSize: '16px' }}>{tabData.appName}</Typography>}
                       secondary={tabData.description}
                     />
                   </ListItem>

@@ -1,4 +1,6 @@
-import { LinearProgress, makeStyles, Container, Grid } from '@material-ui/core';
+import { Container, Grid, LinearProgress, makeStyles, TextField } from '@material-ui/core';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Tab from '@material-ui/core/Tab';
 import Axios from 'axios';
 import React, { useEffect, useState } from 'react';
@@ -6,12 +8,11 @@ import { Link, useParams } from 'react-router-dom';
 import MySnackbar from "../../Shared/Snackbar/MySnackbar";
 import CONSTANTS from "../../Util/Constants";
 import Copy from "../../Util/Copy";
+import CVETextField from './../CVE/CVEInput/CVETextField';
 import './Feed.css';
 import TabsData from './TabsData/TabsData';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import CVETextField from './../CVE/CVEInput/CVETextField';
-
+import InputAdornment from '@material-ui/core/InputAdornment';
+import SearchIcon from '@material-ui/icons/Search';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -21,9 +22,12 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: 'inherit',
     },
     checkBoxes: {
-        display: 'inline',
+        display: 'flex',
+        alignItems: 'center',
         margin: '20px',
-        textTransform: 'capitalize'
+        textTransform: 'capitalize',
+        justifyContent: 'space-between',
+        width: '100%',
     }
 }));
 
@@ -38,6 +42,7 @@ export const Feed = (/* {   } */) => {
     const [snackbarMessage, setSnackbarMessage] = useState('');
     const { feedType } = useParams();
     const [reportTypes, setReportTypes] = useState([]);
+    const [cveInput, setCVEInput] = useState("");
 
     useEffect(() => {
         fetchFeed();
@@ -108,35 +113,60 @@ export const Feed = (/* {   } */) => {
 
     }
 
+
+    const handleChangeCVE = (event) => {
+        setCVEInput(event.target.value);
+    };
+
     const getTabsData = () => {
         return (
             <>
                 <div className={classes.checkBoxes}>
-                    {
-                        reportTypes.map(type => (
-                            <FormControlLabel
-                                control={(
-                                    <Checkbox
-                                        checked={tabsData.findIndex(res => res['report type'] === type && res.isShowing) !== -1}
-                                        onChange={(event) => handleCheckBoxChange(event, type)}
-                                        name={type}
-                                        color="primary"
-                                    />
-                                )}
-                                label={type}
-                            />
-                        )
-                        )
-                    }
-                    {/* <CVETextField
-                        cveInput={cveInput}
-                        keyPress={keyPress}
-                        handleChangeCVE={handleChangeCVE}
-                    /> */}
+                    <div>
+                        {
+                            reportTypes.map(type => (
+                                <FormControlLabel
+                                    control={(
+                                        <Checkbox
+                                            checked={tabsData.findIndex(res => res['report type'] === type && res.isShowing) !== -1}
+                                            onChange={(event) => handleCheckBoxChange(event, type)}
+                                            name={type}
+                                            color="primary"
+                                        />
+                                    )}
+                                    label={type}
+                                />
+                            )
+                            )
+                        }
+                    </div>
+                    <div>
+                        <TextField
+                            required
+                            value={cveInput}
+                            onChange={handleChangeCVE}
+                            style={{
+                                width: "200px",
+                                background: "white",
+                                borderRadius: '8px',
+                            }}
+                            id="cve"
+                            placeholder="Search"
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <SearchIcon />
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                    </div>
+
                 </div>
                 {
+                    // todo:
                     tabsData.map(data =>
-                        data.isShowing ?
+                        (data.isShowing && data.results.findIndex(d => d.appName.toLowerCase().includes(cveInput)) !== -1) ?
                             <TabsData bgcolor={data.bgcolor} reportType={data['report type']}
                                 tabsData={data.results} expandPanel={expandPanel} />
                             : ''

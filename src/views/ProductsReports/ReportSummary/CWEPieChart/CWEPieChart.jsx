@@ -22,7 +22,7 @@ const CWEPieChart = ({ cwe, divId, bgColor = "#f1f1f1", width = 360, height= 280
         title: title,
         width:  width,
         height: height,
-        margin: { "t": 30, "b": 0, "l": 0, "r": 0 },
+        margin: { "t": 30, "b": 10, "l": 0, "r": 0 },
         showlegend: false,
         plot_bgcolor: bgColor,
         paper_bgcolor: bgColor,

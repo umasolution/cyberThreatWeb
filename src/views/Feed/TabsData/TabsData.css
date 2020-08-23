@@ -10,5 +10,37 @@
 
 .language-icon {
   margin-top: -66px;
-  margin-left: -35px;
+  margin-left: -62px;
+}
+
+.cve-pie-chart {
+  height: fit-content;
+  margin-top: 20px;
+  border: 1px solid;
+  border-color: darkorange;
+  padding: 4px;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.cve-pie-chart-title {
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+.cve-pie-chart-right {
+  margin-left: 91px !important;
+  margin-top: -40px;
+}
+
+.cve-pie-chart-right:hover {
+  transition: all .4s ease;
+  margin-top: -60px;
+}
+
+.cve-pie-chart-right:hover:after{
+  margin-top: -40px;
+  margin-left: 91px !important;
 }
