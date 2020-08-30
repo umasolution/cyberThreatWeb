@@ -16,6 +16,7 @@ const CWEPieChart = ({ cwe, divId, bgColor = "#f1f1f1", width = 360, height= 280
           values,
           type: 'pie',
           textinfo: "none",
+          hole: .5,
         }
       ];
       var layout = {

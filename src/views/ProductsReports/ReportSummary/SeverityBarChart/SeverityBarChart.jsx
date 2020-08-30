@@ -22,8 +22,9 @@ const SeverityBarChart = ({ severity, divId, displayModeBar = true, title = 'Sev
           type: 'bar',
           // automargin: true,
           marker: {
-            color: colors
-          }
+            color: 'white'
+          },
+          width: 0.2,
         }
       ];
       const layout = {
@@ -33,7 +34,31 @@ const SeverityBarChart = ({ severity, divId, displayModeBar = true, title = 'Sev
         margin: { "t": 10, "b": 20, "l": 30, "r": 0 },
         showlegend: false,
         plot_bgcolor: bgColor,
-        paper_bgcolor: bgColor
+        paper_bgcolor: bgColor,
+        xaxis: {
+          titlefont: {
+            color: 'white'
+          },
+          tickfont: {
+            color: 'white'
+          },
+          linecolor: 'white',
+          zeroline: true,
+          zerolinecolor: 'white',
+          zerolinewidth: 1,
+        },
+        yaxis: {
+          titlefont: {
+            color: 'white'
+          },
+          tickfont: {
+            color: 'white'
+          },
+          linecolor: 'white',
+          zeroline: true,
+          zerolinecolor: 'white',
+          zerolinewidth: 1,
+        },
       };
       const config = { responsive: true, displayModeBar };
       Plotly.newPlot(`SeverityBarChartDiv-${divId}`, data, layout, config);

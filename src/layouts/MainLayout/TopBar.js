@@ -52,10 +52,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2)
   },
   typography: {
-    fontFamily: [
-      '"Montserrat"',
-      'sans-serif',
-    ].join(','),
+    fontFamily: '"Roboto","Helvetica","Arial",sans-serif !important',
   }
 }));
 

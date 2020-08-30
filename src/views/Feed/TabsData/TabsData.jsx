@@ -63,11 +63,11 @@ const TabsData = ({ reportType, tabsData, expandPanel, bgcolor }) => {
         options={{
           cellStyle: {
             fontSize: 13,
-            fontFamily: '"Montserrat", sans-serif',
+            fontFamily: '"Roboto","Helvetica","Arial",sans-serif !important',
           },
           headerStyle: {
             fontSize: 16,
-            fontFamily: '"Montserrat", sans-serif',
+            fontFamily: '"Roboto","Helvetica","Arial",sans-serif !important',
             color: '#546e7a',
           },
           rowStyle: x => {
@@ -113,7 +113,7 @@ const TabsData = ({ reportType, tabsData, expandPanel, bgcolor }) => {
               tabData.header && <CWEPieChart
                 cwe={tabData.header}
                 divId={`${appName}-header-pieChart`}
-                bgColor="darkorange"
+                bgColor="#26c6da"
                 width={width}
                 height={height}
                 title=""
@@ -124,16 +124,16 @@ const TabsData = ({ reportType, tabsData, expandPanel, bgcolor }) => {
             CVE vs Non-CVE
           </div>
         </div>
-        <div className="cve-pie-chart">
+        <div className="cve-pie-chart" style={{ width: '254px' }}>
           <div className="cve-pie-chart-right">
             {tabData.severity ? <SeverityBarChart
               severity={tabData.severity}
               divId={`${appName}-barChart`}
-              bgColor="#00c4ff"
+              bgColor="#ffa726"
               title=''
-              width={width}
-                height={height}
-                displayModeBar={false}
+              width={250}
+              height={height}
+              displayModeBar={false}
             /> : ''}
           </div>
           <div className="cve-pie-chart-title">
@@ -146,7 +146,7 @@ const TabsData = ({ reportType, tabsData, expandPanel, bgcolor }) => {
             {tabData.CWE ? <CWEPieChart
               cwe={tabData.CWE}
               divId={`${appName}-pieChart`}
-              bgColor="#f35caf"
+              bgColor="#ef5350"
               width={width}
               height={height}
               title=''
@@ -170,7 +170,7 @@ const TabsData = ({ reportType, tabsData, expandPanel, bgcolor }) => {
             return (
               <ExpansionPanel
                 key={tabData.appName}
-                style={{ borderLeft: `15px solid  ${bgcolor}`, width: '100%', marginBottom: '16px' }}
+                style={{ width: '100%', marginBottom: '16px' }}
                 onChange={(event, expanded) =>
                   expandPanel(event, expanded, tabData, reportType)}
               >
@@ -179,18 +179,35 @@ const TabsData = ({ reportType, tabsData, expandPanel, bgcolor }) => {
                   aria-controls="panel1a-content"
                   id="panel1a-header"
                 >
-                  <ListItem key={tabData.appName}>
-                    <ListItemIcon className="language-icon">
-                      <img
-                        className="languageImg"
-                        src={`${process.env.PUBLIC_URL}/static/images1/${tabData.imageName}`}
-                        alt="t"
-                      />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={<Typography type="body2" style={{ color: 'red', fontSize: '16px' }}>{tabData.appName}</Typography>}
-                      secondary={tabData.description}
-                    />
+                  <ListItem key={tabData.appName} style={{ display: 'block' }}>
+                    <div>
+
+
+                      <div className="language-icon">
+                        <Typography
+                          className=" background-shadow background-margin"
+                          style={{ background: `${bgcolor}` }}>
+                          {tabData.appName}</Typography>
+                        <div className=" background-shadow background-margin count"
+                          style={{ background: `${bgcolor}` }}>
+                          {
+                            Object.keys(tabData.count).map((cKey, index) => <div style={{ marginLeft: index === 1 ? '12px' : '0' }} > {cKey}   {tabData.count[cKey]}   </div>)
+                          }
+                        </div>
+                      </div>
+                      <div className="sub-title">
+                        <ListItemText
+                          primary={<ListItemIcon >
+                            <img
+                              className="languageImg"
+                              src={`${process.env.PUBLIC_URL}/static/images1/${tabData.imageName}`}
+                              alt="t"
+                            />
+                          </ListItemIcon>}
+                          secondary={tabData.description}
+                        />
+                      </div>
+                    </div>
                   </ListItem>
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>

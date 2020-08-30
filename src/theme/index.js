@@ -143,31 +143,31 @@ export function createTheme(settings = {}) {
       { direction: settings.direction },
       {
         typography:  {
-          fontFamily: '"Montserrat", sans-serif',
+          fontFamily: '"Roboto","Helvetica","Arial",sans-serif !important',
             h1: {
-          fontFamily: '"Montserrat", sans-serif',
+          fontFamily: '"Roboto","Helvetica","Arial",sans-serif !important',
 
             },
             h2: {
-              fontFamily: '"Montserrat", sans-serif',
+              fontFamily: '"Roboto","Helvetica","Arial",sans-serif !important',
             },
             h3: {
-              fontFamily: '"Montserrat", sans-serif',
+              fontFamily: '"Roboto","Helvetica","Arial",sans-serif !important',
             },
             h4: {
-              fontFamily: '"Montserrat", sans-serif',
+              fontFamily: '"Roboto","Helvetica","Arial",sans-serif !important',
             },
             h5: {
-              fontFamily: '"Montserrat", sans-serif',
+              fontFamily: '"Roboto","Helvetica","Arial",sans-serif !important',
             },
             h6: {
               fontSize: 16,
-              fontFamily: '"Montserrat", sans-serif',
+              fontFamily: '"Roboto","Helvetica","Arial",sans-serif !important',
               color: '#546e7a',
             },
             body1: {
               fontSize: 13,
-              fontFamily: '"Montserrat", sans-serif',
+              fontFamily: '"Roboto","Helvetica","Arial",sans-serif !important',
             }
           }
       }

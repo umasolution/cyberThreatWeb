@@ -51,10 +51,7 @@ const useStyles = makeStyles(() => createStyles({
       backgroundColor: '#f1f1f1'
     },
     typography: {
-      fontFamily: [
-        'Montserrat',
-        'sans-serif',
-      ].join(','),
+      fontFamily: '"Roboto","Helvetica","Arial",sans-serif !important',
     },
     panelMainDiv: {
       border: '1px solid',

@@ -164,12 +164,14 @@ export const Feed = (/* {   } */) => {
 
                 </div>
                 {
-                    // todo:
                     tabsData.map(data =>
-                        (data.isShowing && data.results.findIndex(d => d.appName.toLowerCase().includes(cveInput)) !== -1) ?
+                        {
+                            const result = data.results.filter(d => d.appName.toLowerCase().includes(cveInput));
+                        return (data.isShowing) ?
                             <TabsData bgcolor={data.bgcolor} reportType={data['report type']}
-                                tabsData={data.results} expandPanel={expandPanel} />
+                                tabsData={result} expandPanel={expandPanel} />
                             : ''
+                        }
                     )
                 }
             </>

@@ -1,9 +1,32 @@
+import { TextField, colors } from '@material-ui/core';
+import { createMuiTheme, withStyles } from "@material-ui/core/styles";
 import React from 'react';
-import { TextField } from '@material-ui/core';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import SearchIcon from '@material-ui/icons/Search';
+import InputAdornment  from '@material-ui/core/InputAdornment';
+import './CVETextField.css';
+import SearchIcon  from '@material-ui/icons/Search';
 
-const CVETextField = ({ cveInput, keyPress, handleChangeCVE }) => {
+
+const styles = theme => ({
+  input: {
+    "&::placeholder": {
+      textOverflow: "ellipsis !important",
+      color: "white",
+
+
+      fontSize: 14
+    },
+  },
+});
+
+const theme = createMuiTheme({
+  palette: {
+    primary: colors.white
+  },
+  typography: { useNextVariants: true }
+});
+
+const CVETextField = (props) => {
+  const { classes, cveInput, keyPress, handleChangeCVE } = props;
   return (
     <TextField
       required
@@ -12,20 +35,26 @@ const CVETextField = ({ cveInput, keyPress, handleChangeCVE }) => {
       onChange={handleChangeCVE}
       style={{
         width: "200px",
-        background: "white",
-        borderRadius: '8px',
+        color: "white",
       }}
       id="cve"
       placeholder="Search CVEs"
       InputProps={{
+        classes: {
+          input: classes.input
+        },
         startAdornment: (
           <InputAdornment position="start">
-            <SearchIcon />
+            <SearchIcon style={{ color: 'white'}} />
           </InputAdornment>
         ),
       }}
+    // InputProps={{ classes: { input: 'input' } }}
+  /*   InputProps={{
+      
+    }} */
     />
   );
 };
 
-export default CVETextField;
+export default withStyles(styles)(CVETextField);
