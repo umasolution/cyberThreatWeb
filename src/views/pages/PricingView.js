@@ -8,7 +8,11 @@ import {
   Grid,
   Paper,
   Typography,
-  makeStyles
+  makeStyles,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemAvatar
 } from '@material-ui/core';
 import Page from 'src/components/Page';
 
@@ -33,21 +37,28 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   productImage: {
-    borderRadius: theme.shape.borderRadius,
-    position: 'absolute',
-    top: -24,
-    left: theme.spacing(3),
-    height: 48,
-    width: 48,
-    fontSize: 24
+    
+  },
+  servicesList: {
+
+  },
+  checkImage: {
+
   },
   recommendedProduct: {
-    backgroundColor: theme.palette.secondary.main,
-    color: theme.palette.common.white
+    /*backgroundColor: theme.palette.secondary.main,
+    color: theme.palette.common.white*/
   },
   chooseButton: {
     backgroundColor: theme.palette.common.white
+  },
+  mainH1 : {
+    fontWeight: theme.fontfamily.bold,
+  },
+  subtitle1 :{
+    fontWeight: theme.fontfamily.semiBold,
   }
+
 }));
 
 function PricingView() {
@@ -59,19 +70,23 @@ function PricingView() {
       title="Pricing"
       id="PricingView" 
     >
-      <Container maxWidth="sm">
+      <Container maxWidth="lg">
         <Typography
           align="center"
           variant="h1"
+          className={classes.mainH1}
           color="textPrimary"
         >
           Start today. Boost up your services!
         </Typography>
+      </Container>
+      <Container maxWidth="sm">
         <Box mt={3}>
           <Typography
             align="center"
             variant="subtitle1"
             color="textSecondary"
+            className={classes.subtitle1}
           >
             Welcome to the first platform created for freelancers and agencies
             for showcasing and finding the best clinets in the market.
@@ -79,7 +94,7 @@ function PricingView() {
           </Typography>
         </Box>
       </Container>
-      <Box mt="160px">
+      <Box mt="50px">
         <Container maxWidth="lg">
           <Grid
             container
@@ -94,37 +109,40 @@ function PricingView() {
                 className={classes.product}
                 elevation={1}
               >
-                <img
+                <Box>
+                  <img
                   alt="Product"
                   className={classes.productImage}
-                  src="/static/images/products/product_freelancer.svg"
-                />
-                <Typography
-                  component="h3"
-                  gutterBottom
-                  variant="overline"
-                  color="textSecondary"
-                >
-                  Freelancer
-                </Typography>
-                <div>
+                    src="/static/images/products/product_freelancer.png"
+                  />
                   <Typography
-                    component="span"
-                    display="inline"
-                    variant="h3"
-                    color="textPrimary"
-                  >
-                    $5
-                  </Typography>
-                  <Typography
-                    component="span"
-                    display="inline"
-                    variant="subtitle2"
+                    component="h3"
+                    gutterBottom
+                    variant="overline"
                     color="textSecondary"
                   >
-                    /month
+                    Freelancer
                   </Typography>
-                </div>
+                  <div>
+                    <Typography
+                      component="span"
+                      display="inline"
+                      variant="h3"
+                      color="textPrimary"
+                    >
+                      $5
+                    </Typography>
+                    <Typography
+                      component="span"
+                      display="inline"
+                      variant="subtitle2"
+                      color="textSecondary"
+                    >
+                      /month
+                    </Typography>
+                  </div>
+                </Box>
+                
                 <Typography
                   variant="overline"
                   color="textSecondary"
@@ -134,18 +152,48 @@ function PricingView() {
                 <Box my={2}>
                   <Divider />
                 </Box>
-                <Typography
-                  variant="body2"
-                  color="textPrimary"
-                >
-                  20 proposals/month
-                  <br />
-                  10 templates
-                  <br />
-                  Analytics dashboard
-                  <br />
-                  Email alerts
-                </Typography>
+                <List className={classes.servicesList}>
+                  <ListItem alignItems="flex-start">
+                    <img
+                    alt="Product"
+                    className={classes.checkImage}
+                      src="/static/images/products/check1.png"
+                    />
+                    <ListItemText>
+                   20 proposals/month   
+                    </ListItemText>
+                  </ListItem>
+                  <ListItem>
+                    <img
+                    alt="Product"
+                    className={classes.checkImage}
+                      src="/static/images/products/check1.png"
+                    />
+                    <ListItemText>
+                   10 templates   
+                    </ListItemText>
+                  </ListItem>
+                  <ListItem>
+                    <img
+                    alt="Product"
+                    className={classes.checkImage}
+                      src="/static/images/products/check1.png"
+                    />
+                    <ListItemText>
+                   Analytics dashboard  
+                    </ListItemText>
+                  </ListItem>
+                  <ListItem>
+                    <img
+                    alt="Product"
+                    className={classes.checkImage}
+                      src="/static/images/products/check1.png"
+                    />
+                    <ListItemText>
+                   Email alerts  
+                    </ListItemText>
+                  </ListItem>
+                </List>
                 <Box my={2}>
                   <Divider />
                 </Box>
@@ -154,7 +202,7 @@ function PricingView() {
                   fullWidth
                   className={classes.chooseButton}
                 >
-                  Choose
+                  Choose Plan
                 </Button>
               </Paper>
             </Grid>
@@ -167,10 +215,11 @@ function PricingView() {
                 className={clsx(classes.product, classes.recommendedProduct)}
                 elevation={1}
               >
+               <Box>
                 <img
                   alt="Product"
                   className={classes.productImage}
-                  src="/static/images/products/product_agency--outlined.svg"
+                  src="/static/images/products/product_agency--outlined.png"
                 />
                 <Typography
                   component="h3"
@@ -198,6 +247,7 @@ function PricingView() {
                     /month
                   </Typography>
                 </div>
+                </Box>
                 <Typography
                   variant="overline"
                   color="inherit"
@@ -207,18 +257,48 @@ function PricingView() {
                 <Box my={2}>
                   <Divider />
                 </Box>
-                <Typography
-                  variant="body2"
-                  color="inherit"
-                >
-                  20 proposals/month
-                  <br />
-                  10 templates
-                  <br />
-                  Analytics dashboard
-                  <br />
-                  Email alerts
-                </Typography>
+                <List className={classes.servicesList}>
+                  <ListItem alignItems="flex-start">
+                    <img
+                    alt="Product"
+                    className={classes.checkImage}
+                      src="/static/images/products/check2.png"
+                    />
+                    <ListItemText>
+                   20 proposals/month   
+                    </ListItemText>
+                  </ListItem>
+                  <ListItem>
+                    <img
+                    alt="Product"
+                    className={classes.checkImage}
+                      src="/static/images/products/check2.png"
+                    />
+                    <ListItemText>
+                   10 templates   
+                    </ListItemText>
+                  </ListItem>
+                  <ListItem>
+                    <img
+                    alt="Product"
+                    className={classes.checkImage}
+                      src="/static/images/products/check2.png"
+                    />
+                    <ListItemText>
+                   Analytics dashboard  
+                    </ListItemText>
+                  </ListItem>
+                  <ListItem>
+                    <img
+                    alt="Product"
+                    className={classes.checkImage}
+                      src="/static/images/products/check2.png"
+                    />
+                    <ListItemText>
+                   Email alerts  
+                    </ListItemText>
+                  </ListItem>
+                </List>
                 <Box my={2}>
                   <Divider />
                 </Box>
@@ -227,7 +307,7 @@ function PricingView() {
                   fullWidth
                   className={classes.chooseButton}
                 >
-                  Choose
+                  Choose Plan
                 </Button>
               </Paper>
             </Grid>
@@ -240,10 +320,11 @@ function PricingView() {
                 className={classes.product}
                 elevation={1}
               >
+                 <Box>
                 <img
                   alt="Product"
                   className={classes.productImage}
-                  src="/static/images/products/product_enterprise.svg"
+                  src="/static/images/products/product_enterprise.png"
                 />
                 <Typography
                   component="h3"
@@ -280,18 +361,49 @@ function PricingView() {
                 <Box my={2}>
                   <Divider />
                 </Box>
-                <Typography
-                  variant="body2"
-                  color="textPrimary"
-                >
-                  All from above
-                  <br />
-                  Unlimited 24/7 support
-                  <br />
-                  Personalised Page
-                  <br />
-                  Advertise your profile
-                </Typography>
+                 </Box>
+                 <List className={classes.servicesList}>
+                  <ListItem alignItems="flex-start">
+                    <img
+                    alt="Product"
+                    className={classes.checkImage}
+                      src="/static/images/products/check3.png"
+                    />
+                    <ListItemText>
+                   All from above    
+                    </ListItemText>
+                  </ListItem>
+                  <ListItem>
+                   <img
+                    alt="Product"
+                    className={classes.checkImage}
+                      src="/static/images/products/check3.png"
+                    />
+                   <ListItemText> 
+                   Unlimited 24/7 support
+                   </ListItemText>
+                  </ListItem>
+                  <ListItem>
+                  <img
+                    alt="Product"
+                    className={classes.checkImage}
+                      src="/static/images/products/check3.png"
+                    />
+                   <ListItemText>
+                    Personalised Page
+                   </ListItemText> 
+                  </ListItem>
+                  <ListItem>
+                  <img
+                    alt="Product"
+                    className={classes.checkImage}
+                      src="/static/images/products/check3.png"
+                    />
+                  <ListItemText>
+                    Advertise your profile
+                  </ListItemText>  
+                  </ListItem>
+                </List>
                 <Box my={2}>
                   <Divider />
                 </Box>
@@ -300,7 +412,7 @@ function PricingView() {
                   fullWidth
                   className={classes.chooseButton}
                 >
-                  Choose
+                  Choose Plan
                 </Button>
               </Paper>
             </Grid>

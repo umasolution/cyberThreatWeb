@@ -17,7 +17,6 @@ import {
 import moment from 'moment';
 import CVEInput from './../../CVE/CVEInput/CVEInput';
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.dark,
@@ -53,27 +52,37 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '10px'
   },
   mainContent: {
-    background: '-webkit-linear-gradient(330.58deg,#50649f,#31468e 79.71%)',
+    
     padding: '10px'
   },
   mainContentH3: {
     // fontFamily: 'PrentonRPProLight,sans-serif',
-    fontFamily: '"Roboto","Helvetica","Arial",sans-serif !important',
-    fontWeight: '200',
-    fontSize: '22px',
-    color: '#fff'
+    fontFamily: '"Montserrat",sans-serif !important',
+    fontWeight: theme.fontfamily.bold,
+    fontSize: '22px'
   },
   mainContentH2: {
-    fontSize: '48px',
-    color: '#fff',
+    fontWeight: theme.fontfamily.light,
     marginBottom: '25px',
-    fontFamily: '"Roboto","Helvetica","Arial",sans-serif !important',
+    fontFamily: '"Montserrat",sans-serif !important',
   },
   mainContentP: {
     color: '#fff'
-  }
+  },
+  mainContentsub: {
+    
+  },
+  mainBannerBtn : {
 
+  },
+  mainContentH5: {
+     fontWeight: theme.fontfamily.light,
+  },
+  searchbar: {
+    backgroundColor: theme.palette.background.dark,
+  }
 }));
+
 
 function Hero({ className, ...rest }) {
   const classes = useStyles();
@@ -124,19 +133,7 @@ function Hero({ className, ...rest }) {
       className={clsx(classes.root, className)}
       {...rest}
     >
-      <Container maxWidth="lg">
-        <TextField
-          required
-          value={cveInput}
-          onKeyDown={keyPress}
-          onChange={handleChangeCVE}
-          style={{
-            width: '500px'
-          }}
-          id="cve"
-          placeholder="Search Vulnerabilities"
-          label="Search Vulnerabilities"
-        />
+      <Container maxWidth="false">
         <Grid
           container
           spacing={3}
@@ -158,38 +155,21 @@ function Hero({ className, ...rest }) {
                 <h3 className={classes.mainContentH3}>Continuous Development.</h3>
                 <h3 className={classes.mainContentH3}>Continuous Confidence.</h3>
               </div>
-
-              <Box mt={3}>
-                <Grid
-                  container
-                  spacing={3}
-                >
-                  <Grid item>
-                    <Typography
-                      variant="h5"
-                      color="secondary"
-                    >
-                      Add confidence to your CI/CD process. Develop securely while you deploy continously with confidence.
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <Typography
-                      variant="h5"
-                      color="secondary"
-                    >
-                      Confidently scan for vulnerablities in your source code, container image, virtual machine or physical servers.
-                    </Typography>
-                  </Grid>
-                  <Grid item style={{ width: '100%' }}>
-                    <Typography
-                      variant="h5"
-                      color="secondary"
-                    >
-                      Make every check in a secure checkin
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </Box>
+              <div className={classes.mainContentSub}>
+                <h5 className={classes.mainContentH5}>Confidently scan for vulnerablities in your source code,</h5>
+                <h5 className={classes.mainContentH5}>container image, virtual machine or physical servers.</h5>
+              </div>
+              <div className={classes.mainBannerBtn}><Button
+                color="secondary"
+                size="large"
+                type="button"
+                variant="contained"
+                onClick={gotoRegister}
+                style={{marginTop: '8px'}}
+              >
+                Explore More
+              </Button></div>
+              
             </Box>
           </Grid>
           <Grid
@@ -198,16 +178,10 @@ function Hero({ className, ...rest }) {
             md={7}
           >
             <Box position="relative">
-              <div className={classes.shape}>
-                <img
-                  alt="Shapes"
-                  src="/static/home/shapes.svg"
-                />
-              </div>
               <div className={classes.image}>
                 <img
                   alt="Presentation"
-                  src="/static/home/dark-light-typing.png"
+                  src="/static/home/hero_banner.png"
                 />
               </div>
             </Box>
@@ -226,73 +200,26 @@ function Hero({ className, ...rest }) {
           </Box>
           </Grid>
         </Grid>
-      <Grid item xs={12}>
-        <Grid container    spacing={2}>
-          
-        <Grid item>
-            <Typography
-              variant="h1"
-              color="secondary"
-            >
-              10%
-                    </Typography>
-            <Typography
-              variant="overline"
-              color="textSecondary"
-            >
-              more vulnerabilities than NVD
-                    </Typography>
-          </Grid>
-          <Grid item>
-            <Typography
-              variant="h1"
-              color="secondary"
-            >
-              300+
-                    </Typography>
-            <Typography
-              variant="overline"
-              color="textSecondary"
-            >
-              projects scanned
-                    </Typography>
-          </Grid>
-          <Grid item>
-            <Typography
-              variant="h1"
-              color="secondary"
-            >
-              500+
-                    </Typography>
-            <Typography
-              variant="overline"
-              color="textSecondary"
-            >
-              vulnerabilities discovered for developers like you.
-                    </Typography>
-          </Grid>
-        </Grid>
-      </Grid>
-      <Grid item>
-          <Typography
-              variant="h4"
-              color="textSecondary"
-            >
-              A more reliable scoring system to prioritize the most important vulnerabilities
-            </Typography>
-             
-          </Grid>
-          
-          <Button
-                color="secondary"
-                size="large"
-                type="button"
-                variant="contained"
-                onClick={gotoRegister}
-                style={{marginTop: '8px'}}
-              >
-                SIGN UP FOR A FREE ACCOUNT
-        </Button>
+      
+      </Container>
+      <Container maxWidth="md" className={classes.searchbar}>       
+        <Box mt={3}
+          display="flex"
+          justifyContent="center"
+          alignItems="center">
+          <TextField
+          required
+          value={cveInput}
+          onKeyDown={keyPress}
+          onChange={handleChangeCVE}
+          style={{
+            width: '500px'
+          }}
+          id="cve"
+          placeholder="Search Vulnerabilities"
+          label="Search Vulnerabilities"
+        />
+        </Box>
       </Container>
       
     </div >

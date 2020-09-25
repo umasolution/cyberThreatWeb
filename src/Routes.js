@@ -13,6 +13,7 @@ import DashboardLayout from 'src/layouts/DashboardLayout';
 import DocsLayout from 'src/layouts/DocsLayout';
 import MainLayout from 'src/layouts/MainLayout';
 import HomeView from 'src/views/pages/HomeView';
+import AboutView from 'src/views/pages/AboutView';
 import LoadingScreen from 'src/components/LoadingScreen';
 import AuthGuard from 'src/components/AuthGuard';
 import GuestGuard from 'src/components/GuestGuard';
@@ -365,6 +366,11 @@ const routesConfig = [
         exact: true,
         path: '/home',
         component: HomeView
+      },
+      {
+        exact: true,
+        path: '/about-us',
+        component: AboutView
       },
       {
         exact: true,

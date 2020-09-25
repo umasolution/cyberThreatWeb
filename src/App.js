@@ -23,6 +23,7 @@ import { createTheme } from 'src/theme';
 import Routes from 'src/Routes';
 import './App.css';
 
+
 const history = createBrowserHistory();
 const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
 
@@ -51,7 +52,7 @@ const useStyles = makeStyles(() => createStyles({
       backgroundColor: '#f1f1f1'
     },
     typography: {
-      fontFamily: '"Roboto","Helvetica","Arial",sans-serif !important',
+      fontFamily: '"Montserrat",sans-serif !important',
     },
     panelMainDiv: {
       border: '1px solid',

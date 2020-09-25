@@ -1,8 +1,11 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap');
+
 .details-header {
   display: inline;
   color: #263238;
   font-size: 16px;
-  font-family: "Roboto","Helvetica","Arial",sans-serif !important;
+  font-family: "Montserrat",sans-serif !important;
   font-weight: 400;
   line-height: 1.6;
   letter-spacing: -0.05px;
@@ -13,7 +16,7 @@
 
 .secondary {
   font-size: 13px !important;
-  font-family: "Roboto","Helvetica","Arial",sans-serif !important;
+  font-family: "Montserrat",sans-serif !important;
   /* line-height: 1.42857143' */
 }
 
@@ -48,7 +51,7 @@
 .red-font {
   color: red !important;
   font-size: 18px !important;
-  font-family: "Roboto","Helvetica","Arial",sans-serif !important;
+  font-family: "Montserrat",sans-serif !important;
 }
 
 .divider {
@@ -63,10 +66,6 @@
   text-align: center;
   padding: 5px;
   width: fit-content;
-}
-
-.MuiContainer-maxWidthLg{
-  max-width: none !important;
 }
 
 .background-shadow {
