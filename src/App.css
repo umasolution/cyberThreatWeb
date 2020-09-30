@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
 
 .details-header {
   display: inline;
@@ -81,4 +81,100 @@
   margin-top: -20px;
   margin-left: -13px;
   height: fit-content;
+}
+
+.bannerBox .bannerContainer{
+  padding:0;
+}
+.bannerBox .bannerContent{
+  max-width:475px;
+  width:100%;
+  float: right;
+}
+.bannerBox label + .MuiInput-formControl{
+  margin-top:0;
+}
+.bannerBox .MuiInputBase-input{
+  color: #333 !important;
+}
+.bannerBox .MuiInput-underline:before,
+.bannerBox .MuiInput-underline:after{
+  border: none !important;
+}
+button{
+  cursor: pointer;
+}
+button:focus{
+  outline:0;
+}
+.gridBox-Container .gridBox {
+  padding:0 8px !important;
+}
+.gridBox-Container .gridBox h4{
+    padding-top:16px;
+    position: relative;
+    margin-bottom:15px;
+}
+.gridBox-Container .gridBox h4:before{
+    content: '';
+    width:50px;
+    height:2px;
+    position: absolute;
+    top:0;
+    left:0px;
+}
+.gridBox-Container .gridBox:first-child h4:before{
+    background:#00d1ce;
+}
+.gridBox-Container .gridBox:nth-child(2) h4:before{
+    background:#fe0a7b;
+}
+.gridBox-Container .gridBox:nth-child(3) h4:before{
+    background:#ff9f00;
+}
+.gridBox-Container .gridBox:nth-child(4) h4:before{
+    background:#027de7;
+}
+
+.price-top{
+  display: flex;
+}
+.price-top img{
+  box-shadow: 4px 0px 81px rgba(43, 40, 30, 0.11);
+}
+.price-top .right-content{
+  width:calc(100% - 75px);
+  padding-left:25px;
+  font-size:14px;
+  color: #484848;
+}
+.price-top .right-content h3{
+  font-size:16px;
+  color: #333;
+  font-weight: 700;
+  letter-spacing:0.8px;
+}
+.price-top .right-content .price-tag{
+  font-size:26px;
+  font-weight: 600;
+  letter-spacing:0.8px;
+  color: #333; 
+}
+.services-list{
+  padding:0;
+}
+.services-list li {
+  padding: 0;
+  margin-bottom: 20px;
+  color: #444;
+}
+.services-list li img{
+  margin-right:15px;
+}
+.services-list li > div{
+  margin:0;
+}
+.services-list li > div span{
+  font-size: 15px;
+  font-weight: 500;
 }

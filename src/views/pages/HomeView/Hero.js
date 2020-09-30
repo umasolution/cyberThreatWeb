@@ -16,27 +16,34 @@ import {
 } from 'react-router-dom';
 import moment from 'moment';
 import CVEInput from './../../CVE/CVEInput/CVEInput';
+import Icon from '@material-ui/core/Icon';
+
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: theme.palette.background.dark,
+    backgroundColor: theme.palette.background.light,
     paddingTop: 5,
-    paddingBottom: 20,
+    paddingBottom: 140,
     [theme.breakpoints.down('md')]: {
       paddingTop: 60,
       paddingBottom: 60
-    }
+    },
+    boxShadow:'0px 0px 50px rgba(0,0,0,0.06)',
+    marginBottom:100,
+    position:'relative',
   },
   image: {
-    perspectiveOrigin: 'left center',
-    transformStyle: 'preserve-3d',
-    perspective: 1500,
+    //perspectiveOrigin: 'left center',
+    //transformStyle: 'preserve-3d',
+    //perspective: 1500,
+    textAlign:'right',
     '& > img': {
-      maxWidth: '90%',
+      maxWidth: '100%',
       height: 'auto',
-      transform: 'rotateY(-35deg) rotateX(15deg)',
+      //transform: 'rotateY(-35deg) rotateX(15deg)',
       backfaceVisibility: 'hidden',
-      boxShadow: theme.shadows[16]
+      //boxShadow: theme.shadows[16]
     }
   },
   shape: {
@@ -44,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
     top: 0,
     left: 0,
     '& > img': {
-      maxWidth: '90%',
+      maxWidth: '100%',
       height: 'auto'
     }
   },
@@ -52,14 +59,14 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '10px'
   },
   mainContent: {
-    
-    padding: '10px'
+    padding: '0'
   },
   mainContentH3: {
     // fontFamily: 'PrentonRPProLight,sans-serif',
     fontFamily: '"Montserrat",sans-serif !important',
     fontWeight: theme.fontfamily.bold,
-    fontSize: '22px'
+    fontSize: '26px',
+    marginBottom: '25px',
   },
   mainContentH2: {
     fontWeight: theme.fontfamily.light,
@@ -70,17 +77,85 @@ const useStyles = makeStyles((theme) => ({
     color: '#fff'
   },
   mainContentsub: {
-    
+    marginTop:'20px', 
   },
   mainBannerBtn : {
-
+    marginTop:'30px',
+    '& > Button': {
+      backgroundColor:'#027de7',
+      border:'none',
+      padding:'15px 30px',
+      lineHeight:'16px',
+      borderRadius: '25px',
+      boxShadow: 'none',
+    },
+    '& > mainContent': {
+      padding:'0',
+    }
   },
   mainContentH5: {
-     fontWeight: theme.fontfamily.light,
+     fontWeight: theme.fontfamily.regular,
+     fontFamily: '"Montserrat",sans-serif',
+     fontSize: '16px',
+     color: '#484848',
+     marginBottom:'15px',
+  },
+  bannerBox:{
+    '& > bannerContainer': {
+      padding:'0',
+    }
+  },
+  searchbarArea: {
+    position:'absolute',
+    width: '100%',
+    bottom: -70,
   },
   searchbar: {
-    backgroundColor: theme.palette.background.dark,
+    backgroundColor: theme.palette.background.light,
+    maxWidth:1180,
+    background: '#fff url(/static/bg_searchbar.png)',
+    padding:'35px 0px',
+    boxShadow:'4px 0px 54px rgba(0,0,0,0.1)',
+    borderRadius: 5,
+  },
+  searchBox: {
+    marginTop: 0,
+    maxWidth:815,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    backgroundColor: '#fff',
+    boxShadow:'4px 0px 27px rgba(0,0,0,0.08)',
+    height:62,
+    borderRadius:50,
+    border:'1px solid #e8e8f2',
+    padding:8,
+    position: 'relative',
+    '& > div' : {
+      paddingLeft: 60,
+    }
+  },
+  searchIcon: {
+    position:'absolute',
+    left:'30px',
+    color:'#747474',
+    fontSize:'25px',
+  },
+  searchButton: {
+    backgroundColor:'#ff0476',
+    padding:'0 !important',
+    textAlign: 'center',
+    width: 176,
+    height: 45,
+    lineHeight: '45px',
+    color: '#fff',
+    borderRadius: 50,
+    fontWeight: theme.fontfamily.bold,
+    fontFamily: '"Montserrat",sans-serif',
+    letterSpacing: '1px',
+    border:0,
+    fontSize:'16px',
   }
+
 }));
 
 
@@ -101,11 +176,14 @@ function Hero({ className, ...rest }) {
   };
 
   const onSearchClicked = () => {
-    if (searchByCVE) {
+    if (cveInput) {
       history.push(`/CVE/${cveInput}`);
+      console.log(`/CVE/'${cveInput}`);
+      
     } else {
-      // history.push(`/CVE/${moment(cveSearchStartDate).format("YYYY-MM-DD")}/${moment(cveSearchEndDate).format("YYYY-MM-DD")}`);
-      history.push(`/CVE/${cveSearchStartDate}/${cveSearchEndDate}`);
+      console.log(`/CVE/'${moment(cveSearchStartDate).format("YYYY-MM-DD")}/${moment(cveSearchEndDate).format("YYYY-MM-DD")}`);
+      history.push(`/CVE/${moment(cveSearchStartDate).format("YYYY-MM-DD")}/${moment(cveSearchEndDate).format("YYYY-MM-DD")}`);
+      /*history.push(`/CVE/${cveSearchStartDate}/${cveSearchEndDate}`);*/
     }
   }
 
@@ -114,6 +192,9 @@ function Hero({ className, ...rest }) {
       onSearchClicked();
     }
   }
+  const handleClick = (event) => {
+      onSearchClicked();
+   }
 
   const setCVESearchDate = (dateType, date) => {
     if (dateType === 'startDate') {
@@ -129,14 +210,15 @@ function Hero({ className, ...rest }) {
 
 
   return (
+    <div className="bannerBox">
     <div
       className={clsx(classes.root, className)}
       {...rest}
     >
-      <Container maxWidth="false">
+      <Container maxWidth={false} className="bannerContainer">
         <Grid
           container
-          spacing={3}
+          spacing={0}
           className={classes.container}
         >
           <Grid
@@ -149,13 +231,14 @@ function Hero({ className, ...rest }) {
               flexDirection="column"
               justifyContent="center"
               height="100%"
+              className="bannerContent"
             >
               <div className={classes.mainContent}>
                 <h3 className={classes.mainContentH3}>Continuous Integration.</h3>
                 <h3 className={classes.mainContentH3}>Continuous Development.</h3>
                 <h3 className={classes.mainContentH3}>Continuous Confidence.</h3>
               </div>
-              <div className={classes.mainContentSub}>
+              <div className="mainContentSub">
                 <h5 className={classes.mainContentH5}>Confidently scan for vulnerablities in your source code,</h5>
                 <h5 className={classes.mainContentH5}>container image, virtual machine or physical servers.</h5>
               </div>
@@ -202,26 +285,31 @@ function Hero({ className, ...rest }) {
         </Grid>
       
       </Container>
-      <Container maxWidth="md" className={classes.searchbar}>       
-        <Box mt={3}
-          display="flex"
-          justifyContent="center"
-          alignItems="center">
-          <TextField
-          required
-          value={cveInput}
-          onKeyDown={keyPress}
-          onChange={handleChangeCVE}
-          style={{
-            width: '500px'
-          }}
-          id="cve"
-          placeholder="Search Vulnerabilities"
-          label="Search Vulnerabilities"
-        />
-        </Box>
-      </Container>
+      <div className={classes.searchbarArea}> 
+        <Container maxWidth="lg" className={classes.searchbar}>    
+          <Box mt={3}
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            className={classes.searchBox}>
+            <TextField
+            required
+            value={cveInput}
+            onKeyDown={keyPress}
+            onChange={handleChangeCVE}
+            style={{
+              width: '100%'
+            }}
+            id="cve"
+            placeholder="Search Vulnerabilities"
+          />
+          <Icon className={classes.searchIcon}>search</Icon>
+          <button onClick={handleClick} className={classes.searchButton}>Search</button>
+          </Box>
+        </Container>
+      </div>
       
+    </div >
     </div >
   );
 }

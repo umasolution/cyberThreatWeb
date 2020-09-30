@@ -27,28 +27,39 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(2)
   },
   logo: {
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
+    marginBottom: theme.spacing(2),
   },
   rounded : {
 
   },
   large: {
-    width: theme.spacing(7),
-    height: theme.spacing(7),
+    //width: theme.spacing(6),
+    //height: theme.spacing(6),
+    width:52,
+    height:52,
     marginRight: theme.spacing(2),
-    borderRadius: "16" 
+    borderRadius: '16px',
+    background:'#e7e9ef',
+    color:'#494949',
   },
   socialicon : {
     borderBottom : "1px solid #efeff2",
-    paddingBottom: "35px",
+    paddingBottom: "40px",
     marginTop: "10px"
   },
   copyright : {
     fontWeight: theme.fontfamily.regular,
-    color : "#bdbfc5"
+    color : "#bdbfc5",
+    fontSize: '13px',
+    color:'#33394d',
+    opacity:'0.6',
+    letterSpacing:'0.8px',
   },
   footerMenu :{
-
+    '& > ul' :{
+      padding:0,
+    }
   }
 }));
 

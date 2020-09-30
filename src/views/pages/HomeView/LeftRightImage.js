@@ -19,18 +19,25 @@ const useStyles = makeStyles((theme) => ({
   marginAutoItem: {
     margin: 'auto'
   },
-  mainH1:{
+  mainH2:{
     fontWeight: theme.fontfamily.semiBold,
+    fontSize:'18px',
+    marginBottom: 10,
   },
   body1:{
     fontWeight: theme.fontfamily.medium,
+    fontSize:'14px',
+    lineHeight: '30px'
+  },
+  imageSection:{
+    paddingTop:100,
   }
 }));
 
 function LeftRightImage({ className, ...rest }) {
   const classes = useStyles();
   return (
-    <div>
+    <div className={classes.imageSection}>
     <div id="rightImage" className={classes.root}>
       <Container maxWidth="lg">
         <Box mt={2}>
@@ -47,10 +54,10 @@ function LeftRightImage({ className, ...rest }) {
               <Box className={classes.marginAutoItem}>
                 <Box ml={2} textAlign="right">
                   <Typography
-                    variant="h1"
+                    variant="h2"
                     gutterBottom
                     color="textPrimary"
-                    className={classes.mainH1}
+                    className={classes.mainH2}
                   >
                     Develop using open source...with confidence
                   </Typography>
@@ -112,10 +119,10 @@ function LeftRightImage({ className, ...rest }) {
               <Box className={classes.marginAutoItem}>
                 <Box ml={2}>
                   <Typography
-                    variant="h1"
+                    variant="h2"
                     gutterBottom
                     color="textPrimary"
-                    className={classes.mainH1}
+                    className={classes.mainH2}
                   >
                     Develop using open source...with confidence
                   </Typography>
@@ -152,10 +159,10 @@ function LeftRightImage({ className, ...rest }) {
               <Box className={classes.marginAutoItem}>
                 <Box ml={2} textAlign="right">
                   <Typography
-                    variant="h1"
+                    variant="h2"
                     gutterBottom
                     color="textPrimary"
-                    className={classes.mainH1}
+                    className={classes.mainH2}
                   >
                     Develop using open source...with confidence
                   </Typography>

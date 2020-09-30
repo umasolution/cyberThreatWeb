@@ -26,8 +26,11 @@ const useStyles = makeStyles((theme) => ({
   },
   product: {
     position: 'relative',
-    padding: theme.spacing(5, 3),
+    padding: theme.spacing(5, 3, 2, 3),
     cursor: 'pointer',
+    boxShadow: '4px 0px 81px rgba(43, 40, 30, 0.11)',
+    borderRadius:'0px 50px 0px 50px',
+    margin: '0 20px',
     transition: theme.transitions.create('transform', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
@@ -49,14 +52,68 @@ const useStyles = makeStyles((theme) => ({
     /*backgroundColor: theme.palette.secondary.main,
     color: theme.palette.common.white*/
   },
-  chooseButton: {
-    backgroundColor: theme.palette.common.white
+  chooseButton1: {
+    backgroundColor: '#00d1ce',
+    borderRadius:'0 25px 0 25px',
+    lineHeight:'52px',
+    padding:0,
+    color:'#fff',
+    fontWeight:700,
+    fontSize:'16px',
+    letterSpacing:'0.8px',
+    boxShadow: '4px 0px 81px rgba(43, 40, 30, 0.11)',
+    '&:hover': {
+      backgroundColor: '#00d1ce',
+    }
   },
-  mainH1 : {
+  chooseButton2: {
+    backgroundColor: '#ff0476',
+    borderRadius:'0 25px 0 25px',
+    lineHeight:'52px',
+    padding:0,
+    color:'#fff',
+    fontWeight:700,
+    fontSize:'16px',
+    letterSpacing:'0.8px',
+    boxShadow: '4px 0px 81px rgba(43, 40, 30, 0.11)',
+    '&:hover': {
+      backgroundColor: '#ff0476',
+    }
+  },
+  chooseButton3: {
+    backgroundColor: '#ff9f00',
+    borderRadius:'0 25px 0 25px',
+    lineHeight:'52px',
+    padding:0,
+    color:'#fff',
+    fontWeight:700,
+    fontSize:'16px',
+    letterSpacing:'0.8px',
+    boxShadow: '4px 0px 81px rgba(43, 40, 30, 0.11)',
+    '&:hover': {
+      backgroundColor: '#ff9f00',
+    }
+  },
+  mainH2 : {
     fontWeight: theme.fontfamily.bold,
+    fontSize: '26px',
+    fontWeight: 700,
+    letterSpacing: '1px',
   },
   subtitle1 :{
+    fontWeight: theme.fontfamily.regular,
+    color: '#333333',
+    fontSize: '14px',
+    maxWidth:'630px',
+    margin:'0 auto',
+    letterSpacing:'0.8px',
+  },
+  user :{
     fontWeight: theme.fontfamily.semiBold,
+    fontSize:'15px',
+    color:'#444444',
+    paddingTop:25,
+    display: 'inline-block',
   }
 
 }));
@@ -73,14 +130,14 @@ function PricingView() {
       <Container maxWidth="lg">
         <Typography
           align="center"
-          variant="h1"
-          className={classes.mainH1}
+          variant="h2"
+          className={classes.mainH2}
           color="textPrimary"
         >
           Start today. Boost up your services!
         </Typography>
       </Container>
-      <Container maxWidth="sm">
+      <Container maxWidth="md">
         <Box mt={3}>
           <Typography
             align="center"
@@ -94,7 +151,7 @@ function PricingView() {
           </Typography>
         </Box>
       </Container>
-      <Box mt="50px">
+      <Box mt="50px" mb="100px">
         <Container maxWidth="lg">
           <Grid
             container
@@ -109,50 +166,53 @@ function PricingView() {
                 className={classes.product}
                 elevation={1}
               >
-                <Box>
+                <Box className="price-top">
                   <img
                   alt="Product"
                   className={classes.productImage}
                     src="/static/images/products/product_freelancer.png"
                   />
-                  <Typography
-                    component="h3"
-                    gutterBottom
-                    variant="overline"
-                    color="textSecondary"
-                  >
-                    Freelancer
-                  </Typography>
-                  <div>
+
+                  <div className="right-content">
                     <Typography
-                      component="span"
-                      display="inline"
-                      variant="h3"
-                      color="textPrimary"
-                    >
-                      $5
-                    </Typography>
-                    <Typography
-                      component="span"
-                      display="inline"
-                      variant="subtitle2"
+                      component="h3"
+                      gutterBottom
+                      variant="overline"
                       color="textSecondary"
                     >
-                      /month
+                      Freelancer
                     </Typography>
+                    <div>
+                      <Typography
+                        component="span"
+                        display="inline"
+                        variant="h3"
+                        color="textPrimary"
+                        className="price-tag"
+                      >
+                        $5/
+                      </Typography>
+                      <Typography
+                        component="span"
+                        display="inline"
+                        variant="subtitle2"
+                        color="textSecondary"
+                      >
+                        month
+                      </Typography>
+                    </div>
                   </div>
+
                 </Box>
                 
                 <Typography
                   variant="overline"
                   color="textSecondary"
+                  className={classes.user}
                 >
                   Max 1 user
                 </Typography>
-                <Box my={2}>
-                  <Divider />
-                </Box>
-                <List className={classes.servicesList}>
+                <List className="services-list">
                   <ListItem alignItems="flex-start">
                     <img
                     alt="Product"
@@ -194,13 +254,10 @@ function PricingView() {
                     </ListItemText>
                   </ListItem>
                 </List>
-                <Box my={2}>
-                  <Divider />
-                </Box>
                 <Button
                   variant="contained"
                   fullWidth
-                  className={classes.chooseButton}
+                  className={classes.chooseButton1}
                 >
                   Choose Plan
                 </Button>
@@ -215,49 +272,50 @@ function PricingView() {
                 className={clsx(classes.product, classes.recommendedProduct)}
                 elevation={1}
               >
-               <Box>
-                <img
-                  alt="Product"
-                  className={classes.productImage}
-                  src="/static/images/products/product_agency--outlined.png"
-                />
-                <Typography
-                  component="h3"
-                  gutterBottom
-                  variant="overline"
-                  color="inherit"
-                >
-                  Agency
-                </Typography>
-                <div>
-                  <Typography
-                    component="span"
-                    display="inline"
-                    variant="h3"
-                    color="inherit"
-                  >
-                    $29
-                  </Typography>
-                  <Typography
-                    component="span"
-                    display="inline"
-                    variant="subtitle2"
-                    color="inherit"
-                  >
-                    /month
-                  </Typography>
-                </div>
+               <Box className="price-top">
+                  <img
+                    alt="Product"
+                    className={classes.productImage}
+                    src="/static/images/products/product_agency--outlined.png"
+                  />
+                  <div className="right-content">
+                    <Typography
+                      component="h3"
+                      gutterBottom
+                      variant="overline"
+                      color="inherit"
+                    >
+                      Agency
+                    </Typography>
+                    <div>
+                      <Typography
+                        component="span"
+                        display="inline"
+                        variant="h3"
+                        color="inherit"
+                        className="price-tag"
+                      >
+                        $29/
+                      </Typography>
+                      <Typography
+                        component="span"
+                        display="inline"
+                        variant="subtitle2"
+                        color="inherit"
+                      >
+                        month
+                      </Typography>
+                    </div>
+                  </div>
                 </Box>
                 <Typography
                   variant="overline"
                   color="inherit"
+                  className={classes.user}
                 >
                   Max 3 user
                 </Typography>
-                <Box my={2}>
-                  <Divider />
-                </Box>
-                <List className={classes.servicesList}>
+                <List className="services-list">
                   <ListItem alignItems="flex-start">
                     <img
                     alt="Product"
@@ -299,13 +357,10 @@ function PricingView() {
                     </ListItemText>
                   </ListItem>
                 </List>
-                <Box my={2}>
-                  <Divider />
-                </Box>
                 <Button
                   variant="contained"
                   fullWidth
-                  className={classes.chooseButton}
+                  className={classes.chooseButton2}
                 >
                   Choose Plan
                 </Button>
@@ -320,49 +375,51 @@ function PricingView() {
                 className={classes.product}
                 elevation={1}
               >
-                 <Box>
-                <img
-                  alt="Product"
-                  className={classes.productImage}
-                  src="/static/images/products/product_enterprise.png"
-                />
+                <Box className="price-top">
+                  <img
+                    alt="Product"
+                    className={classes.productImage}
+                    src="/static/images/products/product_enterprise.png"
+                  />
+                  <div className="right-content">
+                    <Typography
+                      component="h3"
+                      gutterBottom
+                      variant="overline"
+                      color="textSecondary"
+                    >
+                      Enterprise
+                    </Typography>
+                    <div>
+                      <Typography
+                        component="span"
+                        display="inline"
+                        variant="h3"
+                        color="textPrimary"
+                        className="price-tag"
+                      >
+                        $259/
+                      </Typography>
+                      <Typography
+                        component="span"
+                        display="inline"
+                        variant="subtitle2"
+                        color="textSecondary"
+                      >
+                        month
+                      </Typography>
+                    </div>
+                  </div>
+                </Box>  
                 <Typography
-                  component="h3"
-                  gutterBottom
                   variant="overline"
                   color="textSecondary"
-                >
-                  Enterprise
-                </Typography>
-                <div>
-                  <Typography
-                    component="span"
-                    display="inline"
-                    variant="h3"
-                    color="textPrimary"
-                  >
-                    $259
-                  </Typography>
-                  <Typography
-                    component="span"
-                    display="inline"
-                    variant="subtitle2"
-                    color="textSecondary"
-                  >
-                    /month
-                  </Typography>
-                </div>
-                <Typography
-                  variant="overline"
-                  color="textSecondary"
+                  className={classes.user}
                 >
                   Unlimited
                 </Typography>
-                <Box my={2}>
-                  <Divider />
-                </Box>
-                 </Box>
-                 <List className={classes.servicesList}>
+                 
+                 <List className="services-list">
                   <ListItem alignItems="flex-start">
                     <img
                     alt="Product"
@@ -404,13 +461,10 @@ function PricingView() {
                   </ListItemText>  
                   </ListItem>
                 </List>
-                <Box my={2}>
-                  <Divider />
-                </Box>
                 <Button
                   variant="contained"
                   fullWidth
-                  className={classes.chooseButton}
+                  className={classes.chooseButton3}
                 >
                   Choose Plan
                 </Button>

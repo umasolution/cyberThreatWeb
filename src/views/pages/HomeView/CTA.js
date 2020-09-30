@@ -18,26 +18,38 @@ const useStyles = makeStyles((theme) => ({
   browseButton: {
     marginLeft: theme.spacing(2)
   },
-  mainH1 : {
+  mainH2 : {
     fontWeight: theme.fontfamily.bold,
     color : "#fff",
-    marginBottom : 22
+    marginBottom : 22,
+    fontSize:'26px',
+    letterSpacing:'1px'
   },
   mainH3 : {
-    fontWeight: theme.fontfamily.semibold,
+    fontWeight: theme.fontfamily.semiBold,
     color : "#fff",
     marginTop : 22,
-    marginBottom : 14
-
+    marginBottom : 14,
+    fontSize:'18px',
+    letterSpacing:'1px'
   },
   mainH5 : {
     fontWeight: theme.fontfamily.regular,
     color : "#fff",
     marginTop : 14,
-    lineHeight: 2
+    lineHeight: '27px',
+    fontSize:'14px',
   },
   mainBtn :{
     marginTop : 50
+  },
+  startedButton :{
+    borderRadius: 35,
+    backgroundColor: "#ff0476",
+    padding: "10px 40px",
+    fontWeight: theme.fontfamily.semiBold,
+    fontSize:'14px',
+    letterSpacing:'1px'
   }
 }));
 
@@ -52,9 +64,9 @@ function CTA({ className, ...rest }) {
     >
       <Container maxWidth="lg">
         <Typography
-          variant="h1"
+          variant="h2"
           align="center"
-          className={classes.mainH1}
+          className={classes.mainH2}
           mt={4}
         >
           Start Clean
@@ -97,10 +109,8 @@ function CTA({ className, ...rest }) {
                 size="large"
                 type="button"
                 variant="contained"
-                style={{
-        borderRadius: 35,
-        backgroundColor: "#ff0476",
-        padding: "17px 40px"}}
+                className={classes.startedButton}
+                
               >
                 GET STARTED
               </Button>

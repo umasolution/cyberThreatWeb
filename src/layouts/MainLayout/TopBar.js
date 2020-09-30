@@ -34,13 +34,19 @@ import MenuIcon from '@material-ui/icons/Menu';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: theme.palette.background.default
+    backgroundColor: theme.palette.background.default,
+    boxShadow:'0px 0px 50px rgba(0,0,0,0.06)',
+  },
+  header: {
+    '& > MuiContainer-root': {
+      maxWidth:1140 
+    }
   },
   paper: {
     marginRight: theme.spacing(2),
   },
   toolbar: {
-    height: 64
+    height: 85
   },
   logo: {
     marginRight: theme.spacing(2)
@@ -50,8 +56,11 @@ const useStyles = makeStyles((theme) => ({
   },
   link: {
     fontWeight: theme.fontfamily.regular,
+    fontSize:'14px',
+    color:'#000000',
+    letterSpacing:'0.8px',
     '& + &': {
-      marginLeft: theme.spacing(2)
+      marginLeft: theme.spacing(4)
     }
   },
   divider: {
@@ -183,9 +192,14 @@ function TopBar({ className, ...rest }) {
       <ScrollTo smooth selector="#PricingView">
         <Button style={{
             borderRadius: 35,
-            marginLeft : 10,
+            marginLeft : 25,
             backgroundColor: "#ff0476",
             padding: "5px 30px",
+            height:'37px',
+            boxShadow:'none',
+            fontSize:'14px',
+            fontWeight:'600',
+            letterSpacing:'1px',
             
         }} className={classes.priceBTN} variant="contained" color="secondary">
           Pricing

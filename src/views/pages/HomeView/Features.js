@@ -22,13 +22,31 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.secondary.contrastText
   },
   featureImage:{
-
+    boxShadow: '4px 0px 65px rgba(43, 40, 30, 0.10)',
+    marginBottom:'25px',
   },
-  mainH4:{
+  mainH4: {
     fontWeight: theme.fontfamily.semiBold,
+    fontSize:'16px',
   },
-  body1:{
+  body1: {
     fontWeight: theme.fontfamily.medium,
+    fontSize:'14px'
+  },
+  welcomText: {
+    maxWidth:675,
+    margin:'0 auto',
+    color:'#333333',
+    fontSize:14,
+    marginBottom:50,
+  },
+  featureBox: {
+    height:'100%',
+    boxShadow:'4px 0px 67px rgba(46,57,124,0.07)',
+    padding:'26px',
+  },
+  gridBox: {
+    padding:'0 8px !important',
   }
 }));
 
@@ -46,6 +64,7 @@ function Features({ className, ...rest }) {
             align="center"
             variant="subtitle1"
             color="textSecondary"
+            className={classes.welcomText}
           >
             Welcome to the first platform created for freelancers and agencies
             for showcasing and finding the best clinets in the market.
@@ -54,23 +73,25 @@ function Features({ className, ...rest }) {
         </Box>
       </Container>
       <Container maxWidth="lg">
-        <Box mt={2}>
+        <Box mt={2} >
           <Grid
             container
             spacing={1}
+            className="gridBox-Container"
           >
             <Grid
               item
               xs={12}
               md={3}
+              className="gridBox"
             >
-              <Box borderRadius={16} boxShadow={3} p={2} m={1} minHeight={250}>
+              <Box className={classes.featureBox} borderRadius={16} boxShadow={3} p={2} m={1} minHeight={250}>
                 <img
                   alt="Features"
                   className={classes.featureImage}
                     src="/static/ic_1.png"
                   />
-                <Box ml={2}>
+                <Box>
                   <Typography
                     variant="h4"
                     gutterBottom
@@ -94,14 +115,15 @@ function Features({ className, ...rest }) {
               item
               xs={12}
               md={3}
+              className="gridBox"
             >
-              <Box borderRadius={16} boxShadow={3} p={2} m={1} minHeight={250}>
+              <Box className={classes.featureBox} borderRadius={16} boxShadow={3} p={2} m={1} minHeight={250}>
                <img
                   alt="Features"
                   className={classes.featureImage}
                     src="/static/ic_2.png"
                   />
-                <Box ml={2}>
+                <Box>
                   <Typography
                     variant="h4"
                     gutterBottom
@@ -125,14 +147,15 @@ function Features({ className, ...rest }) {
               item
               xs={12}
               md={3}
+              className="gridBox"
             >
-              <Box borderRadius={16} boxShadow={3} p={2} m={1} minHeight={250}>
+              <Box className={classes.featureBox} borderRadius={16} boxShadow={3} p={2} m={1} minHeight={250}>
                 <img
                   alt="Features"
                   className={classes.featureImage}
                     src="/static/ic_3.png"
                   />
-                <Box ml={2}>
+                <Box>
                   <Typography
                     variant="h4"
                     gutterBottom
@@ -157,14 +180,15 @@ function Features({ className, ...rest }) {
               item
               xs={12}
               md={3}
+              className="gridBox"
             >
-              <Box borderRadius={16} boxShadow={3} p={2} m={1} minHeight={250}>
+              <Box className={classes.featureBox} borderRadius={16} boxShadow={3} p={2} m={1} minHeight={250}>
                 <img
                   alt="Features"
                   className={classes.featureImage}
                     src="/static/ic_4.png"
                   />
-                <Box ml={2}>
+                <Box>
                   <Typography
                     variant="h4"
                     gutterBottom

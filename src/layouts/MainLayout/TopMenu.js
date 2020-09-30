@@ -43,11 +43,25 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2)
   },
   link: {
-    fontWeight: theme.fontfamily.regular,
+    fontWeight: theme.fontfamily.medium,
+    fontSize:'16px',
+    color:'#000000',
+    letterSpacing:'0.8px',
     '& + &': {
       marginLeft: theme.spacing(2)
     }
   },
+  footerMenuList :{
+    marginBottom: theme.spacing(2),
+    '& > ul' :{
+      padding:0,
+      '& > li' :{
+        display:'inline-block',
+        width:'auto',   
+      },
+    }
+  }
+
 }));
 
 const StyledMenu = withStyles({
@@ -105,7 +119,7 @@ function TopMenu({ className, ...rest }) {
     setMobileOpen(!mobileOpen);
   };
   return (
-    <div>
+    <div className={classes.footerMenuList}>
        <List className={classes.list}>
                   <ListItem className={classes.listItem}>
                     <Link
