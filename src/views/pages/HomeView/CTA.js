@@ -13,7 +13,11 @@ const useStyles = makeStyles((theme) => ({
   root: {
     backgroundImage: `url(${"/static/home/start_clean_bg.png"})`,
     paddingTop: 80,
-    paddingBottom: 63
+    paddingBottom: 63,
+    [theme.breakpoints.down('xs')]: {
+      paddingTop: 40,
+      paddingBottom: 30,
+    },
   },
   browseButton: {
     marginLeft: theme.spacing(2)

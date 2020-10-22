@@ -40,7 +40,8 @@ import {
   MessageCircle as MessageCircleIcon,
   PieChart as PieChartIcon,
   Share2 as ShareIcon,
-  Users as UsersIcon
+  Users as UsersIcon,
+  Home as HomeIcon,
 } from 'react-feather';
 import Logo from 'src/components/Logo';
 import NavItem from './NavItem';
@@ -48,7 +49,7 @@ import authService from './../../../services/authService';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-
+import { THEMES } from 'src/constants';
 const userName = authService.getUserName();
 
 const navConfig = [
@@ -57,7 +58,7 @@ const navConfig = [
     items: [
       {
         title: 'Dashboard',
-        icon: PieChartIcon,
+        icon: HomeIcon,
         href: '/app/reports/dashboard'
       } 
     ]
@@ -354,14 +355,24 @@ function reduceChildRoutes({
   return acc;
 }
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   mobileDrawer: {
-    width: 256
+    width: 256,
+    ...(theme.name === THEMES.NEWLIGHT
+    ? {
+        backgroundColor: theme.palette.background.main,
+      }
+    : {}),
   },
   desktopDrawer: {
     width: 256,
     top: 64,
-    height: 'calc(100% - 64px)'
+    height: 'calc(100% - 64px)',
+    ...(theme.name === THEMES.NEWLIGHT
+      ? {
+          backgroundColor: theme.palette.background.main,
+        }
+      : {}),
   },
   avatar: {
     cursor: 'pointer',

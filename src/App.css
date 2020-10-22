@@ -1,6 +1,9 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
 
+img{
+  max-width:100%;
+}
 .details-header {
   display: inline;
   color: #263238;
@@ -177,4 +180,19 @@ button:focus{
 .services-list li > div span{
   font-size: 15px;
   font-weight: 500;
+}
+
+
+@media(min-width:767px) and (max-width:959px){
+  .bannerBox .bannerContent{
+    max-width:100%;
+  }
+  .bannerBox .MuiGrid-grid-xs-12{
+    max-width: 50%;
+    flex-basis: 50%;
+  }
+  .gridBox-Container .gridBox{
+    margin-bottom:25px;
+    max-width:50%
+  }
 }

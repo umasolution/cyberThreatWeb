@@ -1,0 +1,39 @@
+.paper {
+  padding: 10px;
+}
+
+.paper-border {
+  overflow: inherit;
+  margin-top: 16px;
+  border: 1px solid;
+  border-color: #de2546;
+}
+.base-score {
+  display: inline;
+  background: #3a75f9;
+  color: white;
+  padding: 5px;
+}
+
+.base-score-value {
+  display: inline;
+  background: #f93a43;
+  color: white;
+  padding: 5px;
+  margin-left: 5px;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.secondaryText {
+    color: inherit;
+    display: inline;
+    text-transform: capitalize;
+}
+
+.right-p {
+  margin-top: 18px;
+}

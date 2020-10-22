@@ -29,6 +29,15 @@ const useStyles = makeStyles((theme) => ({
   popover: {
     width: 320,
     padding: theme.spacing(2)
+  },
+  iconcolor : {
+    ...(theme.name === THEMES.NEWLIGHT
+      ? {
+          color: theme.palette.background.main,
+        }
+      : {
+        color: 'inherit',
+      }),
   }
 }));
 
@@ -72,7 +81,7 @@ function Settings() {
           classes={{ badge: classes.badge }}
         >
           <IconButton
-            color="inherit"
+            className={classes.iconcolor}
             onClick={handleOpen}
             ref={ref}
           >

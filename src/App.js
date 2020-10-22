@@ -69,7 +69,7 @@ function App() {
   const { settings } = useSettings();
 
   return (
-    <ThemeProvider id="id1" theme={createTheme(settings)}>
+    <ThemeProvider theme={createTheme(settings)}>
       <StylesProvider jss={jss}>
         <MuiPickersUtilsProvider utils={MomentUtils}>
           <SnackbarProvider maxSnack={1}>

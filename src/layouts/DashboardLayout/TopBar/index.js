@@ -37,6 +37,12 @@ const useStyles = makeStyles((theme) => ({
           backgroundColor: theme.palette.primary.main,
         }
       : {}),
+    ...(theme.name === THEMES.NEWLIGHT
+      ? {
+          boxShadow: "none",
+          backgroundColor: theme.palette.background.default,
+        }
+      : {}),
     ...(theme.name === THEMES.ONE_DARK
       ? {
           backgroundColor: theme.palette.background.default,
@@ -150,13 +156,13 @@ function TopBar({ className, onMobileNavOpen, ...rest }) {
           <RouterLink to="/">
             <Logo />
           </RouterLink>
+          <CVETextField
+            cveInput={cveInput}
+            keyPress={keyPress}
+            handleChangeCVE={handleChangeCVE}
+          />
         </Hidden>
         <Box ml={2} flexGrow={1} />
-        <CVETextField
-          cveInput={cveInput}
-          keyPress={keyPress}
-          handleChangeCVE={handleChangeCVE}
-        />
         {/* <Search /> */}
         {/* <Contacts /> */}
         <Notifications alertsResponse={alertsResponse}/>

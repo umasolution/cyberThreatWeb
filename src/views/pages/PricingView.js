@@ -160,6 +160,7 @@ function PricingView() {
             <Grid
               item
               md={4}
+              sm={6}
               xs={12}
             >
               <Paper
@@ -266,6 +267,7 @@ function PricingView() {
             <Grid
               item
               md={4}
+              sm={6}
               xs={12}
             >
               <Paper
@@ -369,6 +371,7 @@ function PricingView() {
             <Grid
               item
               md={4}
+              sm={12}
               xs={12}
             >
               <Paper

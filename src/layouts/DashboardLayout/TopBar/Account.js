@@ -75,7 +75,6 @@ function Account() {
         <Hidden smDown>
           <Typography
             variant="h6"
-            color="inherit"
           >
             {/* {`${account.user.firstName} ${account.user.lastName}`} */}
             {`${account.user}`}

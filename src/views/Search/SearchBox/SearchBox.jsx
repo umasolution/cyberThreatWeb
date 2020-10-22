@@ -119,7 +119,6 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   searchbarArea: {
-    position:'absolute',
     width: '100%',
     bottom: -70,
     [theme.breakpoints.down('sm')]: {
@@ -179,7 +178,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function Hero({ className, ...rest }) {
+const SearchBox = ({ className, ...rest }) => {
   const classes = useStyles();
 
   const { history } = { ...rest };
@@ -230,81 +229,6 @@ function Hero({ className, ...rest }) {
 
 
   return (
-    <div className="bannerBox">
-    <div
-      className={clsx(classes.root, className)}
-      {...rest}
-    >
-      <Container maxWidth={false} className="bannerContainer">
-        <Grid
-          container
-          spacing={0}
-          className={classes.container}
-        >
-          <Grid
-            item
-            xs={12}
-            md={5}
-          >
-            <Box
-              display="flex"
-              flexDirection="column"
-              justifyContent="center"
-              height="100%"
-              className="bannerContent"
-            >
-              <div className={classes.mainContent}>
-                <h3 className={classes.mainContentH3}>Continuous Integration.</h3>
-                <h3 className={classes.mainContentH3}>Continuous Development.</h3>
-                <h3 className={classes.mainContentH3}>Continuous Confidence.</h3>
-              </div>
-              <div className="mainContentSub">
-                <h5 className={classes.mainContentH5}>Confidently scan for vulnerablities in your source code,</h5>
-                <h5 className={classes.mainContentH5}>container image, virtual machine or physical servers.</h5>
-              </div>
-              <div className={classes.mainBannerBtn}><Button
-                color="secondary"
-                size="large"
-                type="button"
-                variant="contained"
-                onClick={gotoRegister}
-                style={{marginTop: '8px'}}
-              >
-                Explore More
-              </Button></div>
-              
-            </Box>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            md={7}
-          >
-            <Box position="relative">
-              <div className={classes.image}>
-                <img
-                  alt="Presentation"
-                  src="/static/home/hero_banner.png"
-                />
-              </div>
-            </Box>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-          >
-            <Box
-              display="flex"
-              flexDirection="column"
-              justifyContent="center"
-              height="100%"
-            >
-          
-          </Box>
-          </Grid>
-        </Grid>
-      
-      </Container>
       <div className={classes.searchbarArea}> 
         <Container maxWidth="lg" className={classes.searchbar}>    
           <Box mt={3}
@@ -328,14 +252,7 @@ function Hero({ className, ...rest }) {
           </Box>
         </Container>
       </div>
-      
-    </div >
-    </div >
   );
 }
 
-Hero.propTypes = {
-  className: PropTypes.string
-};
-
-export default withRouter(Hero);
+export default SearchBox;

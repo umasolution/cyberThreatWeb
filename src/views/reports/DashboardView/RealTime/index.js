@@ -1,4 +1,9 @@
-import { Box, Card, CardHeader, ListItem, ListItemText, makeStyles, TextField, Typography } from '@material-ui/core';
+import { Box, Card, CardHeader, ListItem, ListItemText, makeStyles, TextField, Typography,Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  TableSortLabel,Divider } from '@material-ui/core';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import React, { useRef, useState } from 'react';
@@ -7,6 +12,10 @@ import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import Copy from "../../../../Util/Copy";
 import './index.css';
 import { Link } from 'react-router-dom';
+import IconButton from '@material-ui/core/IconButton';
+import SearchIcon from '@material-ui/icons/Search';
+import CloseIcon from '@material-ui/icons/Close';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -33,6 +42,15 @@ function RealTime({ className, lib_details, ...rest }) {
   const [searchedLibDetails, setSearchedLibDetails] = useState(Copy(lib_details));
   const [searchInput, setSearchInput] = useState();
 
+  const [openSearch, setOpenSearch] = useState(false);
+
+  const handleSearchOpen = () => {
+    setOpenSearch(true);
+  };
+
+  const handleSearchClose = () => {
+    setOpenSearch(false);
+  };
 
 
   const pages = [
@@ -55,19 +73,16 @@ function RealTime({ className, lib_details, ...rest }) {
   ];
 
   const height = 309;
-  const rowHeight = 25;
-  const width = 285;
+  const rowHeight = 52;
+  const width = 398;
+  
 
   const rowRenderer = ({ index, isScrolling, key, style }) => {
     return searchedLibDetails && (
-      <div className="odd-even-background" key={key} style={style}>
-        <ListItem
-          classes={{ divider: classes.itemDivider }}
-          divider
-          className="spaceBetween"
-          key={searchedLibDetails[index].product}
-        >
-          <Typography color="inherit"
+        <div className="odd-even-background" key={key} style={style}>
+         
+        <TableRow>
+          <TableCell><Typography color="inherit"
             className="secondary"
           >
             <Link target="_blank" to={`/library/${searchedLibDetails[index].product}/${searchedLibDetails[index].app}`}
@@ -76,14 +91,13 @@ function RealTime({ className, lib_details, ...rest }) {
               {`${searchedLibDetails[index].product} (${searchedLibDetails[index].app})`}
             </Link>
 
-          </Typography>
-
-          <Typography color="inherit"
+          </Typography></TableCell>
+          <TableCell><Typography color="inherit"
             className="secondary"
           >
             {searchedLibDetails[index].count}
-          </Typography>
-        </ListItem>
+          </Typography></TableCell>
+        </TableRow>
       </div>
     )
       ;
@@ -101,27 +115,34 @@ function RealTime({ className, lib_details, ...rest }) {
       className={clsx(classes.root, className)}
       {...rest}
     >
-      <Typography
-        component="h4"
-        gutterBottom
-        variant="overline"
-        className="margin-general fontsize"
-        color="textSecondary"
-      >
-        Libraries with most vulnerabilities
-        </Typography>
-      <TextField
+      
+    { openSearch ? null : <CardHeader
+        title="Libraries with most vulnerabilities"
+        action={
+          <IconButton aria-label="settings">
+            <SearchIcon onClick={handleSearchOpen} />
+          </IconButton>
+        }
+      /> }
+      { openSearch ? <TextField
         required
         value={searchInput}
         onChange={handleChangeSearch}
         className="secondary"
         labelClassName="secondary"
         style={{
-          marginLeft: '15px'
+          marginLeft: '15px',
         }}
         id="search"
         placeholder="Search"
-      />
+      /> : null }
+      { openSearch ? <IconButton aria-label="settings">
+            <CloseIcon onClick={handleSearchClose} />
+          </IconButton> : null }
+      
+      <Divider />
+      <Table>
+        <TableBody>
       {searchedLibDetails && (
         <VirtualizedList
           rowCount={searchedLibDetails.length}
@@ -132,37 +153,8 @@ function RealTime({ className, lib_details, ...rest }) {
           overscanRowCount={3}
         />
       )}
-      {/* <List>
-        {lib_details.map((page) => (
-          <ListItem
-            classes={{ divider: classes.itemDivider }}
-            divider
-            key={page.product}
-          >
-            <ListItemText
-              primary={page.product}
-              primaryTypographyProps={{ color: 'textSecondary', variant: 'body2' }}
-            />
-            <Typography color="inherit">
-              {page.count}
-            </Typography>
-          </ListItem>
-        ))}
-      </List> */}
-      <Box
-        p={2}
-        display="flex"
-        justifyContent="flex-end"
-      >
-        {/* <Button
-          component={RouterLink}
-          size="small"
-          to="#"
-        >
-          See all
-          <NavigateNextIcon className={classes.navigateNextIcon} />
-        </Button> */}
-      </Box>
+       </TableBody>
+      </Table>
     </Card>
   );
 }

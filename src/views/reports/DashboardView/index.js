@@ -28,13 +28,12 @@ const useStyles = makeStyles((theme) => ({
     minHeight: '100%',
     paddingTop: theme.spacing(3),
     paddingBottom: theme.spacing(3),
-    paddingLeft: '0px !important', 
-    paddingRight: '0px !important',
   },
   container: {
     [theme.breakpoints.up('lg')]: {
     },
-    paddingLeft: '8px !important', 
+    paddingLeft: 45,
+    paddingRight: 45 
   }
 }));
 
@@ -98,11 +97,11 @@ function DashboardView() {
               <Header />
               <Grid
                 container
-                spacing={1}
+                spacing={2}
               >
 
                 {
-                  dashboardData.headers.map(header => {
+                  dashboardData.headers.map((header,index) => {
                     return (
                       <Grid
                         item
@@ -110,19 +109,18 @@ function DashboardView() {
                         sm={6}
                         xs={12}
                       >
-                        {Object.keys(header).map(key =>
-                          <TodaysMoney header={key} value={header[key]} />
+                        {Object.keys(header).map(key => 
+                          <TodaysMoney header={key} index={index%4} value={header[key]} />
                         )}
-
                       </Grid>
                     )
-                  })
+                  })  
 
                 }
               </Grid>
               <Grid
                 container
-                spacing={1}
+                spacing={2}
               >
                 <Grid
                   item
@@ -146,15 +144,28 @@ function DashboardView() {
                 >
                   <TeamTasks project_vuln_details={dashboardData.project_vuln_details} />
                 </Grid>
-                <Grid
+                 <Grid
                   item
                   lg={9}
-                  xl={9}
+                  xs={12}
+                >
+                  <PerformanceOverTime chartsData={dashboardData.charts}/>
+                </Grid>
+                
+              </Grid>
+              <Grid
+                container
+                spacing={2}
+              >
+              <Grid
+                  item
+                  lg={12}
+                  xl={12}
                   xs={12}
                 >
                   <LatestProjects project_details={dashboardData.project_details} />
                 </Grid>
-              </Grid>
+                </Grid>
             </>
           )
         }

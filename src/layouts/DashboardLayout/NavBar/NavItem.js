@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-
+import { THEMES } from 'src/constants';
 const useStyles = makeStyles((theme) => ({
   item: {
     display: 'block',
@@ -31,7 +31,13 @@ const useStyles = makeStyles((theme) => ({
     width: '100%'
   },
   buttonLeaf: {
-    color: theme.palette.text.secondary,
+   ...(theme.name === THEMES.NEWLIGHT
+      ? {
+         color: theme.palette.background.default,
+       }
+     : {
+        color: theme.palette.text.secondary,
+     }),
     padding: '10px 8px',
     justifyContent: 'flex-start',
     textTransform: 'none',
@@ -53,12 +59,26 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 'auto'
   },
   active: {
-    color: theme.palette.secondary.main,
+    ...(theme.name === THEMES.NEWLIGHT
+      ? {
+         color: theme.palette.background.default,
+         background : theme.palette.background.active
+       }
+     : {
+        color: theme.palette.secondary.main,
+     }),
     '& $title': {
       fontWeight: theme.typography.fontWeightMedium
     },
     '& $icon': {
-      color: theme.palette.secondary.main
+      ...(theme.name === THEMES.NEWLIGHT
+      ? {
+         color: theme.palette.background.default,
+         background : theme.palette.background.active
+       }
+     : {
+        color: theme.palette.secondary.main,
+     })
     }
   }
 }));

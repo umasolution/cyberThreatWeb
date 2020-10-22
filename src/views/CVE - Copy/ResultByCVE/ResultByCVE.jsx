@@ -8,20 +8,13 @@ import {
     ListItemIcon,
     ListItemText,
     ExpansionPanelDetails,
-    Paper,
+    Paper
 } from '@material-ui/core';
 import MaterialTable from 'material-table';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Link } from 'react-router-dom';
 import './ResultByCVE.css';
 import moment from 'moment';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -195,232 +188,11 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
     }
    
 
-    const getReference = (References) => {
+    const getReference = (cveNVDDetails, key) => {
         return (
-        <Grid item xs={12}>
-            <Typography
-              variant="h5"
-              color="textSecondary"
-            >
-              Reference 
+            <Typography className={classes.secondaryText}>
+                {cveNVDDetails.Reference[key].split(',').map(url => <a target="_blank" style={{ display: 'inline-block' }} href={url}>{url}</a>)}
             </Typography>
-            <ExpansionPanel
-                    key='References'
-                    style={{ width: '100%' }}
-                  > 
-                  <ExpansionPanelSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls="references-content"
-                      id="references-header"
-                    >
-                    <Typography variant="h3" component="h2">
-                        Reference 
-                    </Typography>
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
-                       <Typography
-                            variant="caption"
-                            color="textSecondary"
-                          >
-                            {References.split(',').map(url => <a target="_blank" style={{ display: 'inline-block' }} href={url}>{url}</a>)}
-                          </Typography>
-                    </ExpansionPanelDetails>
-               </ExpansionPanel>
-            
-        </Grid>                
-        )
-    }
-
-    const getCVVScoreDetail = (cveNVDDetails) => {
-        return (
-        <Grid item xs={12}>
-            <Typography
-              variant="h5"
-              color="textSecondary"
-            >
-              CVSS Score Details 
-            </Typography>
-            <ExpansionPanel
-                    key='References'
-                    style={{ width: '100%' }}
-                  > 
-                  <ExpansionPanelSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls="references-content"
-                      id="references-header"
-                    >
-                    <Typography variant="h3" component="h2">
-                        CVSS 2.0 
-                    </Typography>
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
-                       <TableContainer component={Paper}>
-                          <Table className={classes.table} aria-label="simple table">
-                            <TableBody>
-                                 {Object.entries(cveNVDDetails.CVSS20).map(([key, value]) => (
-                                   <TableRow key={key}>
-                                      <TableCell component="th" scope="row">
-                                        {key}
-                                      </TableCell>
-                                      <TableCell align="right">{value}</TableCell>
-                                    </TableRow>
-                                ))}                                
-                            </TableBody>
-                          </Table>
-                        </TableContainer>
-                    </ExpansionPanelDetails>
-               </ExpansionPanel>
-              <ExpansionPanel
-                    key='References'
-                    style={{ width: '100%' }}
-                  > 
-                  <ExpansionPanelSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls="references-content"
-                      id="references-header"
-                    >
-                    <Typography variant="h3" component="h2">
-                        CVSS 3.0 
-                    </Typography>
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
-                       <TableContainer component={Paper}>
-                          <Table className={classes.table} aria-label="simple table">
-                            <TableBody>
-                                 {Object.entries(cveNVDDetails.CVSS30).map(([key, value]) => (
-                                   <TableRow key={key}>
-                                      <TableCell component="th" scope="row">
-                                        {key}
-                                      </TableCell>
-                                      <TableCell align="right">{value}</TableCell>
-                                    </TableRow>
-                                ))}                                
-                            </TableBody>
-                          </Table>
-                        </TableContainer>
-                    </ExpansionPanelDetails>
-               </ExpansionPanel> 
-            
-        </Grid>                
-        )
-    }
-
-    
-
-    const getExploits = (cveNVDDetails) => {
-        return (
-            <Grid item xs={12}>
-                <Typography
-                  variant="h5"
-                  color="textSecondary"
-                >
-                  Exploits 
-                </Typography>
-                <List style={{ width: '100%' }} dense={false}>
-                   {Object.keys(cveNVDDetails.Exploits).map((cKey, index) => 
-                       <ExpansionPanel
-                            key={cKey}
-                            style={{ width: '100%' }}
-                          > 
-                          <ExpansionPanelSummary
-                              expandIcon={<ExpandMoreIcon />}
-                              aria-controls="panel1a-content"
-                              id="panel1a-header"
-                            >
-                            <Typography variant="h3" component="h2">
-                                {cveNVDDetails.Exploits[cKey].Advisory}
-                            </Typography>
-                            </ExpansionPanelSummary>
-                            <ExpansionPanelDetails>
-                               <Typography
-                                    variant="caption"
-                                    color="textSecondary"
-                                  >
-                                    {Object.keys(cveNVDDetails.Exploits[cKey].Reference).map((rKey) =>
-                                        <a target="_blank" style={{ display: 'inline-block' }} href={cveNVDDetails.Exploits[cKey].Reference[rKey]}>{cveNVDDetails.Exploits[cKey].Reference[rKey]}</a>
-                                    )}
-                                  </Typography>
-                            </ExpansionPanelDetails>
-                       </ExpansionPanel>
-                   )}  
-                </List>
-            </Grid>
-        )
-    }
-
-    const getProducts = (productsdata) => {
-        return (
-            <Grid item xs={12}>
-                <MaterialTable
-                    title="Products"
-                    columns={productsdata.columns}
-                    data={productsdata.data}
-                    style={{ width: '100%' }}
-                    className="secondary"
-                    options={{
-                      toolbarStyle: {
-                        fontSize: 19,
-                        fontFamily: '"Montserrat",sans-serif !important',
-                        fontWeight: 600
-                      },
-                      cellStyle: {
-                        fontSize: 19,
-                        fontFamily: '"Montserrat",sans-serif !important',
-                        fontWeight: 600
-                      },
-                      headerStyle: {
-                        fontSize: 19,
-                        fontFamily: '"Montserrat",sans-serif !important',
-                        color: '#546e7a',
-                        fontWeight: 600,
-                        borderBottom: '1px solid rgba(224, 224, 224, 1)'
-                      },
-                      rowStyle: x => {
-                        if (x.tableData.id % 2 === 0) {
-                            return {backgroundColor: "#f9f9fc"}
-                        }
-                    }
-                    }}
-                  />
-            </Grid>
-        )
-    }
-
-    const getMicrosoftAdvisory = (MicrosoftAdvisorydata) => {
-        return (
-            <Grid item xs={12}>
-                <MaterialTable
-                    title="Products"
-                    columns={MicrosoftAdvisorydata.columns}
-                    data={MicrosoftAdvisorydata.data}
-                    style={{ width: '100%' }}
-                    className="secondary"
-                    options={{
-                      toolbarStyle: {
-                        fontSize: 19,
-                        fontFamily: '"Montserrat",sans-serif !important',
-                        fontWeight: 600
-                      },
-                      cellStyle: {
-                        fontSize: 19,
-                        fontFamily: '"Montserrat",sans-serif !important',
-                        fontWeight: 600
-                      },
-                      headerStyle: {
-                        fontSize: 19,
-                        fontFamily: '"Montserrat",sans-serif !important',
-                        color: '#546e7a',
-                        fontWeight: 600,
-                        borderBottom: '1px solid rgba(224, 224, 224, 1)'
-                      },
-                      rowStyle: x => {
-                        if (x.tableData.id % 2 === 0) {
-                            return {backgroundColor: "#f9f9fc"}
-                        }
-                    }
-                    }}
-                  />
-            </Grid>
         )
     }
 
@@ -435,14 +207,14 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                                 <Typography variant="h1" component="h2">
                                     {cve}
                                 </Typography>
-                                {cveNVDDetails.pub_date ? (
+                                {cveNVDDetails.publishedDate ? (
                                 <>  
                                 <Typography
                                     variant="caption"
                                     color="textSecondary"
                                     className={classes.date}
                                   >
-                                    Date Published : {moment(cveNVDDetails.pub_date).fromNow()}
+                                    Date Published : {moment(cveNVDDetails.publishedDate).fromNow()}
                                   </Typography>
                                 </>
                             )
@@ -598,11 +370,35 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                         </>
                         
                     )
-                        : ''}
-                    {getExploits(cveNVDDetails)}       
-                    {cveNVDDetails.Reference ? getReference(cveNVDDetails.Reference) : ''}
-                    {getCVVScoreDetail(cveNVDDetails)}
-                    {cveNVDDetails.Products ? getProducts(cveNVDDetails.Products) : ''}
+                        : ''}    
+                        
+                    <Grid item xs={12}>
+                        <Grid container spacing={1}>
+                            <Grid item xs={6}>
+                                {cveNVDDetails.Reference ? (
+                                    <>
+                                    {cveNVDDetails.Reference.split(',').map(url => <a target="_blank" style={{ display: 'inline-block' }} href={url}>{url}</a>)}
+                                    </>
+                                )
+                                    : ''}    
+                                  
+
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Grid container spacing={0}>
+                                    <Grid item xs={6}>
+                                        
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        
+                                    </Grid>
+                                </Grid>
+
+                            </Grid>
+                        </Grid>
+
+                    </Grid>
+
                 </Grid>
             </div>
         );

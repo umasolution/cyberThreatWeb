@@ -44,9 +44,14 @@ const useStyles = makeStyles((theme) => ({
     height:'100%',
     boxShadow:'4px 0px 67px rgba(46,57,124,0.07)',
     padding:'26px',
+    [theme.breakpoints.down('xs')]: {
+      height:'auto',
+      marginBottom:'25px'
+    },
   },
   gridBox: {
     padding:'0 8px !important',
+    
   }
 }));
 

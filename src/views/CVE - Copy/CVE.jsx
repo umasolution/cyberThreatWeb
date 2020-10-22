@@ -88,6 +88,9 @@ const CVE = () => {
             if (isAuthenticatedURL) {
                 url = `/auth/cve?cve=${cveParams}&emailId=${authService.getUserName()}`;
             }
+
+            console.log(url);
+
             const response = await Axios.get(url);
             if (!response.data) return;
             /*if (response.data.tables) {
@@ -200,6 +203,35 @@ const CVE = () => {
                 container
                 spacing={1}
             >
+                <Box
+                    display="flex"
+                    flexDirection="column"
+                    justifyContent="left"
+                    height="100%"
+                    style={{ marginTop: '25px' }}
+                >
+                    {isLoadingData && getLoader()}
+
+                    <CVEInput
+                        searchByCVE={searchByCVE}
+                        cveInput={cveInput}
+                        changeSearchByCVE={changeSearchByCVE}
+                        keyPress={keyPress}
+                        handleChangeCVE={handleChangeCVE}
+                        onSearchClicked={onSearchClicked}
+                        isSearching={isLoadingData}
+                        setCVESearchDate={setCVESearchDate}
+                        cveSearchStartDate={cveSearchStartDate}
+                        cveSearchEndDate={cveSearchEndDate}
+                        setAlert={setAlert}
+                        canSetAlert={isAuthenticatedURL && cveNVDDetails && !isLoadingData}
+                        alarmAlreadySet={alarmAlreadySet}
+                    />
+                    <MySnackbar
+                        closeSnackbar={() => updateSnackbar(false, '')}
+                        snackbarMessage={snackbar.message}
+                        snackbarOpen={snackbar.open} />
+                </Box>
                 {searchByCVE
                     && !isLoadingData && cveNVDDetails
                     && (

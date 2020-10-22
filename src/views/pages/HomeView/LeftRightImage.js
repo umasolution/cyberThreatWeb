@@ -15,14 +15,38 @@ import {
 const useStyles = makeStyles((theme) => ({
   marginAutoContainer: {
     display: 'flex',
+    [theme.breakpoints.down('sm')]: {
+        maxWidth:'50%'
+    },
+    [theme.breakpoints.down('xs')]: {
+        maxWidth:'100%'
+    },
+  },
+  imageContainer : {
+    [theme.breakpoints.down('sm')]: {
+        maxWidth:'50%'
+    },
+    [theme.breakpoints.down('xs')]: {
+        maxWidth:'100%'
+    },
   },
   marginAutoItem: {
-    margin: 'auto'
+    margin: 'auto',
+    [theme.breakpoints.down('xs')]: {
+        '& > div' :{
+          marginLeft:0,
+          textAlign:'center',
+          marginBottom:'20px',
+        },
+    },
   },
   mainH2:{
     fontWeight: theme.fontfamily.semiBold,
     fontSize:'18px',
     marginBottom: 10,
+    [theme.breakpoints.down('xs')]: {
+      textAlign:'center',
+    },
   },
   body1:{
     fontWeight: theme.fontfamily.medium,
@@ -31,6 +55,9 @@ const useStyles = makeStyles((theme) => ({
   },
   imageSection:{
     paddingTop:100,
+    [theme.breakpoints.down('xs')]: {
+      paddingTop:20,
+    },
   }
 }));
 
@@ -76,6 +103,7 @@ function LeftRightImage({ className, ...rest }) {
               item
               xs={12}
               md={6}
+              className={classes.imageContainer}
             >
               <Box>
                 <Box ml={2}>
@@ -100,6 +128,7 @@ function LeftRightImage({ className, ...rest }) {
               item
               xs={12}
               md={6}
+              className={classes.imageContainer}
             >
               <Box>
                 <Box ml={2}>
@@ -181,6 +210,7 @@ function LeftRightImage({ className, ...rest }) {
               item
               xs={12}
               md={6}
+              className={classes.imageContainer}
             >
               <Box>
                 <Box ml={2}>

@@ -89,8 +89,11 @@ function PerformanceOverTime({ className, chartsData, ...rest }) {
       className={clsx(classes.root, className)}
       {...rest}
     >
+    <CardHeader
+        title="Libraries with most vulnerabilities"        
+      />
+      <Divider />
       <CardContent>
-
         <Box
           height={375}
            

@@ -74,6 +74,18 @@ const useStyles = makeStyles((theme) => ({
   },
   priceBTN : {
     fontWeight: theme.fontfamily.semiBold
+  },
+  appResponsive:{
+    '& > div' :{
+      marginBottom: theme.spacing(2),
+      '& > ul' :{
+        padding:'15px 10px',
+        '& > li' :{
+          display:'flex',
+          width:'auto',   
+        },
+      }
+    }    
   }
 }));
 

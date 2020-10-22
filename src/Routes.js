@@ -397,6 +397,11 @@ const routesConfig = [
         path: '/CVE/:cveStartDate/:cveEndDate',
         component: lazy(() => import('src/views/CVE/CVE'))
       },
+      {
+        exact: true,
+        path: '/Search/CVE',
+        component: lazy(() => import('src/views/Search/Search'))
+      },
       /* {
         exact: true,
         path: '/pricing',

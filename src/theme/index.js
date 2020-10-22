@@ -66,6 +66,47 @@ const themeConfigs = [
     shadows: softShadows
   },
   {
+    name: THEMES.NEWLIGHT,
+    overrides: {
+      MuiInputBase: {
+        input: {
+          '&::placeholder': {
+            opacity: 1,
+            color: colors.blueGrey[600]
+          }
+        }
+      }
+    },
+    palette: {
+      type: 'light',
+      action: {
+        active: colors.blueGrey[600]
+      },
+      background: {
+        main: '#185d98',
+        default: colors.common.white,
+        dark: '#f4f6f8',
+        paper: colors.common.white,
+        active : '#155288',
+        color1 : '#00d1ce',
+        color2 : '#fe0a7b',
+        color3 : '#ff9f00',
+        color4 : '#027de7',
+      },
+      primary: {
+        main: colors.indigo[600]
+      },
+      secondary: {
+        main: '#5850EC'
+      },
+      text: {
+        primary: colors.blueGrey[900],
+        secondary: colors.blueGrey[600]
+      }
+    },
+    shadows: softShadows
+  },
+  {
     name: THEMES.ONE_DARK,
     palette: {
       type: 'dark',

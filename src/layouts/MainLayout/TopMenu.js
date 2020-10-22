@@ -49,15 +49,23 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing:'0.8px',
     '& + &': {
       marginLeft: theme.spacing(2)
-    }
+    },
+    [theme.breakpoints.down('xs')]: {
+      fontSize:'14px',
+      letterSpacing:'0',
+    },
   },
   footerMenuList :{
     marginBottom: theme.spacing(2),
     '& > ul' :{
       padding:0,
+      textAlign:'center',
       '& > li' :{
         display:'inline-block',
-        width:'auto',   
+        width:'auto',
+        [theme.breakpoints.down('xs')]: {
+          padding:'8px 8px',
+        },   
       },
     }
   }
