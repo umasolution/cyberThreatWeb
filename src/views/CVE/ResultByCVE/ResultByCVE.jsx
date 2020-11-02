@@ -138,7 +138,8 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
 
     const getCVEHeaderGrid12 = () => {
         return (
-            <Grid item xs={12}>
+            <Grid item xs={12}
+            >
                 <Grid container spacing={1}>
                     <Grid item xs={4}>
                         <Paper color="primary.main"  className={[classes.paper, 'paper-border'].join(' ')}>
@@ -197,7 +198,9 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
 
     const getReference = (References) => {
         return (
-        <Grid item xs={12}>
+        <Grid item xs={12}
+        className="accordian-sec mb-3"  
+        >
             <Typography
               variant="h5"
               color="textSecondary"
@@ -207,6 +210,7 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
             <ExpansionPanel
                     key='References'
                     style={{ width: '100%' }}
+                    className="accordian-block"
                   > 
                   <ExpansionPanelSummary
                       expandIcon={<ExpandMoreIcon />}
@@ -233,7 +237,9 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
 
     const getCVVScoreDetail = (cveNVDDetails) => {
         return (
-        <Grid item xs={12}>
+        <Grid item xs={12}
+        className="accordian-sec mb-3" 
+        >
             <Typography
               variant="h5"
               color="textSecondary"
@@ -243,6 +249,7 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
             <ExpansionPanel
                     key='References'
                     style={{ width: '100%' }}
+                    className="accordian-block"
                   > 
                   <ExpansionPanelSummary
                       expandIcon={<ExpandMoreIcon />}
@@ -273,6 +280,7 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
               <ExpansionPanel
                     key='References'
                     style={{ width: '100%' }}
+                    className="accordian-block"
                   > 
                   <ExpansionPanelSummary
                       expandIcon={<ExpandMoreIcon />}
@@ -350,13 +358,15 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
 
     const getProducts = (productsdata) => {
         return (
-            <Grid item xs={12}>
+            <Grid item xs={12}
+            className="cve-product-table"
+            >
                 <MaterialTable
                     title="Products"
                     columns={productsdata.columns}
                     data={productsdata.data}
                     style={{ width: '100%' }}
-                    className="secondary"
+                    className="secondary table-inner"
                     options={{
                       toolbarStyle: {
                         fontSize: 19,
@@ -428,10 +438,18 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
     const getCVENVDDetails = () => {
         return (
             <div>
-                <Grid container spacing={1}>
-                    <Grid item xs={12}>
-                        <Grid container spacing={1}>
-                            <Grid item xs={4}>
+                <Grid container spacing={1}
+                className="cve-detail-main"
+                >
+                    <Grid item xs={12}
+                    className="datepub-block mb-5"
+                    >
+                        <Grid container spacing={1} 
+                        className="box-shadow"  
+                        >
+                            <Grid item xs={4}
+                            className="pubdate-title"   
+                            >
                                 <Typography variant="h1" component="h2">
                                     {cve}
                                 </Typography>
@@ -440,7 +458,7 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                                 <Typography
                                     variant="caption"
                                     color="textSecondary"
-                                    className={classes.date}
+                                    className="pub_date"
                                   >
                                     Date Published : {moment(cveNVDDetails.pub_date).fromNow()}
                                   </Typography>
@@ -449,9 +467,18 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                                 : ''}
                                 
                             </Grid>
-                            <Grid item xs={4}>
+                            <Grid item xs={5}
+                            className="pubdate-button"
+                            >
                                 {cveNVDDetails.CVSS30.attackVector ? (
                                 <>  
+                                <Typography
+                                    variant="h5"
+                                    color="textSecondary"
+                                    className="acce-vact"
+                                  >
+                                    AccessVector
+                                  </Typography>
                                 <Typography
                                     variant="h5"
                                     color="textSecondary"
@@ -464,19 +491,23 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                                 : ''}
                             </Grid>
 
-                            <Grid item xs={4}>
+                            <Grid item xs={3}>
                                 
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Grid item xs={12}>
-                        <Grid container spacing={1}>
+                    <Grid item xs={12}
+                    className="mb-5"
+                    >
+                        <Grid container spacing={4}>
                             {cveNVDDetails.CVSS30['baseScore'] ? (
                                 <>  
-                                    <Grid item xs={4}>
-                                    <Paper style={{ overflow: 'inherit', marginTop: '16px', marginLeft: '2px', }} elevation={3} className={[classes.paper, 'paper-border'].join(' ')}>
-                                        <div className="flex">
-                                            <div className="background-shadow background-margin">
+                                    <Grid item xs={4}
+                                     className="baseScore-block" 
+                                    >
+                                    <Paper style={{ overflow: 'inherit', marginTop: '16px', marginLeft: '2px', }} elevation={3} className={[classes.paper, 'baseScore-block-inner'].join(' ')}>
+                                        <div className="baseScore-box">
+                                            <div className="baseScore-block-title">
                                                 CVSS 3.0 Score
                                             </div>
                                             <Typography
@@ -494,10 +525,12 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                                 : ''}
                             {cveNVDDetails.CVSS20['baseScore'] ? (
                                 <>  
-                                    <Grid item xs={4}>
-                                    <Paper style={{ overflow: 'inherit', marginTop: '16px', marginLeft: '2px', }} elevation={3} className={[classes.paper, 'paper-border'].join(' ')}>
-                                        <div className="flex">
-                                            <div className="background-shadow background-margin">
+                                    <Grid item xs={4}
+                                    className="baseScore-block"
+                                    >
+                                    <Paper style={{ overflow: 'inherit', marginTop: '16px', marginLeft: '2px', }} elevation={3} className={[classes.paper, 'baseScore-block-inner'].join(' ')}>
+                                        <div className="baseScore-box">
+                                            <div className="baseScore-block-title">
                                                 CVSS 2.0 Score
                                             </div>
                                             <Typography
@@ -515,10 +548,12 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                                 : ''}
                             {cveNVDDetails.CWE ? (
                                 <>  
-                                    <Grid item xs={4}>
-                                    <Paper style={{ overflow: 'inherit', marginTop: '16px', marginLeft: '2px', }} elevation={3} className={[classes.paper, 'paper-border'].join(' ')}>
-                                        <div className="flex">
-                                            <div className="background-shadow background-margin">
+                                    <Grid item xs={4}
+                                    className="baseScore-block"
+                                    >
+                                    <Paper style={{ overflow: 'inherit', marginTop: '16px', marginLeft: '2px', }} elevation={3} className={[classes.paper, 'baseScore-block-inner'].join(' ')}>
+                                        <div className="baseScore-box">
+                                            <div className="baseScore-block-title">
                                                 CWE
                                             </div>
                                             <Typography
@@ -537,10 +572,12 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                                 
                             {cveNVDDetails.vulnerabilitytype ? (
                                 <>  
-                                    <Grid item xs={4}>
-                                    <Paper style={{ overflow: 'inherit', marginTop: '16px', marginLeft: '2px', }} elevation={3} className={[classes.paper, 'paper-border'].join(' ')}>
-                                        <div className="flex">
-                                            <div className="background-shadow background-margin">
+                                    <Grid item xs={4}
+                                    className="baseScore-block"
+                                    >
+                                    <Paper style={{ overflow: 'inherit', marginTop: '16px', marginLeft: '2px', }} elevation={3} className={[classes.paper, 'baseScore-block-inner'].join(' ')}>
+                                        <div className="baseScore-box">
+                                            <div className="baseScore-block-title">
                                                 Vulnerability Type(s)
                                             </div>
                                             <Typography
@@ -561,7 +598,7 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                     
                     {cveNVDDetails.title ? (
                         <>
-                         <Grid item xs={12}>
+                         <Grid item xs={12} className="cve-title mb-3">
                             <Typography
                               variant="h5"
                               color="textSecondary"
@@ -581,7 +618,9 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                         : ''}
                     {cveNVDDetails.description ? (
                         <>
-                        <Grid item xs={12}>
+                        <Grid item xs={12}
+                        className="mb-3 cve-descp"
+                        >
                             <Typography
                               variant="h5"
                               color="textSecondary"

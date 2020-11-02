@@ -197,13 +197,41 @@ function Hero({ className, ...rest }) {
 
   const onSearchClicked = () => {
     if (cveInput) {
-      history.push(`/CVE/${cveInput}`);
-      console.log(`/CVE/'${cveInput}`);
-      
+      const regex5 = /([^:\s]+):([^:\s]+)/g;
+      const regex = new RegExp(regex5,'i');
+      let m = regex.exec(cveInput);
+      var regexcve = /cve-/;
+      var regexcve2 = /CVE-/;
+      if(m){
+        if(m[1]=='product'){
+          history.push(`/search/CVE/?product=${m[2]}`);          
+        } else if(m[1]=='vendor') {
+          history.push(`/search/CVE/?vendor=${m[2]}`);         
+        } else {
+          var result = regexcve.test(cveInput);
+          var result2 = regexcve2.test(cveInput);
+          if(result){
+             history.push(`/CVE/${cveInput}`); 
+          } else if(result2){
+            history.push(`/CVE/${cveInput}`);  
+          } else {
+             history.push(`/search/CVE/?keyword=${cveInput}`);
+          }
+        }
+      } else {
+        var result = regexcve.test(cveInput);
+        var result2 = regexcve2.test(cveInput);
+        
+        if(result){
+           history.push(`/CVE/${cveInput}`); 
+        } else if(result2){
+           history.push(`/CVE/${cveInput}`);  
+        } else {
+           history.push(`/search/CVE/?keyword=${cveInput}`);
+        }
+      }
     } else {
-      console.log(`/CVE/'${moment(cveSearchStartDate).format("YYYY-MM-DD")}/${moment(cveSearchEndDate).format("YYYY-MM-DD")}`);
       history.push(`/CVE/${moment(cveSearchStartDate).format("YYYY-MM-DD")}/${moment(cveSearchEndDate).format("YYYY-MM-DD")}`);
-      /*history.push(`/CVE/${cveSearchStartDate}/${cveSearchEndDate}`);*/
     }
   }
 

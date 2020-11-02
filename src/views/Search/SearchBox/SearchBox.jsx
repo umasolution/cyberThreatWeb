@@ -121,6 +121,8 @@ const useStyles = makeStyles((theme) => ({
   searchbarArea: {
     width: '100%',
     bottom: -70,
+    margin: '38px auto',
+    maxWidth: '100%',
     [theme.breakpoints.down('sm')]: {
       bottom: -90,
     },
@@ -139,7 +141,7 @@ const useStyles = makeStyles((theme) => ({
   },
   searchBox: {
     marginTop: 0,
-    maxWidth:815,
+    maxWidth:1015,
     marginLeft: 'auto',
     marginRight: 'auto',
     backgroundColor: '#fff',
@@ -148,6 +150,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius:50,
     border:'1px solid #e8e8f2',
     padding:8,
+    color:'#000',
     position: 'relative',
     '& > div' : {
       paddingLeft: 60,
@@ -194,15 +197,51 @@ const SearchBox = ({ className, ...rest }) => {
     setSearchByCVE(event.target.checked);
   };
 
+  /*const regex1 = '/(?P<key>[^:\s]+):(?P<value>.*?)\s*(?=[^:\s]+:|$)/g';
+
+  const regexp = '/^product:(.*)$/m';*/
+
+  /*var re = /\s*([^[:]+):\"([^"]+)"/g;*/
+
   const onSearchClicked = () => {
     if (cveInput) {
-      history.push(`/CVE/${cveInput}`);
-      console.log(`/CVE/'${cveInput}`);
-      
+      const regex5 = /([^:\s]+):([^:\s]+)/g;
+      const regex = new RegExp(regex5,'i');
+      let m = regex.exec(cveInput);
+      var regexcve = /cve-/;
+      var regexcve2 = /CVE-/;
+      if(m){
+        if(m[1]=='product'){
+          history.push(`/search/CVE/?product=${m[2]}`);          
+        } else if(m[1]=='vendor') {
+          history.push(`/search/CVE/?vendor=${m[2]}`);         
+        } else {
+          var result = regexcve.test(cveInput);
+          var result2 = regexcve2.test(cveInput);
+          if(result){
+             history.push(`/CVE/${cveInput}`); 
+          } else if(result2){
+            history.push(`/CVE/${cveInput}`);  
+          } else {
+             history.push(`/search/CVE/?keyword=${cveInput}`);
+          }
+        }
+      } else {
+        var result = regexcve.test(cveInput);
+        var result2 = regexcve2.test(cveInput);
+        
+        if(result){
+           history.push(`/CVE/${cveInput}`); 
+        } else if(result2){
+           history.push(`/CVE/${cveInput}`);  
+        } else {
+           history.push(`/search/CVE/?keyword=${cveInput}`);
+        }
+      }
+
     } else {
       console.log(`/CVE/'${moment(cveSearchStartDate).format("YYYY-MM-DD")}/${moment(cveSearchEndDate).format("YYYY-MM-DD")}`);
       history.push(`/CVE/${moment(cveSearchStartDate).format("YYYY-MM-DD")}/${moment(cveSearchEndDate).format("YYYY-MM-DD")}`);
-      /*history.push(`/CVE/${cveSearchStartDate}/${cveSearchEndDate}`);*/
     }
   }
 
@@ -242,7 +281,8 @@ const SearchBox = ({ className, ...rest }) => {
             onKeyDown={keyPress}
             onChange={handleChangeCVE}
             style={{
-              width: '100%'
+              width: '100%',
+              color:'#000'
             }}
             id="cve"
             placeholder="Search Vulnerabilities"
