@@ -194,6 +194,7 @@ const SearchBox = ({ className, ...rest }) => {
     setCVEInput(event.target.value);
   }
   const changeSearchByCVE = (event) => {
+    
     setSearchByCVE(event.target.checked);
   };
 
@@ -243,6 +244,7 @@ const SearchBox = ({ className, ...rest }) => {
       console.log(`/CVE/'${moment(cveSearchStartDate).format("YYYY-MM-DD")}/${moment(cveSearchEndDate).format("YYYY-MM-DD")}`);
       history.push(`/CVE/${moment(cveSearchStartDate).format("YYYY-MM-DD")}/${moment(cveSearchEndDate).format("YYYY-MM-DD")}`);
     }
+    window.location.reload();
   }
 
   const keyPress = (event) => {
@@ -295,4 +297,4 @@ const SearchBox = ({ className, ...rest }) => {
   );
 }
 
-export default SearchBox;
+export default withRouter(SearchBox);

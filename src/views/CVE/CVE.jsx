@@ -200,16 +200,12 @@ const CVE = () => {
                 container
                 spacing={1}
             >
-                {searchByCVE
-                    && !isLoadingData && cveNVDDetails
-                    && (
-                        <ResultByCVE
-                            cveNVDDetails={cveNVDDetails}
-                            cveTables={cveTables}
-                            cve={cveInput}
-                        />
-                    )}
-
+                
+                <ResultByCVE
+                    cveNVDDetails={cveNVDDetails}
+                    cveTables={cveTables}
+                    cve={cveInput}
+                />
                 {!searchByCVE
                     && !isLoadingData && cveResultByDate
                     && (

@@ -371,12 +371,12 @@ const routesConfig = [
         exact: true,
         path: '/about-us',
         component: AboutView
-      },
+      }/*,
       {
         exact: true,
         path: '/vulDB/:feedType',
         component: lazy(() => import('src/views/Feed/Feed'))
-      },
+      }*/,
       {
         exact: true,
         path: '/CVE/:cve',
@@ -401,6 +401,11 @@ const routesConfig = [
         exact: true,
         path: '/Search/CVE',
         component: lazy(() => import('src/views/Search/Search'))
+      },
+      {
+        exact: true,
+        path: '/vulDB',
+        component: lazy(() => import('src/views/Vuldb/Vuldb'))
       },
       /* {
         exact: true,

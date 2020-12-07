@@ -21,6 +21,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import Skeleton from '@material-ui/lab/Skeleton';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -642,24 +643,223 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                     {cveNVDDetails.Reference ? getReference(cveNVDDetails.Reference) : ''}
                     {getCVVScoreDetail(cveNVDDetails)}
                     {cveNVDDetails.Products ? getProducts(cveNVDDetails.Products) : ''}
+                    {console.log(cveNVDDetails)}
                 </Grid>
             </div>
+        );
+    }
+    const noCVENVDDetails = () => {
+        return (
+           
+                <Grid container spacing={1}
+                className="cve-detail-main"
+                >
+                    <Grid item xs={12}
+                    className="datepub-block mb-5"
+                    >
+                        <Grid container spacing={1} 
+                        className="box-shadow"  
+                        >
+                            <Grid item xs={4}
+                            className="pubdate-title"   
+                            >
+                                <Typography variant="h1" component="h2">
+                                    <Skeleton animation="wave" height="20px" width="100%" />
+                                </Typography>
+                                <Typography
+                                    variant="caption"
+                                    color="textSecondary"
+                                    className="pub_date"
+                                  >
+                                   <Skeleton animation="wave" height="20px" width="100%" />
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={5}
+                            className="pubdate-button"
+                            >
+                                <Typography
+                                    variant="h5"
+                                    color="textSecondary"
+                                    className="acce-vact"
+                                  >
+                                    <Skeleton animation="wave" height="20px" width="100%" />
+                                  </Typography>
+                                <Typography
+                                    variant="h5"
+                                    color="textSecondary"
+                                    className={classes.attackVector}
+                                  >
+                                    <Skeleton animation="wave" height="20px" width="100%" />
+                                  </Typography>
+                            </Grid>
+
+                            <Grid item xs={3}>
+                                
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    <Grid item xs={12}
+                    className="mb-5"
+                    >
+                        <Grid container spacing={4}>
+                                <Grid item xs={3}
+                                 className="baseScore-block" 
+                                >
+                                <Paper style={{ overflow: 'inherit', marginTop: '16px', marginLeft: '2px', }} elevation={3} className={[classes.paper, 'baseScore-block-inner'].join(' ')}>
+                                    <div className="baseScore-box">
+                                        <div className="baseScore-block-title">
+                                            <Skeleton animation="wave" height="20px" width="100%" />
+                                        </div>
+                                        <Typography
+                                            variant="h1"
+                                            color="secondary"
+                                            className="base-score-value"
+                                        >
+                                            <Skeleton animation="wave" height="20px" width="100%" />
+                                        </Typography>
+                                    </div>
+                                </Paper>
+                                </Grid>
+                                <Grid item xs={3}
+                                 className="baseScore-block" 
+                                >
+                                <Paper style={{ overflow: 'inherit', marginTop: '16px', marginLeft: '2px', }} elevation={3} className={[classes.paper, 'baseScore-block-inner'].join(' ')}>
+                                    <div className="baseScore-box">
+                                        <div className="baseScore-block-title">
+                                            <Skeleton animation="wave" height="20px" width="100%" />
+                                        </div>
+                                        <Typography
+                                            variant="h1"
+                                            color="secondary"
+                                            className="base-score-value"
+                                        >
+                                            <Skeleton animation="wave" height="20px" width="100%" />
+                                        </Typography>
+                                    </div>
+                                </Paper>
+                                </Grid>
+                                <Grid item xs={3}
+                                 className="baseScore-block" 
+                                >
+                                <Paper style={{ overflow: 'inherit', marginTop: '16px', marginLeft: '2px', }} elevation={3} className={[classes.paper, 'baseScore-block-inner'].join(' ')}>
+                                    <div className="baseScore-box">
+                                        <div className="baseScore-block-title">
+                                            <Skeleton animation="wave" height="20px" width="100%" />
+                                        </div>
+                                        <Typography
+                                            variant="h1"
+                                            color="secondary"
+                                            className="base-score-value"
+                                        >
+                                            <Skeleton animation="wave" height="20px" width="100%" />
+                                        </Typography>
+                                    </div>
+                                </Paper>
+                                </Grid>
+                                <Grid item xs={3}
+                                 className="baseScore-block" 
+                                >
+                                <Paper style={{ overflow: 'inherit', marginTop: '16px', marginLeft: '2px', }} elevation={3} className={[classes.paper, 'baseScore-block-inner'].join(' ')}>
+                                    <div className="baseScore-box">
+                                        <div className="baseScore-block-title">
+                                            <Skeleton animation="wave" height="20px" width="100%" />
+                                        </div>
+                                        <Typography
+                                            variant="h1"
+                                            color="secondary"
+                                            className="base-score-value"
+                                        >
+                                            <Skeleton animation="wave" height="20px" width="100%" />
+                                        </Typography>
+                                    </div>
+                                </Paper>
+                                </Grid>
+                                
+                                      
+                        </Grid>        
+                    </Grid>
+                    
+                    
+                     <Grid item xs={12} className="cve-title mb-3">
+                        <Typography
+                          variant="h5"
+                          color="textSecondary"
+                        >
+                           <Skeleton animation="wave" height="20px" width="100%" /> 
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          color="textPrimary"
+                        >
+                           <Skeleton animation="wave" height="20px" width="100%" />
+                        </Typography>
+                     </Grid>
+                        
+                    <Grid item xs={12} className="cve-title mb-3">
+                        <Typography
+                          variant="h5"
+                          color="textSecondary"
+                        >
+                           <Skeleton animation="wave" height="20px" width="100%" /> 
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          color="textPrimary"
+                        >
+                           <Skeleton animation="wave" height="20px" width="100%" />
+                        </Typography>
+                     </Grid> 
+
+                     <Grid item xs={12} className="cve-title mb-3">
+                        <Typography
+                          variant="h5"
+                          color="textSecondary"
+                        >
+                           <Skeleton animation="wave" height="20px" width="100%" /> 
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          color="textPrimary"
+                        >
+                           <Skeleton animation="wave" height="20px" width="100%" />
+                        </Typography>
+                     </Grid> 
+
+                     <Grid item xs={12} className="cve-title mb-3">
+                        <Typography
+                          variant="h5"
+                          color="textSecondary"
+                        >
+                           <Skeleton animation="wave" height="20px" width="100%" /> 
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          color="textPrimary"
+                        >
+                           <Skeleton animation="wave" height="20px" width="100%" />
+                        </Typography>
+                     </Grid>    
+
+                </Grid>
+           
         );
     }
 
     const getByCVEData = () => {
         return (
             <>
-                {cveNVDDetails ? (
+                {cveNVDDetails ? (<>
                     <div>
                         {getCVENVDDetails()}
                     </div>
-                )
+                    <div style={{ margin: '10px 0 10px 0', width: '100%' }} >
+                        {getCVEExpansionPanel(cveNVDDetails.Products)}
+                    </div>
+                </>)
                     :
-                    null}
-                <div style={{ margin: '10px 0 10px 0', width: '100%' }} >
-                    {getCVEExpansionPanel(cveNVDDetails.Products)}
-                </div>
+                    noCVENVDDetails()
+                    }
+                
             </>
         )
     }

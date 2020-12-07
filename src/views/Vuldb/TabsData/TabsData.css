@@ -1,0 +1,61 @@
+.flex {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 10px;
+}
+
+.justifyAround {
+  justify-content: space-around !important;
+}
+
+.language-icon {
+  margin-top: -30px;
+  margin-left: -44px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  width: 100%;
+}
+
+.count {
+  display: flex;
+  margin-right: -126px;
+}
+
+.sub-title {
+  margin-left: -32px;
+}
+
+.cve-pie-chart {
+  height: fit-content;
+  margin-top: 20px;
+  /* border: 1px solid; */
+  /* border-color: darkorange; */
+  padding: 4px;
+  width: 204px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* border-radius: 12px; */
+  box-shadow: 10px 10px 10px #f1be81;
+}
+
+.cve-pie-chart-title {
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+.cve-pie-chart-right {
+  /* margin-left: 40px !important; */
+  margin-top: -40px;
+}
+
+.cve-pie-chart-right:hover {
+  transition: all 0.4s ease;
+  margin-top: -60px;
+}
+
+.cve-pie-chart-right:hover:after {
+  margin-top: -40px;
+  /* margin-left: 40px !important; */
+}

@@ -163,7 +163,7 @@ function TopBar({ className, ...rest }) {
       <Link className={classes.link}
         color="textSecondary"
         component={RouterLink}
-        to="/vulDB/application"
+        to="/vulDB"
         underline="none"
         variant="body2"
       >
