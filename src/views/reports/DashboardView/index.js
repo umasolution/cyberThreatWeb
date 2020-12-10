@@ -12,7 +12,9 @@ import Header from './Header';
 import LatestProjects from './LatestProjects';
 import NewProjects from './NewProjects';
 import PerformanceOverTime from './PerformanceOverTime';
+import ChartSecond from './ChartSecond';
 import RealTime from './RealTime';
+import TableList from './TableList';
 import RoiPerCustomer from './RoiPerCustomer';
 import SystemHealth from './SystemHealth';
 import TeamTasks from './TeamTasks';
@@ -54,7 +56,8 @@ function DashboardView() {
       try {
         setLoading(true);
         updateSnackbar(true, CONSTANTS.FETCHING_DATA);
-        const url = `/dashboard/${authService.getUserName()}`;
+        /*const url = `/dashboard/${authService.getUserName()}`;*/
+        const url = `/dashboard`;
         const response = await Axios.get(url);
         setDashboardData(response.data);
         updateSnackbar(true, CONSTANTS.FETCHING_DATA_SUCCESS);
@@ -94,9 +97,9 @@ function DashboardView() {
         {
           dashboardData && (
             <>
-              <Header />
               <Grid
                 container
+                style={{ marginTop: 10,marginBottom: 10 }}
                 spacing={2}
               >
 
@@ -127,31 +130,46 @@ function DashboardView() {
                   lg={3}
                   xs={12}
                 >
-                  <RealTime lib_details={dashboardData['Open Source Libraries Details']} />
+                  <Grid
+                        item
+                        style={{ marginBottom: 10 }}
+                        lg={12}
+                        xs={12}
+                      >
+                  <TableList lib_details={dashboardData['products_summary']} />
+
+                  </Grid>
+                  <Grid
+                        item
+                        style={{ marginBottom: 10 }}
+                        lg={12}
+                        xs={12}
+                      >
+                  <TableList lib_details={dashboardData['products_summary']} />
+                  
+                  </Grid>
                 </Grid>
                 <Grid
-                  item
-                  lg={9}
-                  xs={12}
-                >
-                  <PerformanceOverTime chartsData={dashboardData.charts}/>
-                </Grid>
-                <Grid
-                  item
-                  lg={3}
-                  xl={3}
-                  xs={12}
-                >
-                  <TeamTasks project_vuln_details={dashboardData.project_vuln_details} />
-                </Grid>
-                 <Grid
-                  item
-                  lg={9}
-                  xs={12}
-                >
-                  <PerformanceOverTime chartsData={dashboardData.charts}/>
-                </Grid>
+                    item
+                    lg={9}
+                    xs={12}
+                  >
                 
+                  {
+                    Object.entries(dashboardData.charts).map(([rkey, row],i) =>(
+                      Object.entries(row).map(([ckey, charts],k) =>(<>
+                        <Grid
+                          item
+                          style={{ marginBottom: 10 }}
+                          lg={12}
+                          xs={12}
+                        >
+                         {ckey=='chart1'?(<PerformanceOverTime chartsMainKey={k} chartsKey={ckey} chartsData={charts}/>):(<ChartSecond chartsMainKey={k} chartsKey={ckey} chartsData={charts}/>)}
+                         </Grid>
+                        </>))
+                    ))
+                  } 
+                  </Grid>
               </Grid>
               <Grid
                 container
@@ -163,7 +181,7 @@ function DashboardView() {
                   xl={12}
                   xs={12}
                 >
-                  <LatestProjects project_details={dashboardData.project_details} />
+                  <LatestProjects project_details={dashboardData.open_vulnerabilities} />
                 </Grid>
                 </Grid>
             </>

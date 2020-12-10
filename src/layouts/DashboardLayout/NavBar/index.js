@@ -78,7 +78,7 @@ const navConfig = [
     subheader: '',
     items: [
       {
-        title: 'My Projects',
+        title: 'My Scans',
         icon: UsersIcon,
         href: '/app/management/ProjectsReports/language',
       },

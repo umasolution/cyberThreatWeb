@@ -19,3 +19,7 @@
   color: #fff;
   background-color: #027de7;
 }
+
+.chart-data div#chart-simple-select {
+    color: #000 !important;
+}

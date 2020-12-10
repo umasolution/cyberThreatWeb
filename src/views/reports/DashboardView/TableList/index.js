@@ -33,7 +33,7 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function RealTime({ className, lib_details, ...rest }) {
+function TableList({ className, lib_details, ...rest }) {
   const classes = useStyles();
   const isMountedRef = useIsMountedRef();
 
@@ -72,33 +72,26 @@ function RealTime({ className, lib_details, ...rest }) {
     }
   ];
 
-  const height = 375;
+  const height = 309;
   const rowHeight = 52;
   const width = 398;
   
 
   const rowRenderer = ({ index, isScrolling, key, style }) => {
     return searchedLibDetails && (
-        <div className="odd-even-background" key={key} style={style}>
-         
-        <TableRow>
-          <TableCell><Typography color="inherit"
+        
+        <TableRow className="odd-even-background">
+          <TableCell style={{width: '50%'}}><Typography color="inherit"
             className="secondary"
           >
-            <Link target="_blank" to={`/library/${searchedLibDetails[index].product}/${searchedLibDetails[index].app}`}
-              style={{ textDecoration: 'none' }}
-            >
-              {`${searchedLibDetails[index].product} (${searchedLibDetails[index].app})`}
-            </Link>
-
+             {searchedLibDetails[index].name}
           </Typography></TableCell>
-          <TableCell><Typography color="inherit"
+          <TableCell style={{width: '10%'}}><Typography color="inherit"
             className="secondary"
           >
-            {searchedLibDetails[index].count}
+            {searchedLibDetails[index].value}
           </Typography></TableCell>
         </TableRow>
-      </div>
     )
       ;
   };
@@ -118,11 +111,6 @@ function RealTime({ className, lib_details, ...rest }) {
       
     { openSearch ? null : <CardHeader
         title="Libraries with most vulnerabilities"
-        action={
-          <IconButton aria-label="settings">
-            <SearchIcon onClick={handleSearchOpen} />
-          </IconButton>
-        }
       /> }
       { openSearch ? <TextField
         required
@@ -136,9 +124,6 @@ function RealTime({ className, lib_details, ...rest }) {
         id="search"
         placeholder="Search"
       /> : null }
-      { openSearch ? <IconButton aria-label="settings">
-            <CloseIcon onClick={handleSearchClose} />
-          </IconButton> : null }
       
       <Divider />
       <Table>
@@ -159,8 +144,8 @@ function RealTime({ className, lib_details, ...rest }) {
   );
 }
 
-RealTime.propTypes = {
+TableList.propTypes = {
   className: PropTypes.string
 };
 
-export default RealTime;
+export default TableList;

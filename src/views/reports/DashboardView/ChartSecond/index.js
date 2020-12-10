@@ -26,9 +26,11 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-function PerformanceOverTime({ className, chartsMainKey,chartsKey,chartsData, ...rest }) {
+function ChartSecond({ className, chartsMainKey,chartsKey,chartsData, ...rest }) {
   const classes = useStyles();
   const apps = Object.keys(chartsData.data);
+  /*console.log(chartsMainKey);
+  console.log(chartsKey);*/
   const [app, setApp] = React.useState(apps[0]);
 
   useEffect(() => {
@@ -75,7 +77,7 @@ function PerformanceOverTime({ className, chartsMainKey,chartsKey,chartsData, ..
       },
     };
     const config = { responsive: true };
-    Plotly.newPlot('myDiv', dd, layout, config);
+    Plotly.newPlot('myDiv2', dd, layout, config);
   }
 
   const handleChange = (event) => {
@@ -107,7 +109,7 @@ function PerformanceOverTime({ className, chartsMainKey,chartsKey,chartsData, ..
               {apps.map(appp => <MenuItem value={appp}>{appp}</MenuItem>)}
             </Select>
           </FormControl>
-          <div id='myDiv' />
+          <div id='myDiv2' />
 
         </Box>
 
@@ -116,8 +118,8 @@ function PerformanceOverTime({ className, chartsMainKey,chartsKey,chartsData, ..
   );
 }
 
-PerformanceOverTime.propTypes = {
+ChartSecond.propTypes = {
   className: PropTypes.string
 };
 
-export default PerformanceOverTime;
+export default ChartSecond;

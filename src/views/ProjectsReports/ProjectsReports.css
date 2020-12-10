@@ -1,0 +1,119 @@
+
+
+.cvesearchcenter { padding-left:0px !important;padding-right:0px !important;}
+.cvesearchcenter .MuiPaper-root{padding-left:0px !important;padding-right:0px !important;}
+.cvesearchleft .MuiTypography-h3 {font-size: 18px;font-weight: 600;color: #333333;letter-spacing: 0.5px;}
+
+.cvesearchcenter .MuiTableCell-root,.cvesearchcenter .MuiTypography-h5{ font-weight: 700; font-size: 14px;color: #333333;text-transform: capitalize;border: 0;}
+.cvesearchcenter .MuiTableCell-stickyHeader{background: #e8ebf0;}
+
+.cvesearchcenter .MuiTableCell-root a .MuiSvgIcon-root{vertical-align: middle;}
+.cvesearchcenter .MuiTableCell-root a{color: #027de7;text-decoration: none;}
+
+
+.cvesearchcenter .MuiTableRow-root.MuiTableRow-hover:hover{background: #027ae2}
+.cvesearchcenter .MuiTableRow-root.MuiTableRow-hover:hover .MuiTableCell-root,.cvesearchcenter .MuiTableRow-root.MuiTableRow-hover:hover .MuiTypography-h5,.cvesearchcenter .MuiTableRow-root.MuiTableRow-hover:hover .MuiTypography-h6,.cvesearchcenter .MuiTableRow-root.MuiTableRow-hover:hover .MuiTableCell-root a,
+.cvesearchcenter .MuiTableRow-root.MuiTableRow-hover.Mui-selected .MuiTableCell-root,.cvesearchcenter .MuiTableRow-root.MuiTableRow-hover.Mui-selected .MuiTypography-h5,.cvesearchcenter .MuiTableRow-root.MuiTableRow-hover.Mui-selected .MuiTypography-h6,.cvesearchcenter .MuiTableRow-root.MuiTableRow-hover.Mui-selected .MuiTableCell-root a{color: #fff;}
+
+.cvesearchcenter .MuiPagination-root{margin: 30px 0;}
+
+.cvesearchcenter .MuiPagination-root ul{display: inline-block;width: 100%; text-align: center;}
+
+.cvesearchcenter .MuiPagination-root ul li{display: inline-block;}
+
+
+.boxdetailhead .boxtitlecontent .niahmeter{display: flex;margin-bottom: -55px;}
+
+.cvesearchleft .boxleftheader > div{margin-bottom: 15px;}
+.cvesearchremote .cvesearchremote-inner{box-shadow: 0 0 0 1px rgba(63,63,68,0.05), 0 1px 2px 0 rgba(63,63,68,0.15);border-radius: 6px;padding: 15px 24px;}
+.cvesearchremote .MuiListItem-gutters{padding: 0px 0 10px 0;}
+.cvesearchremote-inner .MuiListItemText-root{margin: 0;}
+.cvesearchleft .MuiListItem-root .MuiListItemText-root .MuiTypography-body1{font-size: 18px; font-weight: 600;color: #333;}
+
+
+.cvesearchright-inner{background: #fff;padding: 15px;box-shadow: 0 0 0 1px rgba(63,63,68,0.05), 0 1px 2px 0 rgba(63,63,68,0.15);}
+.cvesearchtopheader{background: #fff;padding: 15px;box-shadow: 0 0 0 1px rgba(63,63,68,0.05), 0 1px 2px 0 rgba(63,63,68,0.15);}
+
+.cvesearchright-inner > div{background: #f4f6fa;border-radius: 10px;margin-bottom: 15px;}
+.boxdetailtitle{padding: 10px 10px;border-radius: 10px 10px 0px 0px;background: #e8edf5; }
+.boxdetailtitle h2{margin: 0; color: #027ae2;font-weight: 600;font-size: 18px; text-align: center;}
+
+.cvesearchright-inner .boxtitlecontent > div{padding:0px 15px;margin-bottom: 15px;}
+
+.scoreblock-div{display: flex;}
+.scoreblock {padding:0 5px;}
+.scoreblock-inner{display: table;width: 100%;height: 45px;border-radius: 5px;background: #fff;  }
+.scoreblock-inner > div{display: table-cell; vertical-align: middle;padding: 5px;font-size: 14px; font-weight: 600; text-align: center;}
+.scoretitle{border: 1px solid #d0d8e5;border-radius: 3px 0 0 3px; color: #333;}
+.scorevalue{background: #027ae2; color: #fff;border-radius: 0px 3px 3px 0px;}
+
+.niahmeterleft h2{font-size: 16px;font-weight: 600;margin-bottom: 10px;}
+.niahmeterleft h2 a{text-decoration: none;color: #e43838} 
+
+.boxtitlecontent .niahinsightlist .MuiListItem-gutters{padding: 0px 0 15px 0;}
+.boxtitlecontent .niahinsightlist .MuiListItem-gutters:last-child{padding-bottom: 0;}
+.boxtitlecontent .niahinsightlist .MuiListItem-gutters .MuiSvgIcon-root{color: #333;}
+.niahinsightlist .MuiTypography-displayBlock{font-size: 17px;color: #333;font-weight: 600;}
+
+.loading-cell{padding: 10px;}
+.boxtitlecontent .snapshotlist .MuiListItem-gutters{padding: 0px 0 3px 0;;}
+.snapshotlist .MuiTypography-root > div{width: 100%;font-size: 17px; color: #333;font-weight: 600;display: inline-block;vertical-align: top;}
+
+.snapshotlist .MuiTypography-root > div.MuiBox-root-102,.snapshotlist .MuiTypography-root > div.MuiBox-root-103{width: 100%;}
+.snapshotlist .MuiTypography-root > div a{color: }
+
+.boxtitlecontent.explo-list{padding: 10px 15px;}
+.boxtitlecontent.explo-list .MuiExpansionPanelSummary-content h2{font-size: 17px;font-weight: 600;}
+.boxtitlecontent.explo-list .MuiExpansionPanelDetails-root .MuiTypography-root a{padding-bottom: 10px;word-break: break-all;}
+.cveresult .Mui-selected {
+	background-color: #027ae2;
+	color: #fff;
+}
+
+.cvesearchcenter .MuiTypography-h6{font-size: 13px;}
+.cvesearchcenter .MuiTableRow-root {
+	cursor: pointer;
+}
+.cveresult .MuiTableContainer-root{overflow: visible;}
+.cveresult .Mui-selected,.cveresult tr.Mui-selected,.cveresult tr.Mui-selected td:last-child{position: relative;}
+.cveresult tr.Mui-selected td:last-child::after{position: absolute;content: "";width: 31px;height: 60px;right: -24px;top: 0;bottom: 0;margin: auto; width: 0; height: 0;border-top: 18px solid transparent;border-bottom: 18px solid transparent;border-right: 22px solid #027ae2;}
+.snapshot-content.description{
+width:100% !important;
+}
+
+
+.scoreblock-severity-div .scoreblock,.scoreblock-vulnerabilities-div .scoreblock{float:left;margin: 0 10px;}
+.snapshot-title { margin-bottom: 5px; }
+.scoreblock-severity-div .scoreblock:nth-child(1) .scoretitle { background: #980000;}
+.scoreblock-severity-div .scoreblock:nth-child(2) .scoretitle { background: #FF9900;}
+.scoreblock-severity-div .scoreblock:nth-child(3) .scoretitle { background: #56742C;}
+.scoreblock-severity-div .scoretitle { color:#fff;}
+.scoreblock-severity-div .scorevalue {background: #fff;color:#000;}
+.scoreblock-severity-div .scoreblock-inner{ border: 1px solid grey;}
+
+@media only screen and (min-width:1700px){
+
+.cvesearchcenter .MuiTableCell-root{padding: 20px}
+td.MuiTableCell-root.MuiTableCell-body.loading-cell {
+    padding: 0px 5px;
+}
+.cvesearchcenter .MuiTableCell-root,.cvesearchcenter .MuiTypography-h5{  font-size: 15px; }
+
+.scoreblock-inner > div{font-size: 16px;}
+
+}
+
+@media only screen and (max-width:1400px){
+
+.cvesearchcenter .MuiTableCell-root{padding: 12px 10px;font-size: 13px;}
+
+.cvesearchcenter .MuiTypography-h5{font-size: 13px;}
+
+.cvesearchleft .MuiTypography-h3,.boxdetailtitle h2{font-size: 16px;}
+
+.cvesearchleft .MuiListItem-root .MuiListItemText-root .MuiTypography-body1{font-size: 16px;}
+.niahmeterleft h2,.niahinsightlist .MuiTypography-displayBlock,.snapshotlist .MuiTypography-root > div,.boxtitlecontent.explo-list .MuiExpansionPanelSummary-content h2{font-size: 14px;}
+.MuiExpansionPanelSummary-root{padding: 0px 15px;}
+.scoreblock-inner > div{font-size: 12px;}
+
+}

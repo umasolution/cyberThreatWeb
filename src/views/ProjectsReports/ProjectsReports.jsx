@@ -1,6 +1,6 @@
 import {
-    Box, Container, Grid, LinearProgress, makeStyles, Typography, ExpansionPanel, ExpansionPanelSummary,
-    ListItem, ListItemIcon, ListItemText, ExpansionPanelDetails, Divider, Paper
+    Box, Container, Grid,List, LinearProgress, makeStyles, Typography, ExpansionPanel, ExpansionPanelSummary,
+    ListItem, ListItemIcon, ListItemText, ExpansionPanelDetails, Divider, Paper,Table,TableBody,TableCell,TableContainer,TableHead,TablePagination,TableRow,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Axios from 'axios';
@@ -12,8 +12,12 @@ import Checkbox from '@material-ui/core/Checkbox';
 import CONSTANTS from "../../Util/Constants";
 import MySnackbar from "../../Shared/Snackbar/MySnackbar";
 import Copy from '../../Util/Copy';
+import Skeleton from '@material-ui/lab/Skeleton';
+import Pagination from '@material-ui/lab/Pagination';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 import { getBackgroundColorBySeverity, getFontColorBySeverity } from '../../Util/Util';
-
+import './ProjectsReports.css';
+import moment from 'moment';
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
@@ -46,8 +50,28 @@ const ProjectsReports = () => {
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
     const [projectListResponse, setProjectListResponse] = useState();
-    const [reportTypes, setReportTypes] = useState([]);
+    const [tabsData, setTabsData] = useState([]);
+    const [tabsRows, setTabsRows] = useState([]);
+    const [totalpages, setTotalpages] = useState();
+    const [tabsColumns, setTabsColumns] = useState();
+    const [loadingRows, setloadingRows] = useState(false);
+    const [page, setPage] = useState(1);
+    const [offset, setOffset] = useState();
+    const [perRow, setperRow] = useState(10);
+    const [singlerows, setSingleRows] = useState();
+    const [issearch, setisSearch] = useState(false);
+    const [noresult, setNoResult] = useState(false);
+    const [mainurl, setMainUrl] = useState();
+    const [apiurl, setApiUrl] = useState();
 
+    const [selected, setSelected] = useState([]);
+    const isSelected = (name) => selected.indexOf(name) !== -1;
+
+
+    const aurl = new URL(Axios.defaults.baseURL);
+    const apiparams = new URLSearchParams(aurl.search);
+
+    const [selecttype, setSelecttype] = useState([]);
 
     useEffect(() => {
         fetchProjectsList();
@@ -57,22 +81,16 @@ const ProjectsReports = () => {
         try {
             setLoading(true);
             updateSnackbar(true, CONSTANTS.FETCHING_DATA);
-            const url = "/report/project";
-            let response = await Axios.post(url,
-                {
-                    emailAdd: authService.getUserName()
-                });
+            /*console.log(authService);
+            return;*/
+            const url = "/projects";
+            let response = await Axios.post(url);
+            setMainUrl(url);
+            setApiUrl(apiparams);
             // check response exist
-            if (Object.keys(response.data['report type']).length === 0) {
-                updateSnackbar(true, CONSTANTS.DATA_NOT_FOUND);
-                setLoading(false);
-                return;
-            }
-            response = response.data['report type'];
-            response.forEach(res => res.isShowing = true);
-            setProjectListResponse(response);
-            const reportTypes = response.map(d => d['report type'])
-            setReportTypes(reportTypes);
+            setTabsData(response.data);
+            setTabsColumns(response.data.columns);
+            setTabsRows(response.data.results);
             updateSnackbar(true, CONSTANTS.FETCHING_DATA_SUCCESS);
             setLoading(false);
         } catch (error) {
@@ -81,6 +99,64 @@ const ProjectsReports = () => {
             setLoading(false);
         }
     }
+
+    const handleChangeRemote = async (event, value) => {
+        let newSelected = [];
+        setSelected(newSelected);
+        const checked = event.target.checked;
+        const checkedValue = event.target.value;
+        const checkedName = event.target.name;
+        setloadingRows(false);
+        setSingleRows();
+        setisSearch(true);
+        setNoResult(true);
+        apiurl.delete('offset');
+        apiurl.delete('limit');
+        apiurl.delete('type', checkedValue);
+        if(checkedValue=='organization'){
+          if(checked){
+            selecttype.push(checkedValue);
+          } else {
+            apiurl.delete('type', checkedValue);
+            var index = selecttype.indexOf(checkedValue);
+            delete selecttype[index];
+          }
+        } else if(checkedValue=='user'){
+           if(checked){
+            selecttype.push(checkedValue);
+          } else {
+            apiurl.delete('type', checkedValue);
+            var index = selecttype.indexOf(checkedValue);
+            delete selecttype[index];
+          }
+        }
+        setSelecttype(selecttype);
+        const myList = (
+          selecttype.map((item, i) => apiurl.append('type', item))
+        )
+        
+        setApiUrl(apiurl);
+        if(selecttype[0] && selecttype[1]) {  
+          apiurl.delete('type', 'organization');
+          apiurl.delete('type', 'user');
+          var url = `${mainurl}`;
+        } else if(selecttype[0]) { 
+          var url = `${mainurl}?${apiurl.toString()}`;  
+        } else if(selecttype[1]) { 
+          var url = `${mainurl}?${apiurl.toString()}`;  
+        } else { 
+          var url = `${mainurl}`;  
+        } 
+        console.log(url);
+        
+        let response = await Axios.post(url);
+        setTabsData(response.data);
+        setPage(1);
+        let totalpages = Math.ceil(response.data.total/perRow);
+        setTotalpages(totalpages);
+        setperRow(response.data.rowlimit);
+        setisSearch(false);
+    };
 
     const updateSnackbar = (open, message) => {
         setSnackbarOpen(open);
@@ -94,224 +170,658 @@ const ProjectsReports = () => {
         return null;
     }
 
-    const getPanelDetails = (histories, reportType) => {
-        return histories.map(history => {
-            return (
-<Paper elevation={3} style={{ padding: '8px' }}>
-                {Object.keys(history).map(historyKey => {
-                    return (
-                        <>
-                            <div className="odd-even-background" style={{ display: 'block' }}>
-                                <Typography
-                                  variant="h6"
-                                  color="textPrimary"
-                                  style={{ display: 'inline' }}
-                                >
-                                    {historyKey} 
-{' '}
-{' '}
-                                </Typography>
-                                {historyKey !== 'severity'
-                                    ? (
-                                        <>
-                                            {
-                                                historyKey !== 'Report Name' ? (
+    const handleChangePage = async (event, value) => {
+        setloadingRows(false);
+        setSingleRows();
+        setisSearch(true);
+        let Offset = ((value-1)*perRow)+1;
+        apiurl.set('offset', Offset);
+        apiurl.set('limit', perRow);
+        var url = `${mainurl}?${apiurl.toString()}`;
+        let response = await Axios.get(url);
+        setPage(value);
+        setTabsData(response.data);
+        setisSearch(false);
+        let totalpages = Math.ceil(response.data.total/perRow);
+        setTotalpages(totalpages);
+    };
 
-                                                    history[historyKey]
+    const handleClickRow = async (event, value) => {
+        setloadingRows(false);
+        setSingleRows();
+        setloadingRows(true);
+        setSingleRows(tabsData.results[value].option);
+        const selectedIndex = selected.indexOf(value);
+        let newSelected = [];
+        newSelected = newSelected.concat([], value);
+        setSelected(newSelected);
 
-                                                ) : (
-                                                        <Link target="_blank" to={`/ProductsReports/${reportType}/${history[historyKey]}`}>{history[historyKey]}</Link>
-                                                    )
-                                            }
-
-                                        </>
-                                    )
-                                    :
-                                    Object.keys(history[historyKey]).map(severity => {
-                                        return (
-                                            <div style={{ display: 'inline' }}>
-                                                <Typography
-                                                  variant="h6"
-                                                  color="textSecondary"
-                                                  style={{ display: 'inline', marginLeft: '15px', marginRight: '5px' }}
-                                                >
-                                                    {severity}
-                                                </Typography>
-                                                <span
-                                                  className="severity-div"
-                                                  style={{
-                                                    backgroundColor: getBackgroundColorBySeverity(severity),
-                                                    color: getFontColorBySeverity(severity)
-                                                }}
-                                                >
-                                                    {history[historyKey][severity]}
-                                                </span>
-
-                                            </div>
-
-                                        )
-                                    })}
-                            </div>
-                        </>
-
-                    )
-                })}
-</Paper>
-)
-        })
-
-    }
-
-    const getHeader = (project, reportType) => {
-        return (
-            <ListItem key={project.header['Report Name']}>
-                <ListItemText
-                  primary={(
-<Typography type="body2" className={classes.projectHeader}>
-                        <Link target="_blank" to={`/ProductsReports/${reportType}/${project.header['Report Name']}`}>{`${project.header['Project Name']}`}</Link>
-</Typography>
-)}
-                  secondary={(
-                        <div>
-                            {
-                                Object.keys(project.header).map(headerValue => {
-                                    return (
-                                        headerValue !== 'Project Name' && headerValue !== 'Report Name' ? (
-                                            <>
-                                                <div style={{ display: 'inline' }}>
-                                                    <Typography
-                                                      variant="h6"
-                                                      color="textPrimary"
-                                                      style={{ display: 'inline', textTransform: 'capitalize', marginRight: '5px' }}
-                                                    >
-                                                        {headerValue !== 'dependencies' ? headerValue : `Scanned ${headerValue}`}
-                                                    </Typography>
-
-                                                    {headerValue !== 'severity'
-                                                        ? (
-                                                            <p style={{ display: 'inline', marginRight: '10px' }}>
-
-                                                                {project.header[headerValue]}
-
-                                                            </p>
-                                                        )
-                                                        :
-                                                        Object.keys(project.header[headerValue]).map(severity => {
-                                                            return (
-                                                                <div style={{ display: 'inline', marginRight: '10px' }}>
-                                                                    <Typography
-                                                                      variant="h6"
-                                                                      color="textSecondary"
-                                                                      style={{ display: 'inline', marginLeft: '15px' }}
-                                                                    >
-                                                                        {severity}
-                                                                    </Typography>
-
-                                                                    <p style={{ display: 'inline' }}>
-                                                                        <span
-                                                                          className="severity-div"
-                                                                          style={{
-                                                                            backgroundColor: getBackgroundColorBySeverity(severity),
-                                                                            color: getFontColorBySeverity(severity)
-                                                                        }}
-                                                                        >
-                                                                            {project.header[headerValue][severity]}
-                                                                        </span>
-
-                                                                    </p>
-
-                                                                </div>
-
-                                                            )
-                                                        })}
-
-                                                </div>
+    }; 
 
 
 
-                                            </>
-                                          )
-                                            : ''
-                                    )
-                                })
-                            }
-
-                        </div>
-                      )}
-                />
-            </ListItem>
-);
-    }
-
-    const handleCheckBoxChange = (event, type) => {
-        const copy = Copy(projectListResponse);
-        const report = copy.find(data => data['report type'] === type);
-        if (report) {
-            report.isShowing = event.target.checked;
-            setProjectListResponse(copy);
-        }
-
-    }
-
-    const getProjectsResponses = () => {
-        return (
-            <>
-                <div className={classes.checkBoxes}>
-                    {
-                        reportTypes.map(type => (
-<FormControlLabel
-  control={(
+     const getFieldData = () => {
+     return (
+       <>
+        <Grid
+            item
+            xs={12}
+            md={2}
+            className="cvesearchleft"
+          > 
+            <Box className="boxleftheader"
+              display="flex"
+              flexDirection="column"
+              justifyContent="center"
+              borderRadius={16}>
+            <Box
+              display="flex"
+              flexDirection="column"
+              justifyContent="center"
+              className="cvesearchremote"
+              borderRadius={16} 
+            >
+            <Box>
+            <ExpansionPanel
+                    style={{ width: '100%' }}
+                    expanded="false"
+                  > 
+                  <ExpansionPanelSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="type-content"
+                      id="type-header"
+                    >
+                    <Typography variant="h3"  id="type-slider-custom" component="h2">
+                         Options
+                    </Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                       <List>
+                           <ListItem>
+                              <ListItemIcon>
                                 <Checkbox
-                                  color="red"
-                                  checked={projectListResponse.findIndex(res => res['report type'] === type && res.isShowing) !== -1}
-                                  onChange={(event) => handleCheckBoxChange(event, type)}
-                                  name={type}
-                                  color="primary"
+                                  edge="start"
+                                  tabIndex={-1}
+                                  disableRipple
+                                  inputProps="org"
+                                  name="type"
+                                  value="organization" 
+                                  onChange={handleChangeRemote}
                                 />
-                            )}
-  label={type}
-/>
-)
-                        )
-                    }
-                </div>
+                              </ListItemIcon>
+                              <ListItemText id="organization" primary="Organization" />
+                            </ListItem>
+                            <ListItem>
+                              <ListItemIcon>
+                                <Checkbox
+                                  edge="start"
+                                  tabIndex={-1}
+                                  disableRipple
+                                  inputProps="user"
+                                  value="user" 
+                                  name="type"
+                                  onChange={handleChangeRemote}
+                                />
+                              </ListItemIcon>
+                              <ListItemText id="user" primary="User" />
+                            </ListItem>
+                            </List>
+                    </ExpansionPanelDetails>
+               </ExpansionPanel>
+            
+             </Box> 
+            </Box>
+            </Box>
+          </Grid>
+        </>
+     )
+   }
 
-                {
-                    projectListResponse.map(project => {
-                        return project.isShowing ? project.results.map(result => {
-                            return (
-                                <>
-                                    <ExpansionPanel
-                                      key={result.header['Report Name']}
-                                      style={{ borderLeft: `15px solid  ${project.bgcolor}` }}
-                                    >
-                                        <ExpansionPanelSummary
-                                          expandIcon={<ExpandMoreIcon />}
-                                          aria-controls="panel1a-content"
-                                          id="panel1a-header"
-                                        >
-
-                                            {getHeader(result, project['report type'])}
-                                        </ExpansionPanelSummary>
-                                        <ExpansionPanelDetails style={{ display: 'block', width: '100%' }}>
-                                            {getPanelDetails(result.history, project['report type'])}
-                                        </ExpansionPanelDetails>
-                                    </ExpansionPanel>
-                                    <Divider />
-                                </>
-                            )
-
-                        }) : ''
-                    })
-
-                }
-            </>
-        );
-    }
-
+   const cvesearchcenter = (tabsData,col) => {
 
     return (
-        <Container className={classes.root} maxWidth="lg">
+      <>
+      <Grid
+          item
+          xs={12}
+          md={col}
+          className="cvesearchcenter"
+        >
+          <Box position="relative">
+          <Paper className={classes.root}>
+                <TableContainer className={classes.container}>
+                  <Table stickyHeader aria-label="sticky table">
+                    {issearch?(<>
+                      <TableHead>
+                      <TableRow>
+                          <TableCell key='active'>
+                             <Skeleton animation="wave" height="20px" width="100%" />
+                          </TableCell>
+                          <TableCell key='active'>
+                            <Skeleton animation="wave" height="20px" width="100%" />
+                          </TableCell>
+                          <TableCell key='active'>
+                             <Skeleton animation="wave" height="20px" width="100%" />
+                          </TableCell>
+                          <TableCell key='active'>
+                             <Skeleton animation="wave" height="20px" width="100%" />
+                          </TableCell>
+                          <TableCell key='active'>
+                             <Skeleton animation="wave" height="20px" width="100%" />
+                          </TableCell>
+                        </TableRow>
+                    </TableHead><TableBody>
+                      <TableRow>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                        </TableRow>
+                       <TableRow>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                        </TableRow> 
+                    </TableBody>
+                      
+                </>):(<> <TableHead>
+                      <TableRow>
+                        {
+                          Object.keys(tabsData.columns).map((key, i) => (
+                            <><TableCell key={tabsData.columns[key].field}>
+                               {tabsData.columns[key].title}   
+                            </TableCell></>  
+                            
+                          ))
+                        }  
+                      </TableRow>
+                    </TableHead><TableBody>
+                       {
+                          Object.entries(tabsData.results).map(([rkey, row]) => {
+                            const isItemSelected = isSelected(rkey)
+                          return (<TableRow hover onClick={event => handleClickRow('key',rkey)} key={rkey} role="checkbox" selected={isItemSelected} tabIndex={-1} >
+
+                                {Object.keys(tabsData.columns).map((vkey) => (
+                                 <TableCell key={tabsData.columns[vkey].field}>
+                                      {vkey==0 ? (
+                                        <>
+                                         <Grid item xs={12}>
+                                            <Typography
+                                              variant="h5"
+                                              color="textSecondary"
+                                            >
+                                              {row.table[`${tabsData.columns[vkey].field}`] }
+                                            </Typography>
+
+                                         </Grid>
+                                        </>
+                                    )  : row.table[`${tabsData.columns[vkey].field}`]}
+                                  </TableCell>
+                                )
+                                )}
+                            </TableRow>
+                          ) }
+                          )
+                        } 
+                    </TableBody></>)}
+                  </Table>
+                </TableContainer>
+              </Paper>
+            {issearch ? '':(<><Pagination color="primary" count={totalpages} page={page} onChange={handleChangePage} /></>)}
+          </Box>
+        </Grid>
+      </>
+     )
+   }
+
+   const getTabsData = () => {
+        return (
+            <>
+              {loadingRows ?cvesearchcenter(tabsData,7):cvesearchcenter(tabsData,10)}
+              {loadingRows ?(<>  
+              <Grid
+                item
+                xs={12}
+                md={3}
+                className="cvesearchright"
+              >
+              <Box
+                className="cvesearchright-inner"
+                borderRadius={5}
+              >
+              {singlerows ? (
+                    <>  
+                        <Box className={classes.boxrightheader}
+                          display="flex"
+                          flexDirection="column"
+                          justifyContent="center"
+                          borderRadius={16}>
+                          <Box className="boxdetailhead">
+                              {singlerows.scan_insights ? (
+                                <> 
+                                <Box className="boxdetailtitle">
+                                    <Typography gutterBottom variant="h5" component="h2">
+                                     Scan Insights
+                                    </Typography>
+                                </Box> 
+                                <Box className="boxtitlecontent"> 
+                                <Typography variant="body2" color="textSecondary" component="div" className="scoreblock-div">
+                                <List component="ul" className="snapshotlist">
+                                  {Object.entries(singlerows.scan_insights).map((scan_insights) => (
+                                    <>
+                                    <ListItem>
+                                        <ListItemText>
+                                        {scan_insights[0]=='date' ? (<>
+                                        <Box className="snapshot-title">Date: </Box>
+                                        <Box className="snapshot-content">{moment(scan_insights[1]).format('MMM DD, YYYY')}</Box></>):''}
+                                        {scan_insights[0]=='total_scanned_dependancies' ? (<>
+                                        <Box className="snapshot-title">Scanned Dependancies: </Box>
+                                        <Box className="snapshot-content">{scan_insights[1]}</Box></>):''}
+                                         {scan_insights[0]=='total_unique_vulnerabilities' ? (<>
+                                        <Box className="snapshot-title">Unique Vulnerabilities: </Box>
+                                        <Box className="snapshot-content">{scan_insights[1]}</Box></>):''} 
+                                        {scan_insights[0]=='total_vulnerable_dependencies' ? (<>
+                                        <Box className="snapshot-title">Vulnerable Dependencies: </Box>
+                                        <Box className="snapshot-content">{scan_insights[1]}</Box></>):''}
+
+                                        {scan_insights[0]=='vulnerabilities' ? (<>
+                                        <Box className="snapshot-title">Vulnerabilities :</Box>
+                                        <Box className="snapshot-content">
+                                        <Box className="scoreblock-vulnerabilities-div">
+                                          {Object.entries(scan_insights[1]).map((vulnerabilities) => (
+                                            <>
+                                            <Box className="scoreblock MuiGrid-grid-xs-3">
+                                            <Box className="scoreblock-inner">
+                                            <Box className="scoretitle">
+                                              {vulnerabilities[0]}
+                                            </Box>
+                                            <Box className="scorevalue">
+                                              {vulnerabilities[1]}
+                                            </Box>
+                                            </Box>
+                                            </Box>
+                                            </>
+                                          ))}
+                                          </Box>
+                                      </Box>
+                                      </>):''}
+                                      {scan_insights[0]=='severity' ? (<>
+                                        <Box className="snapshot-title">Severity :</Box>
+                                        <Box className="snapshot-content">
+                                        <Box className="scoreblock-severity-div">
+                                          {Object.entries(scan_insights[1]).map((severity) => (
+                                            <>
+                                            <Box className="scoreblock MuiGrid-grid-xs-3">
+                                            <Box className="scoreblock-inner">
+                                            <Box className="scoretitle">
+                                              {severity[0]}
+                                            </Box>
+                                            <Box className="scorevalue">
+                                              {severity[1]}
+                                            </Box>
+                                            </Box>
+                                            </Box>
+                                            </>
+                                          ))}
+                                          </Box>
+                                      </Box>
+                                      </>):''}
+                                      </ListItemText>
+                                      </ListItem>                                
+                                    </>
+                                  ))}
+                                </List> 
+                                  
+                              </Typography>
+                              </Box> 
+                              </>
+                              ): ''}
+                          </Box>
+                    </Box>
+                    <Box className={classes.boxrightheader}
+                          display="flex"
+                          flexDirection="column"
+                          justifyContent="center"
+                          borderRadius={16}>
+                          <Box className="boxdetailhead">
+                            {singlerows.scan_summary ? (
+                                <> 
+                                <Box className="boxdetailtitle">
+                                    <Typography gutterBottom variant="h5" component="h2">
+                                     Scan Summary
+                                    </Typography>
+                                </Box> 
+                                <Box className="boxtitlecontent"> 
+                                <Typography variant="body2" color="textSecondary" component="div" className="scoreblock-div">
+                                <List component="ul" className="snapshotlist">
+                                  {Object.entries(singlerows.scan_summary).map((scan_summary) => (
+                                    <>
+                                    <ListItem>
+                                        <ListItemText>
+                                        {scan_summary[0]=='open_vuln' ? (<>
+                                        <Box className="snapshot-title">Open Vuln: </Box>
+                                        <Box className="snapshot-content">{scan_summary[1]}</Box></>):''}
+                                        {scan_summary[0]=='total_scan' ? (<>
+                                        <Box className="snapshot-title">Total Scan: </Box>
+                                        <Box className="snapshot-content">{scan_summary[1]}</Box></>):''}
+                                        {scan_summary[0]=='vulnerable_library' ? (<>
+                                        <Box className="snapshot-title">Vulnerable Library: </Box>
+                                        <Box className="snapshot-content">{scan_summary[1]}</Box></>):''}
+                                      </ListItemText>
+                                      </ListItem>                                
+                                    </>
+                                  ))}
+                                </List> 
+                                  
+                              </Typography>
+                              </Box> 
+                              </>
+                              ): ''}
+                              
+                          </Box>
+                    </Box>
+                    
+                          </>
+                      )
+                    : (<> <Box className={classes.boxrightheader}
+                        display="flex"
+                        flexDirection="column"
+                        justifyContent="center"
+                        borderRadius={16}>
+                        <Box className="boxdetailhead">
+                            <Box className="boxdetailtitle">
+                                <Typography gutterBottom variant="h5" component="h2">
+                                 <Skeleton animation="wave" height="20px" width="100%" />
+                                </Typography>
+                            </Box>
+                            <Box className="boxtitlecontent"> 
+                             <Skeleton animation="wave" height="100px" width="100%" />
+                            </Box>
+                       </Box>
+                       </Box>
+                       <Box className={classes.boxrightheader}
+                        display="flex"
+                        flexDirection="column"
+                        justifyContent="center"
+                        borderRadius={16}>
+                        <Box className="boxdetailhead">
+                            <Box className="boxdetailtitle">
+                                <Typography gutterBottom variant="h5" component="h2">
+                                 <Skeleton animation="wave" height="20px" width="100%" />
+                                </Typography>
+                            </Box>
+                            <Box className="boxtitlecontent"> 
+                             <Skeleton animation="wave" height="200px" width="100%" />
+                            </Box>
+                       </Box>
+                       </Box> <Box className={classes.boxrightheader}
+                        display="flex"
+                        flexDirection="column"
+                        justifyContent="center"
+                        borderRadius={16}>
+                        <Box className="boxdetailhead">
+                            <Box className="boxdetailtitle">
+                                <Typography gutterBottom variant="h5" component="h2">
+                                 <Skeleton animation="wave" height="20px" width="100%" />
+                                </Typography>
+                            </Box>
+                            <Box className="boxtitlecontent"> 
+                             <Skeleton animation="wave" height="200px" width="100%" />
+                            </Box>
+                       </Box>
+                       </Box><Box className={classes.boxrightheader}
+                        display="flex"
+                        flexDirection="column"
+                        justifyContent="center"
+                        borderRadius={16}>
+                        <Box className="boxdetailhead">
+                            <Box className="boxdetailtitle">
+                                <Typography gutterBottom variant="h5" component="h2">
+                                 <Skeleton animation="wave" height="20px" width="100%" />
+                                </Typography>
+                            </Box>
+                            <Box className="boxtitlecontent"> 
+                             <Skeleton animation="wave" height="200px" width="100%" />
+                            </Box>
+                       </Box>
+                       </Box> </>)}
+                    </Box>
+              
+              </Grid> 
+              </>) :''}
+         </>
+        )
+    }
+
+    const cvenoresult = () => {
+    return (
+      <>
+      
+          <Grid
+            item
+            xs={12}
+            md={7}
+            className="cvesearchcenter"
+          >
+            <Box position="relative">
+            <Paper className={classes.root}>
+                  <TableContainer className={classes.container}>
+                    <Table stickyHeader aria-label="sticky table">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>
+                             <Skeleton animation="wave" height="20px" width="100%" />
+                          </TableCell>
+                          <TableCell >
+                            <Skeleton animation="wave" height="20px" width="100%" />
+                          </TableCell>
+                          <TableCell >
+                             <Skeleton animation="wave" height="20px" width="100%" />
+                          </TableCell>
+                          <TableCell >
+                             <Skeleton animation="wave" height="20px" width="100%" />
+                          </TableCell>
+                          <TableCell >
+                             <Skeleton animation="wave" height="20px" width="100%" />
+                          </TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                        </TableRow>
+                       <TableRow>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </Paper>
+            </Box>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            md={3}
+            className="cvesearchright"
+          >
+          <Box className="boxleftheader"
+            display="flex"
+            flexDirection="column"
+            justifyContent="center"
+            borderRadius={16}>
+            <Box
+              display="flex"
+              flexDirection="column"
+              className="cvesearchseverity"
+              borderRadius={16}
+            >
+            <Skeleton animation="wave" height="20px" width="100%" />
+            <Skeleton animation="wave" height="100px" width="100%" />
+            </Box>
+            <Box
+              display="flex"
+              flexDirection="column"
+              className="cvesearchseverity"
+              borderRadius={16}
+            >
+            <Skeleton animation="wave" height="20px" width="100%" />
+            <Skeleton animation="wave" height="100px" width="100%" />
+            </Box>
+            <Box
+              display="flex"
+              flexDirection="column"
+              className="cvesearchseverity"
+              borderRadius={16}
+            >
+            <Skeleton animation="wave" height="20px" width="100%" />
+            <Skeleton animation="wave" height="100px" width="100%" />
+            </Box>
+            <Box
+              display="flex"
+              flexDirection="column"
+              className="cvesearchseverity"
+              borderRadius={16}
+            >
+            <Skeleton animation="wave" height="20px" width="100%" />
+            <Skeleton animation="wave" height="100px" width="100%" />
+            </Box>
+            <Box
+              display="flex"
+              flexDirection="column"
+              className="cvesearchseverity"
+              borderRadius={16}
+            >
+            <Skeleton animation="wave" height="20px" width="100%" />
+            <Skeleton animation="wave" height="100px" width="100%" />
+            </Box>
+            <Box
+              display="flex"
+              flexDirection="column"
+              className="cvesearchseverity"
+              borderRadius={16}
+            >
+            <Skeleton animation="wave" height="20px" width="100%" />
+            <Skeleton animation="wave" height="100px" width="100%" />
+            </Box>
+          </Box>  
+          </Grid>
+      </>
+     )
+   }
+    
+
+    return (
+        <Container className={classes.root} maxWidth>
             <Grid
               container
               spacing={1}
@@ -323,17 +833,20 @@ const ProjectsReports = () => {
                   height="100%"
                   style={{ marginTop: '25px', width: '100%' }}
                 >
-                    {projectListResponse ?
-
-                        getProjectsResponses()
-
-
-                        : ''}
-
                     {loading ? getLoader() : null}
                     <MySnackbar closeSnackbar={() => updateSnackbar(false, '')} snackbarMessage={snackbarMessage} snackbarOpen={snackbarOpen} />
 
                 </Box>
+                <Container maxWidth className="cveresult">
+                  <Grid
+                        container
+                        spacing={3}
+                        className={classes.container}
+                      >
+                      {getFieldData()}
+                      { noresult ? getTabsData() : (tabsData.total > 0 ? getTabsData(): cvenoresult())}
+                  </Grid>
+                </Container>
             </Grid>
         </Container>
 
