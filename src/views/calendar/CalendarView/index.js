@@ -295,7 +295,7 @@ function CalendarView() {
       title="Calendar"
     >
       <Container maxWidth={false}>
-        <Header onEventAdd={handleEventAddClick} />
+        
         <Toolbar
           date={date}
           onDateNext={handleDateNext}

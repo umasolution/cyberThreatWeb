@@ -33,7 +33,7 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function RealTime({ className, lib_details, ...rest }) {
+function ProjectList({ className, lib_details, ...rest }) {
   const classes = useStyles();
   const isMountedRef = useIsMountedRef();
 
@@ -72,7 +72,7 @@ function RealTime({ className, lib_details, ...rest }) {
     }
   ];
 
-  const height = 375;
+  const height = 309;
   const rowHeight = 52;
   const width = 398;
   
@@ -95,7 +95,7 @@ function RealTime({ className, lib_details, ...rest }) {
       ;
   };
 
-  const handleChangeSearch = (event) => {
+   const handleChangeSearch = (event) => {
     const filteredResult = originalLibDetails.current.filter(details => details.name.toLowerCase().includes(event.target.value));
     setSearchedLibDetails(filteredResult);
     setSearchInput(event.target.value);
@@ -108,7 +108,7 @@ function RealTime({ className, lib_details, ...rest }) {
     >
       
     { openSearch ? null : <CardHeader
-        title="Libraries with most vulnerabilities"
+        title="Projects with most vulnerabilities"
         action={
           <IconButton aria-label="settings">
             <SearchIcon onClick={handleSearchOpen} />
@@ -150,8 +150,8 @@ function RealTime({ className, lib_details, ...rest }) {
   );
 }
 
-RealTime.propTypes = {
+ProjectList.propTypes = {
   className: PropTypes.string
 };
 
-export default RealTime;
+export default ProjectList;

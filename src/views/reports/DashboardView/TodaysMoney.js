@@ -21,8 +21,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    background: '#fff url(/static/block_bg.png)',
-    width:371,
     height:129
   },
   label: {

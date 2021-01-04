@@ -1,9 +1,18 @@
 import React, { useState, useEffect } from 'react';
+import { Link as RouterLink ,useHistory } from 'react-router-dom';
 import {
   Container,
   Grid,
   makeStyles,
-  LinearProgress
+  LinearProgress,
+  Breadcrumbs,
+  Button,
+  Link,
+  Menu,
+  MenuItem,
+  SvgIcon,
+  Typography,
+  Switch 
 } from '@material-ui/core';
 import Page from 'src/components/Page';
 import Axios from 'axios';
@@ -15,12 +24,14 @@ import PerformanceOverTime from './PerformanceOverTime';
 import ChartSecond from './ChartSecond';
 import RealTime from './RealTime';
 import TableList from './TableList';
+import ProjectList from './ProjectList';
 import RoiPerCustomer from './RoiPerCustomer';
 import SystemHealth from './SystemHealth';
 import TeamTasks from './TeamTasks';
 import TodaysMoney from './TodaysMoney';
 import CONSTANTS from "../../../Util/Constants";
 import MySnackbar from "../../../Shared/Snackbar/MySnackbar";
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
 
 
@@ -39,19 +50,34 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+
+
 function DashboardView() {
+
+  let history = useHistory();
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [dashboardData, setDashboardData] = useState();
-
+  const [mainData, setMainData] = useState();
+  const [selectData, setSelectData] = useState('dependancies');
+  const [switchData, setSwitchData] = useState(false);
+  const [countData, setCountData] = useState(false);
+  const query  = new URLSearchParams(window.location.search);
 
   useEffect(() => {
     const updateSnackbar = (open, message) => {
       setSnackbarOpen(open);
       setSnackbarMessage(message)
+      const list = query.get('list')
+      if(list=='org'){
+        setSwitchData(true);
+      } else {
+        setSwitchData(false);
+      }
     }
+
     const fetchDashboardDetails = async () => {
       try {
         setLoading(true);
@@ -59,7 +85,25 @@ function DashboardView() {
         /*const url = `/dashboard/${authService.getUserName()}`;*/
         const url = `/dashboard`;
         const response = await Axios.get(url);
-        setDashboardData(response.data);
+        setMainData(response.data);
+        const list = query.get('list');
+        const type = query.get('type');
+        setCountData(Object.keys(response.data).length);
+        
+        if(type){
+          setSelectData(type);
+          if(list=='org'){
+            setDashboardData(response.data[type].org);
+          } else {
+            setDashboardData(response.data[type].user);
+          }   
+        } else {
+          if(list=='org'){
+            setDashboardData(response.data.dependancies.org);
+          } else {
+            setDashboardData(response.data.dependancies.user);
+          }
+        }
         updateSnackbar(true, CONSTANTS.FETCHING_DATA_SUCCESS);
         setLoading(false);
       } catch (error) {
@@ -75,6 +119,41 @@ function DashboardView() {
     setSnackbarOpen(open);
     setSnackbarMessage(message)
   }
+
+  const handleChange = (event) => {
+    const checked = event.target.checked;  
+    if(checked){
+      query.set('list', 'org');
+      history.push('/app/reports/dashboard/?'+query.toString());
+    } else {
+      query.delete('list');
+      if(query.toString()){
+        history.push('/app/reports/dashboard/?'+query.toString())
+      } else {
+        history.push('/app/reports/dashboard')  
+      } 
+    }
+    history.go(0);
+  };
+
+  const handleSelect = (event) => {
+    const value = event.target.value;
+    setSelectData(value);     
+    /*const list = query.get('list');
+    const list = query.get('list');*/
+    if(value!='dependancies'){
+      query.set('type', value);
+      history.push('/app/reports/dashboard/?'+query.toString());
+    } else {
+      query.delete('type');
+      if(query.toString()){
+        history.push('/app/reports/dashboard/?'+query.toString())
+      } else {
+        history.push('/app/reports/dashboard')  
+      }      
+    }
+    history.go(0);
+  };
 
   const getLoader = () => {
     if (loading) {
@@ -94,6 +173,63 @@ function DashboardView() {
         maxWidth={false}
         className={classes.container}
       >
+      <Grid
+      container
+      spacing={3}
+      justify="space-between"
+      className="dashboardtitle"
+    >
+      {
+          countData > 1 && (
+            <>
+            <Grid xs={12} container justify="flex-end">
+              <select value={selectData} onChange={handleSelect.bind(this)} handleSelect className="type-dropdown">
+              {Object.entries(mainData).map(([key, value]) => {
+                  return (
+                      <option value={key} key={key} >{key}</option>
+                  );
+              })}
+            </select>
+          </Grid>
+            </>
+           )
+      }     
+      
+      <Grid item>
+        <Breadcrumbs
+          separator={<NavigateNextIcon fontSize="small" />}
+          aria-label="breadcrumb"
+        >
+          <Link
+            variant="body1"
+            color="inherit"
+            to="/app"
+            component={RouterLink}
+          >
+            Dashboard
+          </Link>
+        </Breadcrumbs>
+      </Grid>
+      <Grid item
+      className="pubdate-button"
+      >  
+      <Typography component="div">
+        <Grid component="label" container alignItems="center" spacing={1}>          
+          <Grid item>Private Reports</Grid>
+          <Grid item>
+            <Switch
+            checked={switchData}
+            onChange={handleChange}
+            name="checkorg"
+            inputProps={{ 'aria-label': 'secondary checkbox' }}
+          />
+          </Grid>
+          <Grid item>Organization </Grid>
+        </Grid>
+      </Typography>
+      </Grid>      
+    </Grid>
+      
         {
           dashboardData && (
             <>
@@ -101,6 +237,7 @@ function DashboardView() {
                 container
                 style={{ marginTop: 10,marginBottom: 10 }}
                 spacing={2}
+                className="dashboardData"
               >
 
                 {
@@ -135,17 +272,19 @@ function DashboardView() {
                         style={{ marginBottom: 10 }}
                         lg={12}
                         xs={12}
+                        className="products_summary"
                       >
-                  <TableList lib_details={dashboardData['products_summary']} />
+                  <RealTime lib_details={dashboardData['products_summary']} />
 
                   </Grid>
                   <Grid
                         item
                         style={{ marginBottom: 10 }}
+                        className="projects_summary"
                         lg={12}
                         xs={12}
                       >
-                  <TableList lib_details={dashboardData['products_summary']} />
+                  <ProjectList lib_details={dashboardData['projects_summary']} />
                   
                   </Grid>
                 </Grid>
@@ -153,6 +292,7 @@ function DashboardView() {
                     item
                     lg={9}
                     xs={12}
+                    className="chartlist"
                   >
                 
                   {
@@ -180,6 +320,7 @@ function DashboardView() {
                   lg={12}
                   xl={12}
                   xs={12}
+                  className="open_vulnerabilities"
                 >
                   <LatestProjects project_details={dashboardData.open_vulnerabilities} />
                 </Grid>
@@ -196,3 +337,4 @@ function DashboardView() {
 }
 
 export default DashboardView;
+

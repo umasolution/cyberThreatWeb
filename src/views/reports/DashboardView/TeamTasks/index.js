@@ -41,22 +41,20 @@ function TeamTasks({ className, project_vuln_details, ...rest }) {
   };
 
   const rowRenderer = ({ index, isScrolling, key, style }) => {
+    console.log(searchedLibDetails);
     return searchedLibDetails && (
-      <div className="odd-even-background"  key={key} style={style}>
-
-          <TableRow>
-          <TableCell><Typography color="inherit"
+       <TableRow className="odd-even-background">
+          <TableCell style={{width: '50%'}}><Typography color="inherit"
             className="secondary"
           >
-            {searchedLibDetails[index].project}
+             {searchedLibDetails[index].name}
           </Typography></TableCell>
-          <TableCell><Typography color="inherit"
+          <TableCell style={{width: '10%'}}><Typography color="inherit"
             className="secondary"
           >
-            {searchedLibDetails[index].count}
+            {searchedLibDetails[index].value}
           </Typography></TableCell>
         </TableRow>
-      </div>
     )
       ;
   };
@@ -74,32 +72,26 @@ function TeamTasks({ className, project_vuln_details, ...rest }) {
       className={clsx(classes.root, className)}
       {...rest}
     >
+      
     { openSearch ? null : <CardHeader
         title="Projects with most vulnerabilities"
-        action={
-          <IconButton aria-label="settings">
-            <SearchIcon onClick={handleSearchOpen} />
-          </IconButton>
-        }
       /> }
       { openSearch ? <TextField
+        required
         value={searchInput}
         onChange={handleChangeSearch}
-        style={{
-          marginLeft: '15px'
-        }}
         className="secondary"
         labelClassName="secondary"
+        style={{
+          marginLeft: '15px',
+        }}
         id="search"
-        label="Search"
+        placeholder="Search"
       /> : null }
-      { openSearch ? <IconButton aria-label="settings">
-            <CloseIcon onClick={handleSearchClose} />
-          </IconButton> : null }
-    
-       <Divider />
       
-
+      <Divider />
+      <Table>
+        <TableBody>
       {searchedLibDetails && (
         <VirtualizedList
           rowCount={searchedLibDetails.length}
@@ -110,6 +102,8 @@ function TeamTasks({ className, project_vuln_details, ...rest }) {
           overscanRowCount={3}
         />
       )}
+       </TableBody>
+      </Table>
     </Card>
   );
 }

@@ -38,7 +38,9 @@ function PerformanceOverTime({ className, chartsMainKey,chartsKey,chartsData, ..
   const createChart = () => {
     let progressChartData = chartsData.data;
     progressChartData = progressChartData[app];
-    const xAxis = [];
+   
+    if(typeof progressChartData != 'undefined'){
+      const xAxis = [];
     const yAxises = new Map();
     for (let i = 0; i < progressChartData.length; i++) {
       const progress = progressChartData[i];
@@ -76,6 +78,7 @@ function PerformanceOverTime({ className, chartsMainKey,chartsKey,chartsData, ..
     };
     const config = { responsive: true };
     Plotly.newPlot('myDiv', dd, layout, config);
+    }
   }
 
   const handleChange = (event) => {

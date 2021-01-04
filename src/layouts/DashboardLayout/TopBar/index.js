@@ -156,11 +156,13 @@ function TopBar({ className, onMobileNavOpen, ...rest }) {
           <RouterLink to="/">
             <Logo />
           </RouterLink>
+          <Box className="dashboardsearch">
           <CVETextField
             cveInput={cveInput}
             keyPress={keyPress}
             handleChangeCVE={handleChangeCVE}
           />
+          </Box>
         </Hidden>
         <Box ml={2} flexGrow={1} />
         {/* <Search /> */}
@@ -168,7 +170,7 @@ function TopBar({ className, onMobileNavOpen, ...rest }) {
         <Notifications alertsResponse={alertsResponse}/>
         <Settings />
         <Box ml={2}>
-          <Account />
+         { <Account />}
         </Box>
       </Toolbar>
     </AppBar>

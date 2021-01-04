@@ -40,6 +40,7 @@ function ChartSecond({ className, chartsMainKey,chartsKey,chartsData, ...rest })
   const createChart = () => {
     let progressChartData = chartsData.data;
     progressChartData = progressChartData[app];
+     if(typeof progressChartData != 'undefined'){
     const xAxis = [];
     const yAxises = new Map();
     for (let i = 0; i < progressChartData.length; i++) {
@@ -78,6 +79,7 @@ function ChartSecond({ className, chartsMainKey,chartsKey,chartsData, ...rest })
     };
     const config = { responsive: true };
     Plotly.newPlot('myDiv2', dd, layout, config);
+    }
   }
 
   const handleChange = (event) => {

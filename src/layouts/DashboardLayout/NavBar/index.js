@@ -44,6 +44,7 @@ import {
   Home as HomeIcon,
 } from 'react-feather';
 import Logo from 'src/components/Logo';
+import "./index.css";
 import NavItem from './NavItem';
 import authService from './../../../services/authService';
 import NotificationsIcon from '@material-ui/icons/Notifications';

@@ -88,23 +88,22 @@ function LatestProjects({ className, project_details, ...rest }) {
               toolbarStyle: {
                 fontSize: 19,
                 fontFamily: '"Montserrat",sans-serif !important',
-                fontWeight: 600
+                fontWeight: 400
               },
               cellStyle: {
                 fontSize: 19,
                 fontFamily: '"Montserrat",sans-serif !important',
-                fontWeight: 600
+                fontWeight: 400
               },
               headerStyle: {
                 fontSize: 19,
                 fontFamily: '"Montserrat",sans-serif !important',
-                color: '#546e7a',
                 fontWeight: 600,
                 borderBottom: '1px solid rgba(224, 224, 224, 1)'
               },
               rowStyle: x => {
                 if (x.tableData.id % 2 === 0) {
-                    return {backgroundColor: "#f9f9fc"}
+                    /*return {backgroundColor: "#f9f9fc"}*/
                 }
             }
             }}

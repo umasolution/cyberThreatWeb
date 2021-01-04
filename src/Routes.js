@@ -275,6 +275,16 @@ const routesConfig = [
         component: lazy(() => import('src/views/extra/editors/QuillEditorView'))
       },
       {
+        exact: true,
+        path: '/app/productsreports/:reportType/:reportName',
+        component: lazy(() => import('src/views/ProductsReports/ProductsReports'))
+      }/*,
+      {
+        exact: true,
+        path: '/app/productsreports/:reportType/:reportName',
+        component: lazy(() => import('src/views/ProductsReports/ProductsReports'))
+      }*/,
+      {
         component: () => <Redirect to="/404" />
       }
     ]
@@ -386,11 +396,6 @@ const routesConfig = [
         exact: true,
         path: '/library/:product/:app',
         component: lazy(() => import('src/views/Library/Library'))
-      },
-      {
-        exact: true,
-        path: '/ProductsReports/:reportType/:reportName',
-        component: lazy(() => import('src/views/ProductsReports/ProductsReports'))
       },
       {
         exact: true,

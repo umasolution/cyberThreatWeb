@@ -5,7 +5,6 @@ import CWEPieChart from './CWEPieChart/CWEPieChart';
 import isEmpty from './../../../Util/Util';
 
 const ReportSummary = ({ summary, headerDate, projectName, isDocker = false, divId }) => {
-  console.log(divId);
   return (
     <Grid
       container
@@ -13,9 +12,9 @@ const ReportSummary = ({ summary, headerDate, projectName, isDocker = false, div
       style={{ display: 'block', margin: '5px' }}
     >
       <h6 className="details-header" style={{ display: 'block' }}>
-        Vulnerability report for project "
+        Vulnerability report for project 
 {projectName}
-" (
+ (
 {headerDate}
 )
       </h6>

@@ -290,7 +290,7 @@ const ProjectsReports = () => {
           <Box position="relative">
           <Paper className={classes.root}>
                 <TableContainer className={classes.container}>
-                  <Table stickyHeader aria-label="sticky table">
+                  <Table stickyHeader aria-label="sticky table" className={loadingRows?'small-table':'big-table'}>
                     {issearch?(<>
                       <TableHead>
                       <TableRow>
@@ -393,21 +393,39 @@ const ProjectsReports = () => {
                             const isItemSelected = isSelected(rkey)
                           return (<TableRow hover onClick={event => handleClickRow('key',rkey)} key={rkey} role="checkbox" selected={isItemSelected} tabIndex={-1} >
 
-                                {Object.keys(tabsData.columns).map((vkey) => (
+                                { Object.keys(tabsData.columns).map((vkey) => (
                                  <TableCell key={tabsData.columns[vkey].field}>
-                                      {vkey==0 ? (
+                                      { tabsData.columns[vkey].field == 'vulnerability' ? (
+                                        <>
+                                         <Box className="scoreblock-vulnerabilities-div">
+                                         {Object.entries(row.table[`${tabsData.columns[vkey].field}`]).map((vulnerabilities) => (
+                                            <Box className={`scoreblock MuiGrid-grid-xs-3 ${vulnerabilities[0]}`}>
+                                            <Box className="scoreblock-inner">
+                                            <Box className="scoretitle">
+                                              {vulnerabilities[0]}
+                                            </Box>
+                                            <Box className="scorevalue">
+                                              {vulnerabilities[1]?vulnerabilities[1]:'0'}
+                                            </Box>
+                                            </Box>
+                                            </Box>
+                                           ))}
+                                          </Box>  
+                                        </>
+                                    ) : (vkey==0? (
                                         <>
                                          <Grid item xs={12}>
                                             <Typography
                                               variant="h5"
                                               color="textSecondary"
                                             >
-                                              {row.table[`${tabsData.columns[vkey].field}`] }
+                                              {row.table[`${tabsData.columns[vkey].field}`].replace(',', '\n') }
                                             </Typography>
 
                                          </Grid>
                                         </>
-                                    )  : row.table[`${tabsData.columns[vkey].field}`]}
+                                    )  : row.table[`${tabsData.columns[vkey].field}`].replace(',', '\n'))
+                                    }
                                   </TableCell>
                                 )
                                 )}
@@ -464,41 +482,29 @@ const ProjectsReports = () => {
                                     <ListItem>
                                         <ListItemText>
                                         {scan_insights[0]=='date' ? (<>
-                                        <Box className="snapshot-title">Date: </Box>
+                                        <Box className="snapshot-title">Report Date: </Box>
                                         <Box className="snapshot-content">{moment(scan_insights[1]).format('MMM DD, YYYY')}</Box></>):''}
-                                        {scan_insights[0]=='total_scanned_dependancies' ? (<>
-                                        <Box className="snapshot-title">Scanned Dependancies: </Box>
-                                        <Box className="snapshot-content">{scan_insights[1]}</Box></>):''}
-                                         {scan_insights[0]=='total_unique_vulnerabilities' ? (<>
-                                        <Box className="snapshot-title">Unique Vulnerabilities: </Box>
-                                        <Box className="snapshot-content">{scan_insights[1]}</Box></>):''} 
-                                        {scan_insights[0]=='total_vulnerable_dependencies' ? (<>
-                                        <Box className="snapshot-title">Vulnerable Dependencies: </Box>
-                                        <Box className="snapshot-content">{scan_insights[1]}</Box></>):''}
-
                                         {scan_insights[0]=='vulnerabilities' ? (<>
-                                        <Box className="snapshot-title">Vulnerabilities :</Box>
                                         <Box className="snapshot-content">
-                                        <Box className="scoreblock-vulnerabilities-div">
-                                          {Object.entries(scan_insights[1]).map((vulnerabilities) => (
-                                            <>
-                                            <Box className="scoreblock MuiGrid-grid-xs-3">
-                                            <Box className="scoreblock-inner">
-                                            <Box className="scoretitle">
-                                              {vulnerabilities[0]}
-                                            </Box>
-                                            <Box className="scorevalue">
-                                              {vulnerabilities[1]}
-                                            </Box>
-                                            </Box>
-                                            </Box>
-                                            </>
-                                          ))}
+                                          <Box className="scoreblock-vulnerabilities-div">
+                                            {Object.entries(scan_insights[1]).map((vulnerabilities) => (
+                                              <>
+                                              <Box className="scoreblock MuiGrid-grid-xs-3">
+                                              <Box className="scoreblock-inner">
+                                              <Box className="scoretitle">
+                                                {vulnerabilities[0]}
+                                              </Box>
+                                              <Box className="scorevalue">
+                                                {vulnerabilities[1]}
+                                              </Box>
+                                              </Box>
+                                              </Box>
+                                              </>
+                                            ))}
                                           </Box>
                                       </Box>
                                       </>):''}
-                                      {scan_insights[0]=='severity' ? (<>
-                                        <Box className="snapshot-title">Severity :</Box>
+                                      {scan_insights[0]=='severity' ? (<> 
                                         <Box className="snapshot-content">
                                         <Box className="scoreblock-severity-div">
                                           {Object.entries(scan_insights[1]).map((severity) => (
@@ -518,10 +524,26 @@ const ProjectsReports = () => {
                                           </Box>
                                       </Box>
                                       </>):''}
+                                         {scan_insights[0]=='data' ? (<>
+                                        <Box className="snapshot-content"> 
+                                          {Object.entries(scan_insights[1]).map((data) => (
+                                            <>
+                                            <Box className="snapshot-title">{data[0]} : </Box>
+                                            <Box className="snapshot-content">{data[1]}</Box>
+                                            </>
+                                          ))}
+                                          </Box>
+                                        </>):''}
+                                        {scan_insights[0]=='reportname' ? (<>
+                                           <Typography gutterBottom variant="h5" component="h2">
+                                          <a target="_blank" rel="noopener noreferrer" href={`/app/productsreports/${singlerows.scan_summary['Project Id']}/${scan_insights[1]}`}>View Report</a>
+                                        </Typography>
+                                        </>):''}
                                       </ListItemText>
                                       </ListItem>                                
                                     </>
                                   ))}
+                        
                                 </List> 
                                   
                               </Typography>
@@ -540,7 +562,7 @@ const ProjectsReports = () => {
                                 <> 
                                 <Box className="boxdetailtitle">
                                     <Typography gutterBottom variant="h5" component="h2">
-                                     Scan Summary
+                                     Project Summary
                                     </Typography>
                                 </Box> 
                                 <Box className="boxtitlecontent"> 
@@ -550,15 +572,8 @@ const ProjectsReports = () => {
                                     <>
                                     <ListItem>
                                         <ListItemText>
-                                        {scan_summary[0]=='open_vuln' ? (<>
-                                        <Box className="snapshot-title">Open Vuln: </Box>
-                                        <Box className="snapshot-content">{scan_summary[1]}</Box></>):''}
-                                        {scan_summary[0]=='total_scan' ? (<>
-                                        <Box className="snapshot-title">Total Scan: </Box>
-                                        <Box className="snapshot-content">{scan_summary[1]}</Box></>):''}
-                                        {scan_summary[0]=='vulnerable_library' ? (<>
-                                        <Box className="snapshot-title">Vulnerable Library: </Box>
-                                        <Box className="snapshot-content">{scan_summary[1]}</Box></>):''}
+                                        <Box className="snapshot-title">{scan_summary[0]} : </Box>
+                                        <Box className="snapshot-content">{scan_summary[1]}</Box>
                                       </ListItemText>
                                       </ListItem>                                
                                     </>

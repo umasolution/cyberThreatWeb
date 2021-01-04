@@ -57,10 +57,11 @@ const ProductsReports = () => {
     try {
       setLoading(true);
       updateSnackbar(true, CONSTANTS.FETCHING_DATA);
-      const url = `/report/project/reportname`;
+      const url = `/report/reportname`;
+      /*const url = `/report/project/reportname`;*/
       const response = await Axios.post(url, {
-        emailAdd: authService.getUserName(),
-        reportName
+        project_id: 'e897df72-4c8a-11eb-acb0-080027d7b49a',
+        report_name: '01-01-2021_18:36:15.json'
       });
       const res = response.data;
       if (res.header.docker && res.header.docker === 'True') {

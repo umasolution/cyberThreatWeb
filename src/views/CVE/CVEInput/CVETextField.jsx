@@ -38,6 +38,7 @@ const CVETextField = (props) => {
       }}
       id="cve"
       placeholder="Search CVEs"
+      className="searchbtn"
       InputProps={{
         classes: {
           input: classes.input
