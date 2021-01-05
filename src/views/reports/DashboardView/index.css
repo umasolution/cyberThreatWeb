@@ -58,3 +58,8 @@
 
 .MuiDrawer-paperAnchorLeft .MuiList-subheader .MuiList-root .MuiListItem-root a.MuiButton-root:after {width: 0;height: 0;border-width: 20px 10px 20px 0;border-color: transparent #FFFFFF transparent transparent;border-style: solid;position: absolute;
 right: 0px;content: "";}
+
+#myDiv .modebar ,#myDiv2 .modebar {
+  position: absolute;
+  top: -50px;
+}

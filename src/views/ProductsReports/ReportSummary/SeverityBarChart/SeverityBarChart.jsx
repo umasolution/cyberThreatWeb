@@ -5,10 +5,13 @@ import { getBackgroundColorBySeverity } from '../../../../Util/Util';
 const SeverityBarChart = ({ severity, divId, displayModeBar = true, title = 'Severity', bgColor = "#f1f1f1", width = 360, height = 280 }) => {
 
   useEffect(() => {
+
     if (severity) {
       const x = [];
       const y = [];
       const colors = [];
+      console.log(severity);
+      /*severity = JSON.parse(severity);*/
       severity.forEach(sev => {
         x.push(Object.keys(sev)[0]);
         y.push(sev[Object.keys(sev)[0]]);

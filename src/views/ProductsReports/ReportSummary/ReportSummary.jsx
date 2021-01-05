@@ -22,8 +22,8 @@ const ReportSummary = ({ summary, headerDate, projectName, isDocker = false, div
         isDocker ? (
           <>
             <div style={{ display: 'flex', margin: '5px' }}>
-              {summary.Severity ? <SeverityBarChart divId={divId} severity={summary.Severity} /> : ''}
-              {summary.CWE ? <CWEPieChart divId={divId} cwe={summary.CWE} /> : ''}
+              {summary.chart.severity ? <SeverityBarChart divId={divId} severity={summary.chart.severity} /> : ''}
+              {summary.chart.cwe ? <CWEPieChart divId={divId} cwe={summary.chart.cwe} /> : ''}
             </div>
             <div style={{ display: 'flex', margin: '5px', flexDirection: 'column' }}>
               <div style={{ display: 'flex', margin: '5px' }}>
@@ -75,8 +75,8 @@ Remediated
         )
           : (
             <div style={{ display: 'flex', margin: '5px' }}>
-              {summary.Severity ? <SeverityBarChart severity={summary.Severity} /> : ''}
-              {summary.CWE ? <CWEPieChart cwe={summary.CWE} /> : ''}
+              {summary.chart.severity ? <SeverityBarChart severity={summary.chart.severity} /> : ''}
+              {summary.chart.cwe ? <CWEPieChart cwe={summary.chart.cwe} /> : ''}
               <div style={{ display: 'flex', margin: '5px', flexDirection: 'column' }}>
                 <div style={{ display: 'flex', margin: '5px' }}>
                   <Paper elevation={3} className="paper" style={{ marginRight: '10px' }}>

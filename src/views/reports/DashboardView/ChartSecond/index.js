@@ -72,12 +72,12 @@ function ChartSecond({ className, chartsMainKey,chartsKey,chartsData, ...rest })
       })
     }
     var layout = {
-      title: 'Performance Over Time',
+      title: '',
       margin: {
         b: 120,
       },
     };
-    const config = { responsive: true };
+    const config = { responsive: true,displayModeBar: true };
     Plotly.newPlot('myDiv2', dd, layout, config);
     }
   }
@@ -99,19 +99,7 @@ function ChartSecond({ className, chartsMainKey,chartsKey,chartsData, ...rest })
         <Box
           height={375}
            
-        >
-          <FormControl style={{ width: '20%' }}>
-            <InputLabel id="demo-simple-select-label">Projects Chart</InputLabel>
-            <Select
-              labelId="chart-select-label"
-              id="chart-simple-select"
-              value={app}
-              onChange={handleChange}
-            >
-              {apps.map(appp => <MenuItem value={appp}>{appp}</MenuItem>)}
-            </Select>
-          </FormControl>
-          <div id='myDiv2' />
+        > <div id='myDiv2' />
 
         </Box>
 
