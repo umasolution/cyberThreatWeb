@@ -46,7 +46,7 @@
 .scoreblock-inner > div{display: table-cell; vertical-align: middle;padding: 5px;font-size: 14px; font-weight: 600; text-align: center;}
 .scoretitle{border: 1px solid #d0d8e5;border-radius: 3px 0 0 3px; color: #333;}
 
-.scorevalue{background: #027ae2; color: #fff;border-radius: 0px 3px 3px 0px;border-right: 1px solid #d0d8e5;border-bottom:1px solid #d0d8e5;border-top:1px solid #d0d8e5;}
+.scorevalue{color: #fff;border-radius: 0px 3px 3px 0px;border-right: 1px solid #d0d8e5;border-bottom:1px solid #d0d8e5;border-top:1px solid #d0d8e5;}
 
 .niahmeterleft h2{font-size: 16px;font-weight: 600;margin-bottom: 10px;}
 .niahmeterleft h2 a{text-decoration: none;color: #e43838} 
@@ -86,12 +86,12 @@ width:100% !important;
 
 .scoreblock-severity-div .scoreblock,.scoreblock-vulnerabilities-div .scoreblock{float:left;margin: 0 10px;}
 .snapshot-title { margin-bottom: 5px; }
-.scoreblock-severity-div .scoreblock:nth-child(1) .scoretitle { background: #980000;}
+/*.scoreblock-severity-div .scoreblock:nth-child(1) .scoretitle { background: #980000;}
 .scoreblock-severity-div .scoreblock:nth-child(2) .scoretitle { background: #FF9900;}
 .scoreblock-severity-div .scoreblock:nth-child(3) .scoretitle { background: #56742C;}
 .scoreblock-severity-div .scoretitle { color:#fff;}
 .scoreblock-severity-div .scorevalue {background: #fff;color:#000;}
-.scoreblock-severity-div .scoreblock-inner{ border: 1px solid grey;}
+.scoreblock-severity-div .scoreblock-inner{ border: 1px solid grey;}*/
 
  .small-table .MuiTableCell-body, .big-table .MuiTableCell-body { white-space: pre-line;} 
 

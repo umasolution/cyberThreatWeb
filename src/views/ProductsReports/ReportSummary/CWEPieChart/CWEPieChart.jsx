@@ -6,12 +6,17 @@ const CWEPieChart = ({ cwe, divId, bgColor = "#f1f1f1", width = 360, height= 280
     if (cwe) {
       const labels = [];
       const values = [];
-      console.log(cwe);
       /*cwe = JSON.parse(cwe);*/
-      cwe.forEach(sev => {
+      /*cwe.forEach(sev => {
         labels.push(Object.keys(sev)[0]);
         values.push(sev[Object.keys(sev)[0]]);
-      })
+      })*/
+      
+      for (var key in cwe) {
+        labels.push(key);
+        values.push(cwe[key]);
+      } 
+
       const data = [
         {
           labels,

@@ -10,13 +10,18 @@ const SeverityBarChart = ({ severity, divId, displayModeBar = true, title = 'Sev
       const x = [];
       const y = [];
       const colors = [];
-      console.log(severity);
+      for (var key in severity) {
+        x.push(key);
+        y.push(severity[key]);
+        colors.push(getBackgroundColorBySeverity(key));
+      }  
+
       /*severity = JSON.parse(severity);*/
-      severity.forEach(sev => {
-        x.push(Object.keys(sev)[0]);
-        y.push(sev[Object.keys(sev)[0]]);
-        colors.push(getBackgroundColorBySeverity(Object.keys(sev)[0]));
-      });
+      /*severity.forEach(sev => {
+        x.push(Object.keys(sev));
+        y.push(sev[Object.keys(sev)]);
+        colors.push(getBackgroundColorBySeverity(Object.keys(sev)));
+      });*/
 
       const data = [
         {

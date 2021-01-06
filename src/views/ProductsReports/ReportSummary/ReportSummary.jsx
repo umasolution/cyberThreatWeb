@@ -5,6 +5,7 @@ import CWEPieChart from './CWEPieChart/CWEPieChart';
 import isEmpty from './../../../Util/Util';
 
 const ReportSummary = ({ summary, headerDate, projectName, isDocker = false, divId }) => {
+  {console.log(summary['vuln']['carried'])}
   return (
     <Grid
       container
@@ -22,8 +23,8 @@ const ReportSummary = ({ summary, headerDate, projectName, isDocker = false, div
         isDocker ? (
           <>
             <div style={{ display: 'flex', margin: '5px' }}>
-              {summary.chart.severity ? <SeverityBarChart divId={divId} severity={summary.chart.severity} /> : ''}
-              {summary.chart.cwe ? <CWEPieChart divId={divId} cwe={summary.chart.cwe} /> : ''}
+              {summary.chart.cwe ? <div> <CWEPieChart divId={divId} cwe={summary.chart.cwe} /> </div>: ''}
+              {summary.chart.severity ? <div> <SeverityBarChart divId={divId} severity={summary.chart.severity} /></div> : ''}              
             </div>
             <div style={{ display: 'flex', margin: '5px', flexDirection: 'column' }}>
               <div style={{ display: 'flex', margin: '5px' }}>
@@ -53,19 +54,19 @@ const ReportSummary = ({ summary, headerDate, projectName, isDocker = false, div
               <div style={{ display: 'flex', margin: '5px' }}>
                 <Paper elevation={3} className="paper" style={{ marginRight: '10px', width: '117px' }}>
                   <h6 className="details-header red-font" style={{ display: 'block', marginRight: '2px' }}>
-                    {summary['New Vulnerabilities']}
+                    {summary.vuln.new}
                   </h6>
 New
                 </Paper>
                 <Paper elevation={3} className="paper" style={{ marginRight: '10px', width: '131px' }}>
                   <h6 className="details-header red-font" style={{ display: 'block', marginRight: '2px' }}>
-                    {summary['Vulnerabilities Remediated']}
+                    {summary.vuln.remediate}                    
                   </h6>
 Remediated
                 </Paper>
                 <Paper elevation={3} className="paper" style={{ marginRight: '10px', width: '141px' }}>
                   <h6 className="details-header red-font" style={{ display: 'block', marginRight: '2px' }}>
-                    {summary['Vulnerabilities Carried Over']}
+                     {summary.vuln.carried}
                   </h6>
  Carried Over
                 </Paper>
@@ -106,19 +107,19 @@ Remediated
                 <div style={{ display: 'flex', margin: '5px' }}>
                   <Paper elevation={3} className="paper" style={{ marginRight: '10px', width: '117px' }}>
                     <h6 className="details-header red-font" style={{ display: 'block', marginRight: '2px' }}>
-                      {summary['New Vulnerabilities']}
+                      {summary.vuln.new}
                     </h6>
         New
                   </Paper>
                   <Paper elevation={3} className="paper" style={{ marginRight: '10px', width: '131px' }}>
                     <h6 className="details-header red-font" style={{ display: 'block', marginRight: '2px' }}>
-                      {summary['Vulnerabilities Remediated']}
+                      {summary.vuln.remediate} 
                     </h6>
         Remediated
                   </Paper>
                   <Paper elevation={3} className="paper" style={{ marginRight: '10px', width: '141px' }}>
                     <h6 className="details-header red-font" style={{ display: 'block', marginRight: '2px' }}>
-                      {summary['Vulnerabilities Carried Over']}
+                      {summary.vuln.carried}
                     </h6>
           Carried Over
                   </Paper>

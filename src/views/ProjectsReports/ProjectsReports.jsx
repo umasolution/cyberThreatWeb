@@ -190,6 +190,13 @@ const ProjectsReports = () => {
         setloadingRows(false);
         setSingleRows();
         setloadingRows(true);
+        const optiondata = tabsData.results[value].option.scan_insights;
+        tabsData.results[value].option.scan_insights = [];
+        tabsData.results[value].option.scan_insights.date = optiondata.date;
+        tabsData.results[value].option.scan_insights.data = optiondata.data;
+        tabsData.results[value].option.scan_insights.severity = optiondata.severity;
+        tabsData.results[value].option.scan_insights.vulnerabilities = optiondata.vulnerabilities;
+        tabsData.results[value].option.scan_insights.reportname = optiondata.reportname;
         setSingleRows(tabsData.results[value].option);
         const selectedIndex = selected.indexOf(value);
         let newSelected = [];
@@ -402,10 +409,10 @@ const ProjectsReports = () => {
                                             <Box className={`scoreblock MuiGrid-grid-xs-3 ${vulnerabilities[0]}`}>
                                             <Box className="scoreblock-inner">
                                             <Box className="scoretitle">
-                                              {vulnerabilities[0]}
+                                              {vulnerabilities[0]}                                              
                                             </Box>
-                                            <Box className="scorevalue">
-                                              {vulnerabilities[1]?vulnerabilities[1]:'0'}
+                                            <Box className="scorevalue" bgcolor={getBackgroundColorBySeverity(vulnerabilities[0])}>
+                                              {vulnerabilities[1]?vulnerabilities[1]:'0'}                                              
                                             </Box>
                                             </Box>
                                             </Box>
@@ -482,8 +489,9 @@ const ProjectsReports = () => {
                                     <ListItem>
                                         <ListItemText>
                                         {scan_insights[0]=='date' ? (<>
+                                        <Box className="date-block">
                                         <Box className="snapshot-title">Report Date: </Box>
-                                        <Box className="snapshot-content">{moment(scan_insights[1]).format('MMM DD, YYYY')}</Box></>):''}
+                                        <Box className="snapshot-content">{moment(scan_insights[1]).format('MMM DD, YYYY')}</Box> </Box></>):''}
                                         {scan_insights[0]=='vulnerabilities' ? (<>
                                         <Box className="snapshot-content">
                                           <Box className="scoreblock-vulnerabilities-div">
@@ -494,7 +502,7 @@ const ProjectsReports = () => {
                                               <Box className="scoretitle">
                                                 {vulnerabilities[0]}
                                               </Box>
-                                              <Box className="scorevalue">
+                                              <Box className="scorevalue" bgcolor={getBackgroundColorBySeverity(vulnerabilities[0])}>
                                                 {vulnerabilities[1]}
                                               </Box>
                                               </Box>
@@ -514,7 +522,7 @@ const ProjectsReports = () => {
                                             <Box className="scoretitle">
                                               {severity[0]}
                                             </Box>
-                                            <Box className="scorevalue">
+                                            <Box className="scorevalue" bgcolor={getBackgroundColorBySeverity(severity[0])}>
                                               {severity[1]}
                                             </Box>
                                             </Box>
@@ -525,19 +533,21 @@ const ProjectsReports = () => {
                                       </Box>
                                       </>):''}
                                          {scan_insights[0]=='data' ? (<>
-                                        <Box className="snapshot-content"> 
+                                        <Box className="snapshot-content data-block"> 
                                           {Object.entries(scan_insights[1]).map((data) => (
                                             <>
+                                            <Box className="snapshot-block">
                                             <Box className="snapshot-title">{data[0]} : </Box>
                                             <Box className="snapshot-content">{data[1]}</Box>
+                                            </Box>
                                             </>
                                           ))}
                                           </Box>
                                         </>):''}
                                         {scan_insights[0]=='reportname' ? (<>
-                                           <Typography gutterBottom variant="h5" component="h2">
+                                           <Box className="view-report-btn">
                                           <a target="_blank" rel="noopener noreferrer" href={`/app/productsreports/${singlerows.scan_summary['Project Id']}/${scan_insights[1]}`}>View Report</a>
-                                        </Typography>
+                                        </Box>
                                         </>):''}
                                       </ListItemText>
                                       </ListItem>                                
