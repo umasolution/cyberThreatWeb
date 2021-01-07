@@ -5,7 +5,6 @@ import CWEPieChart from './CWEPieChart/CWEPieChart';
 import isEmpty from './../../../Util/Util';
 
 const ReportSummary = ({ summary, headerDate, projectName, isDocker = false, divId }) => {
-  {console.log(summary['vuln']['carried'])}
   return (
     <Grid
       container
@@ -76,8 +75,8 @@ Remediated
         )
           : (
             <div style={{ display: 'flex', margin: '5px' }}>
-              {summary.chart.severity ? <SeverityBarChart severity={summary.chart.severity} /> : ''}
-              {summary.chart.cwe ? <CWEPieChart cwe={summary.chart.cwe} /> : ''}
+              {summary.chart.severity ? <SeverityBarChart divId={divId} severity={summary.chart.severity} /> : ''}
+              {summary.chart.cwe ? <CWEPieChart divId={divId} cwe={summary.chart.cwe} /> : ''}
               <div style={{ display: 'flex', margin: '5px', flexDirection: 'column' }}>
                 <div style={{ display: 'flex', margin: '5px' }}>
                   <Paper elevation={3} className="paper" style={{ marginRight: '10px' }}>

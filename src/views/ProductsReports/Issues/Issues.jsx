@@ -33,8 +33,8 @@ const Issues = ({ issues, reportName, reportType }) => {
   const [value, setValue] = React.useState(0);
   const [state, setState] = React.useState({
     isHighIssueChecked: true,
-    isLowIssueChecked: true,
-    isMediumIssueChecked: true,
+    isLowIssueChecked: false,
+    isMediumIssueChecked: false,
   });
 
   const handleChange = (event, newValue) => {
@@ -152,20 +152,20 @@ const Issues = ({ issues, reportName, reportType }) => {
 
 
               {state.isHighIssueChecked &&
-                issues.High ?
+                (issues.HIGH || issues.high) ?
                 <>
-                  <PackageJSON jsonName="High" packageJSON={issues.High} />
+                  <PackageJSON jsonName="HIGH" packageJSON={issues.HIGH ? issues.HIGH : issues.medium} />
                 </>
                 : ''}
               {state.isMediumIssueChecked &&
-                (issues.Medium || issues.medium) ?
+                (issues.MEDIUM || issues.medium) ?
                 <>
-                  <PackageJSON jsonName="Medium" packageJSON={issues.Medium ? issues.Medium : issues.medium} />
+                  <PackageJSON jsonName="MEDIUM" packageJSON={issues.MEDIUM ? issues.MEDIUM : issues.medium} />
                 </>
                 : ''}
               {state.isLowIssueChecked &&
-                issues.Low ? <>
-                  <PackageJSON jsonName="Low" packageJSON={issues.Low} />
+                (issues.LOW || issues.low) ? <>
+                  <PackageJSON jsonName="LOW" packageJSON={issues.LOW ? issues.LOW : issues.low} />
                 </>
                 : ''}
             </div>

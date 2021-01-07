@@ -111,6 +111,7 @@ const PackageJSON = ({ packageJSON }) => {
             {
                 packageJSON.header.map((value, index) => {
                     return (
+
                         <div>
                             <Paper className={classes.borderDiv}>
                                 {printValues(value, index, packageJSON.data[index])}

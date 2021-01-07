@@ -36,8 +36,9 @@ const useStyles = makeStyles((theme) => ({
 const ProductsReports = () => {
   const classes = useStyles();
 
-  const { reportType, reportName } = useParams();
+  const { reportName, projectId  } = useParams();
   const [loading, setLoading] = useState(false);
+  const [reportType, setReportType] = useState();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [productReportResponse, setProductReportResponse] = useState();
@@ -51,7 +52,7 @@ const ProductsReports = () => {
 
   useEffect(() => {
     fetchProductsReports();
-  }, [reportName]);
+  }, [reportName, projectId]);
 
   const fetchProductsReports = async () => {
     try {
@@ -60,10 +61,13 @@ const ProductsReports = () => {
       const url = `/report/reportname`;
       /*const url = `/report/project/reportname`;*/
       const response = await Axios.post(url, {
-        project_id: 'e897df72-4c8a-11eb-acb0-080027d7b49a',
-        report_name: '01-01-2021_18:36:15.json'
+        project_id: projectId,
+        report_name: reportName
       });
       const res = response.data;
+      if (res.header.report_type) {
+        setReportType(res.header.report_type);
+      }
       if (res.header.docker && res.header.docker === 'True') {
         setIsDocker(true);
       }
@@ -131,7 +135,7 @@ const ProductsReports = () => {
             {productReportResponse.summary ? <Tab  className="summary-tab" label="Summary" /> : ''}
             <Tab className="issue-tab" label="Issues" />
             {!isDocker ? <Tab className="inventory-tab" label="Inventory" />  : ''}
-            {((reportType === 'platform') && !isDocker) ? <Tab className="remediation-tab" label="Remediation" /> : ''}
+            {((reportType === 'platform' || reportType === 'system' ) && !isDocker) ? <Tab className="remediation-tab" label="Remediation" /> : ''}
           </Tabs>
         </AppBar>
         <TabPanel value={tabValue} index={0}>
@@ -152,14 +156,18 @@ const ProductsReports = () => {
         <TabPanel value={tabValue} index={2}>
           {(reportType === 'language' || reportType === 'application') ?
 
-            productReportResponse.filesArray ? <File name="" file={productReportResponse.filesArray} />
+            productReportResponse.inventory ? <File name="" file={productReportResponse.inventory} />
               :
-              <Dependencies issues={reportType === 'application' ? productReportResponse.applications : productReportResponse.files} reportType={reportType} reportName={reportName} />
+              <Dependencies issues={reportType === 'application' ? productReportResponse.inventory : productReportResponse.inventory} reportType={reportType} reportName={reportName} />
 
             :
-            reportType === 'platform' ?
-              <File name="" file={productReportResponse.packages?.pkgDetails} />
+            (reportType === 'platform') ?
+              <File name="" file={productReportResponse.inventory?.pkgDetails} />
               : ''}
+            {(reportType === 'dependancies')? <File name="" file={productReportResponse.inventory} />
+              : ''}  
+            {(reportType === 'system')? <File name="" file={productReportResponse.inventory} />
+              : ''}  
         </TabPanel>
         <TabPanel value={tabValue} index={3}>
           <Remediation data={productReportResponse.remediation} />
@@ -186,7 +194,7 @@ const ProductsReports = () => {
 
 
   return (
-    <Container className={classes.root} maxWidth="lg">
+    <Container className={classes.root} maxWidth>
       <Grid
         container
         spacing={1}

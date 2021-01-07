@@ -18,6 +18,7 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import { getBackgroundColorBySeverity, getFontColorBySeverity } from '../../Util/Util';
 import './ProjectsReports.css';
 import moment from 'moment';
+import Page from 'src/components/Page';
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
@@ -846,6 +847,10 @@ const ProjectsReports = () => {
     
 
     return (
+    <Page
+          className={classes.root}
+          title="My Scans"
+        >
         <Container className={classes.root} maxWidth>
             <Grid
               container
@@ -874,7 +879,7 @@ const ProjectsReports = () => {
                 </Container>
             </Grid>
         </Container>
-
+        </Page>
     );
 };
 
