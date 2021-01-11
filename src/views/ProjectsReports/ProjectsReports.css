@@ -84,7 +84,7 @@ width:100% !important;
 
 
 
-.scoreblock-severity-div .scoreblock,.scoreblock-vulnerabilities-div .scoreblock{float:left;margin: 0 10px;}
+.scoreblock-severity-div .scoreblock,.scoreblock-vulnerabilities-div .scoreblock{float:left;margin: 0 0px;}
 .snapshot-title { margin-bottom: 5px; }
 /*.scoreblock-severity-div .scoreblock:nth-child(1) .scoretitle { background: #980000;}
 .scoreblock-severity-div .scoreblock:nth-child(2) .scoretitle { background: #FF9900;}
@@ -115,6 +115,58 @@ table.small-table tr td:nth-child(8) {
 .small-table,.big-table{
 	background: #fff;
 }  
+
+.cveresult .cvesearchleft{padding-left: 0;padding-right: 0;}
+
+
+.cveresult .cvesearchcenter .MuiTableRow-root.MuiTableRow-hover:hover{background: #F6F8FA;}
+.cveresult table tr th,.cveresult table tr td{font-size: 15px !important;font-weight: 500 !important;padding: 10px 20px !important;border-bottom: 1px solid #e1e4e8 !important;}
+.cveresult table tr td h5{font-size: 15px !important;font-weight: 500 !important;color: #000}
+.cveresult .cvesearchcenter .MuiTableRow-root.MuiTableRow-hover:hover .MuiTypography-h5{color: #000;}
+.cveresult .cvesearchcenter .MuiTableRow-root.MuiTableRow-hover:hover .MuiTableCell-root{color: #263238;}
+.cveresult .cvesearchcenter .MuiTableRow-root.MuiTableRow-hover.Mui-selected .MuiTableCell-root{background: #f6f8fa;color: #263238;}
+.cveresult .cvesearchcenter .MuiTableRow-root.MuiTableRow-hover.Mui-selected .MuiTypography-h5{color: #263238;}
+.cveresult table tr th:last-child{text-align: right;}
+.cveresult .cvesearchcenter .MuiTableCell-stickyHeader{border-bottom: 1px solid #e1e4e8 !important;background: none;font-weight: 600 !important;background: #f6f8fa;}
+.cveresult table tr td:last-child{width: 35%;}
+.cveresult .scoreblock-vulnerabilities-div > div{padding: 0 0 0 5px }
+.cveresult .scoreblock-vulnerabilities-div{display: flex;justify-content: end;}
+.cveresult table tr td .scoreblock-vulnerabilities-div .scoreblock-inner{border: 1px solid;border-radius: 5px; }
+.cveresult table tr td .scoreblock-vulnerabilities-div .scoreblock-inner > div{font-size: 12px;padding: 3px 5px;border-radius: 5px;border: 0;}
+.cveresult table tr td .scoreblock-vulnerabilities-div .CRITICAL .scoreblock-inner{border-color: rgb(185, 0, 0); }
+.cveresult table tr td .scoreblock-vulnerabilities-div .HIGH .scoreblock-inner{border-color: red }
+.cveresult table tr td .scoreblock-vulnerabilities-div .LOW .scoreblock-inner{border-color: green }
+.cveresult table tr td .scoreblock-vulnerabilities-div .MEDIUM .scoreblock-inner{border-color:rgb(239, 148, 36); }
+ 
+.snapshot-content.data-block > .snapshot-block{display: flex;column-gap: normal;padding-bottom: 5px;margin-bottom: 10px;border-bottom: 1px solid #e8edf5;}
+.cvesearchright.MuiGrid-grid-md-4{padding-right: 0; }
+.cvesearchright .snapshotlist .MuiTypography-root .date-block{display: flex;column-gap: normal;padding-bottom: 5px;margin-bottom: 10px;border-bottom: 1px solid #e8edf5;}
+.cvesearchright .date-block .snapshot-title,.cvesearchright .date-block .snapshot-content{max-width: 50%;flex-basis: 50%; align-self: center; font-size: 15px;}
+.cvesearchright .date-block .snapshot-title{color: #185d98;}
+.cvesearchright .date-block .snapshot-content{justify-content: end;display: flex;}
+.snapshot-content.data-block > .snapshot-block > div.snapshot-title{max-width: 80%;flex-basis: 80%; align-self: center; font-size: 15px;color: #185d98;}
+.snapshot-content.data-block > .snapshot-block > div.snapshot-content{max-width: 20%;flex-basis: 20%;align-self: center;justify-content: end;display: flex;}
+
+.cvesearchright .boxtitlecontent ul.snapshotlist{width: 100%;}
+.cveresult .snapshot-content .scoreblock-severity-div,.cveresult .snapshot-content .scoreblock-vulnerabilities-div{justify-content: center;display: flex;}
+
+
+.cveresult .snapshot-content .scoreblock-severity-div .scoreblock.MuiGrid-grid-xs-3{max-width: 33.33%;flex-basis: 33.33%;}
+.cveresult .snapshot-content .scoreblock-vulnerabilities-div .scoreblock.MuiGrid-grid-xs-3{max-width: 33.33%;flex-basis: 33.33%;}
+.cvesearchright .scoreblock-vulnerabilities-div,.cvesearchright .scoreblock{padding: 0 5px}
+.cvesearchright .scoreblock-inner{padding:0 0px;border: 1px solid;}
+.cvesearchright .scoreblock-inner > div{font-size: 12px;border: 0;}
+
+.cvesearchright .view-report-btn{text-align: center;margin-top: 15px;}
+.cvesearchright .view-report-btn a{background: #185d98;text-decoration: none;display: inline-block;padding: 12px 20px;color: #fff;border: 2px solid #185d98; line-height: 1}
+.cvesearchright .view-report-btn a:hover{background: none;color: #185d98;}
+
+
+.cvesearchright-inner > [class*='MuiBox-root']:last-child .snapshotlist li span.MuiListItemText-primary{display: flex;column-gap: normal;padding-bottom: 5px;margin-bottom: 10px;border-bottom: 1px solid #e8edf5;}
+.cvesearchright-inner > [class*='MuiBox-root']:last-child .snapshotlist li span.MuiListItemText-primary > .snapshot-title{max-width: 70%;flex-basis: 70%; align-self: center; font-size: 15px;color: #185d98 }
+
+.cvesearchright-inner > [class*='MuiBox-root']:last-child .snapshotlist li span.MuiListItemText-primary > .snapshot-content{max-width: 30%;flex-basis: 30%; align-self: center; font-size: 15px;word-break: break-all;}
+
 @media only screen and (min-width:1700px){
 
 .cvesearchcenter .MuiTableCell-root{padding: 15px}

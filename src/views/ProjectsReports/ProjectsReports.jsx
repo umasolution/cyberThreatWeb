@@ -214,7 +214,7 @@ const ProjectsReports = () => {
         <Grid
             item
             xs={12}
-            md={2}
+            md={12}
             className="cvesearchleft"
           > 
             <Box className="boxleftheader"
@@ -232,7 +232,7 @@ const ProjectsReports = () => {
             <Box>
             <ExpansionPanel
                     style={{ width: '100%' }}
-                    expanded="false"
+                    
                   > 
                   <ExpansionPanelSummary
                       expandIcon={<ExpandMoreIcon />}
@@ -291,7 +291,7 @@ const ProjectsReports = () => {
       <>
       <Grid
           item
-          xs={12}
+          xs={12}          
           md={col}
           className="cvesearchcenter"
         >
@@ -455,12 +455,12 @@ const ProjectsReports = () => {
    const getTabsData = () => {
         return (
             <>
-              {loadingRows ?cvesearchcenter(tabsData,7):cvesearchcenter(tabsData,10)}
+              {loadingRows ?cvesearchcenter(tabsData,8):cvesearchcenter(tabsData,12)}
               {loadingRows ?(<>  
               <Grid
                 item
                 xs={12}
-                md={3}
+                md={4}
                 className="cvesearchright"
               >
               <Box
@@ -676,9 +676,9 @@ const ProjectsReports = () => {
       <>
       
           <Grid
-            item
+            item            
             xs={12}
-            md={7}
+            md={8}
             className="cvesearchcenter"
           >
             <Box position="relative">
@@ -777,7 +777,7 @@ const ProjectsReports = () => {
           <Grid
             item
             xs={12}
-            md={3}
+            md={4}
             className="cvesearchright"
           >
           <Box className="boxleftheader"
@@ -869,11 +869,17 @@ const ProjectsReports = () => {
                 </Box>
                 <Container maxWidth className="cveresult">
                   <Grid
-                        container
                         spacing={3}
+                        container                        
                         className={classes.container}
                       >
                       {getFieldData()}
+                  </Grid>
+                  <Grid
+                        spacing={3}
+                        container                        
+                        className={classes.container}
+                      >    
                       { noresult ? getTabsData() : (tabsData.total > 0 ? getTabsData(): cvenoresult())}
                   </Grid>
                 </Container>

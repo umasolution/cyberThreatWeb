@@ -48,15 +48,15 @@ function ProfileDetails({ user, className, ...rest }) {
             variant="h3"
             color="textPrimary"
           >
-            {`${user.fName} ${user.lName}`}
+            {`${user.firstname} ${user.lastname}`}
             {/* {`${user}`} */}
           </Typography>
-         {/*  <Typography
+         <Typography
             color="textPrimary"
             variant="body1"
           >
             {`${user.state}, ${user.country}`}
-          </Typography> */}
+          </Typography> 
          {/*  <Typography
             color="textSecondary"
             variant="body2"

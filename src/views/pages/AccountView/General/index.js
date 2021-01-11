@@ -13,8 +13,9 @@ const useStyles = makeStyles(() => ({
 function General({ className,general, ...rest }) {
   const classes = useStyles();
   const { user } = useSelector((state) => state.account);
-
+  
   return (
+
     <Grid
       className={clsx(classes.root, className)}
       container

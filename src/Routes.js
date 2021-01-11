@@ -95,6 +95,11 @@ const routesConfig = [
       },
       {
         exact: true,
+        path: '/app/vulDB',
+        component: lazy(() => import('src/views/VuldbLogin/VuldbLogin'))
+      },
+      {
+        exact: true,
         path: '/app/CVE/:cve',
         component: lazy(() => import('src/views/CVE/CVE'))
       },

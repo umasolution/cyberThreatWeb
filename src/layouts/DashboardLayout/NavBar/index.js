@@ -71,7 +71,7 @@ const navConfig = [
       {
         title: 'Vulnerabilities DB',
         icon: UsersIcon,
-        href: '/app/feedDB/application',
+        href: '/app/vulDB',
       },
     ]
   },
@@ -92,12 +92,12 @@ const navConfig = [
         title: 'Manage Token',
         icon: UsersIcon,
         href: '/app/management/APIToken',
-      },
+      }/*,
       {
         title: 'Account',
         href: '/app/account',
         icon: UserIcon
-      }
+      }*/
     ]
   },
  /*  {
@@ -271,7 +271,7 @@ const navConfig = [
   } */
 ];
 
-if(userName === 'jay.net.in@gmail.com'){
+/*if(userName === 'jay.net.in@gmail.com'){
   navConfig.push({
     subheader: 'Admin',
     items: [
@@ -297,7 +297,7 @@ if(userName === 'jay.net.in@gmail.com'){
       },
     ]
   });
-}
+}*/
 
 function renderNavItems({ items, ...rest }) {
   return (

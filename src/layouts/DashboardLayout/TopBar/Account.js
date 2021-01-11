@@ -1,7 +1,9 @@
 import React, {
   useRef,
-  useState
+  useState,
+  useEffect
 } from 'react';
+import Axios from 'axios';
 import { Link as RouterLink } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
@@ -38,13 +40,36 @@ function Account() {
   const { enqueueSnackbar } = useSnackbar();
   const [isOpen, setOpen] = useState(false);
 
+  const [profileResponse, setProfileResponse] = useState(null);
+
   const handleOpen = () => {
     setOpen(true);
   };
 
+  useEffect(() => {
+    getProfile();
+  }, []);
+
+
   const handleClose = () => {
     setOpen(false);
   };
+
+  const getProfile = async () => {
+    try {      
+      const url = `/getProfile`;        
+      let response = await Axios.get(url); 
+      setProfileResponse(response.data.general);
+     
+    } catch (error) {
+      console.error(error);
+      
+    }
+  };
+
+  const capitalize = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+    }
 
   const handleLogout = async () => {
     try {
@@ -76,8 +101,8 @@ function Account() {
           <Typography
             variant="h6"
           >
-            {/* {`${account.user.firstName} ${account.user.lastName}`} */}
-            {`${account.user}`}
+            {profileResponse ? `${capitalize(profileResponse.firstname)} ${capitalize(profileResponse.lastname)}` :`${account.user}`}
+           
           </Typography>
         </Hidden>
       </Box>
@@ -93,12 +118,7 @@ function Account() {
         anchorEl={ref.current}
         open={isOpen}
       >
-        <MenuItem
-          component={RouterLink}
-          to="/app/social/profile"
-        >
-          Profile
-        </MenuItem>
+        
         <MenuItem
           component={RouterLink}
           to="/app/account"

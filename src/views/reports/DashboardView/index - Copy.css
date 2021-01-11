@@ -1,0 +1,28 @@
+
+.rounded-dashboard{
+  padding: 30px;
+  font-weight: 600;
+}
+.rounded-color-0{
+  color: #fff;
+  background-color: #00d1ce;
+}
+.rounded-color-1{
+  color: #fff;
+  background-color: #fe0a7b;
+}
+.rounded-color-2{
+  color: #fff;
+  background-color: #ff9f00;
+}
+.rounded-color-3{
+  color: #fff;
+  background-color: #027de7;
+}
+
+.chart-data div#chart-simple-select {
+    color: #000 !important;
+}
+
+
+
