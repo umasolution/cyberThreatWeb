@@ -58,6 +58,8 @@ function GeneralSettings({ user, className, ...rest }) {
         phone: user.phone,
         team_name: user.team_name,
         state: state,
+        company_id: user.company_id,
+        team_id:user.team_id
       }}
       validationSchema={Yup.object().shape({
         /*country: Yup.string().max(255).required('Country is required'),*/

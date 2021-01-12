@@ -84,7 +84,7 @@ export function register(values) {
 export function updateProfile(update) {
 
   return async (dispatch) => {
-    await axios.post('/getProfile/update', { ...update });
+    await axios.post('/getProfile/general/update', { ...update });
     dispatch({
       type: UPDATE_PROFILE,
       payload: { user: authService.getUserName() }
