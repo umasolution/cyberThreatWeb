@@ -49,13 +49,14 @@ function GeneralSettings({ user, className, ...rest }) {
       enableReinitialize
       initialValues={{
         address1: user.address1,
+        address2: user.address2,
         company: user.company_name,
         country: country,
         email_id: user.email_id,
         firstname: user.firstname,
         lastname: user.lastname,
         phone: user.phone,
-        position: user.position,
+        team_name: user.team_name,
         state: state,
       }}
       validationSchema={Yup.object().shape({
@@ -210,13 +211,32 @@ function GeneralSettings({ user, className, ...rest }) {
                       error={Boolean(touched.address1 && errors.address1)}
                       fullWidth
                       helperText={touched.address1 && errors.address1}
-                      label="Address"
+                      label="Address 1"
                       name="address1"
                       onBlur={handleBlur}
                       onChange={handleChange}
                       required
                       type="address1"
                       value={values.address1}
+                      variant="outlined"
+                    />
+                  </Grid>
+                  <Grid
+                    item
+                    md={6}
+                    xs={12}
+                  >
+                    <TextField
+                      error={Boolean(touched.address2 && errors.address2)}
+                      fullWidth
+                      helperText={touched.address2 && errors.address2}
+                      label="Address 2"
+                      name="address2"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      required
+                      type="address2"
+                      value={values.address2}
                       variant="outlined"
                     />
                   </Grid>
@@ -245,16 +265,16 @@ function GeneralSettings({ user, className, ...rest }) {
                     xs={12}
                   >
                     <TextField
-                      error={Boolean(touched.position && errors.position)}
+                      error={Boolean(touched.team_name && errors.team_name)}
                       fullWidth
-                      helperText={touched.position && errors.position}
-                      label="Designation"
-                      name="position"
+                      helperText={touched.team_name && errors.team_name}
+                      label="Team Name"
+                      name="team_name"
                       onBlur={handleBlur}
                       onChange={handleChange}
                       required
-                      type="position"
-                      value={values.position}
+                      type="team_name"
+                      value={values.team_name}
                       variant="outlined"
                     />
                   </Grid>
