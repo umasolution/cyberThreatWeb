@@ -12,8 +12,10 @@ import {
   FormControlLabel,
   Grid,
   Typography,
-  makeStyles
+  makeStyles,
+  Select,NativeSelect,TextField
 } from '@material-ui/core';
+
 import wait from 'src/utils/wait';
 import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
@@ -25,16 +27,20 @@ const useStyles = makeStyles(() => ({
   root: {}
 }));
 
-function Notifications({ className, notification, ...rest }) {
+function Notifications({ className, general,notification, ...rest }) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [notificationCheckboxes, setNotificationCheckboxes] = useState()
   const { enqueueSnackbar } = useSnackbar();
-
+  
+  const [selectData, setSelectData] = useState(notification.title.notification_id);
 
   useEffect(() => {
     const not = {};
-    Object.keys(notification).forEach(k => { not[k] = notification[k].toLowerCase() === "true" ? true : false});
+    Object.keys(notification.title).forEach(k => {       
+      not[k] =  notification.title[k] === "yes" ? true : notification.title[k]
+      not[k] =  notification.title[k] === "no" ? false : notification.title[k]
+    });
     setNotificationCheckboxes(not);
 
   }, [])
@@ -45,6 +51,25 @@ function Notifications({ className, notification, ...rest }) {
   //   // await dispatch(updateProfile(event));
 
   // };
+
+   const handleSelect = (event) => {
+    const value = event.target.value;    
+    setSelectData(value);
+    const not = {};    
+    /*Object.keys(notification.lists).forEach(k => {
+     if(notification.lists[k].notification_id===value) {
+       setSelectedVal(notification.lists[k]); 
+     }
+    });
+    console.log(selectedVal);
+    return;*/
+    var selNot = notification.lists[value];    
+    Object.keys(selNot).forEach(k => {
+      not[k] =  selNot[k] === "yes" ? true : selNot[k]
+      not[k] =  selNot[k] === "no" ? false : selNot[k]
+    });
+    setNotificationCheckboxes(not);
+  };
 
   const handleChange = (event) => {
     setNotificationCheckboxes({ ...notificationCheckboxes, [event.target.name]: event.target.checked });
@@ -61,9 +86,11 @@ function Notifications({ className, notification, ...rest }) {
         setSubmitting
       }) => {
         try {
-
+          values.team_id = general.team_id;
+          values.company_id = general.company_id;
           await dispatch(updateNotifications(values));
           // resetForm();
+          
           setStatus({ success: true });
           enqueueSnackbar('Profile updated', {
             variant: 'success'
@@ -97,11 +124,25 @@ function Notifications({ className, notification, ...rest }) {
             spacing={6}
             wrap="wrap"
           >
+            <Grid
+                item
+                md={12}
+                sm={12}
+                xs={12}
+              >
+              <select value={selectData} onChange={handleSelect.bind(this)} handleSelect className="type-dropdown">
+              {Object.entries(notification.lists).map(([key, value]) => {
+                  return (
+                      <option value={key} key={key} >{value.notification_name}</option>
+                  );
+              })}
+            </select>
+            </Grid>
             {notificationCheckboxes && (
               <Grid
                 item
-                md={4}
-                sm={6}
+                md={12}
+                sm={12}
                 xs={12}
               >
                 <Typography
@@ -118,10 +159,18 @@ function Notifications({ className, notification, ...rest }) {
                 >
                   You will recieve emails in your business email address
                 </Typography>
+                <Typography
+                  gutterBottom
+                  variant="body2"
+                  color="textSecondary"
+                >
+                  {notificationCheckboxes.notification_name}
+                </Typography>
+                
                 <div>
                   <FormControlLabel
                     control={(
-                      <Checkbox checked={notificationCheckboxes.notificationEmail} onChange={handleChange} name="notificationEmail" />
+                      <Checkbox disabled checked={notificationCheckboxes.notification_email} onChange={handleChange} name="notification_email" />
                     )}
                     label="Email alerts"
                   />
@@ -129,7 +178,7 @@ function Notifications({ className, notification, ...rest }) {
                 <div>
                   <FormControlLabel
                     control={(
-                      <Checkbox checked={notificationCheckboxes.notificationTextMessage} onChange={handleChange} name="notificationTextMessage" />
+                      <Checkbox disabled checked={notificationCheckboxes.notification_textmessage} onChange={handleChange} name="notification_textmessage" />
                     )}
                     label="Text message"
                   />
@@ -137,7 +186,7 @@ function Notifications({ className, notification, ...rest }) {
                 <div>
                   <FormControlLabel
                     control={(
-                      <Checkbox checked={notificationCheckboxes.phoneCall} onChange={handleChange} name="phoneCall" />
+                      <Checkbox disabled checked={notificationCheckboxes.notification_phonecall} onChange={handleChange} name="notification_phonecall" />
                     )}
                     label={(
                       <>

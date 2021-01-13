@@ -115,8 +115,8 @@ const updateSnackbar = (open, message) => {
         <Divider />
         <Box mt={3}>
           {currentTab === 'general' && userProfileData && <General general={userProfileData.general} />}
-          {currentTab === 'subscription' && userProfileData && <Subscription />}
-          {currentTab === 'notifications' && userProfileData && <Notifications notification={userProfileData.notification} />}
+          {currentTab === 'subscription' && userProfileData && <Subscription subscription={userProfileData.subscription} />}
+          {currentTab === 'notifications' && userProfileData && <Notifications general={userProfileData.general} notification={userProfileData.notification} />}
           {currentTab === 'security' && userProfileData && <Security security={userProfileData.Security} />}
         </Box>
         {loading ? getLoader() : null}

@@ -256,6 +256,7 @@ function GeneralSettings({ user, className, ...rest }) {
                       onBlur={handleBlur}
                       onChange={handleChange}
                       required
+                      disabled
                       type="company"
                       value={values.company}
                       variant="outlined"
@@ -275,6 +276,7 @@ function GeneralSettings({ user, className, ...rest }) {
                       onBlur={handleBlur}
                       onChange={handleChange}
                       required
+                      disabled
                       type="team_name"
                       value={values.team_name}
                       variant="outlined"

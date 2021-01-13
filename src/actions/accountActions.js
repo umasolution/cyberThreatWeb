@@ -94,7 +94,7 @@ export function updateProfile(update) {
 
 export function updateNotifications(update) {
   return async (dispatch) => {
-    await axios.post('/profile/notification/edit', { ...update, emailAdd: authService.getUserName() });
+    await axios.post('/getProfile/notification/update', { ...update });
     dispatch({
       type: UPDATE_PROFILE,
       payload: { user: authService.getUserName() }
