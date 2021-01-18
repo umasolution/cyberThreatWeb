@@ -86,7 +86,7 @@ const CVE = () => {
             updateSnackbar(true, CONSTANTS.FETCHING_DATA);
             let url = `/cve?cve=${cveParams}`;
             if (isAuthenticatedURL) {
-                url = `/auth/cve?cve=${cveParams}&emailId=${authService.getUserName()}`;
+                url = `/cve?cve=${cveParams}`;
             }
             const response = await Axios.get(url);
             if (!response.data) return;
@@ -97,6 +97,7 @@ const CVE = () => {
             if (response.data.NVD) {
                 setCVENVDDetails(response.data.NVD);
             }*/
+            console.log(response.data);
             console.log(response.data.Reference);
             if (response.data) {
                 setCVENVDDetails(response.data);
@@ -181,8 +182,9 @@ const CVE = () => {
             setloadingData(true);
             const response = await Axios.post(!alarmAlreadySet ? '/setalert' : '/status/delalert',
                 {
-                    "emailAdd": authService.getUserName(),
-                    "cve_id": cveInput
+                    "alert_name": cveInput,
+                     "alert_type":"cve_id",
+                     "alert_mode":"all" 
                 });
             updateSnackbar(true, response.data.message);
             setAlarmAlreadySet(!alarmAlreadySet);
@@ -200,6 +202,36 @@ const CVE = () => {
                 container
                 spacing={1}
             >
+            {isAuthenticatedURL && (
+            <Box
+                    display="flex"
+                    flexDirection="column"
+                    justifyContent="left"
+                    height="100%"
+                    style={{ marginTop: '25px' }}
+                >
+                    {isLoadingData && isAuthenticatedURL && getLoader()}
+
+                    <CVEInput
+                        searchByCVE={searchByCVE}
+                        cveInput={cveInput}
+                        changeSearchByCVE={changeSearchByCVE}
+                        keyPress={keyPress}
+                        handleChangeCVE={handleChangeCVE}
+                        onSearchClicked={onSearchClicked}
+                        isSearching={isLoadingData}
+                        setCVESearchDate={setCVESearchDate}
+                        cveSearchStartDate={cveSearchStartDate}
+                        cveSearchEndDate={cveSearchEndDate}
+                        setAlert={setAlert}
+                        canSetAlert={isAuthenticatedURL && cveNVDDetails && !isLoadingData}
+                        alarmAlreadySet={alarmAlreadySet}
+                    />
+                    <MySnackbar
+                        closeSnackbar={() => updateSnackbar(false, '')}
+                        snackbarMessage={snackbar.message}
+                        snackbarOpen={snackbar.open} />
+                </Box>)}
                 
                 <ResultByCVE
                     cveNVDDetails={cveNVDDetails}

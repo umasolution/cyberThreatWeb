@@ -33,11 +33,8 @@ const Alerts = () => {
   const getAlerts = async () => {
     try {
       updateLoadingData(true);
-      const url = `/getalert`;
-      const response = await Axios.post(url,
-        {
-          "emailAdd": authService.getUserName()
-        });
+      const url = `/alert/lists`;
+      const response = await Axios.get(url);
       if (!response.data) {
         updateLoadingData(false);
         return;
