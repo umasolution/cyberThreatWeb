@@ -86,10 +86,14 @@ const CVE = () => {
             updateSnackbar(true, CONSTANTS.FETCHING_DATA);
             let url = `/cve?cve=${cveParams}`;
             if (isAuthenticatedURL) {
-                url = `/cve?cve=${cveParams}`;
+                url = `auth/cve?cve=${cveParams}`;
             }
             const response = await Axios.get(url);
+
             if (!response.data) return;
+            if (isAuthenticatedURL) {
+                setAlarmAlreadySet(response.data.alert);
+            }    
             /*if (response.data.tables) {
                 setCVETables(response.data.tables);
             }
@@ -180,7 +184,7 @@ const CVE = () => {
     const setAlert = async () => {
         try {
             setloadingData(true);
-            const response = await Axios.post(!alarmAlreadySet ? '/setalert' : '/status/delalert',
+            const response = await Axios.post(!alarmAlreadySet ? '/setalert' : '/delalert',
                 {
                     "alert_name": cveInput,
                      "alert_type":"cve_id",

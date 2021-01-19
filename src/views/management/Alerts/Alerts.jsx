@@ -14,14 +14,37 @@ import Copy from './../../../Util/Copy';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import isEmpty from './../../../Util/Util';
 import { Link } from 'react-router-dom';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import MarkunreadIcon from '@material-ui/icons/Markunread';
+import MarkunreadOutlinedIcon from '@material-ui/icons/MarkunreadOutlined';
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    backgroundColor: '#f1f1f1',
+    display: 'block',
+    height: 224,
+  },
+  tabs: {
+    borderRight: `1px solid ${theme.palette.divider}`,
+    width: '100%'
+  },
+  // borderDiv: {
+  //   border: '1px',
+  //   borderStyle: 'solid',
+  //   borderRadius: '10px',
+  //   borderColor: 'brown',
+  //   marginTop: '5px'
+  // }
+}));
 const Alerts = () => {
 
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: ""
   });
-
+  const classes = useStyles();
   const [isLoadingData, setloadingData] = useState(true);
   const [alertsResponse, setAlertsResponse] = useState(null);
 
@@ -33,13 +56,13 @@ const Alerts = () => {
   const getAlerts = async () => {
     try {
       updateLoadingData(true);
-      const url = `/alert/lists`;
+      const url = `/alerts/lists`;
       const response = await Axios.get(url);
       if (!response.data) {
         updateLoadingData(false);
         return;
       }
-      console.log(response.data);
+      
       setAlertsResponse(response.data);
       updateLoadingData(false);
     } catch (error) {
@@ -76,17 +99,18 @@ const Alerts = () => {
       }
       const response = await Axios.post(url,
         {
-          "emailAdd": authService.getUserName(),
-          "cve_id": alert.CVEID
+          "alert_type": alert.alert_type,
+          "alert_name": alert.alert_name,
+          "alert_mode" : alert.alert_mode
         });
       let alerts = Copy(alertsResponse);
       if (deleteAlert) {
-        const index = alerts.header.findIndex(a => a.CVEID === alert.CVEID);
-        alerts.header.splice(index, 1);
-        alerts.data.splice(index, 1);
+        const index = alerts.findIndex(a => a.alert_name === alert.alert_name);
+        /*alerts.splice(index, 1);*/
+        alerts[index].status = 'unread';      
       } else {
-        const index = alerts.header.findIndex(a => a.CVEID === alert.CVEID);
-        alerts.header[index].Status = 'read';
+        const index = alerts.findIndex(a => a.alert_name === alert.alert_name);
+        alerts[index].status = 'read';
       }
 
       setAlertsResponse(alerts);
@@ -107,16 +131,12 @@ const Alerts = () => {
             Object.keys(alert).map(key => {
               return (
                 <>
-                  {key !== 'Updated Details' &&
+                  {key == 'alert_name' && 
                     (
                       <span>
                         <h6 className="details-header">
-                          {key !== 'Updated On' ? key : !isEmpty(alert[key]) ? key : null}
-                        </h6>
-                        {
-                          key === 'Status' && isEmpty(alert[key]) ? 'No Updates' :
-                            key === 'CVEID' ? <Link target="_blank" to={`/app/CVE/${alert[key]}`}>{alert[key]}</Link> : alert[key]
-                        }
+                          {key == 'alert_name' ? alert[key] : null}
+                        </h6>                        
                       </span>
                     )
                   }
@@ -124,12 +144,23 @@ const Alerts = () => {
               )
             })
           }
-          <Tooltip title="Remove Alert">
+          {alert.status == "read" ? (<Tooltip title="Read Alert">
+            <MarkunreadIcon
+              style={{ marginLeft: '10px' }}
+              onClick={() => setAlert(alert, true)}
+            />
+          </Tooltip>):<Tooltip title="Unread">
+            <MarkunreadOutlinedIcon
+              style={{ marginLeft: '10px' }}
+              onClick={() => setAlert(alert, false)}
+            />
+          </Tooltip>}
+          {/*<Tooltip title="Remove Alert">
             <NotificationsOffIcon
               style={{ marginLeft: '10px' }}
               onClick={() => setAlert(alert, true)}
             />
-          </Tooltip>
+          </Tooltip>*/}
         </div>
         <div>
           {
@@ -143,12 +174,12 @@ const Alerts = () => {
                         return (
                           Object.keys(updatedDetails).map(updatedDetail => {
                             return (
-                              <span className="updated-detail">
+                              <div className="odd-even-background">
                                 <h6 className="details-header">
                                   {updatedDetail}
                                 </h6>
-                                {updatedDetails[updatedDetail]}
-                              </span>
+                                <p>{updatedDetails[updatedDetail]}</p>
+                              </div>
                             )
                           })
                         )
@@ -167,48 +198,46 @@ const Alerts = () => {
   const getDetails = (data) => {
     return (
       <>
-        {
-          data?.map(dataObj => {
-            return (
-              <>
-                <div className="header2 odd-even-background">
-                  {Object.keys(dataObj).length > 0 && <ArrowRightIcon className="right-arrow-icon" />}
-                  {
-                    Object.keys(dataObj).map(key => {
-                      return (
-                        <span className="updated-detail">
-                          <h6 className="details-header">
-                            {key}
-                          </h6>
-                          {' '}
-                          {dataObj[key]}
-                        </span>
-                      )
-                    })
-                  }
-                </div>
-              </>
-            )
-          })
-        }
+          {Object.keys(data).length > 0 && <ArrowRightIcon className="right-arrow-icon" />}
+          {
+            Object.keys(data).map(key => {
+              return (
+              <div key={key} className="odd-even-background">
+                <Typography
+                    variant="h6"
+                    color="textPrimary"
+                    className={classes.title}
+                  >
+                     {key}
+                  </Typography>                  
+                  <Typography className={classes.secondaryText}>
+                      {data[key]}
+                  </Typography>
+                  </div>
+                 
+              )
+            })
+          }
+        
       </>
     )
   }
 
   const expandPanel = async (event, expanded, alert) => {
-    if (alert.Status === 'unread') {
-      setAlert(alert, false)
-      /*  try {
+    if (alert.status === 'unread') {
+        setAlert(alert, false)
+        /*try {
          const url = `/status/setalert`;
          await Axios.post(url,
            {
-             "emailAdd": authService.getUserName(),
-             "cve_id": alert.CVEID
+             "alert_type": alert.alert_type,
+             "alert_name": alert.alert_name,
+             "alert_mode" : alert.alert_mode
            });
  
        } catch (error) {
          console.error(error);
-       } */
+       }*/ 
 
     }
   }
@@ -227,25 +256,28 @@ const Alerts = () => {
             height="100%"
             style={{ marginTop: '25px', width: '100%' }}
           >
-            {alertsResponse.header.map((alert, index) => {
+
+            {Object.entries(alertsResponse).map(([index,alert]) => {
               return (
                 <ExpansionPanel
                   style={{ width: '100%' }}
                   onChange={(event, expanded) =>
                     expandPanel(event, expanded, alert)}
+                    className={alert.status === 'unread' ? 'bold-font' : null}
                 >
                   <ExpansionPanelSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
                     id="panel1a-header"
                     onex
-                    className={alert?.Status === 'unread' ? 'bold-font' : null}
+                    className={alert.status === 'unread' ? 'bold-font' : null}
                   >
+
                     {getSummary(alert, index)}
                   </ExpansionPanelSummary>
                   <ExpansionPanelDetails>
                     <div style={{ width: '100%' }} >
-                      {getDetails(alertsResponse.data[index])}
+                      {getDetails(alert)}
                     </div>
                   </ExpansionPanelDetails>
                 </ExpansionPanel>

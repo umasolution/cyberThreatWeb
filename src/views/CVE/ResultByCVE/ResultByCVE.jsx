@@ -643,7 +643,7 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                     {cveNVDDetails.Reference ? getReference(cveNVDDetails.Reference) : ''}
                     {getCVVScoreDetail(cveNVDDetails)}
                     {cveNVDDetails.Products ? getProducts(cveNVDDetails.Products) : ''}
-                    {console.log(cveNVDDetails)}
+                    
                 </Grid>
             </div>
         );

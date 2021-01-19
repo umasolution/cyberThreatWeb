@@ -20,6 +20,7 @@ import { useHistory } from "react-router";
 import Account from "./Account";
 import Contacts from "./Contacts";
 import Notifications from "./Notifications";
+import Alerts from "./Alerts";
 import Search from "./Search";
 import Settings from "./Settings";
 import "./index.css";
@@ -77,15 +78,13 @@ function TopBar({ className, onMobileNavOpen, ...rest }) {
     try {
       updateLoadingData(true);
       const url = `/corner/getalert`;
-      const response = await Axios.post(url, {
-        emailAdd: authService.getUserName(),
-      });
-      if (!response.data || !response.data.header) {
+      const response = await Axios.get(url);
+      
+      if (!response.data) {
         updateLoadingData(false);
         return;
-      }
-      console.log(response.data);
-      setAlertsResponse(response.data.header);
+      }      
+      setAlertsResponse(response.data);
       /* const res =  [
         {
            "CVEID":"CVE-2020-12345",
@@ -168,6 +167,7 @@ function TopBar({ className, onMobileNavOpen, ...rest }) {
         {/* <Search /> */}
         {/* <Contacts /> */}
         <Notifications alertsResponse={alertsResponse}/>
+        <Alerts alertsResponse={alertsResponse}/>
         <Settings />
         <Box ml={2}>
          { <Account />}
