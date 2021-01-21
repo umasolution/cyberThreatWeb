@@ -244,7 +244,7 @@ const Alerts = () => {
 
   const printAlerts = () => {
     return (
-      <Container className="root" maxWidth="lg">
+      <Container className="root" maxWidth>
         <Grid
           container
           spacing={1}

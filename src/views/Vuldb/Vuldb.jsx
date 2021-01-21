@@ -90,7 +90,7 @@ export const Vuldb = (/* {   } */) => {
 
     const aurl = new URL(Axios.defaults.baseURL);
     const apiparams = new URLSearchParams(aurl.search);
-
+     
     
     useEffect(() => {
         fetchFeed();
@@ -353,6 +353,7 @@ export const Vuldb = (/* {   } */) => {
           md={col}
           className="cvesearchcenter"
         >
+        
         <Box
               display="flex"
               flexDirection="column"
@@ -1201,6 +1202,7 @@ export const Vuldb = (/* {   } */) => {
         >
         <Container style={{ paddingLeft: '0px', paddingRight: '0px', maxWidth: 'unset' }} maxWidth="lg">
             <Grid style={{ width: '100%' }} container spacing={1}>
+
                 {loadingTabs ? getLoader() : null}
                 <Container maxWidth="lg" className="topSearch">
                    <Grid
@@ -1211,6 +1213,7 @@ export const Vuldb = (/* {   } */) => {
                     <SearchBox />
                     </Grid>
                 </Container>
+                
                 <Container maxWidth className="cveresult">
                   <Grid
                         container

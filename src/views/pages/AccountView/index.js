@@ -92,7 +92,7 @@ const updateSnackbar = (open, message) => {
       className={classes.root}
       title="Settings"
     >
-      <Container maxWidth="lg">
+      <Container maxWidth>
         <Header />
         <Box mt={3}>
           <Tabs
