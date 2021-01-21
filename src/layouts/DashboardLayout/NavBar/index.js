@@ -87,7 +87,7 @@ const navConfig = [
         title: 'Alerts',
         icon: NotificationsIcon,
         href: '/app/management/Alerts',
-      },
+      }/*,
       {
         title: 'Manage Token',
         icon: UsersIcon,
