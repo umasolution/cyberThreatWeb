@@ -39,6 +39,7 @@ function Account() {
   const account = useSelector((state) => state.account);
   const { enqueueSnackbar } = useSnackbar();
   const [isOpen, setOpen] = useState(false);
+  const [avatar, setAvatar] = useState();
 
   const [profileResponse, setProfileResponse] = useState(null);
 
@@ -56,6 +57,19 @@ function Account() {
   };
 
   const getProfile = async () => {
+
+    var aValue = localStorage.getItem("loginuserid");
+    var aValues = sessionStorage.getItem("loginuserid");
+    var linki = 'http://cyberthreatinfo.ca/api/image/'
+    if(aValue!='undefined'){
+        var linkmain = linki+aValue+'.png?'+Math.random(); 
+        setAvatar(linkmain);
+    } 
+    if(aValues!='undefined'){
+        var linkmain2 = linki+aValues+'.png?'+Math.random();
+        setAvatar(linkmain2);
+    }
+
     try {      
       const url = `/getProfile`;        
       let response = await Axios.get(url); 
@@ -95,7 +109,7 @@ function Account() {
         <Avatar
           alt="User"
           className={classes.avatar}
-          src={account.user.avatar}
+          src={avatar}
         />
         <Hidden smDown>
           <Typography

@@ -89,6 +89,10 @@ function DashboardView() {
         const list = query.get('list');
         const type = query.get('type');
         setCountData(Object.keys(response.data).length);
+        if(response.data.user_id) {          
+          sessionStorage.setItem("loginuserid", response.data.user_id);
+          localStorage.setItem('loginuserid', response.data.user_id);
+        } 
         
         if(type){
           setSelectData(type);

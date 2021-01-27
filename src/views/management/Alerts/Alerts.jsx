@@ -18,7 +18,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import MarkunreadIcon from '@material-ui/icons/Markunread';
 import MarkunreadOutlinedIcon from '@material-ui/icons/MarkunreadOutlined';
-
+import moment from 'moment';
+import DeleteIcon from '@material-ui/icons/Delete';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -93,9 +94,9 @@ const Alerts = () => {
   const setAlert = async (alert, deleteAlert) => {
     try {
       setloadingData(true);
-      let url = `/status/delalert`;
+      let url = `/status/setalert`;
       if (!deleteAlert) {
-        url = `/status/setalert`;
+        url = `/status/delalert`;        
       }
       const response = await Axios.post(url,
         {
@@ -105,9 +106,36 @@ const Alerts = () => {
         });
       let alerts = Copy(alertsResponse);
       if (deleteAlert) {
+        const index = alerts.findIndex(a => a.alert_name === alert.alert_name);        
+        alerts[index].status = 'unread';
+      } else {
         const index = alerts.findIndex(a => a.alert_name === alert.alert_name);
-        /*alerts.splice(index, 1);*/
-        alerts[index].status = 'unread';      
+        alerts[index].status = 'read';
+      }
+
+      setAlertsResponse(alerts);
+      updateSnackbar(true, response.data.message);
+      setloadingData(false);
+    } catch (error) {
+      console.error(error);
+      updateSnackbar(true, 'Error while setting Alert');
+      setloadingData(false);
+    }
+  }
+  const deleteAlert = async (alert, deleteAlert) => {
+    try {
+      setloadingData(true);
+      let url = `/delalert`;      
+      const response = await Axios.post(url,
+        {
+          "alert_type": alert.alert_type,
+          "alert_name": alert.alert_name,
+          "alert_mode" : alert.alert_mode
+        });
+      let alerts = Copy(alertsResponse);
+      if (deleteAlert) {
+        const index = alerts.findIndex(a => a.alert_name === alert.alert_name);
+        alerts.splice(index, 1);            
       } else {
         const index = alerts.findIndex(a => a.alert_name === alert.alert_name);
         alerts[index].status = 'read';
@@ -133,11 +161,34 @@ const Alerts = () => {
                 <>
                   {key == 'alert_name' && 
                     (
-                      <span>
-                        <h6 className="details-header">
-                          {key == 'alert_name' ? alert[key] : null}
-                        </h6>                        
-                      </span>
+                       <Typography
+                        color="textPrimary"
+                        variant="h5"
+                      >
+                        {key == 'alert_name' ? alert[key] : null}
+                      </Typography>
+
+                    )
+                  }
+                  {key == 'message' && 
+                    (
+                      <Typography
+                        color="textSecondary"
+                       variant="h6"
+                      >
+                        {key == 'message' ? alert[key] : null}
+                      </Typography>
+                    )
+                  }
+                  {key == 'updated' && 
+                    (
+                    <Typography
+                      color="textSecondary"
+                      variant="h6"
+                    >
+                      {moment(alert[key]).fromNow()}
+                    </Typography>
+                      
                     )
                   }
                 </>
@@ -147,7 +198,8 @@ const Alerts = () => {
           {alert.status == "read" ? (<Tooltip title="Read Alert">
             <MarkunreadIcon
               style={{ marginLeft: '10px' }}
-              onClick={() => setAlert(alert, true)}
+              onClick={() => setAlert(alert, true)}              
+              onFocus={(event) => event.stopPropagation()}
             />
           </Tooltip>):<Tooltip title="Unread">
             <MarkunreadOutlinedIcon
@@ -155,12 +207,12 @@ const Alerts = () => {
               onClick={() => setAlert(alert, false)}
             />
           </Tooltip>}
-          {/*<Tooltip title="Remove Alert">
-            <NotificationsOffIcon
+          {<Tooltip title="Remove Alert">
+            <DeleteIcon
               style={{ marginLeft: '10px' }}
-              onClick={() => setAlert(alert, true)}
+              onClick={() => deleteAlert(alert, true)}
             />
-          </Tooltip>*/}
+          </Tooltip>}
         </div>
         <div>
           {
@@ -256,9 +308,12 @@ const Alerts = () => {
             height="100%"
             style={{ marginTop: '25px', width: '100%' }}
           >
-
+          <Typography variant="h5" color="textPrimary">
+            Unread
+          </Typography>
             {Object.entries(alertsResponse).map(([index,alert]) => {
               return (
+                alert.status == "unread" ?(
                 <ExpansionPanel
                   style={{ width: '100%' }}
                   onChange={(event, expanded) =>
@@ -280,7 +335,37 @@ const Alerts = () => {
                       {getDetails(alert)}
                     </div>
                   </ExpansionPanelDetails>
-                </ExpansionPanel>
+                </ExpansionPanel>):''
+              );
+            })}
+          <Typography variant="h5" color="textPrimary">
+            Read
+          </Typography>
+            {Object.entries(alertsResponse).map(([index,alert]) => {
+              return (
+                alert.status == "read" ?(
+                <ExpansionPanel
+                  style={{ width: '100%' }}
+                  onChange={(event, expanded) =>
+                    expandPanel(event, expanded, alert)}
+                    className={alert.status === 'unread' ? 'bold-font' : null}
+                >
+                  <ExpansionPanelSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                    onex
+                    className={alert.status === 'unread' ? 'bold-font' : null}
+                  >
+
+                    {getSummary(alert, index)}
+                  </ExpansionPanelSummary>
+                  <ExpansionPanelDetails>
+                    <div style={{ width: '100%' }} >
+                      {getDetails(alert)}
+                    </div>
+                  </ExpansionPanelDetails>
+                </ExpansionPanel>):''
               );
             })}
 

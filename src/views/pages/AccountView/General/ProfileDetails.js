@@ -30,61 +30,37 @@ const useStyles = makeStyles((theme) => ({
 function ProfileDetails({ user, className, ...rest }) {
   const classes = useStyles();
   const [selectedFile, setSelectedFile] = useState();
-  const [image, setImage] = useState();
-  const [avatar, setavatar] = useState();
-  const [mydata, setData] = useState();
   
+  const [avatar, setAvatar] = useState();
+  const [mydata, setData] = useState();
 
+  const [image, setImage] = useState({ preview: "", raw: "" });
+
+  useEffect(() => {    
+    fetchImage();
+  }, [])
+
+  const fetchImage = async () => {
+    var aValue = localStorage.getItem("loginuserid");
+    var aValues = sessionStorage.getItem("loginuserid");
+    var linki = 'http://cyberthreatinfo.ca/api/image/'
+    if(aValue!='undefined'){
+        var linkmain = linki+aValue+'.png?'+Math.random(); 
+        setAvatar(linkmain);
+
+    } 
+    if(aValues!='undefined'){
+        var linkmain2 = linki+aValues+'.png?'+Math.random();
+        setAvatar(linkmain2);
+    }
+  }
+  
   const onFileChange = async (event, value) => {      
       setSelectedFile(event.target.files[0]); 
-      console.log(event.target.files) ;
+      
   };
 
- /* const onImageChange = (event) => {
-     if (event.target.files && event.target.files[0]) {
-       setImage(URL.createObjectURL(event.target.files[0]));
-       
-     }
-    } */
-
-  const onImageChange = event => {
-    if (event.target.files && event.target.files[0]) {
-      let reader = new FileReader();
-      let file = event.target.files[0];
-      reader.onloadend = () => {
-        setData({
-          ...mydata,
-          imagePreview: reader.result,
-          file: file
-        });
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const submitForm = form => {
-    form.preventDefault();
-    const formData = new FormData();
-    formData.append('file', mydata.file);
-    // for (var pair of formData.entries()) {
-    //   console.log(pair[1]);
-    // }
-
-    console.log(formData); 
-    const config = {
-      headers: {
-        "content-type": "multipart/form-data"
-      }
-    };
-    Axios
-      .post("api/upload/image", formData, config)
-      .then(response => {
-        alert("The file is successfully uploaded");
-      })
-      .catch(error => {});
-  };
-
-  const onFileUpload = async () => { 
+    const onFileUpload = async () => { 
      
       // Create an object of formData 
       var formData = new FormData();
@@ -94,32 +70,41 @@ function ProfileDetails({ user, className, ...rest }) {
         'file', 
         selectedFile
       );
+      try {      
+        Axios.post("/upload/image", formData).then((res) => {
+          alert(res.data.message);
+          window.location.reload();
+        });
+       
+      } catch (error) {
+        console.error(error);
+      }
 
-     /* formData.append( 
-        'file', 
-         fs.createReadStream(selectedFile.name)
-      );*/
-      /*formData.append( 
-        'file', 
-        selectedFile, 
-        'C:/Users/divya/Downloads/Benedict_Cumberbatch_2011.png' 
-      );*/
-
-     
-      // Details of the uploaded file 
-      console.log(selectedFile); 
-     
-      // Request made to the backend api 
-      // Send formData object 
-
-      Axios.post("api/upload/image", formData).then((res) => {
-        console.log(res);
-      });
-
-      /*const response = await Axios.post("api/upload/image", formData);
-      console.log(response);*/
       
     }; 
+
+    const handleChange = e => {
+      if (e.target.files.length) {
+        setImage({
+          preview: URL.createObjectURL(e.target.files[0]),
+          raw: e.target.files[0]
+        });
+      }
+    };
+
+  const handleUpload = async e => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("file", image.raw);
+
+    await fetch("/upload/image", {
+      method: "POST",
+      headers: {
+        "Content-Type": "multipart/form-data"
+      },
+      body: formData
+    });
+  };
 
   return (
     <Card
@@ -132,40 +117,43 @@ function ProfileDetails({ user, className, ...rest }) {
           alignItems="center"
           flexDirection="column"
           textAlign="center"
-        >
-
-        <form onSubmit={form => submitForm(form)}>
-              <input
-                accept="image/*"
-                onChange={onImageChange}
-                className={classes.inputImage}
-                id="contained-button-file"
-                multiple
-                name="file"
-                type="file"
-              />
-              <label htmlFor="contained-button-file">
-                
-              </label>
-              <Button
-                type="submit"
-                variant="outlined"
-                className={classes.button}
-              >
-                Default
-              </Button>
-            </form>
+        >{/*
+        <div>
+          <label htmlFor="upload-button">
+            {image.preview ? (<>
+              <img src={image.preview} alt="dummy" width="300" height="300" />
+              <button onClick={handleUpload}>Upload</button>
+            </>) : (
+              <>
+                <Avatar
+                  className={classes.avatar}
+                  src="http://cyberthreatinfo.ca/api/image/d1851c52-3204-11eb-b1b2-080027d7b49a.png"
+                />
+              </>
+            )}
+          </label>
+          <input
+            type="file"
+            id="upload-button"
+            style={{ display: "none" }}
+            onChange={handleChange}
+          />
+          
+        </div>
+*/}
+        <Avatar
+            className={classes.avatar}
+            src={avatar}
+          />
+          
         <div> 
             <input type="file" name="file" onChange={onFileChange} /> 
             <button onClick={onFileUpload}> 
               Upload! 
             </button> 
         </div>
-        <img src={selectedFile}/>
-          <Avatar
-            className={classes.avatar}
-            src={user.avatar}
-          />
+        
+          
           <Typography
             className={classes.name}
             gutterBottom

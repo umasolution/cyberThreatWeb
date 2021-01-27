@@ -25,6 +25,7 @@ import {
 import { getNotifications } from "src/actions/notificationsActions";
 import Badge from '@material-ui/core/Badge';
 import { THEMES } from 'src/constants';
+
 const iconsMap = {
   order_placed: PackageIcon,
   new_message: MessageIcon,
