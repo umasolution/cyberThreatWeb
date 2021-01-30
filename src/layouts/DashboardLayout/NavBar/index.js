@@ -84,7 +84,7 @@ const navConfig = [
         href: '/app/management/ProjectsReports/language',
       },
       {
-        title: 'Alerts',
+        title: 'Manage Alerts',
         icon: NotificationsIcon,
         href: '/app/management/Alerts',
       }/*,

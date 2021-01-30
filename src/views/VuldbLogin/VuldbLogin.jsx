@@ -723,7 +723,8 @@ export const VuldbLogin = (/* {   } */) => {
                       <List>
                       <RadioGroup aria-label={key[0]} name={key[0]} onChange={(e) => handleChangeRadio(e,key[0])}>
                         {Object.values(key[1].values).map((vkey, vi) => (<>
-                          <FormControlLabel value={vkey} control={<Radio />} label={capitalizeFirstLetter(vkey)} />
+
+                          {vkey?<FormControlLabel value={vkey} control={<Radio />} label={capitalizeFirstLetter(vkey)} />:''}
                            </>))
                           }
                         </RadioGroup>
