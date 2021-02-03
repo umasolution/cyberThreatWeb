@@ -278,7 +278,7 @@ function DashboardView() {
                         xs={12}
                         className="products_summary"
                       >
-                  <RealTime lib_details={dashboardData['products_summary']} />
+                  <RealTime headtitle="Libraries with most vulnerabilities" lib_details={dashboardData['products_summary']} />
 
                   </Grid>
                   <Grid

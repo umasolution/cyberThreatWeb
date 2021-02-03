@@ -1,4 +1,5 @@
-import { Divider, Grid, Typography } from '@material-ui/core';
+import { Divider, Grid, Typography, Paper,Table,TableBody,TableCell,TableContainer,TableHead,TablePagination,TableRow,Box
+ } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import List from '@material-ui/core/List';
@@ -6,6 +7,9 @@ import ListItem from '@material-ui/core/ListItem';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import PackageJSON from './PackageJSON/PackageJSON';
+import Skeleton from '@material-ui/lab/Skeleton';
+import Pagination from '@material-ui/lab/Pagination';
+import { getBackgroundColorBySeverity, getFontColorBySeverity } from './../../../Util/Util';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,10 +41,24 @@ const Issues = ({ issues, reportName, reportType }) => {
     isMediumIssueChecked: false,
   });
 
+  const [issearch, setisSearch] = React.useState(false);
+
+  const [singlerows, setSingleRows] = React.useState();
+
+  const [selected, setSelected] = React.useState([]);
+  const isSelected = (name) => selected.indexOf(name) !== -1;
+
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  const handleClickRow = async (event, value) => {
+    const selectedIndex = selected.indexOf(value);
+    let newSelected = [];
+    newSelected = newSelected.concat([], value);
+    setSelected(newSelected);
+  }; 
   const getPlatformResult = () => {
     return (
       <>
@@ -149,8 +167,6 @@ const Issues = ({ issues, reportName, reportType }) => {
 
             </List>
             <div style={{ width: '100%' }}>
-
-
               {state.isHighIssueChecked &&
                 (issues.HIGH || issues.high) ?
                 <>
@@ -178,13 +194,144 @@ const Issues = ({ issues, reportName, reportType }) => {
 
   return (
     <Grid
-      container
-      spacing={1}
-      style={{ display: 'block', margin: '5px' }}
-    >
-      <div className={classes.root}>
-        {getLanguageReport()}
-      </div>
+          item
+          xs={12}          
+          md={12}
+          className="repost-issuelist"
+        >
+      <Box position="relative">
+      <Paper className={classes.root}>
+            <TableContainer className={classes.container}>
+              <Table stickyHeader aria-label="sticky table" className={'big-table'}>
+                {issearch?(<>
+                  <TableHead>
+                  <TableRow>
+                      <TableCell key='active'>
+                         <Skeleton animation="wave" height="20px" width="100%" />
+                      </TableCell>
+                      <TableCell key='active'>
+                        <Skeleton animation="wave" height="20px" width="100%" />
+                      </TableCell>
+                      <TableCell key='active'>
+                         <Skeleton animation="wave" height="20px" width="100%" />
+                      </TableCell>
+                      <TableCell key='active'>
+                         <Skeleton animation="wave" height="20px" width="100%" />
+                      </TableCell>
+                      <TableCell key='active'>
+                         <Skeleton animation="wave" height="20px" width="100%" />
+                      </TableCell>
+                    </TableRow>
+                </TableHead><TableBody>
+                  <TableRow>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                    </TableRow>
+                   <TableRow>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                      <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                    </TableRow> 
+                </TableBody>
+                  
+            </>):(<> <TableHead>
+                  <TableRow>
+                    {
+                      Object.keys(issues.display.table).map((key, i) => (
+                        <><TableCell key={issues.display.table[key].field}>
+                           {issues.display.table[key].title}   
+                        </TableCell></>  
+                        
+                      ))
+                    }  
+                  </TableRow>
+                </TableHead><TableBody>
+                   {
+                      Object.entries(issues.data).map(([rkey, row]) => {
+                        const isItemSelected = isSelected(rkey)
+                      return (<TableRow hover hover onClick={event => handleClickRow('key',rkey)}  key={rkey} role="checkbox" selected={isItemSelected} tabIndex={-1} >
+
+                            { Object.keys(issues.display.table).map((vkey) => (
+                             <TableCell key={issues.display.table[vkey].field}>
+                                  {vkey==0? (
+                                    <>
+                                     <Grid item xs={12}>
+                                        <Typography
+                                          variant="h5"
+                                          color="textSecondary"
+                                        >
+                                          {row[`${issues.display.table[vkey].field}`].replace(',', '\n') }
+                                        </Typography>
+
+                                     </Grid>
+                                    </>
+                                )  : row[`${issues.display.table[vkey].field}`].replace(',', '\n')}
+                              </TableCell>
+                            )
+                            )}
+                        </TableRow>
+                      ) }
+                      )
+                    } 
+                </TableBody></>)}
+              </Table>
+            </TableContainer>
+          </Paper>
+      </Box>
     </Grid>
   );
 };

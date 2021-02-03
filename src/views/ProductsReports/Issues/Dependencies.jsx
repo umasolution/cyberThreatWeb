@@ -173,7 +173,6 @@ const Dependencies = ({ issues, reportName, reportType }) => {
       style={{ display: 'block', margin: '5px' }}
     >
       <div className={classes.root}>
-        {getLanguageReport()}
       </div>
     </Grid>
   );

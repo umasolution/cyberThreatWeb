@@ -33,7 +33,7 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function RealTime({ className, lib_details, ...rest }) {
+function RealTime({ className, lib_details,headtitle, ...rest }) {
   const classes = useStyles();
   const isMountedRef = useIsMountedRef();
 
@@ -108,7 +108,7 @@ function RealTime({ className, lib_details, ...rest }) {
     >
       
     { openSearch ? null : <CardHeader
-        title="Libraries with most vulnerabilities"
+        title={headtitle}
         action={
           <IconButton aria-label="settings">
             <SearchIcon onClick={handleSearchOpen} />

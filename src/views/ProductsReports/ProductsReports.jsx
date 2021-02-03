@@ -30,6 +30,12 @@ const useStyles = makeStyles((theme) => ({
   tabRoot: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
+  },
+  container: {
+    [theme.breakpoints.up('lg')]: {
+    },
+    paddingLeft: 45,
+    paddingRight: 45 
   }
 }));
 
@@ -194,7 +200,7 @@ const ProductsReports = () => {
 
 
   return (
-    <Container className={classes.root} maxWidth>
+    <Container className={classes.container} maxWidth={false}>
       <Grid
         container
         spacing={1}

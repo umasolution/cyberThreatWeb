@@ -1,8 +1,16 @@
 import React, { useEffect } from 'react';
 import { Plotly } from "../../../../Util/Constants";
 import { getBackgroundColorBySeverity } from '../../../../Util/Util';
+import {
+  Box,
+  Card,
+  CardHeader,
+  CardContent,
+  Divider,
+  makeStyles
+} from '@material-ui/core';
 
-const SeverityBarChart = ({ severity, divId, displayModeBar = true, title = 'Severity', bgColor = "#f1f1f1", width = 360, height = 280 }) => {
+const SeverityBarChart = ({ severity, divId, displayModeBar = true, title = 'Severity', bgColor = "#fff", width = 300, height = 280 }) => {
 
   useEffect(() => {
 
@@ -30,51 +38,63 @@ const SeverityBarChart = ({ severity, divId, displayModeBar = true, title = 'Sev
           type: 'bar',
           // automargin: true,
           marker: {
-            color: 'white'
+            color: 'red'
           },
           width: 0.2,
         }
       ];
       const layout = {
-        title,
+        title:'',
         width,
         height,
-        margin: { "t": 10, "b": 20, "l": 30, "r": 0 },
+        margin: { "t": 20, "b": 20, "l": 10, "r": 10 },
         showlegend: false,
         plot_bgcolor: bgColor,
         paper_bgcolor: bgColor,
         xaxis: {
           titlefont: {
-            color: 'white'
+            color: 'red'
           },
           tickfont: {
-            color: 'white'
+            color: 'red'
           },
-          linecolor: 'white',
+          linecolor: 'red',
           zeroline: true,
-          zerolinecolor: 'white',
+          zerolinecolor: 'red',
           zerolinewidth: 1,
         },
         yaxis: {
           titlefont: {
-            color: 'white'
+            color: 'red'
           },
           tickfont: {
-            color: 'white'
+            color: 'red'
           },
-          linecolor: 'white',
+          linecolor: 'red',
           zeroline: true,
-          zerolinecolor: 'white',
+          zerolinecolor: 'red',
           zerolinewidth: 1,
         },
       };
-      const config = { responsive: true, displayModeBar };
+      const config = { responsive: true ,displayModeBar: false };
       Plotly.newPlot(`SeverityBarChartDiv-${divId}`, data, layout, config);
     }
   }, [])
 
   return (
-    <div id={`SeverityBarChartDiv-${divId}`} />
+    <Card>
+    <CardHeader
+        title={title}        
+      />
+      <Divider />
+      <CardContent className="chart-data">
+        <Box> 
+        <div id={`SeverityBarChartDiv-${divId}`} />
+        </Box>
+
+      </CardContent>
+    </Card>
+    
   );
 };
 

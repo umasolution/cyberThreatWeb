@@ -2,7 +2,7 @@ import { Container, Grid, LinearProgress, makeStyles, TextField,Typography,Box,
 ListItem,ListItemIcon,ListItemText,List,ExpansionPanel,ExpansionPanelSummary,ExpansionPanelDetails,
 Slider,
 Paper,Table,TableBody,TableCell,TableContainer,TableHead,TablePagination,TableRow,
-Card,CardActionArea,CardActions,CardContent,CardMedia,Radio,RadioGroup,FormLabel
+Card,CardActionArea,CardActions,CardContent,CardMedia,Radio,RadioGroup,FormLabel,Chip,Icon
 } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -18,7 +18,7 @@ import './VuldbLogin.css';
 import TabsData from './TabsData/TabsData';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import SearchIcon from '@material-ui/icons/Search';
-import SearchBox from './../Search/SearchBox/SearchBox';
+import SearchBox from './../Search/SearchBoxVul/SearchBoxVul';
 import MaterialTable from 'material-table';
 import Pagination from '@material-ui/lab/Pagination';
 import VisibilityIcon from '@material-ui/icons/Visibility';
@@ -50,6 +50,65 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'space-between',
         width: '100%',
     },
+    chip: {
+      margin: theme.spacing(0.5),
+    },
+    searchbar: {
+      backgroundColor: theme.palette.background.light,
+      maxWidth:1180,
+      background: '#fff url(/static/bg_searchbar.png)',
+      padding:'35px 0px',
+      boxShadow:'4px 0px 54px rgba(0,0,0,0.1)',
+      borderRadius: 5,
+      [theme.breakpoints.down('sm')]: {
+        padding:'15px 10px',
+      },
+    },
+    searchBox: {
+      marginTop: 0,
+      maxWidth:1015,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      backgroundColor: '#fff',
+      boxShadow:'4px 0px 27px rgba(0,0,0,0.08)',
+      height:62,
+      borderRadius:50,
+      border:'1px solid #e8e8f2',
+      padding:8,
+      color:'#000',
+      position: 'relative',
+      '& > div' : {
+        paddingLeft: 60,
+      }
+    },
+    searchbarArea: {
+      width: '100%',
+      bottom: -70,
+      margin: '38px auto',
+      maxWidth: '100%',
+      [theme.breakpoints.down('sm')]: {
+        bottom: -90,
+      },
+      left:0,
+    },
+    chippaper : {
+      display: 'flex',
+      justifyContent: 'center',
+      flexWrap: 'wrap',
+      listStyle: 'none',
+      padding: theme.spacing(0.5),
+      margin: 0,
+    },
+    chipbar : {
+      width: '100%',
+      bottom: -70,
+      margin: '38px auto',
+      maxWidth: '100%',
+      [theme.breakpoints.down('sm')]: {
+        bottom: -90,
+      },
+      left:0,
+    }
 }));
 
 export const VuldbLogin = (/* {   } */) => {
@@ -91,7 +150,15 @@ export const VuldbLogin = (/* {   } */) => {
     const aurl = new URL(Axios.defaults.baseURL);
     const apiparams = new URLSearchParams(aurl.search);
 
-    
+    const [chipData, setChipData] = useState([]);
+
+    const handleChipDelete = (chipToDelete) => () => {
+      chipData.splice(chipToDelete, 1);
+      let newSelected = [];
+      newSelected = newSelected.concat(chipData);
+      setChipData(newSelected);
+    };
+
     useEffect(() => {
         fetchFeed();
     }, [feedType]);
@@ -103,7 +170,6 @@ export const VuldbLogin = (/* {   } */) => {
             var url = `/vuln/list`;
             setMainUrl('/vuln/list');
             setApiUrl(apiparams);
-            
             let response = await Axios.get(url);
             setTabsData(response.data);
             setTabsColumns(response.data.columns);
@@ -134,6 +200,21 @@ export const VuldbLogin = (/* {   } */) => {
             updateSnackbar(true, CONSTANTS.FETCHING_DATA_FAILED);
             setLoadingTabs(false);
         }
+    }
+
+    const callApi = async () => {
+        setloadingRows(false);
+        setSingleRows();
+        setisSearch(true);
+        setNoResult(true);
+        var url = `${mainurl}?${apiurl.toString()}`;
+        let response = await Axios.get(url);
+        setTabsData(response.data);
+        setPage(1);
+        let totalpages = Math.ceil(response.data.total/perRow);
+        setTotalpages(totalpages);
+        setperRow(response.data.rowlimit);
+        setisSearch(false);
     }
 
     const handleChangePage = async (event, value) => {
@@ -310,11 +391,62 @@ export const VuldbLogin = (/* {   } */) => {
         }
 
     }
- 
+
+    const keyPress = (event) => {
+      if (event.keyCode === 13) {
+        onSearchClicked();
+      }
+    }
+    const handleClick = (event) => {
+        onSearchClicked();
+     }
 
     const handleChangeCVE = (event) => {
-        setCVEInput(event.target.value);
-    };
+      setCVEInput(event.target.value);
+    }
+
+    const onSearchClicked = () => {
+      if (cveInput) {
+        const regex5 = /([^:\s]+):([^:\s]+)/g;
+        const regex = new RegExp(regex5,'i');
+        const split_cveInput = cveInput.split("OR");
+        split_cveInput.forEach(function (value, index, array) {
+            let m = regex.exec(value);    
+            var regexcve = /cve-/;
+            var regexcve2 = /CVE-/;
+            if(m){
+              if(m[1]=='language'){
+                let newSelected = [];
+                newSelected = newSelected.concat(chipData, 'language:'+m[2]);
+                apiurl.set('language', m[2]);
+                setChipData(newSelected);
+              } else if(m[1]=='advisory') {
+                let newSelected = [];
+                newSelected = newSelected.concat(chipData, 'advisory:'+m[2]);
+                apiurl.set('advisory', m[2]);
+                setChipData(newSelected);
+              } else if(m[1]=='platform') {
+                let newSelected = [];
+                newSelected = newSelected.concat(chipData, 'platform:'+m[2]);
+                apiurl.set('platform', m[2]);
+                setChipData(newSelected);
+              } else if(m[1]=='plugin') {
+                let newSelected = [];
+                newSelected = newSelected.concat(chipData, 'plugin:'+m[2]);
+                apiurl.set('plugin', m[2]);
+                setChipData(newSelected);
+              } 
+            }
+        })
+        setApiUrl(apiurl);
+        /*callApi();*/
+        
+    }
+    
+   }
+ 
+
+    
 
     const severitys = [
       {
@@ -335,10 +467,10 @@ export const VuldbLogin = (/* {   } */) => {
       }
     ];
 
-   const [expand, setExpand] = useState(false);
-   const onShowMore = () => {
-      setExpand(!expand);
-   };
+     const [expand, setExpand] = useState(false);
+     const onShowMore = () => {
+        setExpand(!expand);
+     };
 
    
    
@@ -748,7 +880,7 @@ export const VuldbLogin = (/* {   } */) => {
             className="cvesearchleft"
           > 
             <Grid className="boxleftheader" >
-              {fieldsData ? expansionFields():''}
+              {fieldsData ? '':''}
               <Grid 
                   xs={12}
                   md={3}
@@ -1180,6 +1312,67 @@ export const VuldbLogin = (/* {   } */) => {
         setSnackbarMessage(message)
     }
 
+    
+
+
+
+
+    const getSearchBox = (chipData) => {
+      return (
+            <>
+        <Container maxWidth="lg" className={classes.searchbarArea}>
+             <Grid
+                container
+                spacing={0}
+                className={classes.container}
+              > 
+              <Container maxWidth="lg" className={classes.searchbar}>    
+                <Box mt={3}
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  className={classes.searchBox}>
+                  <TextField
+                  required
+                  value={cveInput}
+                  onKeyDown={keyPress}
+                  onChange={handleChangeCVE}
+                  style={{
+                    width: '100%',
+                    color:'#000'
+                  }}
+                  id="cve"
+                  placeholder="Search Vulnerabilities"
+                />
+                <button onClick={handleClick} className={classes.searchButton}>Add</button>
+                </Box>
+              </Container>
+               </Grid> 
+          </Container>
+          {chipData ? (<Container maxWidth="lg" className={classes.chipbar}>
+          <Grid
+                container
+                spacing={0}
+                className={classes.container}
+              >
+             <Paper component="ul" className={classes.chippaper}>
+              {chipData ? Object.entries(chipData).map((data, i) => ( 
+                  <li key={i}>
+                    <Chip
+                      label={data[1]}
+                      onDelete={handleChipDelete(data[0])}
+                      className={classes.chip}
+                      color="secondary"
+                    />
+                  </li>
+              )) : ''}              
+              </Paper>
+              </Grid>
+          </Container>): '' }
+          </>
+       )   
+    }
+
     return (
         <Page
           title="Vulnerabilities DB - Niah Security"
@@ -1187,15 +1380,9 @@ export const VuldbLogin = (/* {   } */) => {
         <Container style={{ paddingLeft: '0px', paddingRight: '0px', maxWidth: 'unset' }} maxWidth="lg">
             <Grid style={{ width: '100%' }} container spacing={1}>
                 {loadingTabs ? getLoader() : null}
-                
+                {getSearchBox(chipData)}
                 <Container maxWidth className="cveresult">
-                  <Grid
-                        container
-                        spacing={3}
-                        className={classes.container}
-                      >
-                      {getFieldData()}
-                   </Grid> 
+                  
                    <Grid
                         container
                         spacing={3}
