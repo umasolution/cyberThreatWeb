@@ -19,6 +19,7 @@ import Remediation from './Remediation/Remediation';
 import ReportSummary from './ReportSummary/ReportSummary';
 import DockerSummaries from './DockerSummaries/DockerSummaries';
 import DockerPackages from './DockerPackages/DockerPackages';
+import Page from 'src/components/Page';
 import './ProductsReports.css';
 
 const useStyles = makeStyles((theme) => ({
@@ -155,28 +156,15 @@ const ProductsReports = () => {
         </TabPanel>
         <TabPanel value={tabValue} index={1}>
           {!isDocker
-            ? <Issues reportType={reportType} reportName={reportName} issues={productReportResponse.Issues} />
+            ? <Issues reportType={reportType} reportName={reportName} issues={productReportResponse.Issues} counter={productReportResponse.summary.counter} history={productReportResponse.summary.history} />
             : <DockerIssues reportType={reportType} reportName={reportName} issues={productReportResponse.images} />}
 
         </TabPanel>
         <TabPanel value={tabValue} index={2}>
-          {(reportType === 'language' || reportType === 'application') ?
-
-            productReportResponse.inventory ? <File name="" file={productReportResponse.inventory} />
-              :
-              <Dependencies issues={reportType === 'application' ? productReportResponse.inventory : productReportResponse.inventory} reportType={reportType} reportName={reportName} />
-
-            :
-            (reportType === 'platform') ?
-              <File name="" file={productReportResponse.inventory?.pkgDetails} />
-              : ''}
-            {(reportType === 'dependancies')? <File name="" file={productReportResponse.inventory} />
-              : ''}  
-            {(reportType === 'system')? <File name="" file={productReportResponse.inventory} />
-              : ''}  
+          {productReportResponse.inventory ? (<Dependencies issues={reportType === 'application' ? productReportResponse.inventory : productReportResponse.inventory} reportType={reportType} reportName={reportName} counter={productReportResponse.summary.counter} history={productReportResponse.summary.history}  />) : ''}             
         </TabPanel>
         <TabPanel value={tabValue} index={3}>
-          <Remediation data={productReportResponse.remediation} />
+          <Remediation remediation={productReportResponse.remediation} counter={productReportResponse.summary.counter} />
         </TabPanel>
       </>
     );
@@ -200,6 +188,10 @@ const ProductsReports = () => {
 
 
   return (
+  <Page
+          className={classes.root}
+          title="My Report"
+        >
     <Container className={classes.container} maxWidth={false}>
       <Grid
         container
@@ -215,8 +207,8 @@ const ProductsReports = () => {
           {productReportResponse ?
             (
               <>
-                <ReportHeader header={productReportResponse.header} />
-                {getTabs()}
+                <Box className="report-header-data"><ReportHeader header={productReportResponse.header} /></Box>
+                <Box className="report-tabs-data">{getTabs()}</Box>
               </>
             )
             : ''}
@@ -227,6 +219,7 @@ const ProductsReports = () => {
         </Box>
       </Grid>
     </Container>
+    </Page>
 
   );
 };

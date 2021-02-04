@@ -1,4 +1,5 @@
-import { Divider, Grid, Typography } from '@material-ui/core';
+import { Divider, Grid, Typography, Paper,Table,TableBody,TableCell,TableContainer,TableHead,TablePagination,TableRow,Box
+ } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import List from '@material-ui/core/List';
@@ -7,13 +8,16 @@ import { makeStyles } from '@material-ui/core/styles';
 import React, { useEffect } from 'react';
 import PackageJSON from './PackageJSON/PackageJSON';
 import File from './File/File';
+import Skeleton from '@material-ui/lab/Skeleton';
+import { getBackgroundColorBySeverity, getFontColorBySeverity } from './../../../Util/Util';
+import ReportCount from './../ReportCount/ReportCount';
+ import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    backgroundColor: '#f1f1f1',
-    display: 'block',
-    height: 224,
+ root: {
+      flexGrow: 1,
+      width: '100%',
+      backgroundColor: 'inherit', // theme.palette.background.paper
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
@@ -28,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   // }
 }));
 
-const Dependencies = ({ issues, reportName, reportType }) => {
+const Dependencies = ({ issues, reportName, reportType,counter,history }) => {
 
 
   const classes = useStyles();
@@ -37,6 +41,14 @@ const Dependencies = ({ issues, reportName, reportType }) => {
   const [state, setState] = React.useState({
   });
 
+  const [issearch, setisSearch] = React.useState(false);
+
+  const [singlerows, setSingleRows] = React.useState();
+
+  const [selected, setSelected] = React.useState([]);
+  const isSelected = (name) => selected.indexOf(name) !== -1;
+
+  const [selectData, setSelectData] = React.useState();
 
   const fileNames = issues ? Object.keys(issues) : [];
 
@@ -46,14 +58,20 @@ const Dependencies = ({ issues, reportName, reportType }) => {
       stateObject[name] = true;
     })
     setState(stateObject);
-    console.log(stateObject);
+    
 
   }, []);
 
 
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
+ 
+
+  const handleSelect = (event) => {
+    const value = event.target.value;
+    setSelectData(value); 
+    console.log(selectData)
+    history.push('/app/reports/dashboard/'+value);
+    //history.go(0);
   };
 
   const getPlatformResult = () => {
@@ -172,9 +190,191 @@ const Dependencies = ({ issues, reportName, reportType }) => {
       spacing={1}
       style={{ display: 'block', margin: '5px' }}
     >
-      <div className={classes.root}>
-      </div>
-    </Grid>
+      {
+          history && (
+            <>
+            <Grid xs={12} container justify="flex-end">
+              <select value={selectData} onChange={handleSelect.bind(this)} handleSelect className="type-dropdown">
+              {Object.entries(history).map(([key, value]) => {                  
+                  return (
+                      <option key={value} value={value}>{moment(value.replace(".json","").replace("_"," ")).format('MMMM Do YYYY, h:mm:ss a')}</option>
+                  );
+              })}
+            </select>
+          </Grid>
+            </>
+           )
+      }
+      <Grid
+           container
+              style={{ marginTop: 10,marginBottom: 10 }}
+              spacing={2}
+              className="report-dashboardData"
+           >
+          {Object.keys(counter).map(key => 
+            <ReportCount header={key} index={key%4} value={counter[key]} />
+          )}
+      </Grid>
+    <Grid
+          item
+          xs={12}          
+          md={12}
+          className="report-inventrylist-table"
+        >
+          <Box position="relative">
+          <Paper className={classes.root}>
+                <TableContainer className={classes.container}>
+                  <Table stickyHeader aria-label="sticky table" className="big-table">
+                    {issearch?(<>
+                      <TableHead>
+                      <TableRow>
+                          <TableCell key='active'>
+                             <Skeleton animation="wave" height="20px" width="100%" />
+                          </TableCell>
+                          <TableCell key='active'>
+                            <Skeleton animation="wave" height="20px" width="100%" />
+                          </TableCell>
+                          <TableCell key='active'>
+                             <Skeleton animation="wave" height="20px" width="100%" />
+                          </TableCell>
+                          <TableCell key='active'>
+                             <Skeleton animation="wave" height="20px" width="100%" />
+                          </TableCell>
+                          <TableCell key='active'>
+                             <Skeleton animation="wave" height="20px" width="100%" />
+                          </TableCell>
+                        </TableRow>
+                    </TableHead><TableBody>
+                      <TableRow>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                        </TableRow>
+                       <TableRow>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                          <TableCell><Skeleton animation="wave" height="40px" width="100%" /></TableCell>
+                        </TableRow> 
+                    </TableBody>
+                      
+                </>):(<> <TableHead>
+                      <TableRow>
+                        {
+                          Object.keys(issues.column).map((key, i) => (
+                            <><TableCell key={issues.column[key].field}>
+                               {issues.column[key].title}   
+                            </TableCell></>  
+                            
+                          ))
+                        }  
+                      </TableRow>
+                    </TableHead><TableBody>
+                       {
+                          Object.entries(issues.data).map(([rkey, row]) => {
+                            const isItemSelected = isSelected(rkey)
+                          return (<TableRow hover key={rkey} role="checkbox" selected={isItemSelected} tabIndex={-1} >
+
+                                { Object.keys(issues.column).map((vkey) => (
+                                 <TableCell key={issues.column[vkey].field}>
+                                      { issues.column[vkey].field == 'vulnerability' ? (
+                                        <>
+                                         <Box className="scoreblock-vulnerabilities-div">
+                                         {Object.entries(row.table[`${issues.column[vkey].field}`]).map((vulnerabilities) => (
+                                            <Box className={`scoreblock MuiGrid-grid-xs-3 ${vulnerabilities[0]}`}>
+                                            <Box className="scoreblock-inner">
+                                            <Box className="scoretitle">
+                                              {vulnerabilities[0]}                                              
+                                            </Box>
+                                            <Box className="scorevalue" bgcolor={getBackgroundColorBySeverity(vulnerabilities[0])}>
+                                              {vulnerabilities[1]?vulnerabilities[1]:'0'}                                              
+                                            </Box>
+                                            </Box>
+                                            </Box>
+                                           ))}
+                                          </Box>  
+                                        </>
+                                    ) : (vkey==0? (
+                                        <>
+                                         <Grid item xs={12}>
+                                            <Typography
+                                              variant="h5"
+                                              color="textSecondary"
+                                            >
+                                              {row[`${issues.column[vkey].field}`].replace(',', '\n') }
+                                            </Typography>
+
+                                         </Grid>
+                                        </>
+                                    )  : row[`${issues.column[vkey].field}`].replace(',', '\n'))
+                                    }
+                                  </TableCell>
+                                )
+                                )}
+                            </TableRow>
+                          ) }
+                          )
+                        } 
+                    </TableBody></>)}
+                  </Table>
+                </TableContainer>
+              </Paper>
+            
+          </Box>
+        </Grid>
+        </Grid>
   );
 };
 

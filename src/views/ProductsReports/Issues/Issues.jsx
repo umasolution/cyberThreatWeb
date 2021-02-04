@@ -10,28 +10,22 @@ import PackageJSON from './PackageJSON/PackageJSON';
 import Skeleton from '@material-ui/lab/Skeleton';
 import Pagination from '@material-ui/lab/Pagination';
 import { getBackgroundColorBySeverity, getFontColorBySeverity } from './../../../Util/Util';
+import ReportCount from './../ReportCount/ReportCount';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
-    backgroundColor: '#f1f1f1',
-    display: 'block',
-    height: 224,
+      flexGrow: 1,
+      width: '100%',
+      backgroundColor: 'inherit', // theme.palette.background.paper
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
     width: '100%'
   },
-  // borderDiv: {
-  //   border: '1px',
-  //   borderStyle: 'solid',
-  //   borderRadius: '10px',
-  //   borderColor: 'brown',
-  //   marginTop: '5px'
-  // }
+  
 }));
 
-const Issues = ({ issues, reportName, reportType }) => {
+const Issues = ({ issues, reportName, reportType,counter }) => {
 
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
@@ -194,6 +188,21 @@ const Issues = ({ issues, reportName, reportType }) => {
 
   return (
     <Grid
+      container
+      spacing={1}
+      style={{ display: 'block', margin: '5px' }}
+    >
+      <Grid
+           container
+              style={{ marginTop: 10,marginBottom: 10 }}
+              spacing={2}
+              className="report-dashboardData"
+           >
+          {Object.keys(counter).map(key => 
+            <ReportCount header={key} index={key%4} value={counter[key]} />
+          )}
+      </Grid>
+    <Grid
           item
           xs={12}          
           md={12}
@@ -333,6 +342,7 @@ const Issues = ({ issues, reportName, reportType }) => {
           </Paper>
       </Box>
     </Grid>
+     </Grid>
   );
 };
 

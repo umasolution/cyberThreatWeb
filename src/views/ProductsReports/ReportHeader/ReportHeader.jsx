@@ -25,11 +25,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'inline'
   },
   cardMain: {
-    padding: theme.spacing(1),
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    height:129
+    margin: theme.spacing(1),
+    padding: theme.spacing(1)
   },
 }));
 
@@ -41,7 +38,7 @@ const ReportHeader = ({ header }) => {
     <Grid
       container
       spacing={1}
-      className={classes.mainGrid}
+      className="report-main-title"
     >
       <Typography
         variant="h6"
@@ -96,12 +93,18 @@ const ReportHeader = ({ header }) => {
     <Grid
       container
       spacing={1}
-      className={classes.mainGrid}
+      className="report-main-box"
     >
       
       {Object.entries(header.display).map((severity) => (
         severity[1].field == 'Date'?
-        (<Card key={severity[0]}>
+        ( <Grid
+              item
+              lg={3}
+              sm={6}
+              xs={12}              
+            >
+           <Card key={severity[0]} className={classes.cardMain}>
             <Typography
               variant="h6"
               color="textPrimary"
@@ -112,7 +115,13 @@ const ReportHeader = ({ header }) => {
             <Typography className={classes.secondaryText}>
               {moment(header[severity[1].field].replace('_', ' ')).format("YYYY-MM-DD H:I:s")}
             </Typography>
-          </Card>) : (<Card key={severity[0]}>
+          </Card> </Grid>) : (<Grid
+              item
+              lg={3}
+              sm={6}
+              xs={12}
+            >
+            <Card key={severity[0]} className={classes.cardMain}>
             <Typography
               variant="h6"
               color="textPrimary"
@@ -123,13 +132,14 @@ const ReportHeader = ({ header }) => {
             <Typography className={classes.secondaryText}>
               {header[severity[1].field]}
             </Typography>
-          </Card>) 
+          </Card> </Grid>
+          ) 
       ))}
-      {header.Severity ?
+      {/*header.Severity ?
         <Card>
           <Severity severity={header.Severity} />
         </Card>
-        : ''}
+        : ''*/}
     </Grid>
   </>);
 };
