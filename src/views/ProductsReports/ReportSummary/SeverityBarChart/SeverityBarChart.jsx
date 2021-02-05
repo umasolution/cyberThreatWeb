@@ -10,7 +10,7 @@ import {
   makeStyles
 } from '@material-ui/core';
 
-const SeverityBarChart = ({ severity, divId, displayModeBar = true, title = 'Severity', bgColor = "#fff", width = 300, height = 280 }) => {
+const SeverityBarChart = ({ severity, divId, displayModeBar = true, title = 'Severity', bgColor = "#fff", width = 280, height = 175 }) => {
 
   useEffect(() => {
 
@@ -38,7 +38,7 @@ const SeverityBarChart = ({ severity, divId, displayModeBar = true, title = 'Sev
           type: 'bar',
           // automargin: true,
           marker: {
-            color: 'red'
+            color: '#4285f4'
           },
           width: 0.2,
         }
@@ -47,32 +47,32 @@ const SeverityBarChart = ({ severity, divId, displayModeBar = true, title = 'Sev
         title:'',
         width,
         height,
-        margin: { "t": 20, "b": 20, "l": 10, "r": 10 },
+        margin: { "t": 0, "b": 20, "l": 10, "r": 10 },
         showlegend: false,
         plot_bgcolor: bgColor,
         paper_bgcolor: bgColor,
         xaxis: {
           titlefont: {
-            color: 'red'
+            color: '#a3a3a3'
           },
           tickfont: {
-            color: 'red'
+            color: '#a3a3a3'
           },
-          linecolor: 'red',
+          linecolor: '#a3a3a3',
           zeroline: true,
-          zerolinecolor: 'red',
+          zerolinecolor: '#a3a3a3',
           zerolinewidth: 1,
         },
         yaxis: {
           titlefont: {
-            color: 'red'
+            color: '#a3a3a3'
           },
           tickfont: {
-            color: 'red'
+            color: '#a3a3a3'
           },
-          linecolor: 'red',
+          linecolor: '#a3a3a3',
           zeroline: true,
-          zerolinecolor: 'red',
+          zerolinecolor: '#a3a3a3',
           zerolinewidth: 1,
         },
       };

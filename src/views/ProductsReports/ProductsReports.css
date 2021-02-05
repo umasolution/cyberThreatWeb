@@ -65,3 +65,80 @@
   border-bottom: 2px solid;
   border-color: white;
 }
+
+
+
+
+
+
+
+
+.makeStyles-wrapper-8{background: #fafafc !important;}
+.user-nav .MuiDrawer-paperAnchorLeft{border: 0;}
+
+.report-header-data .report-main-title h6.MuiTypography-h6{color: #666666;font-size: 20px; text-transform: uppercase;font-weight: 600;line-height: 1;margin-bottom: 25px; letter-spacing: 0.5px;padding: 0 8px;}
+
+.report-tabs-data > .makeStyles-root-43,.report-tabs-data .tabs{background: #fafafc !important;}
+.report-tabs-data .MuiTypography-root.MuiTypography-body1 .MuiBox-root{padding: 0}
+
+.report-main-box.MuiGrid-root{margin: 0 -15px;margin-bottom: 15px !important; width: auto;}
+.report-main-box > .MuiGrid-grid-lg-3{flex-grow: 0;max-width: 50%;flex-basis: 50%;padding: 0 15px;}
+.report-main-box > .MuiGrid-grid-lg-3 > .MuiPaper-root{margin: 0;box-shadow: 0 5px 32px 0 rgba(0,0,0,0.06);border: 0;margin-bottom: 20px;border-radius: 5px;padding: 10px 15px;}
+.report-main-box > .MuiGrid-grid-lg-3 > .MuiPaper-root h6{font-size: 18px;color: #333333;font-weight: 500;}
+.report-main-box > .MuiGrid-grid-lg-3 > .MuiPaper-root p{float: right;font-size: 18px;color: #027de7;font-weight: 500;}
+
+.report-main-box > .MuiGrid-grid-xs-12{flex-grow: 0;max-width: 50%;flex-basis: 50%;padding: 0 15px;}
+.report-main-box > .MuiGrid-grid-xs-12 > .MuiPaper-root{margin: 0;box-shadow: 0 5px 32px 0 rgba(0,0,0,0.06);border: 0;margin-bottom: 20px;border-radius: 5px;padding: 10px 15px;}
+.report-main-box > .MuiGrid-grid-xs-12 > .MuiPaper-root h6{font-size: 18px;color: #333333;font-weight: 500;}
+.report-main-box > .MuiGrid-grid-xs-12 > .MuiPaper-root p{float: right;font-size: 18px;color: #027de7;font-weight: 500;}
+
+.report-tabs-data .tabs .MuiTabs-flexContainer{border-bottom: 1px solid #eeeded;margin-bottom: 15px; }
+.report-tabs-data .tabs .MuiTabs-indicator{display: none;}
+.report-tabs-data .tabs .MuiTabs-flexContainer button.MuiButtonBase-root{background: none;border-radius: 0;color: #666666;font-size: 17px;font-weight: 500;text-transform: uppercase;min-width: inherit;padding: 0;margin-right: 45px;margin-bottom: -2px;position: relative;border-bottom: 2px solid transparent;}
+.report-tabs-data .tabs .MuiTabs-flexContainer button.MuiButtonBase-root.Mui-selected,.report-tabs-data .tabs .MuiTabs-flexContainer button.MuiButtonBase-root:hover{color: #185d98;border-color: #185d98;}
+
+.MuiGrid-root.report-dashboardData,.MuiGrid-root.report-summary-box{width: 100%;}
+.report-dashboardData > div > .MuiCard-root{border-radius: 8px;border: 0;box-shadow: 0 4px 32px 0 rgba(0,0,0,0.06);padding: 25px 20px;height: auto;}
+
+.report-dashboardData > div > .MuiCard-root h3.MuiTypography-root{font-size: 16px;margin: 0;color: #444444;}
+.report-dashboardData > div .MuiAvatar-root{width: 100%;height: 100%;font-size: 30px;font-weight: 500;padding: 10px 26px;}
+
+.plot-container.plotly{text-align: center;}
+
+.plot-container.plotly > .svg-container{display: inline-block;}
+.MuiCardContent-root.chart-data{padding-top:10px;padding-bottom: 10px;  }
+
+.lastscanlist.MuiList-root{padding: 0;}
+.lastscanlist > li.MuiListItem-root{padding: 0;}
+.lastscanlist .MuiListItemText-root > span.MuiListItemText-primary{display: flex;grid-column-gap: normal;column-gap: normal;padding-bottom: 5px;
+    margin-bottom: 0px;border-bottom: 1px solid #e8edf5;}
+.lastscanlist .MuiListItemText-root > span.MuiListItemText-primary .lastscan-title{max-width: 60%;flex-basis: 60%;align-self: center;font-size: 15px;color: #027de7; font-weight: 600;}
+.lastscanlist .MuiListItemText-root > span.MuiListItemText-primary .lastscan-content{max-width: 40%;flex-basis: 40%;align-self: center;justify-content: end;display: flex; font-size: 15px;color: #444444;font-weight: 600;}
+
+
+.lastscanlist .MuiListItemText-root > span.MuiListItemText-primary .snapshot-block{display: table;grid-column-gap: normal;column-gap: normal;padding-bottom: 5px;margin-bottom: 0px;width: 100%;}
+
+.lastscanlist .MuiListItemText-root > span.MuiListItemText-primary .snapshot-block .snapshot-title{max-width: 100%;flex-basis: 100%;align-self: center;font-size: 15px;color: #027de7; font-weight: 600;}
+.lastscanlist .MuiListItemText-root > span.MuiListItemText-primary .snapshot-block .snapshot-content{max-width: 100%;flex-basis: 100%;align-self: center;justify-content: end; font-size: 15px;color: #444444;font-weight: 600;margin-top:10px; }
+
+.scoreblock-severity-div{justify-content: center;display: flex;}
+.scoreblock-severity-div > .scoreblock{max-width: 33.33%;flex-basis: 33.33%;padding: 0 2px !important;}
+.scoreblock-severity-div > .scoreblock .scoreblock-inner{display: table;width: 100%;height: 30px;border-radius: 5px;background: #fff;padding: 0 0px;border: 1px solid;}
+.scoreblock-inner > div {display: table-cell;vertical-align: middle;padding: 5px !important;font-size: 11px;font-weight: 600;text-align: center;}
+.scoreblock-inner > div.scorevalue{color: #fff;}
+
+.tabs-content-inner .report-history-dropdown{border: 1px solid #c5c5c5;height: 40px;padding: 6px 20px;border-radius: 50px;-moz-appearance: none;
+appearance: none;-webkit-appearance: none;width: 250px;}
+
+.cvesearchright-inner {background: #fff;padding: 15px !important;box-shadow: 0 0 0 1px rgba(63,63,68,0.05), 0 1px 2px 0 rgba(63,63,68,0.15);}
+.cvesearchright-inner > div {background: #f4f6fa;border-radius: 10px;margin-bottom: 15px;}
+.boxdetailtitle {padding: 10px 10px !important;border-radius: 10px 10px 0px 0px;background: #e8edf5;}
+.boxdetailtitle h2 {margin: 0;color: #027ae2;font-weight: 600;font-size: 18px;text-align: center;}
+.cvesearchright-inner .boxtitlecontent > div {padding: 0px 15px;margin-bottom: 15px;}
+.cvesearchright .boxtitlecontent ul.snapshotlist {width: 100%;}
+.boxtitlecontent .snapshotlist .MuiListItem-gutters {padding: 0px 0 3px 0;}
+.boxtitlecontent .snapshotlist .MuiListItem-gutters > div > span {display: flex;grid-column-gap: normal;column-gap: normal;padding-bottom: 5px;    margin-bottom: 10px;border-bottom: 1px solid #e8edf5;}
+.report-issuelist-right .snapshot-title, .report-issuelist-right .snapshot-content {max-width: 50%;flex-basis: 50%;
+    align-self: center;font-size: 15px;}
+.report-issuelist-right .snapshot-title {color: #027de7; font-weight: 600;}
+.report-issuelist-right .snapshot-content {justify-content: end;display: flex;text-align: right;color: #444444;font-weight: 600;}

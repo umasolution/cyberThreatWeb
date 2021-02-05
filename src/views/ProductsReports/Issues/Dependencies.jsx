@@ -11,7 +11,8 @@ import File from './File/File';
 import Skeleton from '@material-ui/lab/Skeleton';
 import { getBackgroundColorBySeverity, getFontColorBySeverity } from './../../../Util/Util';
 import ReportCount from './../ReportCount/ReportCount';
- import moment from 'moment';
+import moment from 'moment';
+import { Link as RouterLink ,useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
  root: {
@@ -32,9 +33,9 @@ const useStyles = makeStyles((theme) => ({
   // }
 }));
 
-const Dependencies = ({ issues, reportName, reportType,counter,history }) => {
+const Dependencies = ({ issues, reportName, reportType,counter,historydata,projectId }) => {
 
-
+  let history = useHistory();
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -48,7 +49,7 @@ const Dependencies = ({ issues, reportName, reportType,counter,history }) => {
   const [selected, setSelected] = React.useState([]);
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
-  const [selectData, setSelectData] = React.useState();
+  const [selectData, setSelectData] = React.useState(reportName);
 
   const fileNames = issues ? Object.keys(issues) : [];
 
@@ -63,15 +64,11 @@ const Dependencies = ({ issues, reportName, reportType,counter,history }) => {
   }, []);
 
 
-
- 
-
   const handleSelect = (event) => {
     const value = event.target.value;
-    setSelectData(value); 
-    console.log(selectData)
-    history.push('/app/reports/dashboard/'+value);
-    //history.go(0);
+    setSelectData(value);     
+    history.push(`/app/productsreports/${projectId}/${value}`);
+    history.go(0);
   };
 
   const getPlatformResult = () => {
@@ -191,11 +188,11 @@ const Dependencies = ({ issues, reportName, reportType,counter,history }) => {
       style={{ display: 'block', margin: '5px' }}
     >
       {
-          history && (
+          historydata && (
             <>
             <Grid xs={12} container justify="flex-end">
-              <select value={selectData} onChange={handleSelect.bind(this)} handleSelect className="type-dropdown">
-              {Object.entries(history).map(([key, value]) => {                  
+              <select value={selectData} onChange={handleSelect.bind(this)} handleSelect className="report-history-dropdown">
+              {Object.entries(historydata).map(([key, value]) => {                  
                   return (
                       <option key={value} value={value}>{moment(value.replace(".json","").replace("_"," ")).format('MMMM Do YYYY, h:mm:ss a')}</option>
                   );
@@ -205,16 +202,12 @@ const Dependencies = ({ issues, reportName, reportType,counter,history }) => {
             </>
            )
       }
-      <Grid
+    <Grid
            container
               style={{ marginTop: 10,marginBottom: 10 }}
               spacing={2}
-              className="report-dashboardData"
-           >
-          {Object.keys(counter).map(key => 
-            <ReportCount header={key} index={key%4} value={counter[key]} />
-          )}
-      </Grid>
+              className="report-issues-tab"
+           >   
     <Grid
           item
           xs={12}          
@@ -375,6 +368,7 @@ const Dependencies = ({ issues, reportName, reportType,counter,history }) => {
           </Box>
         </Grid>
         </Grid>
+         </Grid>
   );
 };
 

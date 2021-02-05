@@ -77,9 +77,7 @@ const useStyles = makeStyles((theme) => ({
       padding:8,
       color:'#000',
       position: 'relative',
-      '& > div' : {
-        paddingLeft: 60,
-      }
+      
     },
     searchbarArea: {
       width: '100%',
@@ -91,6 +89,21 @@ const useStyles = makeStyles((theme) => ({
       },
       left:0,
     },
+    searchButton: {
+      backgroundColor:'#ff0476',
+      padding:'0 !important',
+      textAlign: 'center',
+      width: 176,
+      height: 45,
+      lineHeight: '45px',
+      color: '#fff',
+      borderRadius: 50,
+      fontWeight: theme.fontfamily.bold,
+      fontFamily: '"Montserrat",sans-serif',
+      letterSpacing: '1px',
+      border:0,
+      fontSize:'16px',
+    },
     chippaper : {
       display: 'flex',
       justifyContent: 'center',
@@ -98,11 +111,12 @@ const useStyles = makeStyles((theme) => ({
       listStyle: 'none',
       padding: theme.spacing(0.5),
       margin: 0,
+      boxShadow: 'none',
     },
     chipbar : {
       width: '100%',
       bottom: -70,
-      margin: '38px auto',
+      margin: '10px auto',
       maxWidth: '100%',
       [theme.breakpoints.down('sm')]: {
         bottom: -90,
@@ -146,6 +160,7 @@ export const VuldbLogin = (/* {   } */) => {
     const [noresult, setNoResult] = useState(false);
     const [apiurl, setApiUrl] = useState();
     const [fieldsData, setFieldsData] = useState();
+    const [emptyData, setEmptyData] = useState(false);
 
     const aurl = new URL(Axios.defaults.baseURL);
     const apiparams = new URLSearchParams(aurl.search);
@@ -207,14 +222,20 @@ export const VuldbLogin = (/* {   } */) => {
         setSingleRows();
         setisSearch(true);
         setNoResult(true);
+        apiurl.delete('offset');
+        apiurl.delete('limit');        
         var url = `${mainurl}?${apiurl.toString()}`;
         let response = await Axios.get(url);
-        setTabsData(response.data);
-        setPage(1);
-        let totalpages = Math.ceil(response.data.total/perRow);
-        setTotalpages(totalpages);
-        setperRow(response.data.rowlimit);
-        setisSearch(false);
+        if(response.data) {
+          setTabsData(response.data);
+          setPage(1);
+          let totalpages = Math.ceil(response.data.total/perRow);
+          setTotalpages(totalpages);
+          setperRow(response.data.rowlimit);
+          setisSearch(false);                      
+        } else { 
+           setEmptyData(true); 
+        }
     }
 
     const handleChangePage = async (event, value) => {
@@ -392,12 +413,16 @@ export const VuldbLogin = (/* {   } */) => {
 
     }
 
+    const handleClick = (event) => {
+      callApi();
+    } 
+
     const keyPress = (event) => {
       if (event.keyCode === 13) {
         onSearchClicked();
       }
     }
-    const handleClick = (event) => {
+    const addTagClick = (event) => {
         onSearchClicked();
      }
 
@@ -416,38 +441,69 @@ export const VuldbLogin = (/* {   } */) => {
             var regexcve2 = /CVE-/;
             if(m){
               if(m[1]=='language'){
-                let newSelected = [];
-                newSelected = newSelected.concat(chipData, 'language:'+m[2]);
-                apiurl.set('language', m[2]);
-                setChipData(newSelected);
+                if(apiurl.has('language') === true) {
+                  alert('already added language');
+                } else {
+                  let newSelected = [];
+                  newSelected = newSelected.concat(chipData, 'language:'+m[2]);
+                  apiurl.set('language', m[2]);
+                  setChipData(newSelected);
+                }
               } else if(m[1]=='advisory') {
-                let newSelected = [];
-                newSelected = newSelected.concat(chipData, 'advisory:'+m[2]);
-                apiurl.set('advisory', m[2]);
-                setChipData(newSelected);
+                if(apiurl.has('advisory') === true) {
+                  alert('already added advisory');
+                } else {
+                  let newSelected = [];
+                  newSelected = newSelected.concat(chipData, 'advisory:'+m[2]);
+                  apiurl.set('advisory', m[2]);
+                  setChipData(newSelected);
+                }
               } else if(m[1]=='platform') {
-                let newSelected = [];
-                newSelected = newSelected.concat(chipData, 'platform:'+m[2]);
-                apiurl.set('platform', m[2]);
-                setChipData(newSelected);
+                if(apiurl.has('platform') === true) {
+                  alert('already added platform');
+                } else {
+                  let newSelected = [];
+                  newSelected = newSelected.concat(chipData, 'platform:'+m[2]);
+                  apiurl.set('platform', m[2]);
+                  setChipData(newSelected);
+                }
               } else if(m[1]=='plugin') {
-                let newSelected = [];
-                newSelected = newSelected.concat(chipData, 'plugin:'+m[2]);
-                apiurl.set('plugin', m[2]);
-                setChipData(newSelected);
+                if(apiurl.has('plugin') === true) {
+                  alert('already added plugin');
+                } else {
+                  let newSelected = [];
+                  newSelected = newSelected.concat(chipData, 'plugin:'+m[2]);
+                  apiurl.set('plugin', m[2]);
+                  setChipData(newSelected);
+                }
+              } else if(m[1]=='severity') {
+                if(apiurl.has('severity') === true) {
+                  alert('already added Severity');
+                } else {
+                  let newSelected = [];
+                  newSelected = newSelected.concat(chipData, 'severity:'+m[2]);
+                  apiurl.set('severity', m[2]);
+                  setChipData(newSelected);
+                }
+              } else if(m[1]=='accessvector') {
+                if(apiurl.has('accessvector') === true) {
+                  alert('already added AccessVector');
+                } else {
+                  let newSelected = [];
+                  newSelected = newSelected.concat(chipData, 'accessvector:'+m[2]);
+                  apiurl.set('accessvector', m[2]);
+                  setChipData(newSelected);
+                }
               } 
             }
-        })
+        })        
         setApiUrl(apiurl);
-        /*callApi();*/
+        setCVEInput('');
         
     }
     
    }
  
-
-    
-
     const severitys = [
       {
         value: 0,
@@ -575,7 +631,8 @@ export const VuldbLogin = (/* {   } */) => {
                         </TableRow> 
                     </TableBody>
                       
-                </>):(<> <TableHead>
+                </>):(<>
+                  <TableHead>
                       <TableRow>
                         {
                           Object.keys(tabsData.columns).map((key, i) => (
@@ -589,7 +646,8 @@ export const VuldbLogin = (/* {   } */) => {
                            Action
                         </TableCell>
                       </TableRow>
-                    </TableHead><TableBody>
+                    </TableHead>
+                    <TableBody>
                       {
                           Object.values(tabsData.results).map((row) => {
                             const isItemSelected = isSelected(row[`cve_id`])
@@ -631,7 +689,8 @@ export const VuldbLogin = (/* {   } */) => {
                           ) }
                           )
                         }  
-                    </TableBody></>)}
+                    </TableBody>
+                    </>)}
                   </Table>
                 </TableContainer>
               </Paper>
@@ -1312,10 +1371,6 @@ export const VuldbLogin = (/* {   } */) => {
         setSnackbarMessage(message)
     }
 
-    
-
-
-
 
     const getSearchBox = (chipData) => {
       return (
@@ -1326,7 +1381,15 @@ export const VuldbLogin = (/* {   } */) => {
                 spacing={0}
                 className={classes.container}
               > 
-              <Container maxWidth="lg" className={classes.searchbar}>    
+              <Container maxWidth="lg" className={classes.searchbar}> 
+                <Box m={3}
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  ><Typography >
+                    You can search like example : "advisory:value" OR "language:value" OR "platform:value" "plugin:value" OR "severity:value" OR "accessvector:value"
+                  </Typography> 
+                </Box>  
                 <Box mt={3}
                   display="flex"
                   justifyContent="center"
@@ -1344,31 +1407,40 @@ export const VuldbLogin = (/* {   } */) => {
                   id="cve"
                   placeholder="Search Vulnerabilities"
                 />
-                <button onClick={handleClick} className={classes.searchButton}>Add</button>
+                <button onClick={addTagClick} className={classes.searchButton}>Add</button>
                 </Box>
+                {chipData.length > 0 ? (<Box maxWidth="lg" className={classes.chipbar}>
+                <Grid
+                      container
+                      spacing={0}
+                      className={classes.container}
+                    >
+                   <Paper component="ul" className={classes.chippaper}>
+                    {chipData ? Object.entries(chipData).map((data, i) => ( 
+                        <li key={i}>
+                          <Chip
+                            label={data[1]}
+                            onDelete={handleChipDelete(data[0])}
+                            className={classes.chip}
+                            color="secondary"
+                          />
+                        </li>
+                    )) : ''}              
+                    </Paper>
+                    </Grid>
+                    <Box
+                        display="flex">
+                        <Box m="auto">
+                         <button onClick={handleClick} className={classes.searchButton}>Search</button>
+                        </Box>
+                      </Box>
+                </Box>
+                ): '' }
+                
               </Container>
                </Grid> 
           </Container>
-          {chipData ? (<Container maxWidth="lg" className={classes.chipbar}>
-          <Grid
-                container
-                spacing={0}
-                className={classes.container}
-              >
-             <Paper component="ul" className={classes.chippaper}>
-              {chipData ? Object.entries(chipData).map((data, i) => ( 
-                  <li key={i}>
-                    <Chip
-                      label={data[1]}
-                      onDelete={handleChipDelete(data[0])}
-                      className={classes.chip}
-                      color="secondary"
-                    />
-                  </li>
-              )) : ''}              
-              </Paper>
-              </Grid>
-          </Container>): '' }
+          
           </>
        )   
     }

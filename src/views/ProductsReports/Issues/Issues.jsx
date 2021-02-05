@@ -1,4 +1,4 @@
-import { Divider, Grid, Typography, Paper,Table,TableBody,TableCell,TableContainer,TableHead,TablePagination,TableRow,Box
+import { Divider, Grid, Typography, Paper,Table,TableBody,TableCell,TableContainer,TableHead,TablePagination,TableRow,Box,ListItemText
  } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -11,7 +11,8 @@ import Skeleton from '@material-ui/lab/Skeleton';
 import Pagination from '@material-ui/lab/Pagination';
 import { getBackgroundColorBySeverity, getFontColorBySeverity } from './../../../Util/Util';
 import ReportCount from './../ReportCount/ReportCount';
-
+import { Link as RouterLink ,useHistory } from 'react-router-dom';
+import moment from 'moment';
 const useStyles = makeStyles((theme) => ({
   root: {
       flexGrow: 1,
@@ -25,8 +26,8 @@ const useStyles = makeStyles((theme) => ({
   
 }));
 
-const Issues = ({ issues, reportName, reportType,counter }) => {
-
+const Issues = ({ issues, reportName, reportType,counter,historydata,projectId }) => {
+  let history = useHistory();
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const [state, setState] = React.useState({
@@ -42,171 +43,39 @@ const Issues = ({ issues, reportName, reportType,counter }) => {
   const [selected, setSelected] = React.useState([]);
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
+  const [selectData, setSelectData] = React.useState(reportName);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
+
+  const [loadingRows, setloadingRows] = React.useState(false);
+
+  const handleSelect = (event) => {
+    const value = event.target.value;
+    setSelectData(value);     
+    history.push(`/app/productsreports/${projectId}/${value}`);
+    history.go(0);
   };
 
+ 
+
   const handleClickRow = async (event, value) => {
-    const selectedIndex = selected.indexOf(value);
+    setloadingRows(false);
+    setSingleRows();
+    setloadingRows(true);    
     let newSelected = [];
     newSelected = newSelected.concat([], value);
     setSelected(newSelected);
+    setSingleRows(issues.data[value]);
   }; 
-  const getPlatformResult = () => {
+
+  const cvesearchcenter = (issues,col) => {
+
     return (
       <>
-        {
-          Object.keys(issues).map(issue => {
-            return (
-              issue !== 'severity' ?
-                (
-                  <>
-                    <Typography
-                      variant="h2"
-                      color="primary"
-                    >
-                      {issue}
-                    </Typography>
-
-                    {
-                      issues[issue].map(iss => {
-                        return (
-                          <div >
-                            {Object.keys(iss).map(i => {
-                              return (
-                                <Typography
-                                  variant="h6"
-                                  style={{ color: '#ab396a', marginLeft: '10px' }}
-                                >
-                                  {i}
-                                  {' '}
-:
-                                  {iss[i]}
-                                </Typography>
-                              )
-                            })}
-                            <Divider />
-                          </div>
-                        )
-
-                      })
-                    }
-                  </>
-                )
-                :
-                (
-                  <>
-                  </>
-                )
-            )
-          })
-        }
-
-      </>
-    )
-  }
-
-  const handleCheckBoxChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
-  };
-
-  const getLanguageReport = () => {
-    return (
-      <>
-        <div className={classes.root}>
-          <div style={{ display: 'flex' }}>
-            <List component="nav" aria-label="main mailbox folders">
-              <ListItem button>
-                <FormControlLabel
-                  control={(
-                    <Checkbox
-                      checked={state.isHighIssueChecked}
-                      onChange={handleCheckBoxChange}
-                      name="isHighIssueChecked"
-                      color="primary"
-                    />
-                  )}
-                  label="High"
-                />
-              </ListItem>
-              <ListItem button>
-
-                <FormControlLabel
-                  control={(
-                    <Checkbox
-                      checked={state.isMediumIssueChecked}
-                      onChange={handleCheckBoxChange}
-                      name="isMediumIssueChecked"
-                      color="primary"
-                    />
-                  )}
-                  label="Medium"
-                />
-              </ListItem>
-
-              <ListItem button>
-                <FormControlLabel
-                  control={(
-                    <Checkbox
-                      checked={state.isLowIssueChecked}
-                      onChange={handleCheckBoxChange}
-                      name="isLowIssueChecked"
-                      color="primary"
-                    />
-                  )}
-                  label="Low"
-                />
-              </ListItem>
-
-            </List>
-            <div style={{ width: '100%' }}>
-              {state.isHighIssueChecked &&
-                (issues.HIGH || issues.high) ?
-                <>
-                  <PackageJSON jsonName="HIGH" packageJSON={issues.HIGH ? issues.HIGH : issues.medium} />
-                </>
-                : ''}
-              {state.isMediumIssueChecked &&
-                (issues.MEDIUM || issues.medium) ?
-                <>
-                  <PackageJSON jsonName="MEDIUM" packageJSON={issues.MEDIUM ? issues.MEDIUM : issues.medium} />
-                </>
-                : ''}
-              {state.isLowIssueChecked &&
-                (issues.LOW || issues.low) ? <>
-                  <PackageJSON jsonName="LOW" packageJSON={issues.LOW ? issues.LOW : issues.low} />
-                </>
-                : ''}
-            </div>
-          </div>
-        </div>
-
-      </>
-    );
-  }
-
-  return (
-    <Grid
-      container
-      spacing={1}
-      style={{ display: 'block', margin: '5px' }}
-    >
       <Grid
-           container
-              style={{ marginTop: 10,marginBottom: 10 }}
-              spacing={2}
-              className="report-dashboardData"
-           >
-          {Object.keys(counter).map(key => 
-            <ReportCount header={key} index={key%4} value={counter[key]} />
-          )}
-      </Grid>
-    <Grid
           item
           xs={12}          
-          md={12}
-          className="repost-issuelist"
+          md={col}
+          className="report-issuelist-left"
         >
       <Box position="relative">
       <Paper className={classes.root}>
@@ -342,6 +211,83 @@ const Issues = ({ issues, reportName, reportType,counter }) => {
           </Paper>
       </Box>
     </Grid>
+      </>
+     )
+   }
+  
+  return (
+    <Grid
+      container
+      spacing={1}
+      style={{ display: 'block', margin: '5px' }}
+    >
+    {
+          historydata && (
+            <>
+            <Grid xs={12} container justify="flex-end">
+              <select value={selectData} onChange={handleSelect.bind(this)} handleSelect className="report-history-dropdown">
+              {Object.entries(historydata).map(([key, value]) => {                  
+                  return (
+                      <option key={value} value={value}>{moment(value.replace(".json","").replace("_"," ")).format('MMMM Do YYYY, h:mm:ss a')}</option>
+                  );
+              })}
+            </select>
+          </Grid>
+            </>
+           )
+      }
+      
+      <Grid
+           container
+              style={{ marginTop: 10,marginBottom: 10 }}
+              spacing={2}
+              className="report-issues-tab"
+           > 
+     {loadingRows ?cvesearchcenter(issues,8):cvesearchcenter(issues,12)}
+     {loadingRows ?(<>  
+              <Grid
+                item
+                xs={12}
+                md={4}
+                className="report-issuelist-right"
+              >
+              <Box
+                className="cvesearchright-inner"
+                borderRadius={5}
+              >
+              
+              {singlerows ? (<> 
+              <Box className={classes.boxrightheader}
+                          display="flex"
+                          flexDirection="column"
+                          justifyContent="center"
+                          borderRadius={16}>
+                          <Box className="boxdetailhead">
+                              <Box className="boxdetailtitle">
+                                  <Typography gutterBottom variant="h5" component="h2">
+                                   More Data
+                                  </Typography>
+                              </Box> 
+                              <Box className="boxtitlecontent"> 
+                              <Typography variant="body2" color="textSecondary" component="div" className="scoreblock-div">
+                              <List component="ul" className="snapshotlist">
+                               { Object.keys(issues.display.option).map((vkey) => (                                 
+                                 <ListItem key={issues.display.option[vkey].field}>
+                                    <ListItemText>
+                                    <Box className="snapshot-title">{issues.display.option[vkey].title} : </Box>
+                                    <Box className="snapshot-content">{singlerows[`${issues.display.option[vkey].field}`].replace(',', '\n') }</Box>
+                                    </ListItemText>
+                                  </ListItem>
+                                )
+                                )}
+                              </List>
+                            </Typography>
+                            </Box>
+                          </Box>
+                    </Box></>): ''} 
+              </Box></Grid>
+              </>):''}
+            </Grid>  
      </Grid>
   );
 };

@@ -48,48 +48,7 @@ const ReportHeader = ({ header }) => {
         SCAN REPORT FOR {header.Project.toUpperCase()}
       </Typography>
     </Grid>
-    {/*<Grid
-        container
-        spacing={1}
-        className={classes.mainGrid}
-      >
-
-        { Object.entries(header.display).map((severity) => {
-            return (
-                <Grid
-                  item
-                  lg={4}
-                  sm={6}
-                  xs={12}
-                >
-              {severity[1].field == 'Date'?
-              (<Card key={severity[0]}>
-                  <Typography
-                    variant="h6"
-                    color="textPrimary"
-                    className={classes.title}
-                  >
-                    {severity[1].title}
-                  </Typography>
-                  <Typography variant="h6" className={classes.secondaryText}>
-                    {moment(header[severity[1].field].replace('_', ' ')).format("YYYY-MM-DD H:I:s")}
-                  </Typography>
-                </Card>) : (<Card key={severity[0]}>
-                  <Typography
-                    variant="h6"
-                    color="textPrimary"
-                    className={classes.title}
-                  >
-                    {severity[1].title}
-                  </Typography>
-                  <Typography variant="h6" className={classes.secondaryText}>
-                    {header[severity[1].field]}
-                  </Typography>
-                </Card>)}
-              </Grid>)  
-            })
-      }
-      </Grid>*/}
+    
     <Grid
       container
       spacing={1}
@@ -100,8 +59,9 @@ const ReportHeader = ({ header }) => {
         severity[1].field == 'Date'?
         ( <Grid
               item
-              lg={3}
-              sm={6}
+              lg={6}
+              md={6}
+              sm={12}
               xs={12}              
             >
            <Card key={severity[0]} className={classes.cardMain}>
@@ -117,9 +77,11 @@ const ReportHeader = ({ header }) => {
             </Typography>
           </Card> </Grid>) : (<Grid
               item
-              lg={3}
-              sm={6}
+              lg={6}
+              md={6}
+              sm={12}
               xs={12}
+              xl={4}
             >
             <Card key={severity[0]} className={classes.cardMain}>
             <Typography

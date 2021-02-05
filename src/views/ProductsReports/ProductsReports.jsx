@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     width: '100%',
-    backgroundColor: '#f1f1f1',
+    backgroundColor: '#fafafc',
   },
   tabRoot: {
     flexGrow: 1,
@@ -156,15 +156,15 @@ const ProductsReports = () => {
         </TabPanel>
         <TabPanel value={tabValue} index={1}>
           {!isDocker
-            ? <Issues reportType={reportType} reportName={reportName} issues={productReportResponse.Issues} counter={productReportResponse.summary.counter} history={productReportResponse.summary.history} />
+            ? <Issues reportType={reportType} reportName={reportName} issues={productReportResponse.Issues} counter={productReportResponse.summary.counter} historydata={productReportResponse.summary.history} projectId={projectId}/>
             : <DockerIssues reportType={reportType} reportName={reportName} issues={productReportResponse.images} />}
 
         </TabPanel>
         <TabPanel value={tabValue} index={2}>
-          {productReportResponse.inventory ? (<Dependencies issues={reportType === 'application' ? productReportResponse.inventory : productReportResponse.inventory} reportType={reportType} reportName={reportName} counter={productReportResponse.summary.counter} history={productReportResponse.summary.history}  />) : ''}             
+          {productReportResponse.inventory ? (<Dependencies issues={reportType === 'application' ? productReportResponse.inventory : productReportResponse.inventory} reportType={reportType} reportName={reportName} counter={productReportResponse.summary.counter} historydata={productReportResponse.summary.history} projectId={projectId}  />) : ''}             
         </TabPanel>
         <TabPanel value={tabValue} index={3}>
-          <Remediation remediation={productReportResponse.remediation} counter={productReportResponse.summary.counter} />
+          <Remediation remediation={productReportResponse.remediation} counter={productReportResponse.summary.counter} reportName={reportName} historydata={productReportResponse.summary.history} projectId={projectId} />
         </TabPanel>
       </>
     );
@@ -202,7 +202,7 @@ const ProductsReports = () => {
           flexDirection="column"
           justifyContent="left"
           height="100%"
-          style={{ marginTop: '25px' }}
+          style={{ marginTop: '25px',width: '100%' }}
         >
           {productReportResponse ?
             (

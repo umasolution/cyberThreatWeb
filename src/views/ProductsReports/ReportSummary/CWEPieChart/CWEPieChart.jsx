@@ -9,7 +9,7 @@ import {
   makeStyles
 } from '@material-ui/core';
 
-const CWEPieChart = ({ cwe, divId, bgColor = "#fff", width = 300, height= 280, title="CWE" }) => {
+const CWEPieChart = ({ cwe, divId, bgColor = "#fff", width = 200, height= 200, title="CWE" }) => {
   useEffect(() => {
     if (cwe) {
       const labels = [];

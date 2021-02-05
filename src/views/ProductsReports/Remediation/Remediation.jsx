@@ -8,6 +8,8 @@ import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ReportCount from './../ReportCount/ReportCount';
+import { Link as RouterLink ,useHistory } from 'react-router-dom';
+import moment from 'moment';
 import './Remediation.css';
 
 const useStyles = makeStyles((theme) => ({
@@ -29,13 +31,17 @@ const useStyles = makeStyles((theme) => ({
   // }
 }));
 
-const Remediation = ({remediation,counter}) => {
+const Remediation = ({remediation,counter, reportName,historydata,projectId}) => {
 
+  let history = useHistory();
   const classes = useStyles();
 
   const [issearch, setisSearch] = React.useState(false);
 
   const [singlerows, setSingleRows] = React.useState();
+
+  const [selectData, setSelectData] = React.useState(reportName);
+
 
   const [selected, setSelected] = React.useState([]);
   const isSelected = (name) => selected.indexOf(name) !== -1;
@@ -45,22 +51,40 @@ const Remediation = ({remediation,counter}) => {
       setExpand(!expand);
    };
 
+   const handleSelect = (event) => {
+    const value = event.target.value;
+    setSelectData(value);     
+    history.push(`/app/productsreports/${projectId}/${value}`);
+    history.go(0);
+  };
+
   return (
     <Grid
       container
       spacing={1}
       style={{ display: 'block', margin: '5px' }}
     >
-      <Grid
-           container
-              style={{ marginTop: 10,marginBottom: 10 }}
-              spacing={2}
-              className="report-dashboardData"
-           >
-          {Object.keys(counter).map(key => 
-            <ReportCount header={key} index={key%4} value={counter[key]} />
-          )}
-      </Grid>
+    {
+          historydata && (
+            <>
+            <Grid xs={12} container justify="flex-end">
+              <select value={selectData} onChange={handleSelect.bind(this)} handleSelect className="report-history-dropdown">
+              {Object.entries(historydata).map(([key, value]) => {                  
+                  return (
+                      <option key={value} value={value}>{moment(value.replace(".json","").replace("_"," ")).format('MMMM Do YYYY, h:mm:ss a')}</option>
+                  );
+              })}
+            </select>
+          </Grid>
+            </>
+           )
+      }
+    <Grid
+         container
+            style={{ marginTop: 10,marginBottom: 10 }}
+            spacing={2}
+            className="report-issues-tab"
+         >   
     <Grid
           item
           xs={12}          
@@ -214,6 +238,7 @@ const Remediation = ({remediation,counter}) => {
             
           </Box>
         </Grid>
+       </Grid> 
        </Grid> 
   );
 };
