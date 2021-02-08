@@ -1,4 +1,20 @@
 
+.rounded-color-0{
+  color: #fff;
+  background-color: #00d1ce;
+}
+.rounded-color-1{
+  color: #fff;
+  background-color: #fe0a7b;
+}
+.rounded-color-2{
+  color: #fff;
+  background-color: #ff9f00;
+}
+.rounded-color-3{
+  color: #fff;
+  background-color: #027de7;
+}
 .dashboardsearch{margin-left: 100px;}
 .MuiFormControl-root.searchbtn{ width: 320px !important;}
 .dashboardsearch .MuiInput-formControl {border: 1px solid #c5c5c5;border-radius: 50px;display: inline-block;height: 40px;}
@@ -21,6 +37,7 @@
 .dashboardData > div >  .MuiPaper-root h3.MuiTypography-root{font-size: 16px;margin:0; }
 
  .MuiTable-root .ReactVirtualized__List{width: 100% !important;}
+ 
 
 .MuiDrawer-paperAnchorLeft .scrollbar-container > .MuiBox-root{padding: 0;}
 .MuiDrawer-paperAnchorLeft .MuiList-subheader {padding-bottom: 0;}
@@ -31,6 +48,12 @@
 
 .MuiDrawer-paperAnchorLeft .MuiList-subheader .MuiList-root .MuiListItem-root a.MuiButton-root:after {width: 0;height: 0;border-width: 20px 10px 20px 0;border-color: transparent #FFFFFF transparent transparent;border-style: solid;position: absolute;
 right: 0px;content: "";}
+
+.user-nav a[class*='makeStyles-active'] {background: #155288; }
+.user-nav a[class*='makeStyles-active']::after {opacity: 1 !important;}
+
+.MuiDrawer-paperAnchorLeft .MuiList-subheader .MuiList-root .MuiListItem-root a.MuiButton-root:after{opacity: 0}
+.MuiDrawer-paperAnchorLeft .MuiList-subheader .MuiList-root .MuiListItem-root a.MuiButton-root:hover:after{opacity: 1;}
 
 #myDiv .modebar ,#myDiv2 .modebar {
   position: absolute;

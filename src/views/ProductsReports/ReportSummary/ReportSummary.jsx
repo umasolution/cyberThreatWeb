@@ -25,9 +25,11 @@ const ReportSummary = ({ summary, headerDate, projectName, isDocker = false, div
               spacing={2}
               className="report-dashboardData"
            >
-          {Object.keys(summary.counter).map(key => 
-            <ReportCount header={key} index={key%4} value={summary.counter[key]} />
-          )}
+          {
+          Object.entries(summary.counter).map(([key, value],index) => (
+            <ReportCount header={key} value={value} index={index%4} />
+          ))}
+          
       </Grid>      
       {
         isDocker ? (

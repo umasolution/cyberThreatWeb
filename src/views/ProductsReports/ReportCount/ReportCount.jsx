@@ -39,9 +39,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function ReportCount({ className,header, value,index, ...rest }) {
+function ReportCount({ className,header,value,index, ...rest }) {
   const classes = useStyles();  
-
+  
   return (
     <Grid
         item

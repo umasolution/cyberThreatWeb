@@ -66,14 +66,23 @@
   border-color: white;
 }
 
+.rounded-color-0{
+  color: #fff;
+  background-color: #00d1ce;
+}
+.rounded-color-1{
+  color: #fff;
+  background-color: #fe0a7b;
+}
+.rounded-color-2{
+  color: #fff;
+  background-color: #ff9f00;
+}
+.rounded-color-3{
+  color: #fff;
+  background-color: #027de7;
+}
 
-
-
-
-
-
-
-.makeStyles-wrapper-8{background: #fafafc !important;}
 .user-nav .MuiDrawer-paperAnchorLeft{border: 0;}
 
 .report-header-data .report-main-title h6.MuiTypography-h6{color: #666666;font-size: 20px; text-transform: uppercase;font-weight: 600;line-height: 1;margin-bottom: 25px; letter-spacing: 0.5px;padding: 0 8px;}
@@ -82,12 +91,6 @@
 .report-tabs-data .MuiTypography-root.MuiTypography-body1 .MuiBox-root{padding: 0}
 
 .report-main-box.MuiGrid-root{margin: 0 -15px;margin-bottom: 15px !important; width: auto;}
-.report-main-box > .MuiGrid-grid-lg-3{flex-grow: 0;max-width: 50%;flex-basis: 50%;padding: 0 15px;}
-.report-main-box > .MuiGrid-grid-lg-3 > .MuiPaper-root{margin: 0;box-shadow: 0 5px 32px 0 rgba(0,0,0,0.06);border: 0;margin-bottom: 20px;border-radius: 5px;padding: 10px 15px;}
-.report-main-box > .MuiGrid-grid-lg-3 > .MuiPaper-root h6{font-size: 18px;color: #333333;font-weight: 500;}
-.report-main-box > .MuiGrid-grid-lg-3 > .MuiPaper-root p{float: right;font-size: 18px;color: #027de7;font-weight: 500;}
-
-.report-main-box > .MuiGrid-grid-xs-12{flex-grow: 0;max-width: 50%;flex-basis: 50%;padding: 0 15px;}
 .report-main-box > .MuiGrid-grid-xs-12 > .MuiPaper-root{margin: 0;box-shadow: 0 5px 32px 0 rgba(0,0,0,0.06);border: 0;margin-bottom: 20px;border-radius: 5px;padding: 10px 15px;}
 .report-main-box > .MuiGrid-grid-xs-12 > .MuiPaper-root h6{font-size: 18px;color: #333333;font-weight: 500;}
 .report-main-box > .MuiGrid-grid-xs-12 > .MuiPaper-root p{float: right;font-size: 18px;color: #027de7;font-weight: 500;}
@@ -98,10 +101,10 @@
 .report-tabs-data .tabs .MuiTabs-flexContainer button.MuiButtonBase-root.Mui-selected,.report-tabs-data .tabs .MuiTabs-flexContainer button.MuiButtonBase-root:hover{color: #185d98;border-color: #185d98;}
 
 .MuiGrid-root.report-dashboardData,.MuiGrid-root.report-summary-box{width: 100%;}
-.report-dashboardData > div > .MuiCard-root{border-radius: 8px;border: 0;box-shadow: 0 4px 32px 0 rgba(0,0,0,0.06);padding: 25px 20px;height: auto;}
+.report-dashboardData > div > .MuiCard-root{border-radius: 8px;border: 0;box-shadow: 0 4px 32px 0 rgba(0,0,0,0.06);padding: 25px 20px;height: 95px;}
 
 .report-dashboardData > div > .MuiCard-root h3.MuiTypography-root{font-size: 16px;margin: 0;color: #444444;}
-.report-dashboardData > div .MuiAvatar-root{width: 100%;height: 100%;font-size: 30px;font-weight: 500;padding: 10px 26px;}
+.report-dashboardData > div .MuiAvatar-root{width: 100%;height: 100%;font-size: 18px;font-weight: 500;padding: 10px 26px;}
 
 .plot-container.plotly{text-align: center;}
 
@@ -124,7 +127,7 @@
 .scoreblock-severity-div{justify-content: center;display: flex;}
 .scoreblock-severity-div > .scoreblock{max-width: 33.33%;flex-basis: 33.33%;padding: 0 2px !important;}
 .scoreblock-severity-div > .scoreblock .scoreblock-inner{display: table;width: 100%;height: 30px;border-radius: 5px;background: #fff;padding: 0 0px;border: 1px solid;}
-.scoreblock-inner > div {display: table-cell;vertical-align: middle;padding: 5px !important;font-size: 11px;font-weight: 600;text-align: center;}
+.scoreblock-inner > div {display: block;vertical-align: middle;padding: 5px !important;font-size: 11px;font-weight: 600;text-align: center;}
 .scoreblock-inner > div.scorevalue{color: #fff;}
 
 .tabs-content-inner .report-history-dropdown{border: 1px solid #c5c5c5;height: 40px;padding: 6px 20px;border-radius: 50px;-moz-appearance: none;
@@ -138,7 +141,31 @@ appearance: none;-webkit-appearance: none;width: 250px;}
 .cvesearchright .boxtitlecontent ul.snapshotlist {width: 100%;}
 .boxtitlecontent .snapshotlist .MuiListItem-gutters {padding: 0px 0 3px 0;}
 .boxtitlecontent .snapshotlist .MuiListItem-gutters > div > span {display: flex;grid-column-gap: normal;column-gap: normal;padding-bottom: 5px;    margin-bottom: 10px;border-bottom: 1px solid #e8edf5;}
-.report-issuelist-right .snapshot-title, .report-issuelist-right .snapshot-content {max-width: 50%;flex-basis: 50%;
-    align-self: center;font-size: 15px;}
+.report-issuelist-right .snapshot-title{max-width: 50%;flex-basis: 50%;align-self: center;font-size: 15px;}
+.report-issuelist-right .snapshot-content {max-width: 50%;flex-basis: 50%;align-self: center;font-size: 15px;word-break: break-all;padding-left: 20px !important;}
 .report-issuelist-right .snapshot-title {color: #027de7; font-weight: 600;}
-.report-issuelist-right .snapshot-content {justify-content: end;display: flex;text-align: right;color: #444444;font-weight: 600;}
+.report-issuelist-right .snapshot-content {justify-content: start;display: flex;text-align: right;color: #444444;font-weight: 600;text-align: left;}
+
+
+
+
+
+.project-summary-box .MuiTextField-root.secondary{width: calc(100% - 40px);padding: 15px 0 15px 15px;margin-left: 0 !important;border-radius: 50px;}
+.project-summary-box .MuiPaper-root .MuiIconButton-root{padding: 24px 5px;}
+.project-summary-box .MuiFormControl-root.secondary .MuiInput-formControl{border: 1px solid #c5c5c5;border-radius: 50px;height: 42px;width: 100%;}
+.project-summary-box .MuiFormControl-root.secondary .MuiInput-formControl:before,.project-summary-box .MuiFormControl-root.secondary .MuiInput-formControl:after{display: none;}
+.project-summary-box .MuiFormControl-root.secondary .MuiInput-formControl input{padding: 0px 15px;height: 40px;width: 100%;}
+
+.project-summary-box .MuiTableCell-body{font-size: 20px;color: #027de7;padding: 12px 10px;}
+
+.project-summary-box .MuiTableCell-body p{font-weight: 700;}
+.project-summary-box .MuiTableRow-root .MuiTableCell-body:last-child{color: #444444;}
+
+.ReactVirtualized__List > div{max-width: 100% !important;display: table;width: 100% !important;}
+
+
+
+
+
+
+

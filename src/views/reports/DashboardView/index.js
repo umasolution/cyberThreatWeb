@@ -190,7 +190,8 @@ function DashboardView() {
               <select value={selectData} onChange={handleSelect.bind(this)} handleSelect className="type-dropdown">
               {Object.entries(mainData).map(([key, value]) => {
                   return (
-                      <option value={key} key={key} >{key}</option>
+                      key!='user_id'?<option value={key} key={key} >{key}</option>:''  
+                      
                   );
               })}
             </select>

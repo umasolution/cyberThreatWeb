@@ -75,6 +75,9 @@ const ProductsReports = () => {
       if (res.header.report_type) {
         setReportType(res.header.report_type);
       }
+      if (res.header.scanner_type) {
+        setReportType(res.header.scanner_type);
+      }
       if (res.header.docker && res.header.docker === 'True') {
         setIsDocker(true);
       }

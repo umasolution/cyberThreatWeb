@@ -1201,7 +1201,7 @@ export const Vuldb = (/* {   } */) => {
           title="Vulnerabilities DB - Niah Security"
         >
         <Container style={{ paddingLeft: '0px', paddingRight: '0px', maxWidth: 'unset' }} maxWidth="lg">
-            <Grid style={{ width: '100%' }} container spacing={1}>
+            <Grid style={{ width: '100%' }} container spacing={1} className="vuldb-front">
 
                 {loadingTabs ? getLoader() : null}
                 <Container maxWidth="lg" className="topSearch">

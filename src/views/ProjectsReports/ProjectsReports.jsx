@@ -92,6 +92,10 @@ const ProjectsReports = () => {
             setTabsData(response.data);
             setTabsColumns(response.data.columns);
             setTabsRows(response.data.results);
+            setTabsRows(response.data.results);
+            setperRow(response.data.rowlimit);
+            let totalpages = Math.ceil(response.data.total/perRow);
+            setTotalpages(totalpages);
             updateSnackbar(true, CONSTANTS.FETCHING_DATA_SUCCESS);
             setLoading(false);
         } catch (error) {
@@ -179,7 +183,7 @@ const ProjectsReports = () => {
         apiurl.set('offset', Offset);
         apiurl.set('limit', perRow);
         var url = `${mainurl}?${apiurl.toString()}`;
-        let response = await Axios.get(url);
+        let response = await Axios.post(url);
         setPage(value);
         setTabsData(response.data);
         setisSearch(false);

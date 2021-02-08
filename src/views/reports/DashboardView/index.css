@@ -55,5 +55,5 @@
 .open_vulnerabilities table tr th,.open_vulnerabilities table tr td{font-size: 15px !important;font-weight: 400 !important;padding: 10px 20px !important;}
 .open_vulnerabilities table tr th{border-bottom: 1px solid #e1e4e8 !important;background: none;}
 
-
+.ReactVirtualized__List > div{max-width: 100% !important;width: 100% !important;height: auto !important;display: table;}
 

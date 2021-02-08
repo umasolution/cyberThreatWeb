@@ -77,7 +77,9 @@ const useStyles = makeStyles((theme) => ({
       padding:8,
       color:'#000',
       position: 'relative',
-      
+      '& > div' : {
+        paddingLeft: 20,
+      }
     },
     searchbarArea: {
       width: '100%',
@@ -159,11 +161,16 @@ export const VuldbLogin = (/* {   } */) => {
     const [issearch, setisSearch] = useState(false);
     const [noresult, setNoResult] = useState(false);
     const [apiurl, setApiUrl] = useState();
+
     const [fieldsData, setFieldsData] = useState();
     const [emptyData, setEmptyData] = useState(false);
 
+
+
     const aurl = new URL(Axios.defaults.baseURL);
     const apiparams = new URLSearchParams(aurl.search);
+
+    const [tagapiurl, setTagApiUrl] = useState(apiparams);
 
     const [chipData, setChipData] = useState([]);
 
@@ -226,7 +233,7 @@ export const VuldbLogin = (/* {   } */) => {
         apiurl.delete('limit');        
         var url = `${mainurl}?${apiurl.toString()}`;
         let response = await Axios.get(url);
-        if(response.data) {
+        if(response) {
           setTabsData(response.data);
           setPage(1);
           let totalpages = Math.ceil(response.data.total/perRow);
@@ -414,6 +421,39 @@ export const VuldbLogin = (/* {   } */) => {
     }
 
     const handleClick = (event) => {
+      apiurl.delete('offset');
+      apiurl.delete('limit'); 
+      apiurl.delete('type');
+      apiurl.delete('language'); 
+      apiurl.delete('product'); 
+      apiurl.delete('severity');
+      apiurl.delete('accessvector');
+      const regex5 = /([^:\s]+):([^:\s]+)/g;
+      const regex = new RegExp(regex5,'i');
+      chipData.forEach(function (value, index, array) {
+          let m = regex.exec(value);    
+          var regexcve = /cve-/;
+          var regexcve2 = /CVE-/;
+          if(m){
+            if(m[1]=='language'){
+              apiurl.set('type', 'language');
+              apiurl.set('product', m[2]);
+            } else if(m[1]=='advisory') {
+              apiurl.set('type', 'advisory');
+              apiurl.set('product', m[2]);
+            } else if(m[1]=='platform') {
+              apiurl.set('type', 'platform');
+              apiurl.set('product', m[2]);
+            } else if(m[1]=='plugin') {              
+              apiurl.set('type', 'plugin');
+              apiurl.set('product', m[2]);
+            } else if(m[1]=='severity') {
+              apiurl.set('severity', m[2]);
+            } else if(m[1]=='accessvector') {
+              apiurl.set('accessvector', m[2]);
+            } 
+          }
+      })
       callApi();
     } 
 
@@ -434,6 +474,36 @@ export const VuldbLogin = (/* {   } */) => {
       if (cveInput) {
         const regex5 = /([^:\s]+):([^:\s]+)/g;
         const regex = new RegExp(regex5,'i');
+
+        tagapiurl.delete('language'); 
+        tagapiurl.delete('advisory'); 
+        tagapiurl.delete('platform');
+        tagapiurl.delete('plugin');
+        tagapiurl.delete('severity');
+        tagapiurl.delete('accessvector');
+
+        chipData.forEach(function (value, index, array) {
+            let m = regex.exec(value);    
+            var regexcve = /cve-/;
+            var regexcve2 = /CVE-/;
+            if(m){
+              if(m[1]=='language'){
+                tagapiurl.set('language', m[2]);
+              } else if(m[1]=='advisory') {
+                tagapiurl.set('advisory', m[2]);
+              } else if(m[1]=='platform') {
+                tagapiurl.set('platform', m[2]);
+              } else if(m[1]=='plugin') {              
+                tagapiurl.set('plugin', m[2]);
+              } else if(m[1]=='severity') {
+                tagapiurl.set('severity', m[2]);
+              } else if(m[1]=='accessvector') {
+                tagapiurl.set('accessvector', m[2]);
+              } 
+            }
+        })
+
+
         const split_cveInput = cveInput.split("OR");
         split_cveInput.forEach(function (value, index, array) {
             let m = regex.exec(value);    
@@ -441,63 +511,63 @@ export const VuldbLogin = (/* {   } */) => {
             var regexcve2 = /CVE-/;
             if(m){
               if(m[1]=='language'){
-                if(apiurl.has('language') === true) {
-                  alert('already added language');
+                if(tagapiurl.has('language') === true || tagapiurl.has('advisory') === true || tagapiurl.has('platform') === true || tagapiurl.has('plugin') === true) {
+                  alert('You can add only language or advisory or platform or plugin');
                 } else {
                   let newSelected = [];
                   newSelected = newSelected.concat(chipData, 'language:'+m[2]);
-                  apiurl.set('language', m[2]);
                   setChipData(newSelected);
+                  tagapiurl.set('language', m[2]);
                 }
               } else if(m[1]=='advisory') {
-                if(apiurl.has('advisory') === true) {
-                  alert('already added advisory');
+                if(tagapiurl.has('language') === true || tagapiurl.has('advisory') === true || tagapiurl.has('platform') === true || tagapiurl.has('plugin') === true) {
+                  alert('You can add only language or advisory or platform or plugin');
                 } else {
                   let newSelected = [];
                   newSelected = newSelected.concat(chipData, 'advisory:'+m[2]);
-                  apiurl.set('advisory', m[2]);
                   setChipData(newSelected);
+                  tagapiurl.set('advisory', m[2]);
                 }
               } else if(m[1]=='platform') {
-                if(apiurl.has('platform') === true) {
-                  alert('already added platform');
+                if(tagapiurl.has('language') === true || tagapiurl.has('advisory') === true || tagapiurl.has('platform') === true || tagapiurl.has('plugin') === true) {
+                  alert('You can add only language or advisory or platform or plugin');
                 } else {
                   let newSelected = [];
-                  newSelected = newSelected.concat(chipData, 'platform:'+m[2]);
-                  apiurl.set('platform', m[2]);
+                  newSelected = newSelected.concat(chipData, 'platform:'+m[2]);                  
                   setChipData(newSelected);
+                  tagapiurl.set('platform', m[2]);
                 }
               } else if(m[1]=='plugin') {
-                if(apiurl.has('plugin') === true) {
-                  alert('already added plugin');
+                if(tagapiurl.has('language') === true || tagapiurl.has('advisory') === true || tagapiurl.has('platform') === true || tagapiurl.has('plugin') === true) {
+                  alert('You can add only language or advisory or platform or plugin');
                 } else {
                   let newSelected = [];
                   newSelected = newSelected.concat(chipData, 'plugin:'+m[2]);
-                  apiurl.set('plugin', m[2]);
                   setChipData(newSelected);
+                  tagapiurl.set('plugin', m[2]);
                 }
               } else if(m[1]=='severity') {
-                if(apiurl.has('severity') === true) {
-                  alert('already added Severity');
+                if(tagapiurl.has('severity') === true) {
+                  alert('Already added Severity');
                 } else {
                   let newSelected = [];
                   newSelected = newSelected.concat(chipData, 'severity:'+m[2]);
-                  apiurl.set('severity', m[2]);
                   setChipData(newSelected);
+                  tagapiurl.set('severity', m[2]);
                 }
               } else if(m[1]=='accessvector') {
-                if(apiurl.has('accessvector') === true) {
-                  alert('already added AccessVector');
+                if(tagapiurl.has('accessvector') === true) {
+                  alert('Already added AccessVector');
                 } else {
                   let newSelected = [];
                   newSelected = newSelected.concat(chipData, 'accessvector:'+m[2]);
-                  apiurl.set('accessvector', m[2]);
                   setChipData(newSelected);
+                  tagapiurl.set('accessvector', m[2]);
                 }
               } 
             }
         })        
-        setApiUrl(apiurl);
+        setTagApiUrl(tagapiurl);
         setCVEInput('');
         
     }
@@ -549,21 +619,7 @@ export const VuldbLogin = (/* {   } */) => {
                     {issearch?(<>
                       <TableHead>
                       <TableRow>
-                          <TableCell key='active'>
-                             <Skeleton animation="wave" height="20px" width="100%" />
-                          </TableCell>
-                          <TableCell key='active'>
-                            <Skeleton animation="wave" height="20px" width="100%" />
-                          </TableCell>
-                          <TableCell key='active'>
-                             <Skeleton animation="wave" height="20px" width="100%" />
-                          </TableCell>
-                          <TableCell key='active'>
-                             <Skeleton animation="wave" height="20px" width="100%" />
-                          </TableCell>
-                          <TableCell key='active'>
-                             <Skeleton animation="wave" height="20px" width="100%" />
-                          </TableCell>
+                          
                         </TableRow>
                     </TableHead><TableBody>
                       <TableRow>
@@ -1450,7 +1506,7 @@ export const VuldbLogin = (/* {   } */) => {
           title="Vulnerabilities DB - Niah Security"
         >
         <Container style={{ paddingLeft: '0px', paddingRight: '0px', maxWidth: 'unset' }} maxWidth="lg">
-            <Grid style={{ width: '100%' }} container spacing={1}>
+            <Grid style={{ width: '100%' }} container spacing={1} className="vuldb-login">
                 {loadingTabs ? getLoader() : null}
                 {getSearchBox(chipData)}
                 <Container maxWidth className="cveresult">

@@ -138,6 +138,12 @@ table.small-table tr td:nth-child(8) {
 .cveresult table tr td .scoreblock-vulnerabilities-div .LOW .scoreblock-inner{border-color: green }
 .cveresult table tr td .scoreblock-vulnerabilities-div .MEDIUM .scoreblock-inner{border-color:rgb(239, 148, 36); }
  
+.scoreblock-vulnerabilities-div .CRITICAL .scoreblock-inner{border-color: rgb(185, 0, 0); }
+.scoreblock-vulnerabilities-div .HIGH .scoreblock-inner{border-color: red }
+.scoreblock-vulnerabilities-div .LOW .scoreblock-inner{border-color: green }
+.scoreblock-vulnerabilities-div .MEDIUM .scoreblock-inner{border-color:rgb(239, 148, 36); }
+
+
 .snapshot-content.data-block > .snapshot-block{display: flex;column-gap: normal;padding-bottom: 5px;margin-bottom: 10px;border-bottom: 1px solid #e8edf5;}
 .cvesearchright.MuiGrid-grid-md-4{padding-right: 0; }
 .cvesearchright .snapshotlist .MuiTypography-root .date-block{display: flex;column-gap: normal;padding-bottom: 5px;margin-bottom: 10px;border-bottom: 1px solid #e8edf5;}

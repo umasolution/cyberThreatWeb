@@ -59,10 +59,11 @@ const ReportHeader = ({ header }) => {
         severity[1].field == 'Date'?
         ( <Grid
               item
-              lg={6}
+              lg={4}
               md={6}
               sm={12}
-              xs={12}              
+              xs={12}
+              xl={4}              
             >
            <Card key={severity[0]} className={classes.cardMain}>
             <Typography
@@ -77,7 +78,7 @@ const ReportHeader = ({ header }) => {
             </Typography>
           </Card> </Grid>) : (<Grid
               item
-              lg={6}
+              lg={4}
               md={6}
               sm={12}
               xs={12}

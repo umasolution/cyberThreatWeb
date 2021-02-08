@@ -368,6 +368,7 @@ const useStyles = makeStyles((theme) => ({
   desktopDrawer: {
     width: 256,
     top: 64,
+    borderRight: 0,
     height: 'calc(100% - 64px)',
     ...(theme.name === THEMES.NEWLIGHT
       ? {
