@@ -25,6 +25,7 @@ import {
 import { getNotifications } from "src/actions/notificationsActions";
 import Badge from '@material-ui/core/Badge';
 import { THEMES } from 'src/constants';
+import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
 
 const iconsMap = {
   order_placed: PackageIcon,
@@ -78,7 +79,7 @@ function Alerts({alertsResponse}) {
         <IconButton className={classes.iconcolor} ref={ref} onClick={handleOpen}>
         <Badge badgeContent={alertsResponse ? alertsResponse.length : 0  }  color="secondary">
           <SvgIcon>
-            <BellIcon />
+            <NotificationsActiveIcon />
           </SvgIcon>
           </Badge>
         </IconButton>
@@ -93,11 +94,11 @@ function Alerts({alertsResponse}) {
         onClose={handleClose}
         open={isOpen}
       >
-        <Box p={2}>
+        {/*<Box p={2}>
           <Typography variant="h5" color="textPrimary">
             Alerts
           </Typography>
-        </Box>
+        </Box>*/}
         {alertsResponse?.length === 0 ? (
           <Box p={2}>
             <Typography variant="h6" color="textPrimary">

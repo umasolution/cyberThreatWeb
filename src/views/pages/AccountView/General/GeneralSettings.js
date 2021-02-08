@@ -17,7 +17,8 @@ import {
   Switch,
   TextField,
   Typography,
-  makeStyles
+  makeStyles,
+  FormControl,select
 } from '@material-ui/core';
 import { updateProfile } from 'src/actions/accountActions';
 import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
@@ -188,15 +189,16 @@ function GeneralSettings({ user, className, ...rest }) {
                     item
                     md={6}
                     xs={12}
-                  >
-                    <CountryDropdown
+                    className="countryDropdown"
+                  ><CountryDropdown
                       value={country}
-                      onChange={(country) => {setCountry(country)}} />
+                      onChange={(country) => {setCountry(country)}} />                   
                   </Grid>
                   <Grid
                     item
                     md={6}
                     xs={12}
+                    className="RegionDropdown"
                   >
                     <RegionDropdown
                       country={values.country}

@@ -25,6 +25,7 @@ import {
 import { getNotifications } from "src/actions/notificationsActions";
 import Badge from '@material-ui/core/Badge';
 import { THEMES } from 'src/constants';
+
 const iconsMap = {
   order_placed: PackageIcon,
   new_message: MessageIcon,
@@ -92,11 +93,11 @@ function Notifications({alertsResponse}) {
         onClose={handleClose}
         open={isOpen}
       >
-        <Box p={2}>
+        {/*<Box p={2}>
           <Typography variant="h5" color="textPrimary">
             Notifications
           </Typography>
-        </Box>
+        </Box>*/}
         {alertsResponse?.length === 0 ? (
           <Box p={2}>
             <Typography variant="h6" color="textPrimary">

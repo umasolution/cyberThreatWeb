@@ -1438,14 +1438,7 @@ export const VuldbLogin = (/* {   } */) => {
                 className={classes.container}
               > 
               <Container maxWidth="lg" className={classes.searchbar}> 
-                <Box m={3}
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                  ><Typography >
-                    You can search like example : "advisory:value" OR "language:value" OR "platform:value" "plugin:value" OR "severity:value" OR "accessvector:value"
-                  </Typography> 
-                </Box>  
+                 
                 <Box mt={3}
                   display="flex"
                   justifyContent="center"
@@ -1461,7 +1454,7 @@ export const VuldbLogin = (/* {   } */) => {
                     color:'#000'
                   }}
                   id="cve"
-                  placeholder="Search Vulnerabilities"
+                  placeholder="Search for a advisory:value, language:value, platform:value, plugin:value, severity:value, accessvector:value..."
                 />
                 <button onClick={addTagClick} className={classes.searchButton}>Add</button>
                 </Box>

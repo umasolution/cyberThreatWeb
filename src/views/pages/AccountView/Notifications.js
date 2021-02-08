@@ -13,7 +13,7 @@ import {
   Grid,
   Typography,
   makeStyles,
-  Select,NativeSelect,TextField
+  Select,NativeSelect,TextField,FormControl,MenuItem,InputLabel
 } from '@material-ui/core';
 
 import wait from 'src/utils/wait';
@@ -23,8 +23,16 @@ import { useSnackbar } from 'notistack';
 import { updateNotifications } from './../../../actions/accountActions';
 
 
-const useStyles = makeStyles(() => ({
-  root: {}
+const useStyles = makeStyles((theme) => ({
+  root: {},
+   button: {
+    display: 'block',
+    marginTop: theme.spacing(2),
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
 }));
 
 function Notifications({ className, general,notification, ...rest }) {
@@ -130,13 +138,22 @@ function Notifications({ className, general,notification, ...rest }) {
                 sm={12}
                 xs={12}
               >
-              <select value={selectData} onChange={handleSelect.bind(this)} handleSelect className="type-dropdown">
-              {Object.entries(notification.lists).map(([key, value]) => {
+              
+            <FormControl variant="outlined" className={classes.formControl}>
+            
+            <Select
+              native
+              labelId="demo-controlled-open-select-label"
+              id="demo-controlled-open-select"
+              value={selectData} onChange={handleSelect.bind(this)} handleSelect
+            >
+             {Object.entries(notification.lists).map(([key, value]) => {
                   return (
-                      <option value={key} key={key} >{value.notification_name}</option>
+                      <option  value={key} key={key} >{value.notification_name}</option >
                   );
               })}
-            </select>
+            </Select>
+          </FormControl>
             </Grid>
             {notificationCheckboxes && (
               <Grid
@@ -145,7 +162,7 @@ function Notifications({ className, general,notification, ...rest }) {
                 sm={12}
                 xs={12}
               >
-                <Typography
+                {/*<Typography
                   gutterBottom
                   variant="h6"
                   color="textPrimary"
@@ -158,7 +175,7 @@ function Notifications({ className, general,notification, ...rest }) {
                   color="textSecondary"
                 >
                   You will recieve emails in your business email address
-                </Typography>
+                </Typography>*/}
                 <Typography
                   gutterBottom
                   variant="body2"
