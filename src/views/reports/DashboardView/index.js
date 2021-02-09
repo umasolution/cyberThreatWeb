@@ -12,7 +12,8 @@ import {
   MenuItem,
   SvgIcon,
   Typography,
-  Switch 
+  Switch
+  ,FormControl,Select,InputLabel
 } from '@material-ui/core';
 import Page from 'src/components/Page';
 import Axios from 'axios';
@@ -47,7 +48,10 @@ const useStyles = makeStyles((theme) => ({
     },
     paddingLeft: 45,
     paddingRight: 45 
-  }
+  },formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
 }));
 
 
@@ -187,14 +191,16 @@ function DashboardView() {
           countData > 1 && (
             <>
             <Grid xs={12} container justify="flex-end">
-              <select value={selectData} onChange={handleSelect.bind(this)} handleSelect className="type-dropdown">
+            <FormControl variant="outlined" className={classes.formControl}>
+              <Select native value={selectData} onChange={handleSelect.bind(this)} handleSelect >
               {Object.entries(mainData).map(([key, value]) => {
                   return (
                       key!='user_id'?<option value={key} key={key} >{key}</option>:''  
                       
                   );
               })}
-            </select>
+            </Select>
+            </FormControl> 
           </Grid>
             </>
            )

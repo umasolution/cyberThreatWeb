@@ -1,5 +1,5 @@
 import { Divider, Grid, Typography, Paper,Table,TableBody,TableCell,TableContainer,TableHead,TablePagination,TableRow,Box,ListItemText,Container
- ,TextField} from '@material-ui/core';
+ ,TextField,FormControl,Select,InputLabel} from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import List from '@material-ui/core/List';
@@ -77,6 +77,10 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: '1px',
     border:0,
     fontSize:'16px',
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
   },
   
 }));
@@ -320,13 +324,22 @@ const Issues = ({ issues, reportName, reportType,counter,historydata,projectId }
           historydata && (
             <>
             <Grid xs={12} container justify="flex-end">
-              <select value={selectData} onChange={handleSelect.bind(this)} handleSelect className="report-history-dropdown">
+            <FormControl variant="outlined" className={classes.formControl}>
+             <InputLabel htmlFor="outlined-history-native-simple">History</InputLabel>
+              <Select native
+                onChange={handleSelect.bind(this)} handleSelect label="History"
+                inputProps={{
+                  name: 'history',
+                  id: 'outlined-history-native-simple',
+                }} >
+                <option aria-label="None" value="" />
               {Object.entries(historydata).map(([key, value]) => {                  
                   return (
                       <option key={value} value={value}>{moment(value.replace(".json","").replace("_"," ")).format('MMMM Do YYYY, h:mm:ss a')}</option>
                   );
               })}
-            </select>
+            </Select>
+           </FormControl>           
           </Grid>
             </>
            )

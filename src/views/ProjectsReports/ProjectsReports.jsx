@@ -1195,6 +1195,16 @@ const ProjectsReports = () => {
           className={classes.root}
           title="My Scans"
         >
+        <Container style={{ paddingTop: '35px', paddingLeft: '0px', paddingRight: '0px', maxWidth: 'unset' }} maxWidth="lg" className="head-inner-title">
+          <Grid style={{ width: '100%' }} container spacing={0}>
+          <Container maxWidth >
+          <Typography
+             variant="h3" color="inherit" noWrap>
+            My Scans
+            </Typography>
+            </Container>
+          </Grid>
+        </Container>
         <Container className={classes.root} maxWidth>
             <Grid
               container
@@ -1214,13 +1224,7 @@ const ProjectsReports = () => {
                 </Box>
                 {getSearchBox(chipData)}
                 <Container maxWidth className="cveresult">
-                  <Grid
-                        spacing={3}
-                        container                        
-                        className={classes.container}
-                      >
-                      {getFieldData()}
-                  </Grid>
+                  
                   <Grid
                         spacing={3}
                         container                        

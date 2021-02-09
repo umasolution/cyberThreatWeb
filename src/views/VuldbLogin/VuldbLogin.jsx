@@ -1498,6 +1498,16 @@ export const VuldbLogin = (/* {   } */) => {
         <Page
           title="Vulnerabilities DB - Niah Security"
         >
+        <Container style={{ paddingTop: '35px', paddingLeft: '0px', paddingRight: '0px', maxWidth: 'unset' }} maxWidth="lg" className="head-inner-title">
+          <Grid style={{ width: '100%' }} container spacing={0}>
+          <Container maxWidth >
+          <Typography
+             variant="h3" color="inherit" noWrap>
+            Vulnerabilities DB
+            </Typography>
+            </Container>
+          </Grid>
+        </Container>
         <Container style={{ paddingLeft: '0px', paddingRight: '0px', maxWidth: 'unset' }} maxWidth="lg">
             <Grid style={{ width: '100%' }} container spacing={1} className="vuldb-login">
                 {loadingTabs ? getLoader() : null}

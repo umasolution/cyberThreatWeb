@@ -1,5 +1,3 @@
-
-
 .scan-report-list .cvesearchcenter { padding-left:0px !important;padding-right:0px !important;}
 .scan-report-list .cvesearchcenter .MuiPaper-root{padding-left:0px !important;padding-right:0px !important;}
 .scan-report-list .cvesearchleft .MuiTypography-h3 {font-size: 18px;font-weight: 600;color: #333333;letter-spacing: 0.5px;}
@@ -135,7 +133,7 @@ width:100% !important;
 .scan-report-list .cveresult .scoreblock-vulnerabilities-div > div{padding: 0 0 0 5px }
 .scan-report-list .cveresult .scoreblock-vulnerabilities-div{display: flex;justify-content: end;}
 .scan-report-list .cveresult table tr td .scoreblock-vulnerabilities-div .scoreblock-inner{border: 1px solid;border-radius: 5px; }
-.scan-report-list .cveresult table tr td .scoreblock-vulnerabilities-div .scoreblock-inner > div{min-height: 22px;font-size: 12px;padding: 3px 5px;border-radius: 5px;border: 0;}
+.scan-report-list .cveresult table tr td .scoreblock-vulnerabilities-div .scoreblock-inner > div{min-height: 22px;font-size: 12px;padding: 3px 5px;border: 0;}
 .scan-report-list .cveresult table tr td .scoreblock-vulnerabilities-div .CRITICAL .scoreblock-inner{border-color: rgb(185, 0, 0); }
 .scan-report-list .cveresult table tr td .scoreblock-vulnerabilities-div .HIGH .scoreblock-inner{border-color: red }
 .scan-report-list .cveresult table tr td .scoreblock-vulnerabilities-div .LOW .scoreblock-inner{border-color: green }

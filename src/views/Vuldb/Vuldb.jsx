@@ -2,7 +2,7 @@ import { Container, Grid, LinearProgress, makeStyles, TextField,Typography,Box,
 ListItem,ListItemIcon,ListItemText,List,ExpansionPanel,ExpansionPanelSummary,ExpansionPanelDetails,
 Slider,
 Paper,Table,TableBody,TableCell,TableContainer,TableHead,TablePagination,TableRow,
-Card,CardActionArea,CardActions,CardContent,CardMedia,Radio,RadioGroup,FormLabel
+Card,CardActionArea,CardActions,CardContent,CardMedia,Radio,RadioGroup,FormLabel,Chip
 } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -50,6 +50,82 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'space-between',
         width: '100%',
     },
+    
+    chip: {
+      margin: theme.spacing(0.5),
+    },
+    searchbar: {
+      backgroundColor: theme.palette.background.light,
+      maxWidth:1180,
+      background: '#fff url(/static/bg_searchbar.png)',
+      padding:'35px 0px',
+      boxShadow:'4px 0px 54px rgba(0,0,0,0.1)',
+      borderRadius: 5,
+      [theme.breakpoints.down('sm')]: {
+        padding:'15px 10px',
+      },
+    },
+    searchBox: {
+      marginTop: 0,
+      maxWidth:1015,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      backgroundColor: '#fff',
+      boxShadow:'4px 0px 27px rgba(0,0,0,0.08)',
+      height:62,
+      borderRadius:50,
+      border:'1px solid #e8e8f2',
+      padding:8,
+      color:'#000',
+      position: 'relative',
+      '& > div' : {
+        paddingLeft: 20,
+      }
+    },
+    searchbarArea: {
+      width: '100%',
+      bottom: -70,
+      margin: '38px auto',
+      maxWidth: '100%',
+      [theme.breakpoints.down('sm')]: {
+        bottom: -90,
+      },
+      left:0,
+    },
+    searchButton: {
+      backgroundColor:'#ff0476',
+      padding:'0 !important',
+      textAlign: 'center',
+      width: 176,
+      height: 45,
+      lineHeight: '45px',
+      color: '#fff',
+      borderRadius: 50,
+      fontWeight: theme.fontfamily.bold,
+      fontFamily: '"Montserrat",sans-serif',
+      letterSpacing: '1px',
+      border:0,
+      fontSize:'16px',
+    },
+    chippaper : {
+      display: 'flex',
+      justifyContent: 'center',
+      flexWrap: 'wrap',
+      listStyle: 'none',
+      padding: theme.spacing(0.5),
+      margin: 0,
+      boxShadow: 'none',
+    },
+    chipbar : {
+      width: '100%',
+      bottom: -70,
+      margin: '10px auto',
+      maxWidth: '100%',
+      [theme.breakpoints.down('sm')]: {
+        bottom: -90,
+      },
+      left:0,
+    },
 }));
 
 export const Vuldb = (/* {   } */) => {
@@ -90,6 +166,19 @@ export const Vuldb = (/* {   } */) => {
 
     const aurl = new URL(Axios.defaults.baseURL);
     const apiparams = new URLSearchParams(aurl.search);
+
+    const [tagapiurl, setTagApiUrl] = useState(apiparams);
+
+    const [chipData, setChipData] = useState([]);
+
+    const [emptyData, setEmptyData] = useState(false);
+
+    const handleChipDelete = (chipToDelete) => () => {
+      chipData.splice(chipToDelete, 1);
+      let newSelected = [];
+      newSelected = newSelected.concat(chipData);
+      setChipData(newSelected);
+    };
      
     
     useEffect(() => {
@@ -133,6 +222,27 @@ export const Vuldb = (/* {   } */) => {
             console.error(error);
             updateSnackbar(true, CONSTANTS.FETCHING_DATA_FAILED);
             setLoadingTabs(false);
+        }
+    }
+
+    const callApi = async () => {
+        setloadingRows(false);
+        setSingleRows();
+        setisSearch(true);
+        setNoResult(true);
+        apiurl.delete('offset');
+        apiurl.delete('limit');        
+        var url = `${mainurl}?${apiurl.toString()}`;
+        let response = await Axios.get(url);
+        if(response) {
+          setTabsData(response.data);
+          setPage(1);
+          let totalpages = Math.ceil(response.data.total/perRow);
+          setTotalpages(totalpages);
+          setperRow(response.data.rowlimit);
+          setisSearch(false);                      
+        } else { 
+           setEmptyData(true); 
         }
     }
 
@@ -340,7 +450,157 @@ export const Vuldb = (/* {   } */) => {
       setExpand(!expand);
    };
 
-   
+   const handleClick = (event) => {
+      apiurl.delete('offset');
+      apiurl.delete('limit'); 
+      apiurl.delete('type');
+      apiurl.delete('language'); 
+      apiurl.delete('product'); 
+      apiurl.delete('severity');
+      apiurl.delete('accessvector');
+      const regex5 = /([^:\s]+):([^:\s]+)/g;
+      const regex = new RegExp(regex5,'i');
+      chipData.forEach(function (value, index, array) {
+          let m = regex.exec(value);    
+          var regexcve = /cve-/;
+          var regexcve2 = /CVE-/;
+          if(m){
+            if(m[1]=='language'){
+              apiurl.set('type', 'language');
+              apiurl.set('product', m[2]);
+            } else if(m[1]=='advisory') {
+              apiurl.set('type', 'advisory');
+              apiurl.set('product', m[2]);
+            } else if(m[1]=='platform') {
+              apiurl.set('type', 'platform');
+              apiurl.set('product', m[2]);
+            } else if(m[1]=='plugin') {              
+              apiurl.set('type', 'plugin');
+              apiurl.set('product', m[2]);
+            } else if(m[1]=='severity') {
+              apiurl.set('severity', m[2]);
+            } else if(m[1]=='accessvector') {
+              apiurl.set('accessvector', m[2]);
+            } 
+          }
+      })
+      callApi();
+    } 
+
+    const keyPress = (event) => {
+      if (event.keyCode === 13) {
+        onSearchClicked();
+      }
+    }
+    const addTagClick = (event) => {
+        onSearchClicked();
+     }
+
+    
+
+    const onSearchClicked = () => {
+      if (cveInput) {
+        const regex5 = /([^:\s]+):([^:\s]+)/g;
+        const regex = new RegExp(regex5,'i');
+
+        tagapiurl.delete('language'); 
+        tagapiurl.delete('advisory'); 
+        tagapiurl.delete('platform');
+        tagapiurl.delete('plugin');
+        tagapiurl.delete('severity');
+        tagapiurl.delete('accessvector');
+
+        chipData.forEach(function (value, index, array) {
+            let m = regex.exec(value);    
+            var regexcve = /cve-/;
+            var regexcve2 = /CVE-/;
+            if(m){
+              if(m[1]=='language'){
+                tagapiurl.set('language', m[2]);
+              } else if(m[1]=='advisory') {
+                tagapiurl.set('advisory', m[2]);
+              } else if(m[1]=='platform') {
+                tagapiurl.set('platform', m[2]);
+              } else if(m[1]=='plugin') {              
+                tagapiurl.set('plugin', m[2]);
+              } else if(m[1]=='severity') {
+                tagapiurl.set('severity', m[2]);
+              } else if(m[1]=='accessvector') {
+                tagapiurl.set('accessvector', m[2]);
+              } 
+            }
+        })
+
+
+        const split_cveInput = cveInput.split("OR");
+        split_cveInput.forEach(function (value, index, array) {
+            let m = regex.exec(value);    
+            var regexcve = /cve-/;
+            var regexcve2 = /CVE-/;
+            if(m){
+              if(m[1]=='language'){
+                if(tagapiurl.has('language') === true || tagapiurl.has('advisory') === true || tagapiurl.has('platform') === true || tagapiurl.has('plugin') === true) {
+                  alert('You can add only language or advisory or platform or plugin');
+                } else {
+                  let newSelected = [];
+                  newSelected = newSelected.concat(chipData, 'language:'+m[2]);
+                  setChipData(newSelected);
+                  tagapiurl.set('language', m[2]);
+                }
+              } else if(m[1]=='advisory') {
+                if(tagapiurl.has('language') === true || tagapiurl.has('advisory') === true || tagapiurl.has('platform') === true || tagapiurl.has('plugin') === true) {
+                  alert('You can add only language or advisory or platform or plugin');
+                } else {
+                  let newSelected = [];
+                  newSelected = newSelected.concat(chipData, 'advisory:'+m[2]);
+                  setChipData(newSelected);
+                  tagapiurl.set('advisory', m[2]);
+                }
+              } else if(m[1]=='platform') {
+                if(tagapiurl.has('language') === true || tagapiurl.has('advisory') === true || tagapiurl.has('platform') === true || tagapiurl.has('plugin') === true) {
+                  alert('You can add only language or advisory or platform or plugin');
+                } else {
+                  let newSelected = [];
+                  newSelected = newSelected.concat(chipData, 'platform:'+m[2]);                  
+                  setChipData(newSelected);
+                  tagapiurl.set('platform', m[2]);
+                }
+              } else if(m[1]=='plugin') {
+                if(tagapiurl.has('language') === true || tagapiurl.has('advisory') === true || tagapiurl.has('platform') === true || tagapiurl.has('plugin') === true) {
+                  alert('You can add only language or advisory or platform or plugin');
+                } else {
+                  let newSelected = [];
+                  newSelected = newSelected.concat(chipData, 'plugin:'+m[2]);
+                  setChipData(newSelected);
+                  tagapiurl.set('plugin', m[2]);
+                }
+              } else if(m[1]=='severity') {
+                if(tagapiurl.has('severity') === true) {
+                  alert('Already added Severity');
+                } else {
+                  let newSelected = [];
+                  newSelected = newSelected.concat(chipData, 'severity:'+m[2]);
+                  setChipData(newSelected);
+                  tagapiurl.set('severity', m[2]);
+                }
+              } else if(m[1]=='accessvector') {
+                if(tagapiurl.has('accessvector') === true) {
+                  alert('Already added AccessVector');
+                } else {
+                  let newSelected = [];
+                  newSelected = newSelected.concat(chipData, 'accessvector:'+m[2]);
+                  setChipData(newSelected);
+                  tagapiurl.set('accessvector', m[2]);
+                }
+              } 
+            }
+        })        
+        setTagApiUrl(tagapiurl);
+        setCVEInput('');
+        
+    }
+    
+   }
    
 
    const cvesearchcenter = (tabsData,col) => {
@@ -354,25 +614,7 @@ export const Vuldb = (/* {   } */) => {
           className="cvesearchcenter"
         >
         
-        <Box
-              display="flex"
-              flexDirection="column"
-              className="cvesearchtopheader"
-              borderRadius={5}
-              mb={2}
-            >
-            <Typography
-                variant="h5"
-                color="textSecondary"
-              >
-              Search Result for <Typography
-                                  variant="span"
-                                  color="primary"
-                                >
-                                {keyworddata}
-                                </Typography>
-              </Typography>
-          </Box>
+        
           <Box position="relative">
           <Paper className={classes.root}>
                 <TableContainer className={classes.container}>
@@ -521,9 +763,9 @@ export const Vuldb = (/* {   } */) => {
                     </TableBody></>)}
                   </Table>
                 </TableContainer>
-              </Paper>
-            {issearch ? '':(<><Pagination color="primary" count={totalpages} page={page} onChange={handleChangePage} /></>)}
+              </Paper>            
           </Box>
+          {issearch ? '':(<><Pagination color="primary" count={totalpages} page={page} onChange={handleChangePage} /></>)}
         </Grid>
       </>
      )
@@ -537,7 +779,7 @@ export const Vuldb = (/* {   } */) => {
           <Grid
             item
             xs={12}
-            md={7}
+            md={8}
             className="cvesearchcenter"
           >
             <Box position="relative">
@@ -636,7 +878,7 @@ export const Vuldb = (/* {   } */) => {
           <Grid
             item
             xs={12}
-            md={3}
+            md={4}
             className="cvesearchright"
           >
           <Box className="boxleftheader"
@@ -874,12 +1116,12 @@ export const Vuldb = (/* {   } */) => {
     const getTabsData = () => {
         return (
             <>
-              {loadingRows ?cvesearchcenter(tabsData,7):cvesearchcenter(tabsData,10)}
+              {loadingRows ?cvesearchcenter(tabsData,8):cvesearchcenter(tabsData,12)}
               {loadingRows ?(<>  
               <Grid
                 item
                 xs={12}
-                md={3}
+                md={4}
                 className="cvesearchright"
               >
               <Box
@@ -1196,6 +1438,72 @@ export const Vuldb = (/* {   } */) => {
         setSnackbarMessage(message)
     }
 
+    const getSearchBox = (chipData) => {
+      return (
+            <>
+        <Container maxWidth="lg" className={classes.searchbarArea}>
+             <Grid
+                container
+                spacing={0}
+                className={classes.container}
+              > 
+              <Container maxWidth="lg" className={classes.searchbar}> 
+                 
+                <Box mt={3}
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  className={classes.searchBox}>
+                  <TextField
+                  required
+                  value={cveInput}
+                  onKeyDown={keyPress}
+                  onChange={handleChangeCVE}
+                  style={{
+                    width: '100%',
+                    color:'#000'
+                  }}
+                  id="cve"
+                  placeholder="Search for a advisory:value, language:value, platform:value, plugin:value, severity:value, accessvector:value..."
+                />
+                <button onClick={addTagClick} className={classes.searchButton}>Add</button>
+                </Box>
+                {chipData.length > 0 ? (<Box maxWidth="lg" className={classes.chipbar}>
+                <Grid
+                      container
+                      spacing={0}
+                      className={classes.container}
+                    >
+                   <Paper component="ul" className={classes.chippaper}>
+                    {chipData ? Object.entries(chipData).map((data, i) => ( 
+                        <li key={i}>
+                          <Chip
+                            label={data[1]}
+                            onDelete={handleChipDelete(data[0])}
+                            className={classes.chip}
+                            color="secondary"
+                          />
+                        </li>
+                    )) : ''}              
+                    </Paper>
+                    </Grid>
+                    <Box
+                        display="flex">
+                        <Box m="auto">
+                         <button onClick={handleClick} className={classes.searchButton}>Search</button>
+                        </Box>
+                      </Box>
+                </Box>
+                ): '' }
+                
+              </Container>
+               </Grid> 
+          </Container>
+          
+          </>
+       )   
+    }
+
     return (
         <Page
           title="Vulnerabilities DB - Niah Security"
@@ -1204,15 +1512,7 @@ export const Vuldb = (/* {   } */) => {
             <Grid style={{ width: '100%' }} container spacing={1} className="vuldb-front">
 
                 {loadingTabs ? getLoader() : null}
-                <Container maxWidth="lg" className="topSearch">
-                   <Grid
-                      container
-                      spacing={0}
-                      className={classes.container}
-                    > 
-                    <SearchBox />
-                    </Grid>
-                </Container>
+                {getSearchBox(chipData)}
                 
                 <Container maxWidth className="cveresult">
                   <Grid
@@ -1220,7 +1520,7 @@ export const Vuldb = (/* {   } */) => {
                         spacing={3}
                         className={classes.container}
                       >
-                      {getFieldData()}
+                      
                       { noresult ? getTabsData() : (tabsData.total > 0 ? getTabsData(): cvenoresult())}
                   </Grid>
                 </Container>
