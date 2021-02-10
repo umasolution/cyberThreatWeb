@@ -1,11 +1,11 @@
 import { Divider, Grid, Typography, Paper,Table,TableBody,TableCell,TableContainer,TableHead,TablePagination,TableRow,Box,ListItemText,Container
- ,TextField,FormControl,Select,InputLabel} from '@material-ui/core';
+ ,TextField,FormControl,Select,InputLabel,Chip} from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import { makeStyles } from '@material-ui/core/styles';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PackageJSON from './PackageJSON/PackageJSON';
 import Skeleton from '@material-ui/lab/Skeleton';
 import Pagination from '@material-ui/lab/Pagination';
@@ -13,6 +13,8 @@ import { getBackgroundColorBySeverity, getFontColorBySeverity } from './../../..
 import ReportCount from './../ReportCount/ReportCount';
 import { Link as RouterLink ,useHistory } from 'react-router-dom';
 import moment from 'moment';
+import Axios from 'axios';
+import Copy from "./../../../Util/Copy";
 const useStyles = makeStyles((theme) => ({
   root: {
       flexGrow: 1,
@@ -22,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
     width: '100%'
+  },
+  chip: {
+    margin: theme.spacing(0.5),
   },
   searchbar: {
     backgroundColor: theme.palette.background.light,
@@ -82,6 +87,25 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     minWidth: 120,
   },
+   chippaper : {
+      display: 'flex',
+      justifyContent: 'center',
+      flexWrap: 'wrap',
+      listStyle: 'none',
+      padding: theme.spacing(0.5),
+      margin: 0,
+      boxShadow: 'none',
+    },
+    chipbar : {
+      width: '100%',
+      bottom: -70,
+      margin: '10px auto',
+      maxWidth: '100%',
+      [theme.breakpoints.down('sm')]: {
+        bottom: -90,
+      },
+      left:0,
+    },
   
 }));
 
@@ -100,12 +124,35 @@ const Issues = ({ issues, reportName, reportType,counter,historydata,projectId }
   const [singlerows, setSingleRows] = React.useState();
 
   const [selected, setSelected] = React.useState([]);
+
+  const [cveInput, setCVEInput] = useState("");
+
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   const [selectData, setSelectData] = React.useState(reportName);
 
-
   const [loadingRows, setloadingRows] = React.useState(false);
+
+  const [apiurl, setApiUrl] = useState();
+
+  const aurl = new URL(Axios.defaults.baseURL);
+
+  const apiparams = new URLSearchParams(aurl.search);
+
+  const [tagapiurl, setTagApiUrl] = React.useState(apiparams);
+
+  const [chipData, setChipData] = React.useState([]);
+
+  const [emptyData, setEmptyData] = React.useState(false);
+
+  const [issuesdata, setIssuesData] = React.useState(issues);
+
+  const handleChipDelete = (chipToDelete) => () => {
+    chipData.splice(chipToDelete, 1);
+    let newSelected = [];
+    newSelected = newSelected.concat(chipData);
+    setChipData(newSelected);
+  };
 
   const handleSelect = (event) => {
     const value = event.target.value;
@@ -113,6 +160,182 @@ const Issues = ({ issues, reportName, reportType,counter,historydata,projectId }
     history.push(`/app/productsreports/${projectId}/${value}`);
     history.go(0);
   };
+
+  const callApi = async () => {
+      
+  }
+
+  
+
+  const handleClick = (event) => {
+       
+      const regex5 = /([^:\s]+):([^:\s]+)/g;
+      const regex = new RegExp(regex5,'i');
+      chipData.forEach(function (value, index, array) {
+          let m = regex.exec(value);    
+          var regexcve = /cve-/;
+          var regexcve2 = /CVE-/;
+          if(m){
+            if(m[1]=='language'){
+              apiurl.set('type', 'language');
+              apiurl.set('product', m[2]);
+            } else if(m[1]=='advisory') {
+              apiurl.set('type', 'advisory');
+              apiurl.set('product', m[2]);
+            } else if(m[1]=='platform') {
+              apiurl.set('type', 'platform');
+              apiurl.set('product', m[2]);
+            } else if(m[1]=='plugin') {              
+              apiurl.set('type', 'plugin');
+              apiurl.set('product', m[2]);
+            } else if(m[1]=='severity') {
+              apiurl.set('severity', m[2]);
+            } else if(m[1]=='accessvector') {
+              apiurl.set('accessvector', m[2]);
+            } else if(m[1]=='name') {
+              const copy = Copy(issues.data);
+              const report = copy.find(data => data['CVEID'] === m[2]);
+              if (report) {
+                console.log(report);
+                issues.data = copy;
+                setIssuesData(copy);
+              }
+              
+            } 
+          }
+      })
+      callApi();
+    } 
+
+    const keyPress = (event) => {
+      if (event.keyCode === 13) {
+        onSearchClicked();
+      }
+    }
+    const addTagClick = (event) => {
+        onSearchClicked();
+     }
+
+     const handleChangeCVE = (event) => {
+        setCVEInput(event.target.value);
+    };
+
+    const onSearchClicked = () => {
+      if (cveInput) {
+        const regex5 = /([^:\s]+):([^:\s]+)/g;
+        const regex = new RegExp(regex5,'i');
+
+        tagapiurl.delete('language'); 
+        tagapiurl.delete('advisory'); 
+        tagapiurl.delete('platform');
+        tagapiurl.delete('plugin');
+        tagapiurl.delete('severity');
+        tagapiurl.delete('accessvector');
+        tagapiurl.delete('name');
+
+        chipData.forEach(function (value, index, array) {
+            let m = regex.exec(value);    
+            var regexcve = /cve-/;
+            var regexcve2 = /CVE-/;
+            if(m){
+              if(m[1]=='language'){
+                tagapiurl.set('language', m[2]);
+              } else if(m[1]=='advisory') {
+                tagapiurl.set('advisory', m[2]);
+              } else if(m[1]=='platform') {
+                tagapiurl.set('platform', m[2]);
+              } else if(m[1]=='plugin') {              
+                tagapiurl.set('plugin', m[2]);
+              } else if(m[1]=='severity') {
+                tagapiurl.set('severity', m[2]);
+              } else if(m[1]=='accessvector') {
+                tagapiurl.set('accessvector', m[2]);
+              } else if(m[1]=='name') {
+                tagapiurl.set('name', m[2]);
+              } 
+            }
+        })
+
+
+        const split_cveInput = cveInput.split("OR");
+        split_cveInput.forEach(function (value, index, array) {
+            let m = regex.exec(value);    
+            var regexcve = /cve-/;
+            var regexcve2 = /CVE-/;
+            if(m){
+            
+              if(m[1]=='language'){
+                if(tagapiurl.has('language') === true || tagapiurl.has('advisory') === true || tagapiurl.has('platform') === true || tagapiurl.has('plugin') === true) {
+                  alert('You can add only language or advisory or platform or plugin');
+                } else {
+                  let newSelected = [];
+                  newSelected = newSelected.concat(chipData, 'language:'+m[2]);
+                  setChipData(newSelected);
+                  tagapiurl.set('language', m[2]);
+                }
+              } else if(m[1]=='advisory') {
+                if(tagapiurl.has('language') === true || tagapiurl.has('advisory') === true || tagapiurl.has('platform') === true || tagapiurl.has('plugin') === true) {
+                  alert('You can add only language or advisory or platform or plugin');
+                } else {
+                  let newSelected = [];
+                  newSelected = newSelected.concat(chipData, 'advisory:'+m[2]);
+                  setChipData(newSelected);
+                  tagapiurl.set('advisory', m[2]);
+                }
+              } else if(m[1]=='platform') {
+                if(tagapiurl.has('language') === true || tagapiurl.has('advisory') === true || tagapiurl.has('platform') === true || tagapiurl.has('plugin') === true) {
+                  alert('You can add only language or advisory or platform or plugin');
+                } else {
+                  let newSelected = [];
+                  newSelected = newSelected.concat(chipData, 'platform:'+m[2]);                  
+                  setChipData(newSelected);
+                  tagapiurl.set('platform', m[2]);
+                }
+              } else if(m[1]=='plugin') {
+                if(tagapiurl.has('language') === true || tagapiurl.has('advisory') === true || tagapiurl.has('platform') === true || tagapiurl.has('plugin') === true) {
+                  alert('You can add only language or advisory or platform or plugin');
+                } else {
+                  let newSelected = [];
+                  newSelected = newSelected.concat(chipData, 'plugin:'+m[2]);
+                  setChipData(newSelected);
+                  tagapiurl.set('plugin', m[2]);
+                }
+              } else if(m[1]=='severity') {
+                if(tagapiurl.has('severity') === true) {
+                  alert('Already added Severity');
+                } else {
+                  let newSelected = [];
+                  newSelected = newSelected.concat(chipData, 'severity:'+m[2]);
+                  setChipData(newSelected);
+                  tagapiurl.set('severity', m[2]);
+                }
+              } else if(m[1]=='accessvector') {
+                if(tagapiurl.has('accessvector') === true) {
+                  alert('Already added AccessVector');
+                } else {
+                  let newSelected = [];
+                  newSelected = newSelected.concat(chipData, 'accessvector:'+m[2]);
+                  setChipData(newSelected);
+                  tagapiurl.set('accessvector', m[2]);
+                }
+              } else if(m[1]=='name') {
+                if(tagapiurl.has('name') === true) {
+                  alert('Already added Name');
+                } else {
+                  let newSelected = [];
+                  newSelected = newSelected.concat(chipData, 'name:'+m[2]);
+                  setChipData(newSelected);
+                  tagapiurl.set('name', m[2]);
+                }
+              }  
+            }
+        })        
+        setTagApiUrl(tagapiurl);
+        setCVEInput('');
+        
+    }
+    
+   }
 
   const getSearchBox = () => {
       return (
@@ -131,6 +354,9 @@ const Issues = ({ issues, reportName, reportType,counter,historydata,projectId }
                   className={classes.searchBox}>
                   <TextField
                   required
+                  value={cveInput}
+                  onKeyDown={keyPress}
+                  onChange={handleChangeCVE}
                   style={{
                     width: '100%',
                     color:'#000'
@@ -138,8 +364,35 @@ const Issues = ({ issues, reportName, reportType,counter,historydata,projectId }
                   id="cve"
                   placeholder="Search issues"
                 />
-                <button  className={classes.searchButton}>Add</button>
+                <button onClick={addTagClick} className={classes.searchButton}>Add</button>
                 </Box>
+                {chipData.length > 0 ? (<Box maxWidth="lg" className={classes.chipbar}>
+                <Grid
+                      container
+                      spacing={0}
+                      className={classes.container}
+                    >
+                   <Paper component="ul" className={classes.chippaper}>
+                    {chipData ? Object.entries(chipData).map((data, i) => ( 
+                        <li key={i}>
+                          <Chip
+                            label={data[1]}
+                            onDelete={handleChipDelete(data[0])}
+                            className={classes.chip}
+                            color="secondary"
+                          />
+                        </li>
+                    )) : ''}              
+                    </Paper>
+                    </Grid>
+                    <Box
+                        display="flex">
+                        <Box m="auto">
+                         <button onClick={handleClick} className={classes.searchButton}>Search</button>
+                        </Box>
+                      </Box>
+                </Box>
+                ): '' }
               </Container>
                </Grid> 
           </Container>
@@ -155,10 +408,10 @@ const Issues = ({ issues, reportName, reportType,counter,historydata,projectId }
     let newSelected = [];
     newSelected = newSelected.concat([], value);
     setSelected(newSelected);
-    setSingleRows(issues.data[value]);
+    setSingleRows(issuesdata.data[value]);
   }; 
 
-  const cvesearchcenter = (issues,col) => {
+  const cvesearchcenter = (issuesdata,col) => {
 
     return (
       <>
@@ -268,9 +521,9 @@ const Issues = ({ issues, reportName, reportType,counter,historydata,projectId }
             </>):(<> <TableHead>
                   <TableRow>
                     {
-                      Object.keys(issues.display.table).map((key, i) => (
-                        <><TableCell key={issues.display.table[key].field}>
-                           {issues.display.table[key].title}   
+                      Object.keys(issuesdata.display.table).map((key, i) => (
+                        <><TableCell key={issuesdata.display.table[key].field}>
+                           {issuesdata.display.table[key].title}   
                         </TableCell></>  
                         
                       ))
@@ -278,12 +531,12 @@ const Issues = ({ issues, reportName, reportType,counter,historydata,projectId }
                   </TableRow>
                 </TableHead><TableBody>
                    {
-                      Object.entries(issues.data).map(([rkey, row]) => {
+                      Object.entries(issuesdata.data).map(([rkey, row]) => {
                         const isItemSelected = isSelected(rkey)
                       return (<TableRow hover hover onClick={event => handleClickRow('key',rkey)}  key={rkey} role="checkbox" selected={isItemSelected} tabIndex={-1} >
 
-                            { Object.keys(issues.display.table).map((vkey) => (
-                             <TableCell key={issues.display.table[vkey].field}>
+                            { Object.keys(issuesdata.display.table).map((vkey) => (
+                             <TableCell key={issuesdata.display.table[vkey].field}>
                                   {vkey==0? (
                                     <>
                                      <Grid item xs={12}>
@@ -291,12 +544,12 @@ const Issues = ({ issues, reportName, reportType,counter,historydata,projectId }
                                           variant="h5"
                                           color="textSecondary"
                                         >
-                                          {row[`${issues.display.table[vkey].field}`].replace(',', '\n') }
+                                          {row[`${issuesdata.display.table[vkey].field}`].replace(',', '\n') }
                                         </Typography>
 
                                      </Grid>
                                     </>
-                                )  : row[`${issues.display.table[vkey].field}`].replace(',', '\n')}
+                                )  : row[`${issuesdata.display.table[vkey].field}`].replace(',', '\n')}
                               </TableCell>
                             )
                             )}
@@ -351,7 +604,7 @@ const Issues = ({ issues, reportName, reportType,counter,historydata,projectId }
               spacing={2}
               className="report-issues-tab"
            > 
-     {loadingRows ?cvesearchcenter(issues,8):cvesearchcenter(issues,12)}
+     {loadingRows ?cvesearchcenter(issuesdata,8):cvesearchcenter(issuesdata,12)}
      {loadingRows ?(<>  
               <Grid
                 item
@@ -379,11 +632,11 @@ const Issues = ({ issues, reportName, reportType,counter,historydata,projectId }
                               <Box className="boxtitlecontent"> 
                               <Typography variant="body2" color="textSecondary" component="div" className="scoreblock-div">
                               <List component="ul" className="snapshotlist">
-                               { Object.keys(issues.display.option).map((vkey) => (                                 
-                                 <ListItem key={issues.display.option[vkey].field}>
+                               { Object.keys(issuesdata.display.option).map((vkey) => (                                 
+                                 <ListItem key={issuesdata.display.option[vkey].field}>
                                     <ListItemText>
-                                    <Box className="snapshot-title">{issues.display.option[vkey].title} : </Box>
-                                    <Box className="snapshot-content">{singlerows[`${issues.display.option[vkey].field}`].replace(',', '\n') }</Box>
+                                    <Box className="snapshot-title">{issuesdata.display.option[vkey].title} : </Box>
+                                    <Box className="snapshot-content">{singlerows[`${issuesdata.display.option[vkey].field}`].replace(',', '\n') }</Box>
                                     </ListItemText>
                                   </ListItem>
                                 )

@@ -35,6 +35,7 @@ import moment from 'moment';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Skeleton from '@material-ui/lab/Skeleton';
 import Page from 'src/components/Page';
+import { setDateFormat } from './../../Util/Util';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -192,7 +193,6 @@ export const Vuldb = (/* {   } */) => {
             var url = `/vuln/list`;
             setMainUrl('/vuln/list');
             setApiUrl(apiparams);
-            
             let response = await Axios.get(url);
             setTabsData(response.data);
             setTabsColumns(response.data.columns);
@@ -742,7 +742,7 @@ export const Vuldb = (/* {   } */) => {
                                               color="textSecondary"
                                               className="pub-date-column"
                                             >
-                                            {moment(row[`pub_date`]).format('MMM DD, YYYY')}
+                                            {moment(setDateFormat(row[`pub_date`])).format('MMM DD, YYYY')}
                                             </Typography> </>:''}
 
                                          </Grid>
@@ -1167,12 +1167,12 @@ export const Vuldb = (/* {   } */) => {
                                 {singlerows.niah_meter ? (
                                   <>  
                                  <Grid
-                                    className="niahmeter"
+                                    className="meter"
                                   >
                                     <Grid
                                       xs={6}
                                       md={6}
-                                      className="niahmeterleft"
+                                      className="meterleft"
                                     >
                                     <Typography gutterBottom variant="h5" component="h2">
                                       {singlerows.niah_meter.title}
@@ -1184,7 +1184,7 @@ export const Vuldb = (/* {   } */) => {
                                     <Grid
                                       xs={6}
                                       md={6}
-                                      className="niahmeterright"
+                                      className="meterright"
                                     >
                                       <ReactSpeedometer
                                         maxSegmentLabels={0}
@@ -1225,7 +1225,7 @@ export const Vuldb = (/* {   } */) => {
                               </Box> 
                               <Box className="boxtitlecontent"> 
                                 <Typography variant="body2" color="textSecondary" component="div">
-                                <List component="ul" className="niahinsightlist">
+                                <List component="ul" className="insightlist">
                                   {Object.values(singlerows.NIAH_Insights).map((insights) => (
                                     <>
                                     <ListItem>
@@ -1285,7 +1285,7 @@ export const Vuldb = (/* {   } */) => {
                                         <ListItemText>
                                         {snapshot[0]=="publishedDate" ? (<>
                                         <Box className="snapshot-title">Published Date: </Box>
-                                        <Box className="snapshot-content">{moment(snapshot[1]).format('MMM DD, YYYY')}</Box></>):
+                                        <Box className="snapshot-content">{moment(setDateFormat(snapshot[1])).format('MMM DD, YYYY')}</Box></>):
                                         ( <>
                                         <Box className="snapshot-title">{snapshot[0]} : </Box>
                                         <Box className="snapshot-content">{snapshot[1]}</Box>

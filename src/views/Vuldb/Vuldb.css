@@ -32,7 +32,7 @@
 .vuldb-front .cvesearchcenter .MuiPagination-root ul li{display: inline-block;}
 
 
-.vuldb-front .boxdetailhead .boxtitlecontent .niahmeter{display: flex;margin-bottom: -55px;}
+.vuldb-front .boxdetailhead .boxtitlecontent .meter{display: flex;margin-bottom: -55px;}
 
 .vuldb-front .cvesearchleft .boxleftheader > div{margin-bottom: 15px;}
 .vuldb-front .cvesearchremote .cvesearchremote-inner{box-shadow: 0 0 0 1px rgba(63,63,68,0.05), 0 1px 2px 0 rgba(63,63,68,0.15);border-radius: 6px;padding: 15px 24px;}
@@ -57,13 +57,13 @@
 .vuldb-front .scoretitle{border: 1px solid #d0d8e5;border-radius: 3px 0 0 3px; color: #333;}
 .vuldb-front .scorevalue{background: #027ae2; color: #fff;border-radius: 0px 3px 3px 0px;}
 
-.vuldb-front .niahmeterleft h2{font-size: 16px;font-weight: 600;margin-bottom: 10px;}
-.vuldb-front .niahmeterleft h2 a{text-decoration: none;color: #e43838} 
+.vuldb-front .meterleft h2{font-size: 16px;font-weight: 600;margin-bottom: 10px;}
+.vuldb-front .meterleft h2 a{text-decoration: none;color: #e43838} 
 
-.vuldb-front .boxtitlecontent .niahinsightlist .MuiListItem-gutters{padding: 0px 0 15px 0;}
-.vuldb-front .boxtitlecontent .niahinsightlist .MuiListItem-gutters:last-child{padding-bottom: 0;}
-.vuldb-front .boxtitlecontent .niahinsightlist .MuiListItem-gutters .MuiSvgIcon-root{color: #333;}
-.vuldb-front .niahinsightlist .MuiTypography-displayBlock{font-size: 17px;color: #333;font-weight: 600;}
+.vuldb-front .boxtitlecontent .insightlist .MuiListItem-gutters{padding: 0px 0 15px 0;}
+.vuldb-front .boxtitlecontent .insightlist .MuiListItem-gutters:last-child{padding-bottom: 0;}
+.vuldb-front .boxtitlecontent .insightlist .MuiListItem-gutters .MuiSvgIcon-root{color: #333;}
+.vuldb-front .insightlist .MuiTypography-displayBlock{font-size: 17px;color: #333;font-weight: 600;}
 
 .vuldb-front .loading-cell{padding: 10px;}
 .vuldb-front .boxtitlecontent .snapshotlist .MuiListItem-gutters{padding: 0px 0 15px 0;;}
@@ -111,7 +111,7 @@ width:100% !important;
 .vuldb-front .cvesearchleft .MuiTypography-h3,.boxdetailtitle h2{font-size: 16px;}
 
 .vuldb-front .cvesearchleft .MuiListItem-root .MuiListItemText-root .MuiTypography-body1{font-size: 16px;}
-.vuldb-front .niahmeterleft h2,.vuldb-front .niahinsightlist .MuiTypography-displayBlock,.vuldb-front .snapshotlist .MuiTypography-root > div,.boxtitlecontent.explo-list .MuiExpansionPanelSummary-content h2{font-size: 14px;}
+.vuldb-front .meterleft h2,.vuldb-front .insightlist .MuiTypography-displayBlock,.vuldb-front .snapshotlist .MuiTypography-root > div,.boxtitlecontent.explo-list .MuiExpansionPanelSummary-content h2{font-size: 14px;}
 .vuldb-front .MuiExpansionPanelSummary-root{padding: 0px 15px;}
 .vuldb-front .scoreblock-inner > div{font-size: 12px;}
 
