@@ -32,7 +32,7 @@
 .vuldb-front .cvesearchcenter .MuiPagination-root ul li{display: inline-block;}
 
 
-.vuldb-front .boxdetailhead .boxtitlecontent .meter{display: flex;margin-bottom: -55px;}
+.vuldb-front .boxdetailhead .boxtitlecontent .niahmeter{display: flex;margin-bottom: -55px;}
 
 .vuldb-front .cvesearchleft .boxleftheader > div{margin-bottom: 15px;}
 .vuldb-front .cvesearchremote .cvesearchremote-inner{box-shadow: 0 0 0 1px rgba(63,63,68,0.05), 0 1px 2px 0 rgba(63,63,68,0.15);border-radius: 6px;padding: 15px 24px;}
@@ -57,13 +57,13 @@
 .vuldb-front .scoretitle{border: 1px solid #d0d8e5;border-radius: 3px 0 0 3px; color: #333;}
 .vuldb-front .scorevalue{background: #027ae2; color: #fff;border-radius: 0px 3px 3px 0px;}
 
-.vuldb-front .meterleft h2{font-size: 16px;font-weight: 600;margin-bottom: 10px;}
-.vuldb-front .meterleft h2 a{text-decoration: none;color: #e43838} 
+.vuldb-front .niahmeterleft h2{font-size: 16px;font-weight: 600;margin-bottom: 10px;}
+.vuldb-front .niahmeterleft h2 a{text-decoration: none;color: #e43838} 
 
-.vuldb-front .boxtitlecontent .insightlist .MuiListItem-gutters{padding: 0px 0 15px 0;}
-.vuldb-front .boxtitlecontent .insightlist .MuiListItem-gutters:last-child{padding-bottom: 0;}
-.vuldb-front .boxtitlecontent .insightlist .MuiListItem-gutters .MuiSvgIcon-root{color: #333;}
-.vuldb-front .insightlist .MuiTypography-displayBlock{font-size: 17px;color: #333;font-weight: 600;}
+.vuldb-front .boxtitlecontent .niahinsightlist .MuiListItem-gutters{padding: 0px 0 15px 0;}
+.vuldb-front .boxtitlecontent .niahinsightlist .MuiListItem-gutters:last-child{padding-bottom: 0;}
+.vuldb-front .boxtitlecontent .niahinsightlist .MuiListItem-gutters .MuiSvgIcon-root{color: #333;}
+.vuldb-front .niahinsightlist .MuiTypography-displayBlock{font-size: 17px;color: #333;font-weight: 600;}
 
 .vuldb-front .loading-cell{padding: 10px;}
 .vuldb-front .boxtitlecontent .snapshotlist .MuiListItem-gutters{padding: 0px 0 15px 0;;}
@@ -90,6 +90,18 @@
 width:100% !important;
 }
 
+
+
+.vuldb-front .MuiContainer-root > .MuiGrid-container{box-shadow: 4px 0px 54px rgba(0,0,0,0.1);padding: 0px 0px;border-radius: 5px;}
+.vuldb-front .MuiContainer-root > .MuiGrid-container > .MuiContainer-root{max-width: 100%;box-shadow: none;border-radius: 0;padding: 35px;}
+
+.vuldb-front .makeStyles-searchBox-46{max-width: 100%;border-radius: 5px;box-shadow: none;}
+.vuldb-front .MuiInput-formControl.MuiInput-underline::before,.vuldb-front .MuiInput-formControl.MuiInput-underline::after {display: none;}
+.vuldb-front .MuiInput-formControl input.MuiInputBase-input{height: 30px;font-weight: 500;font-size: 14px;}
+.vuldb-front .makeStyles-searchButton-48{border-radius: 10px; }
+.vuldb-front .makeStyles-chipbar-50 > .MuiGrid-container{border: 1px solid #e8e8f2;border-radius: 5px;margin-bottom:30px;}
+.vuldb-front ul li .MuiChip-deletable{background: #556177;border-radius: 5px; }
+
 @media only screen and (min-width:1700px){
 
 .vuldb-front .cvesearchcenter .MuiTableCell-root{padding: 20px}
@@ -111,7 +123,7 @@ width:100% !important;
 .vuldb-front .cvesearchleft .MuiTypography-h3,.boxdetailtitle h2{font-size: 16px;}
 
 .vuldb-front .cvesearchleft .MuiListItem-root .MuiListItemText-root .MuiTypography-body1{font-size: 16px;}
-.vuldb-front .meterleft h2,.vuldb-front .insightlist .MuiTypography-displayBlock,.vuldb-front .snapshotlist .MuiTypography-root > div,.boxtitlecontent.explo-list .MuiExpansionPanelSummary-content h2{font-size: 14px;}
+.vuldb-front .niahmeterleft h2,.vuldb-front .niahinsightlist .MuiTypography-displayBlock,.vuldb-front .snapshotlist .MuiTypography-root > div,.boxtitlecontent.explo-list .MuiExpansionPanelSummary-content h2{font-size: 14px;}
 .vuldb-front .MuiExpansionPanelSummary-root{padding: 0px 15px;}
 .vuldb-front .scoreblock-inner > div{font-size: 12px;}
 
