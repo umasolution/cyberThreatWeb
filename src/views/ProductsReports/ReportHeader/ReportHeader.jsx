@@ -3,6 +3,7 @@ import Paper from '@material-ui/core/Paper';
 import React from 'react';
 import Severity from './Severity/Severity';
 import moment from 'moment';
+import { setDateFormat } from './../../../Util/Util';
 const useStyles = makeStyles((theme) => ({
   mainGrid: {
     display: 'flex',
@@ -74,7 +75,7 @@ const ReportHeader = ({ header }) => {
               {severity[1].title}
             </Typography>
             <Typography className={classes.secondaryText}>
-              {moment(header[severity[1].field].replace('_', ' ')).format("YYYY-MM-DD H:I:s")}
+              {moment(setDateFormat(header[severity[1].field]).replace('_', ' ')).format("MMM DD, YYYY hh:mm a")}
             </Typography>
           </Card> </Grid>) : (<Grid
               item

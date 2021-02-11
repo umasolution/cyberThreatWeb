@@ -23,7 +23,7 @@
 .scan-report-list .cvesearchcenter .MuiPagination-root ul li{display: inline-block;}
 
 
-.scan-report-list .boxdetailhead .boxtitlecontent .niahmeter{display: flex;margin-bottom: -55px;}
+.scan-report-list .boxdetailhead .boxtitlecontent .meter{display: flex;margin-bottom: -55px;}
 
 .scan-report-list .cvesearchleft .boxleftheader > div{margin-bottom: 15px;}
 .scan-report-list .cvesearchremote .cvesearchremote-inner{box-shadow: 0 0 0 1px rgba(63,63,68,0.05), 0 1px 2px 0 rgba(63,63,68,0.15);border-radius: 6px;padding: 15px 24px;}
@@ -49,13 +49,13 @@
 
 .scan-report-list .scorevalue{color: #fff;border-radius: 0px 3px 3px 0px;border-right: 1px solid #d0d8e5;border-bottom:1px solid #d0d8e5;border-top:1px solid #d0d8e5;}
 
-.scan-report-list .niahmeterleft h2{font-size: 16px;font-weight: 600;margin-bottom: 10px;}
-.scan-report-list .niahmeterleft h2 a{text-decoration: none;color: #e43838} 
+.scan-report-list .meterleft h2{font-size: 16px;font-weight: 600;margin-bottom: 10px;}
+.scan-report-list .meterleft h2 a{text-decoration: none;color: #e43838} 
 
-.scan-report-list .boxtitlecontent .niahinsightlist .MuiListItem-gutters{padding: 0px 0 15px 0;}
-.scan-report-list .boxtitlecontent .niahinsightlist .MuiListItem-gutters:last-child{padding-bottom: 0;}
-.scan-report-list .boxtitlecontent .niahinsightlist .MuiListItem-gutters .MuiSvgIcon-root{color: #333;}
-.scan-report-list .niahinsightlist .MuiTypography-displayBlock{font-size: 17px;color: #333;font-weight: 600;}
+.scan-report-list .boxtitlecontent .insightlist .MuiListItem-gutters{padding: 0px 0 15px 0;}
+.scan-report-list .boxtitlecontent .insightlist .MuiListItem-gutters:last-child{padding-bottom: 0;}
+.scan-report-list .boxtitlecontent .insightlist .MuiListItem-gutters .MuiSvgIcon-root{color: #333;}
+.scan-report-list .insightlist .MuiTypography-displayBlock{font-size: 17px;color: #333;font-weight: 600;}
 
 .scan-report-list .loading-cell{padding: 10px;}
 .scan-report-list .boxtitlecontent .snapshotlist .MuiListItem-gutters{padding: 0px 0 3px 0;;}
@@ -174,6 +174,16 @@ width:100% !important;
 
 .scan-report-list .cvesearchright-inner > [class*='MuiBox-root']:last-child .snapshotlist li span.MuiListItemText-primary > .snapshot-content{max-width: 30%;flex-basis: 30%; align-self: center; font-size: 15px;word-break: break-all;}
 
+.scan-report-list .MuiContainer-root > .MuiGrid-container{box-shadow: 4px 0px 54px rgba(0,0,0,0.1);padding: 0px 0px;border-radius: 5px;}
+.scan-report-list .MuiContainer-root > .MuiGrid-container > .MuiContainer-root{max-width: 100%;box-shadow: none;border-radius: 0;padding: 35px;}
+
+.scan-report-list [class*='makeStyles-searchBox'] {max-width: 100%;border-radius: 5px;box-shadow: none;}
+.scan-report-list .MuiInput-formControl.MuiInput-underline::before,.scan-report-list .MuiInput-formControl.MuiInput-underline::after {display: none;}
+.scan-report-list .MuiInput-formControl input.MuiInputBase-input{height: 30px;font-weight: 500;font-size: 14px;}
+.scan-report-list [class*='makeStyles-searchButton']{border-radius: 10px; }
+.scan-report-list [class*='makeStyles-chipbar'] > .MuiGrid-container{border: 1px solid #e8e8f2;border-radius: 5px;margin-bottom:30px;}
+.scan-report-list ul li .MuiChip-deletable{background: #556177;border-radius: 5px; }
+
 @media only screen and (min-width:1700px){
 
 .scan-report-list .cvesearchcenter .MuiTableCell-root{padding: 15px}
@@ -195,7 +205,7 @@ width:100% !important;
 .scan-report-list .cvesearchleft .MuiTypography-h3,.boxdetailtitle h2{font-size: 16px;}
 
 .scan-report-list .cvesearchleft .MuiListItem-root .MuiListItemText-root .MuiTypography-body1{font-size: 16px;}
-.scan-report-list .niahmeterleft h2,.niahinsightlist .MuiTypography-displayBlock,.snapshotlist .MuiTypography-root > div,.boxtitlecontent.explo-list .MuiExpansionPanelSummary-content h2{font-size: 14px;}
+.scan-report-list .meterleft h2,.insightlist .MuiTypography-displayBlock,.snapshotlist .MuiTypography-root > div,.boxtitlecontent.explo-list .MuiExpansionPanelSummary-content h2{font-size: 14px;}
 .scan-report-list .MuiExpansionPanelSummary-root{padding: 0px 15px;}
 .scan-report-list .scoreblock-inner > div{font-size: 12px;}
 

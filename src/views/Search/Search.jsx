@@ -888,12 +888,12 @@ export const Search = (/* {   } */) => {
                                             {singlerows.niah_meter ? (
                                               <>  
                                              <Grid
-                                                className="niahmeter"
+                                                className="meter"
                                               >
                                                 <Grid
                                                   xs={6}
                                                   md={6}
-                                                  className="niahmeterleft"
+                                                  className="meterleft"
                                                 >
                                                 <Typography gutterBottom variant="h5" component="h2">
                                                   {singlerows.niah_meter.title}
@@ -905,7 +905,7 @@ export const Search = (/* {   } */) => {
                                                 <Grid
                                                   xs={6}
                                                   md={6}
-                                                  className="niahmeterright"
+                                                  className="meterright"
                                                 >
                                                   <ReactSpeedometer
                                                     maxSegmentLabels={0}

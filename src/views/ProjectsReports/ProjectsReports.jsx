@@ -12,6 +12,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import CONSTANTS from "../../Util/Constants";
 import MySnackbar from "../../Shared/Snackbar/MySnackbar";
 import Copy from '../../Util/Copy';
+import { setDateFormat } from '../../Util/Util';
 import Skeleton from '@material-ui/lab/Skeleton';
 import Pagination from '@material-ui/lab/Pagination';
 import VisibilityIcon from '@material-ui/icons/Visibility';
@@ -770,7 +771,7 @@ const ProjectsReports = () => {
                                         {scan_insights[0]=='date' ? (<>
                                         <Box className="date-block">
                                         <Box className="snapshot-title">Report Date: </Box>
-                                        <Box className="snapshot-content">{moment(scan_insights[1]).format('MMM DD, YYYY')}</Box> </Box></>):''}
+                                        <Box className="snapshot-content">{moment(setDateFormat(scan_insights[1])).format('MMM DD, YYYY')}</Box> </Box></>):''}
                                         {scan_insights[0]=='vulnerabilities' ? (<>
                                         <Box className="snapshot-content">
                                           <Box className="scoreblock-vulnerabilities-div">
@@ -858,14 +859,20 @@ const ProjectsReports = () => {
                                 <Typography variant="body2" color="textSecondary" component="div" className="scoreblock-div">
                                 <List component="ul" className="snapshotlist">
                                   {Object.entries(singlerows.scan_summary).map((scan_summary) => (
-                                    <>
-                                    <ListItem>
+                                    
+                                    scan_summary[0] == 'Project Created On' || scan_summary[0] == 'Project Updated On' ? (<>
+                                        <ListItem>
+                                        <ListItemText>
+                                        <Box className="snapshot-title">{scan_summary[0]} : </Box>
+                                        <Box className="snapshot-content">{moment(setDateFormat(scan_summary[1])).format('MMM DD, YYYY hh:mm a')}</Box>
+                                      </ListItemText>
+                                      </ListItem>  </>):(<><ListItem>
                                         <ListItemText>
                                         <Box className="snapshot-title">{scan_summary[0]} : </Box>
                                         <Box className="snapshot-content">{scan_summary[1]}</Box>
                                       </ListItemText>
-                                      </ListItem>                                
-                                    </>
+                                      </ListItem></>)           
+                                   
                                   ))}
                                 </List> 
                                   

@@ -191,6 +191,9 @@ button:focus{
     font-weight: 600;
 }
 
+
+
+
 @media(min-width:767px) and (max-width:959px){
   .bannerBox .bannerContent{
     max-width:100%;

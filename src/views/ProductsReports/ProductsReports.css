@@ -147,7 +147,12 @@ appearance: none;-webkit-appearance: none;width: 250px;}
 .report-issuelist-right .snapshot-content {justify-content: start;display: flex;text-align: right;color: #444444;font-weight: 600;text-align: left;}
 
 
-
+.report-issuelist-search [class*='makeStyles-searchBox']{max-width: 100%;border-radius: 5px;box-shadow: none;}
+.report-issuelist-search .MuiInput-formControl.MuiInput-underline::before,.report-issuelist-search .MuiInput-formControl.MuiInput-underline::after {display: none;}
+.report-issuelist-search .MuiInput-formControl input.MuiInputBase-input{height: 30px;font-weight: 500;font-size: 14px;}
+.report-issuelist-search [class*='makeStyles-searchButton']{border-radius: 10px; }
+.report-issuelist-search [class*='makeStyles-chipbar'] > .MuiGrid-container{border: 1px solid #e8e8f2;border-radius: 5px;margin-bottom:30px;}
+.report-issuelist-search ul li .MuiChip-deletable{background: #556177;border-radius: 5px; }
 
 
 .project-summary-box .MuiTextField-root.secondary{width: calc(100% - 40px);padding: 15px 0 15px 15px;margin-left: 0 !important;border-radius: 50px;}
@@ -164,8 +169,8 @@ appearance: none;-webkit-appearance: none;width: 250px;}
 .ReactVirtualized__List > div{max-width: 100% !important;display: table;width: 100% !important;}
 
 
+.report-issuelist-head-block { box-shadow: 4px 0px 54px rgb(0 0 0 / 10%);border-radius: 5px;margin-top: 15px;padding: 38px 0px; }
 
-
-
+.report-issuelist-dd { text-align: right; }
 
 

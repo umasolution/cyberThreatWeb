@@ -1,5 +1,5 @@
 import { Divider, Grid, Typography, Paper,Table,TableBody,TableCell,TableContainer,TableHead,TablePagination,TableRow,Box,ListItemText,Container
- ,TextField,FormControl,Select,InputLabel,Chip} from '@material-ui/core';
+ ,TextField,FormControl,Select,InputLabel,Chip,Card} from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import List from '@material-ui/core/List';
@@ -15,6 +15,7 @@ import { Link as RouterLink ,useHistory } from 'react-router-dom';
 import moment from 'moment';
 import Axios from 'axios';
 import Copy from "./../../../Util/Copy";
+import { setDateFormat } from './../../../Util/Util';
 const useStyles = makeStyles((theme) => ({
   root: {
       flexGrow: 1,
@@ -31,9 +32,6 @@ const useStyles = makeStyles((theme) => ({
   searchbar: {
     backgroundColor: theme.palette.background.light,
     maxWidth:1180,
-    background: '#fff url(/static/bg_searchbar.png)',
-    padding:'35px 0px',
-    boxShadow:'4px 0px 54px rgba(0,0,0,0.1)',
     borderRadius: 5,
     [theme.breakpoints.down('sm')]: {
       padding:'15px 10px',
@@ -59,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
   searchbarArea: {
     width: '100%',
     bottom: -70,
-    margin: '38px auto',
+    
     maxWidth: '100%',
     [theme.breakpoints.down('sm')]: {
       bottom: -90,
@@ -133,19 +131,21 @@ const Issues = ({ issues, reportName, reportType,counter,historydata,projectId }
 
   const [loadingRows, setloadingRows] = React.useState(false);
 
-  const [apiurl, setApiUrl] = useState();
-
   const aurl = new URL(Axios.defaults.baseURL);
 
   const apiparams = new URLSearchParams(aurl.search);
 
   const [tagapiurl, setTagApiUrl] = React.useState(apiparams);
 
+  const [apiurl, setApiUrl] = useState(apiparams);
+
   const [chipData, setChipData] = React.useState([]);
 
   const [emptyData, setEmptyData] = React.useState(false);
 
   const [issuesdata, setIssuesData] = React.useState(issues);
+
+  const [issuesvalue, setIssuesValue] = React.useState(issues.data);
 
   const handleChipDelete = (chipToDelete) => () => {
     chipData.splice(chipToDelete, 1);
@@ -164,48 +164,56 @@ const Issues = ({ issues, reportName, reportType,counter,historydata,projectId }
   const callApi = async () => {
       
   }
-
   
-
-  const handleClick = (event) => {
-       
+  const handleClick = (event) => {       
       const regex5 = /([^:\s]+):([^:\s]+)/g;
-      const regex = new RegExp(regex5,'i');
+      const regex = new RegExp(regex5,'i');  
+      setloadingRows(false); 
+      apiurl.delete('Severity');
+      apiurl.delete('severity');      
+      apiurl.delete('CVEID');
+      apiurl.delete('name');
+      apiurl.delete('Product');
+      apiurl.delete('product');
+      apiurl.delete('CWE');   
       chipData.forEach(function (value, index, array) {
-          let m = regex.exec(value);    
-          var regexcve = /cve-/;
-          var regexcve2 = /CVE-/;
+          let m = regex.exec(value);
           if(m){
-            if(m[1]=='language'){
-              apiurl.set('type', 'language');
-              apiurl.set('product', m[2]);
-            } else if(m[1]=='advisory') {
-              apiurl.set('type', 'advisory');
-              apiurl.set('product', m[2]);
-            } else if(m[1]=='platform') {
-              apiurl.set('type', 'platform');
-              apiurl.set('product', m[2]);
-            } else if(m[1]=='plugin') {              
-              apiurl.set('type', 'plugin');
-              apiurl.set('product', m[2]);
-            } else if(m[1]=='severity') {
-              apiurl.set('severity', m[2]);
-            } else if(m[1]=='accessvector') {
-              apiurl.set('accessvector', m[2]);
-            } else if(m[1]=='name') {
-              const copy = Copy(issues.data);
-              const report = copy.find(data => data['CVEID'] === m[2]);
-              if (report) {
-                console.log(report);
-                issues.data = copy;
-                setIssuesData(copy);
-              }
-              
-            } 
+            if(m[1]=='name') {
+              apiurl.set('CVEID', m[2]);  
+            } else if(m[1]=='product') {                            
+              apiurl.set('Product', m[2]);              
+            } else if(m[1]=='CWE') {                            
+              apiurl.set('CWE', m[2]);              
+            } else if(m[1]=='severity') {                            
+              apiurl.set('Severity', m[2]);              
+            }   
           }
-      })
+      })    
+      if(chipData.length <= 0 ) {
+          let newSelected = [];
+          newSelected = newSelected.concat([], issues.data);                           
+          setIssuesValue(newSelected);
+      } else {
+
+        var filter = Object.fromEntries(apiurl);
+        const copy = Copy(issues.data);        
+        var report = copy.filter(item => {
+          for (let key in filter) {
+            if (item[key] === undefined || item[key] != filter[key])
+              return false;
+          }
+          return true;
+        });
+        let newSelected = [];
+        newSelected = newSelected.concat([], report);                           
+        setIssuesValue(newSelected);
+      }
+
       callApi();
-    } 
+    }
+
+    
 
     const keyPress = (event) => {
       if (event.keyCode === 13) {
@@ -225,33 +233,28 @@ const Issues = ({ issues, reportName, reportType,counter,historydata,projectId }
         const regex5 = /([^:\s]+):([^:\s]+)/g;
         const regex = new RegExp(regex5,'i');
 
-        tagapiurl.delete('language'); 
-        tagapiurl.delete('advisory'); 
-        tagapiurl.delete('platform');
-        tagapiurl.delete('plugin');
-        tagapiurl.delete('severity');
-        tagapiurl.delete('accessvector');
+        tagapiurl.delete('Severity');
+        tagapiurl.delete('severity');      
+        tagapiurl.delete('CVEID');
         tagapiurl.delete('name');
+        tagapiurl.delete('Product');
+        tagapiurl.delete('product');
+        tagapiurl.delete('CWE');
+        
 
         chipData.forEach(function (value, index, array) {
             let m = regex.exec(value);    
             var regexcve = /cve-/;
             var regexcve2 = /CVE-/;
             if(m){
-              if(m[1]=='language'){
-                tagapiurl.set('language', m[2]);
-              } else if(m[1]=='advisory') {
-                tagapiurl.set('advisory', m[2]);
-              } else if(m[1]=='platform') {
-                tagapiurl.set('platform', m[2]);
-              } else if(m[1]=='plugin') {              
-                tagapiurl.set('plugin', m[2]);
+              if(m[1]=='name') {
+                tagapiurl.set('name', m[2]);
+              } else if(m[1]=='product') {
+                tagapiurl.set('product', m[2]);
+              } else if(m[1]=='CWE') {
+                tagapiurl.set('CWE', m[2]);
               } else if(m[1]=='severity') {
                 tagapiurl.set('severity', m[2]);
-              } else if(m[1]=='accessvector') {
-                tagapiurl.set('accessvector', m[2]);
-              } else if(m[1]=='name') {
-                tagapiurl.set('name', m[2]);
               } 
             }
         })
@@ -264,61 +267,7 @@ const Issues = ({ issues, reportName, reportType,counter,historydata,projectId }
             var regexcve2 = /CVE-/;
             if(m){
             
-              if(m[1]=='language'){
-                if(tagapiurl.has('language') === true || tagapiurl.has('advisory') === true || tagapiurl.has('platform') === true || tagapiurl.has('plugin') === true) {
-                  alert('You can add only language or advisory or platform or plugin');
-                } else {
-                  let newSelected = [];
-                  newSelected = newSelected.concat(chipData, 'language:'+m[2]);
-                  setChipData(newSelected);
-                  tagapiurl.set('language', m[2]);
-                }
-              } else if(m[1]=='advisory') {
-                if(tagapiurl.has('language') === true || tagapiurl.has('advisory') === true || tagapiurl.has('platform') === true || tagapiurl.has('plugin') === true) {
-                  alert('You can add only language or advisory or platform or plugin');
-                } else {
-                  let newSelected = [];
-                  newSelected = newSelected.concat(chipData, 'advisory:'+m[2]);
-                  setChipData(newSelected);
-                  tagapiurl.set('advisory', m[2]);
-                }
-              } else if(m[1]=='platform') {
-                if(tagapiurl.has('language') === true || tagapiurl.has('advisory') === true || tagapiurl.has('platform') === true || tagapiurl.has('plugin') === true) {
-                  alert('You can add only language or advisory or platform or plugin');
-                } else {
-                  let newSelected = [];
-                  newSelected = newSelected.concat(chipData, 'platform:'+m[2]);                  
-                  setChipData(newSelected);
-                  tagapiurl.set('platform', m[2]);
-                }
-              } else if(m[1]=='plugin') {
-                if(tagapiurl.has('language') === true || tagapiurl.has('advisory') === true || tagapiurl.has('platform') === true || tagapiurl.has('plugin') === true) {
-                  alert('You can add only language or advisory or platform or plugin');
-                } else {
-                  let newSelected = [];
-                  newSelected = newSelected.concat(chipData, 'plugin:'+m[2]);
-                  setChipData(newSelected);
-                  tagapiurl.set('plugin', m[2]);
-                }
-              } else if(m[1]=='severity') {
-                if(tagapiurl.has('severity') === true) {
-                  alert('Already added Severity');
-                } else {
-                  let newSelected = [];
-                  newSelected = newSelected.concat(chipData, 'severity:'+m[2]);
-                  setChipData(newSelected);
-                  tagapiurl.set('severity', m[2]);
-                }
-              } else if(m[1]=='accessvector') {
-                if(tagapiurl.has('accessvector') === true) {
-                  alert('Already added AccessVector');
-                } else {
-                  let newSelected = [];
-                  newSelected = newSelected.concat(chipData, 'accessvector:'+m[2]);
-                  setChipData(newSelected);
-                  tagapiurl.set('accessvector', m[2]);
-                }
-              } else if(m[1]=='name') {
+              if(m[1]=='name') {
                 if(tagapiurl.has('name') === true) {
                   alert('Already added Name');
                 } else {
@@ -327,7 +276,34 @@ const Issues = ({ issues, reportName, reportType,counter,historydata,projectId }
                   setChipData(newSelected);
                   tagapiurl.set('name', m[2]);
                 }
-              }  
+              } else if(m[1]=='product') {
+                if(tagapiurl.has('product') === true) {
+                  alert('Already added Name');
+                } else {
+                  let newSelected = [];
+                  newSelected = newSelected.concat(chipData, 'product:'+m[2]);
+                  setChipData(newSelected);
+                  tagapiurl.set('product', m[2]);
+                }
+              } else if(m[1]=='CWE') {
+                if(tagapiurl.has('CWE') === true) {
+                  alert('Already added Name');
+                } else {
+                  let newSelected = [];
+                  newSelected = newSelected.concat(chipData, 'CWE:'+m[2]);
+                  setChipData(newSelected);
+                  tagapiurl.set('CWE', m[2]);
+                }
+              }else if(m[1]=='severity') {
+                if(tagapiurl.has('severity') === true) {
+                  alert('Already added Name');
+                } else {
+                  let newSelected = [];
+                  newSelected = newSelected.concat(chipData, 'severity:'+m[2]);
+                  setChipData(newSelected);
+                  tagapiurl.set('severity', m[2]);
+                }
+              }
             }
         })        
         setTagApiUrl(tagapiurl);
@@ -362,11 +338,12 @@ const Issues = ({ issues, reportName, reportType,counter,historydata,projectId }
                     color:'#000'
                   }}
                   id="cve"
-                  placeholder="Search issues"
+                  placeholder="Search issues for a name:value,product:value,CWE:value,severity:value"
                 />
                 <button onClick={addTagClick} className={classes.searchButton}>Add</button>
                 </Box>
-                {chipData.length > 0 ? (<Box maxWidth="lg" className={classes.chipbar}>
+                {Object.keys(Object.fromEntries(apiurl)).length > 0 ?
+                <Box maxWidth="lg" className={classes.chipbar}>
                 <Grid
                       container
                       spacing={0}
@@ -391,8 +368,8 @@ const Issues = ({ issues, reportName, reportType,counter,historydata,projectId }
                          <button onClick={handleClick} className={classes.searchButton}>Search</button>
                         </Box>
                       </Box>
-                </Box>
-                ): '' }
+                </Box> :''}
+                
               </Container>
                </Grid> 
           </Container>
@@ -415,14 +392,7 @@ const Issues = ({ issues, reportName, reportType,counter,historydata,projectId }
 
     return (
       <>
-      <Grid
-          item
-          xs={12}          
-          md={12}
-          className="report-issuelist-search"
-        >
-      {getSearchBox()}
-      </Grid>
+      
       <Grid
           item
           xs={12}          
@@ -531,7 +501,7 @@ const Issues = ({ issues, reportName, reportType,counter,historydata,projectId }
                   </TableRow>
                 </TableHead><TableBody>
                    {
-                      Object.entries(issuesdata.data).map(([rkey, row]) => {
+                      Object.entries(issuesvalue).map(([rkey, row]) => {
                         const isItemSelected = isSelected(rkey)
                       return (<TableRow hover hover onClick={event => handleClickRow('key',rkey)}  key={rkey} role="checkbox" selected={isItemSelected} tabIndex={-1} >
 
@@ -573,30 +543,40 @@ const Issues = ({ issues, reportName, reportType,counter,historydata,projectId }
       spacing={1}
       style={{ display: 'block', margin: '5px' }}
     >
-    {
-          historydata && (
-            <>
-            <Grid xs={12} container justify="flex-end">
-            <FormControl variant="outlined" className={classes.formControl}>
-             <InputLabel htmlFor="outlined-history-native-simple">History</InputLabel>
-              <Select native
-                onChange={handleSelect.bind(this)} handleSelect label="History"
-                inputProps={{
-                  name: 'history',
-                  id: 'outlined-history-native-simple',
-                }} >
-                <option aria-label="None" value="" />
-              {Object.entries(historydata).map(([key, value]) => {                  
-                  return (
-                      <option key={value} value={value}>{moment(value.replace(".json","").replace("_"," ")).format('MMMM Do YYYY, h:mm:ss a')}</option>
-                  );
-              })}
-            </Select>
-           </FormControl>           
-          </Grid>
-            </>
-           )
-      }
+      <Grid container className="report-issuelist-head-block">
+        <Grid item xs={8} className="report-issuelist-search">
+          {getSearchBox()}
+        </Grid>
+        
+        <Grid item xs={4} className="report-issuelist-dd">
+          {
+                  historydata && (
+                    <>
+                    
+                    <FormControl variant="outlined" className={classes.formControl}>
+                     <InputLabel htmlFor="outlined-history-native-simple">History</InputLabel>
+                      <Select native
+                        onChange={handleSelect.bind(this)} handleSelect label="History"
+                        inputProps={{
+                          name: 'history',
+                          id: 'outlined-history-native-simple',
+                        }} >
+                        <option aria-label="None" value="" />
+                      {Object.entries(historydata).map(([key, value]) => {                  
+                          return (
+                              <option key={value} value={value}>{moment(setDateFormat(value).replace(".json","").replace("_"," ")).format('MMMM Do YYYY, h:mm:ss a')}</option>
+                          );
+                      })}
+                    </Select>
+                   </FormControl>           
+                 
+                    </>
+                   )
+              }
+        </Grid>        
+      </Grid>
+      
+    
       
       <Grid
            container

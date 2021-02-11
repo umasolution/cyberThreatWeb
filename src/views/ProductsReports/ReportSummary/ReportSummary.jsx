@@ -9,7 +9,7 @@ import ChartSecond from './../../reports/DashboardView/ChartSecond';
 import RealTime from './../../reports/DashboardView/RealTime';
 import { getBackgroundColorBySeverity, getFontColorBySeverity } from './../../../Util/Util';
 import moment from 'moment';
-
+import { setDateFormat } from './../../../Util/Util';
 
 
 const ReportSummary = ({ summary, headerDate, projectName, isDocker = false, divId }) => {
@@ -80,7 +80,7 @@ const ReportSummary = ({ summary, headerDate, projectName, isDocker = false, div
                            <ListItem>
                               <ListItemText>
                               <Box className="lastscan-title">Report Date: </Box>
-                              <Box className="lastscan-content">{moment(summary.lastscan[0]['date'].replace("_"," ")).format('MMM DD, YYYY')}
+                              <Box className="lastscan-content">{moment(setDateFormat(summary.lastscan[0]['date']).replace("_"," ")).format('MMM DD, YYYY')}
                               </Box>
                               </ListItemText>
                             </ListItem> 
@@ -165,7 +165,7 @@ const ReportSummary = ({ summary, headerDate, projectName, isDocker = false, div
                                 {scan_insights[0]=='date' ? (<>
                                 <Box className="date-block">
                                 <Box className="snapshot-title">Report Date: </Box>
-                                <Box className="snapshot-content">{moment(scan_insights[1].replace("_"," ")).format('MMM DD, YYYY')}</Box> </Box></>):''}
+                                <Box className="snapshot-content">{moment(setDateFormat(scan_insights[1]).replace("_"," ")).format('MMM DD, YYYY')}</Box> </Box></>):''}
                                 {scan_insights[0]=='vulnerabilities' ? (<>
                                 <Box className="snapshot-content">
                                   <Box className="scoreblock-vulnerabilities-div">
@@ -308,7 +308,7 @@ const ReportSummary = ({ summary, headerDate, projectName, isDocker = false, div
                            <ListItem>
                               <ListItemText>
                               <Box className="lastscan-title">Report Date: </Box>
-                              <Box className="lastscan-content">{moment(summary.lastscan[0]['date'].replace("_"," ")).format('MMM DD, YYYY')}
+                              <Box className="lastscan-content">{moment(setDateFormat(summary.lastscan[0]['date']).replace("_"," ")).format('MMM DD, YYYY')}
                               </Box>
                               </ListItemText>
                             </ListItem> 
@@ -393,7 +393,7 @@ const ReportSummary = ({ summary, headerDate, projectName, isDocker = false, div
                                 {scan_insights[0]=='date' ? (<>
                                 <Box className="date-block">
                                 <Box className="snapshot-title">Report Date: </Box>
-                                <Box className="snapshot-content">{moment(scan_insights[1].replace("_"," ")).format('MMM DD, YYYY')}</Box> </Box></>):''}
+                                <Box className="snapshot-content">{moment(setDateFormat(scan_insights[1]).replace("_"," ")).format('MMM DD, YYYY')}</Box> </Box></>):''}
                                 {scan_insights[0]=='vulnerabilities' ? (<>
                                 <Box className="snapshot-content">
                                   <Box className="scoreblock-vulnerabilities-div">

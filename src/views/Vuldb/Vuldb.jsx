@@ -742,7 +742,7 @@ export const Vuldb = (/* {   } */) => {
                                               color="textSecondary"
                                               className="pub-date-column"
                                             >
-                                            {moment(setDateFormat(row[`pub_date`])).format('MMM DD, YYYY')}
+                                            {moment(row[`pub_date`]).format('MMM DD, YYYY')}
                                             </Typography> </>:''}
 
                                          </Grid>
@@ -1285,7 +1285,7 @@ export const Vuldb = (/* {   } */) => {
                                         <ListItemText>
                                         {snapshot[0]=="publishedDate" ? (<>
                                         <Box className="snapshot-title">Published Date: </Box>
-                                        <Box className="snapshot-content">{moment(setDateFormat(snapshot[1])).format('MMM DD, YYYY')}</Box></>):
+                                        <Box className="snapshot-content">{moment(snapshot[1]).format('MMM DD, YYYY')}</Box></>):
                                         ( <>
                                         <Box className="snapshot-title">{snapshot[0]} : </Box>
                                         <Box className="snapshot-content">{snapshot[1]}</Box>

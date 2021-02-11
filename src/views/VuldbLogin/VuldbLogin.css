@@ -1,5 +1,4 @@
 
-
 .vuldb-login .cvesearchslider {
 	width: 300px;
 }
@@ -32,7 +31,7 @@
 .vuldb-login .cvesearchcenter .MuiPagination-root ul li{display: inline-block;}
 
 
-.vuldb-login .boxdetailhead .boxtitlecontent .niahmeter{display: flex;margin-bottom: -55px;}
+.vuldb-login .boxdetailhead .boxtitlecontent .meter{display: flex;margin-bottom: -55px;}
 
 .vuldb-login .cvesearchleft .boxleftheader > div{margin-bottom: 15px;}
 .vuldb-login .cvesearchremote .cvesearchremote-inner{box-shadow: 0 0 0 1px rgba(63,63,68,0.05), 0 1px 2px 0 rgba(63,63,68,0.15);border-radius: 6px;padding: 15px 24px;}
@@ -57,20 +56,18 @@
 .vuldb-login .scoretitle{border: 1px solid #d0d8e5;border-radius: 3px 0 0 3px; color: #333;}
 .vuldb-login .scorevalue{background: #027ae2; color: #fff;border-radius: 0px 3px 3px 0px;}
 
-.vuldb-login .niahmeterleft h2{font-size: 16px;font-weight: 600;margin-bottom: 10px;}
-.vuldb-login .niahmeterleft h2 a{text-decoration: none;color: #e43838} 
+.vuldb-login .meterleft h2{font-size: 16px;font-weight: 600;margin-bottom: 10px;}
+.vuldb-login .meterleft h2 a{text-decoration: none;color: #e43838} 
 
-.vuldb-login .boxtitlecontent .niahinsightlist .MuiListItem-gutters{padding: 0px 0 15px 0;}
-.vuldb-login .boxtitlecontent .niahinsightlist .MuiListItem-gutters:last-child{padding-bottom: 0;}
-.vuldb-login .boxtitlecontent .niahinsightlist .MuiListItem-gutters .MuiSvgIcon-root{color: #333;}
-.vuldb-login .niahinsightlist .MuiTypography-displayBlock{font-size: 17px;color: #333;font-weight: 600;}
+.vuldb-login .boxtitlecontent .insightlist .MuiListItem-gutters{padding: 0px 0 15px 0;}
+.vuldb-login .boxtitlecontent .insightlist .MuiListItem-gutters:last-child{padding-bottom: 0;}
+.vuldb-login .boxtitlecontent .insightlist .MuiListItem-gutters .MuiSvgIcon-root{color: #333;}
+.vuldb-login .insightlist .MuiTypography-displayBlock{font-size: 17px;color: #333;font-weight: 600;}
 
 .vuldb-login .loading-cell{padding: 10px;}
 .vuldb-login .boxtitlecontent .snapshotlist .MuiListItem-gutters{padding: 0px 0 15px 0;;}
 .vuldb-login .snapshotlist .MuiTypography-root > div{width: 50%;font-size: 17px; color: #333;font-weight: 600;display: inline-block;vertical-align: top;}
 
-.vuldb-login .snapshotlist .MuiTypography-root > div.MuiBox-root-102,.snapshotlist .MuiTypography-root > div.MuiBox-root-103{width: 100%;}
-.vuldb-login .snapshotlist .MuiTypography-root > div a{color: }
 
 .vuldb-login .boxtitlecontent.explo-list{padding: 10px 15px;}
 .vuldb-login .boxtitlecontent.explo-list .MuiExpansionPanelSummary-content h2{font-size: 17px;font-weight: 600;}
@@ -89,6 +86,18 @@
 .vuldb-login .snapshot-content.description{
 width:100% !important;
 }
+
+
+
+
+.vuldb-login .MuiContainer-root > .MuiGrid-container > .MuiContainer-root{max-width: 100%;box-shadow: none;border-radius: 0;padding: 35px;}
+
+.vuldb-login [class*='makeStyles-searchBox']{max-width: 100%;border-radius: 5px;box-shadow: none;}
+.vuldb-login .MuiInput-formControl.MuiInput-underline::before,.vuldb-login .MuiInput-formControl.MuiInput-underline::after {display: none;}
+.vuldb-login .MuiInput-formControl input.MuiInputBase-input{height: 30px;font-weight: 500;font-size: 14px;}
+.vuldb-login [class*='makeStyles-searchButton']{border-radius: 10px; }
+.vuldb-login [class*='makeStyles-chipbar'] > .MuiGrid-container{border: 1px solid #e8e8f2;border-radius: 5px;margin-bottom:30px;}
+.vuldb-login ul li .MuiChip-deletable{background: #556177;border-radius: 5px; }
 
 @media only screen and (min-width:1700px){
 
@@ -111,7 +120,7 @@ width:100% !important;
 .vuldb-login .cvesearchleft .MuiTypography-h3,.boxdetailtitle h2{font-size: 16px;}
 
 .vuldb-login .cvesearchleft .MuiListItem-root .MuiListItemText-root .MuiTypography-body1{font-size: 16px;}
-.vuldb-login .niahmeterleft h2,.vuldb-login .niahinsightlist .MuiTypography-displayBlock,.vuldb-login .snapshotlist .MuiTypography-root > div,.boxtitlecontent.explo-list .MuiExpansionPanelSummary-content h2{font-size: 14px;}
+.vuldb-login .meterleft h2,.vuldb-login .insightlist .MuiTypography-displayBlock,.vuldb-login .snapshotlist .MuiTypography-root > div,.boxtitlecontent.explo-list .MuiExpansionPanelSummary-content h2{font-size: 14px;}
 .vuldb-login .MuiExpansionPanelSummary-root{padding: 0px 15px;}
 .vuldb-login .scoreblock-inner > div{font-size: 12px;}
 
