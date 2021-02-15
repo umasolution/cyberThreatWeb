@@ -20,6 +20,21 @@ import MarkunreadIcon from '@material-ui/icons/Markunread';
 import MarkunreadOutlinedIcon from '@material-ui/icons/MarkunreadOutlined';
 import moment from 'moment';
 import DeleteIcon from '@material-ui/icons/Delete';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardMedia from '@material-ui/core/CardMedia';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Collapse from '@material-ui/core/Collapse';
+import Avatar from '@material-ui/core/Avatar';
+import IconButton from '@material-ui/core/IconButton';
+import clsx from 'clsx';
+import { red } from '@material-ui/core/colors';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import ShareIcon from '@material-ui/icons/Share';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -27,19 +42,40 @@ const useStyles = makeStyles((theme) => ({
     display: 'block',
     height: 224,
   },
+  cardroot: {
+    minWidth: 345,    
+  },
+  subcardroot:{
+    margin: '0px auto',
+    padding:0
+  },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
     width: '100%'
   },
-  // borderDiv: {
-  //   border: '1px',
-  //   borderStyle: 'solid',
-  //   borderRadius: '10px',
-  //   borderColor: 'brown',
-  //   marginTop: '5px'
-  // }
+  media: {
+    height: 0,
+    paddingTop: '56.25%', // 16:9
+  },
+  expand: {
+    transform: 'rotate(0deg)',
+    marginLeft: 'auto',
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.shortest,
+    }),
+  },
+  expandOpen: {
+    transform: 'rotate(180deg)',
+  },
+  avatar: {
+    backgroundColor: red[500],
+  },
 }));
 const Alerts = () => {
+
+  useEffect(() => {
+    getAlerts();
+  }, []);
 
   const [snackbar, setSnackbar] = useState({
     open: false,
@@ -47,23 +83,46 @@ const Alerts = () => {
   });
   const classes = useStyles();
   const [isLoadingData, setloadingData] = useState(true);
-  const [alertsResponse, setAlertsResponse] = useState(null);
+  const [alertsResponse, setAlertsResponse] = useState("");
 
+  const [expandedId, setExpandedId] = React.useState(-1);
+  const [expanded, setExpanded] = React.useState(false);
 
-  useEffect(() => {
-    getAlerts();
-  }, []);
+  const handleExpandClick = async (i,alert) => {
+    setExpandedId(expandedId === i ? -1 : i);
+     if (alert.status === 'unread') {
+        /*setAlert(alert, false)*/
+        try {
+         const url = `/status/delalert`;
+         await Axios.post(url,
+           {
+             "alert_type": alert.alert_type,
+             "alert_name": alert.alert_name,
+             "alert_mode" : alert.alert_mode
+           });
+ 
+       } catch (error) {
+         console.error(error);
+       }
+
+    }
+  };
+
+  const handleExpandClickSingle = () => {
+    setExpanded(!expanded);
+  };
+  
 
   const getAlerts = async () => {
     try {
-      updateLoadingData(true);
+      
       const url = `/alerts/lists`;
       const response = await Axios.get(url);
       if (!response.data) {
         updateLoadingData(false);
         return;
       }
-      
+      console.log(response.data);
       setAlertsResponse(response.data);
       updateLoadingData(false);
     } catch (error) {
@@ -92,6 +151,7 @@ const Alerts = () => {
   }
 
   const setAlert = async (alert, deleteAlert) => {
+    
     try {
       setloadingData(true);
       let url = `/status/setalert`;
@@ -112,7 +172,6 @@ const Alerts = () => {
         const index = alerts.findIndex(a => a.alert_name === alert.alert_name);
         alerts[index].status = 'read';
       }
-
       setAlertsResponse(alerts);
       updateSnackbar(true, response.data.message);
       setloadingData(false);
@@ -151,129 +210,7 @@ const Alerts = () => {
     }
   }
 
-  const getSummary = (alert, index) => {
-    return (
-      <>
-        <div className="header1">
-          {
-            Object.keys(alert).map(key => {
-              return (
-                <>
-                  {key == 'alert_name' && 
-                    (
-                       <Typography
-                        color="textPrimary"
-                        variant="h5"
-                      >
-                        {key == 'alert_name' ? alert[key] : null}
-                      </Typography>
-
-                    )
-                  }
-                  {key == 'message' && 
-                    (
-                      <Typography
-                        color="textSecondary"
-                       variant="h6"
-                      >
-                        {key == 'message' ? alert[key] : null}
-                      </Typography>
-                    )
-                  }
-                  {key == 'updated' && 
-                    (
-                    <Typography
-                      color="textSecondary"
-                      variant="h6"
-                    >
-                      {moment(alert[key]).fromNow()}
-                    </Typography>
-                      
-                    )
-                  }
-                </>
-              )
-            })
-          }
-          {alert.status == "read" ? (<Tooltip title="Read Alert">
-            <MarkunreadIcon
-              style={{ marginLeft: '10px' }}
-              onClick={() => setAlert(alert, true)}              
-              onFocus={(event) => event.stopPropagation()}
-            />
-          </Tooltip>):<Tooltip title="Unread">
-            <MarkunreadOutlinedIcon
-              style={{ marginLeft: '10px' }}
-              onClick={() => setAlert(alert, false)}
-            />
-          </Tooltip>}
-          {<Tooltip title="Remove Alert">
-            <DeleteIcon
-              style={{ marginLeft: '10px' }}
-              onClick={() => deleteAlert(alert, true)}
-            />
-          </Tooltip>}
-        </div>
-        <div>
-          {
-            Object.keys(alert).map(key => {
-              return (
-                <>
-                  {key === 'Updated Details' &&
-                    <div className="header2">
-                      {alert[key].length > 0 && <ArrowRightIcon className="right-arrow-icon" />}
-                      {alert[key].map(updatedDetails => {
-                        return (
-                          Object.keys(updatedDetails).map(updatedDetail => {
-                            return (
-                              <div className="odd-even-background">
-                                <h6 className="details-header">
-                                  {updatedDetail}
-                                </h6>
-                                <p>{updatedDetails[updatedDetail]}</p>
-                              </div>
-                            )
-                          })
-                        )
-                      })}
-                    </div>
-                  }
-                </>
-              )
-            })
-          }
-        </div>
-      </>
-    )
-  }
-
-  const getDetails = (data) => {
-    return (
-      <>
-          {Object.keys(data).length > 0 && <ArrowRightIcon className="right-arrow-icon" />}
-          {
-            Object.keys(data).map(key => {
-              return (
-              <div key={key} className="odd-even-background">
-                <Typography
-                    variant="h6"
-                    color="textPrimary"
-                    className={classes.title}
-                  >
-                     {key}
-                  </Typography>                  
-                  <Typography className={classes.secondaryText}>
-                      {data[key]}
-                  </Typography>
-                  </div>
-                 
-              )
-            })
-          }
-        
-      </>
-    )
-  }
+  
 
   const expandPanel = async (event, expanded, alert) => {
     if (alert.status === 'unread') {
@@ -293,6 +230,7 @@ const Alerts = () => {
 
     }
   }
+  
 
   const printAlerts = () => {
     return (
@@ -301,6 +239,7 @@ const Alerts = () => {
           container
           spacing={1}
         >
+        
           <Box
             display="flex"
             flexDirection="column"
@@ -308,68 +247,154 @@ const Alerts = () => {
             height="100%"
             style={{ marginTop: '25px', width: '100%' }}
           >
-          <Typography variant="h5" color="textPrimary">
-            Unread
-          </Typography>
-            {Object.entries(alertsResponse).map(([index,alert]) => {
-              return (
-                alert.status == "unread" ?(
-                <ExpansionPanel
-                  style={{ width: '100%' }}
-                  onChange={(event, expanded) =>
-                    expandPanel(event, expanded, alert)}
-                    className={alert.status === 'unread' ? 'bold-font' : null}
-                >
-                  <ExpansionPanelSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                    onex
-                    className={alert.status === 'unread' ? 'bold-font' : null}
-                  >
+          <Card className={classes.cardroot}>
+           
+            <CardContent  style={{ padding: '0px'}}>
+              <Typography gutterBottom variant="h3" component="h2" style={{ padding: '16px'}}>
+                Unread
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p" >
+                {Object.entries(alertsResponse).map(([index,alert],keyindex) => {
+                  return (
+                    alert.status == "unread" ?(
+                    <Card className={classes.subcardroot}>
+                      <CardHeader
+                        title={alert.alert_name + ' ' + alert.message}
+                        subheader={moment(alert['updated']).fromNow()}
+                        avatar={
+                          <Avatar className={classes.avatar} >
+                            U
+                          </Avatar>
+                        }
+                        action={(<>
+                          <IconButton aria-label="read unread">
+                          {alert.status == "read" ? (<Tooltip title="Unread Alert">
+                          <MarkunreadIcon
+                            style={{ marginLeft: '10px' }}
+                            onClick={() => setAlert(alert, true)}              
+                            onFocus={(event) => event.stopPropagation()}
+                          />
+                        </Tooltip>):<Tooltip title="Read Alert">
+                          <MarkunreadOutlinedIcon
+                            style={{ marginLeft: '10px' }}
+                            onClick={() => setAlert(alert, false)}
+                          />
+                        </Tooltip>}
+                        </IconButton>
+                        <IconButton
+                          className={clsx(classes.expand, {
+                            [classes.expandOpen]: expanded,
+                          })}
+                           onClick={() => handleExpandClick(keyindex,alert)}
+                          aria-expanded={expandedId === keyindex}
+                          aria-label="show more"
+                        >
+                          <ExpandMoreIcon />
+                        </IconButton><IconButton aria-label="delete">
+                            {<Tooltip title="Remove Alert">
+                              <HighlightOffIcon
+                                style={{ marginLeft: '10px' }}
+                                onClick={() => deleteAlert(alert, true)}
+                              />
+                            </Tooltip>}
+                         </IconButton></>)
+                        }
 
-                    {getSummary(alert, index)}
-                  </ExpansionPanelSummary>
-                  <ExpansionPanelDetails>
-                    <div style={{ width: '100%' }} >
-                      {getDetails(alert)}
-                    </div>
-                  </ExpansionPanelDetails>
-                </ExpansionPanel>):''
-              );
-            })}
-          <Typography variant="h5" color="textPrimary">
-            Read
-          </Typography>
-            {Object.entries(alertsResponse).map(([index,alert]) => {
-              return (
-                alert.status == "read" ?(
-                <ExpansionPanel
-                  style={{ width: '100%' }}
-                  onChange={(event, expanded) =>
-                    expandPanel(event, expanded, alert)}
-                    className={alert.status === 'unread' ? 'bold-font' : null}
-                >
-                  <ExpansionPanelSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                    onex
-                    className={alert.status === 'unread' ? 'bold-font' : null}
-                  >
+                      />                   
+                      <CardActions disableSpacing>                        
+                        
+                      </CardActions>
+                      <Collapse in={expandedId === keyindex} timeout="auto" unmountOnExit>
+                        <CardContent>
+                         <Typography paragraph>
+                            {alert.messages?alert.messages:'No Message'}
+                          </Typography>
+                        </CardContent>
+                      </Collapse>
+                    </Card>):''
+                  );
+                })}
+              </Typography>
+            </CardContent>
+          </Card>
+          </Box>
+          <Box
+            display="flex"
+            flexDirection="column"
+            justifyContent="left"
+            height="100%"
+            style={{ marginTop: '25px', width: '100%' }}
+          >
+          <Card className={classes.cardroot}>
+           
+            <CardContent  style={{ padding: '0px'}}>
+              <Typography gutterBottom variant="h3" component="h2" style={{ padding: '16px'}}>
+                Read
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p" >
+                {Object.entries(alertsResponse).map(([index,alert],keyindex) => {
+                  return (
+                    alert.status == "read" ?(
+                    <Card className={classes.subcardroot}>
+                      <CardHeader
+                        title={alert.alert_name + ' ' + alert.message}
+                        subheader={moment(alert['updated']).fromNow()}
+                        avatar={
+                          <Avatar aria-label="recipe" className={classes.avatar}>
+                            R
+                          </Avatar>
+                        }
+                        action={(<>
+                          <IconButton aria-label="read unread">
+                          {alert.status == "read" ? (<Tooltip title="Unread Alert">
+                          <MarkunreadIcon
+                            style={{ marginLeft: '10px' }}
+                            onClick={() => setAlert(alert, true)}              
+                            onFocus={(event) => event.stopPropagation()}
+                          />
+                        </Tooltip>):<Tooltip title="Read Alert">
+                          <MarkunreadOutlinedIcon
+                            style={{ marginLeft: '10px' }}
+                            onClick={() => setAlert(alert, false)}
+                          />
+                        </Tooltip>}
+                        </IconButton>
+                        <IconButton
+                          className={clsx(classes.expand, {
+                            [classes.expandOpen]: expanded,
+                          })}
+                           onClick={() => handleExpandClick(keyindex,alert)}
+                          aria-expanded={expandedId === keyindex}
+                          aria-label="show more"
+                        >
+                          <ExpandMoreIcon />
+                        </IconButton><IconButton aria-label="delete">
+                            {<Tooltip title="Remove Alert">
+                              <HighlightOffIcon
+                                style={{ marginLeft: '10px' }}
+                                onClick={() => deleteAlert(alert, true)}
+                              />
+                            </Tooltip>}
+                         </IconButton></>)
+                        }
 
-                    {getSummary(alert, index)}
-                  </ExpansionPanelSummary>
-                  <ExpansionPanelDetails>
-                    <div style={{ width: '100%' }} >
-                      {getDetails(alert)}
-                    </div>
-                  </ExpansionPanelDetails>
-                </ExpansionPanel>):''
-              );
-            })}
-
-
+                      />                   
+                      <CardActions disableSpacing>                        
+                        
+                      </CardActions>
+                      <Collapse in={expandedId === keyindex} timeout="auto" unmountOnExit>
+                        <CardContent>
+                         <Typography paragraph>
+                            {alert.messages?alert.messages:'No Message'}
+                          </Typography>
+                        </CardContent>
+                      </Collapse>
+                    </Card>):''
+                  );
+                })}
+              </Typography>
+            </CardContent>
+          </Card>
           </Box>
         </Grid>
       </Container>

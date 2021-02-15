@@ -133,7 +133,7 @@ const ReportSummary = ({ summary, headerDate, projectName, isDocker = false, div
                             <ListItem>
                               <ListItemText>
                               <Box className="snapshot-block">
-                                <Box className="snapshot-title">vulnerabilities : </Box>
+                                <Box className="snapshot-title">Vulnerabilities : </Box>
                                 <Box className="snapshot-content">
                                   <Box className="scoreblock-severity-div">
                                     {Object.entries(summary.lastscan[0]['vulnerabilities']).map((vulnerabilities) => (
@@ -361,7 +361,7 @@ const ReportSummary = ({ summary, headerDate, projectName, isDocker = false, div
                             <ListItem>
                               <ListItemText>
                               <Box className="snapshot-block">
-                                <Box className="snapshot-title">vulnerabilities : </Box>
+                                <Box className="snapshot-title">Vulnerabilities : </Box>
                                 <Box className="snapshot-content">
                                   <Box className="scoreblock-severity-div">
                                     {Object.entries(summary.lastscan[0]['vulnerabilities']).map((vulnerabilities) => (
