@@ -1,6 +1,6 @@
 import {
     Box, Container, Grid,List, LinearProgress, makeStyles, Typography, ExpansionPanel, ExpansionPanelSummary,
-    ListItem, ListItemIcon, ListItemText, ExpansionPanelDetails, Divider, Paper,Table,TableBody,TableCell,TableContainer,TableHead,TablePagination,TableRow,TextField,Chip
+    ListItem, ListItemIcon, ListItemText, ExpansionPanelDetails, Divider, Paper,Table,TableBody,TableCell,TableContainer,TableHead,TablePagination,TableRow,TextField,Chip,Tooltip,Text,CircularProgress
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Axios from 'axios';
@@ -12,6 +12,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import CONSTANTS from "../../Util/Constants";
 import MySnackbar from "../../Shared/Snackbar/MySnackbar";
 import Copy from '../../Util/Copy';
+import isEmpty  from '../../Util/Util';
 import { setDateFormat } from '../../Util/Util';
 import Skeleton from '@material-ui/lab/Skeleton';
 import Pagination from '@material-ui/lab/Pagination';
@@ -139,7 +140,7 @@ const ProjectsReports = () => {
     const [issearch, setisSearch] = useState(false);
     const [noresult, setNoResult] = useState(false);
     const [mainurl, setMainUrl] = useState();
-    const [apiurl, setApiUrl] = useState();
+    
     const [cveInput, setCVEInput] = useState("");
 
     const [selected, setSelected] = useState([]);
@@ -148,10 +149,12 @@ const ProjectsReports = () => {
 
     const aurl = new URL(Axios.defaults.baseURL);
     const apiparams = new URLSearchParams(aurl.search);
-
+    const [apiurl, setApiUrl] = useState(apiparams);
     const [tagapiurl, setTagApiUrl] = useState(apiparams);
 
     const [chipData, setChipData] = useState([]);
+
+    const [isSearchLoading, setIsSearchLoading] = React.useState(false);
 
     const handleChipDelete = (chipToDelete) => () => {
       chipData.splice(chipToDelete, 1);
@@ -159,6 +162,25 @@ const ProjectsReports = () => {
       newSelected = newSelected.concat(chipData);
       setChipData(newSelected);
     };
+
+    const searchFields = [
+        "type",
+        "scanner",
+        "projectname",
+        "docker",
+        "label",
+        "repoType",
+        "system_os",
+        "system_ip",
+        "system_name",
+        "os_version",
+        "language",
+        "installer_type",
+        "repository",
+        "scan_project",
+        "domainname",
+        "cms"
+    ];
 
     const [selecttype, setSelecttype] = useState([]);
 
@@ -193,63 +215,7 @@ const ProjectsReports = () => {
         }
     }
 
-    const handleChangeRemote = async (event, value) => {
-        let newSelected = [];
-        setSelected(newSelected);
-        const checked = event.target.checked;
-        const checkedValue = event.target.value;
-        const checkedName = event.target.name;
-        setloadingRows(false);
-        setSingleRows();
-        setisSearch(true);
-        setNoResult(true);
-        apiurl.delete('offset');
-        apiurl.delete('limit');
-        apiurl.delete('type', checkedValue);
-        if(checkedValue=='organization'){
-          if(checked){
-            selecttype.push(checkedValue);
-          } else {
-            apiurl.delete('type', checkedValue);
-            var index = selecttype.indexOf(checkedValue);
-            delete selecttype[index];
-          }
-        } else if(checkedValue=='user'){
-           if(checked){
-            selecttype.push(checkedValue);
-          } else {
-            apiurl.delete('type', checkedValue);
-            var index = selecttype.indexOf(checkedValue);
-            delete selecttype[index];
-          }
-        }
-        setSelecttype(selecttype);
-        const myList = (
-          selecttype.map((item, i) => apiurl.append('type', item))
-        )
-        
-        setApiUrl(apiurl);
-        if(selecttype[0] && selecttype[1]) {  
-          apiurl.delete('type', 'organization');
-          apiurl.delete('type', 'user');
-          var url = `${mainurl}`;
-        } else if(selecttype[0]) { 
-          var url = `${mainurl}?${apiurl.toString()}`;  
-        } else if(selecttype[1]) { 
-          var url = `${mainurl}?${apiurl.toString()}`;  
-        } else { 
-          var url = `${mainurl}`;  
-        } 
-        console.log(url);
-        
-        let response = await Axios.post(url);
-        setTabsData(response.data);
-        setPage(1);
-        let totalpages = Math.ceil(response.data.total/perRow);
-        setTotalpages(totalpages);
-        setperRow(response.data.rowlimit);
-        setisSearch(false);
-    };
+    
 
     const updateSnackbar = (open, message) => {
         setSnackbarOpen(open);
@@ -300,31 +266,87 @@ const ProjectsReports = () => {
 
     const callApi = async () => {
         setloadingRows(false);
+        setIsSearchLoading(true);
         setSingleRows();
         setisSearch(true);
         setNoResult(true);
         apiurl.delete('offset');
         apiurl.delete('limit');        
-        var url = `${mainurl}?${apiurl.toString()}`;
-        let response = await Axios.post(url);
-        
+        var url = `${mainurl}`;
+        let response = await Axios.post(url,Object.fromEntries(apiurl));        
         setTabsData(response.data);
         setPage(1);
         let totalpages = Math.ceil(response.data.total/perRow);
         setTotalpages(totalpages);
         setperRow(response.data.rowlimit);
-        setisSearch(false);                      
-        
+        setisSearch(false);
+        setIsSearchLoading(false); 
+    }
+
+    const deletestring = () => {
+        Object.entries(searchFields).map(([key, row],index) => {
+            apiurl.delete(row);
+        })
+    }
+
+    const deleteTagstring = () => {
+        Object.entries(searchFields).map(([key, row],index) => {
+            tagapiurl.delete(row);
+        })
+    }
+
+    const apiSetUrls = (name,value) => {
+        Object.entries(searchFields).map(([key, row],index) => {
+            
+            if(name == row) {
+              apiurl.set(row, value);
+            }
+        })
+    }
+
+    const apiSetTagUrls = (name,value) => {
+        Object.entries(searchFields).map(([key, row],index) => {
+           
+            if(name == row) {
+              tagapiurl.set(row, value);
+            }
+        })
+    }
+
+    const setChipTag = (name,value) => {
+        Object.entries(searchFields).map(([key, row],index) => {
+            if(name == row) {
+              if(tagapiurl.has(row) === true) {
+                alert(`Already added ${row}`);
+              } else {
+                let newSelected = [];
+                newSelected = newSelected.concat(chipData, `${row}:${value}`);
+                setChipData(newSelected);
+                tagapiurl.set(row, value);
+              }
+            }
+        })
     }
 
     const handleClick = (event) => {
       apiurl.delete('offset');
       apiurl.delete('limit'); 
       apiurl.delete('type');
-      apiurl.delete('language'); 
-      apiurl.delete('product'); 
-      apiurl.delete('severity');
-      apiurl.delete('accessvector');
+      apiurl.delete('scanner');
+      apiurl.delete('projectname');
+      apiurl.delete('docker');
+      apiurl.delete('label');
+      apiurl.delete('repoType');
+      apiurl.delete('system_os');
+      apiurl.delete('system_ip');
+      apiurl.delete('system_name');
+      apiurl.delete('os_version');
+      apiurl.delete('language');
+      apiurl.delete('installer_type');
+      apiurl.delete('repository');
+      apiurl.delete('scan_project');
+      apiurl.delete('domainname');
+      apiurl.delete('cms');
       const regex5 = /([^:\s]+):([^:\s]+)/g;
       const regex = new RegExp(regex5,'i');
       chipData.forEach(function (value, index, array) {
@@ -332,25 +354,39 @@ const ProjectsReports = () => {
           var regexcve = /cve-/;
           var regexcve2 = /CVE-/;
           if(m){
-            if(m[1]=='language'){
-              apiurl.set('type', 'language');
-              apiurl.set('product', m[2]);
-            } else if(m[1]=='advisory') {
-              apiurl.set('type', 'advisory');
-              apiurl.set('product', m[2]);
-            } else if(m[1]=='platform') {
-              apiurl.set('type', 'platform');
-              apiurl.set('product', m[2]);
-            } else if(m[1]=='plugin') {              
-              apiurl.set('type', 'plugin');
-              apiurl.set('product', m[2]);
-            } else if(m[1]=='severity') {
-              apiurl.set('severity', m[2]);
-            } else if(m[1]=='accessvector') {
-              apiurl.set('accessvector', m[2]);
-            } else if(m[1]=='type') {
+            if(m[1]=='type') {
               apiurl.set('type', m[2]);
-            }  
+            } else if(m[1]=='scanner') {
+              tagapiurl.set('scanner', m[2]);
+            } else if(m[1]=='projectname') {
+              tagapiurl.set('projectname', m[2]);
+            } else if(m[1]=='docker') {
+              tagapiurl.set('docker', m[2]);
+            } else if(m[1]=='label') {
+              tagapiurl.set('label', m[2]);
+            } else if(m[1]=='repoType') {
+              tagapiurl.set('repoType', m[2]);
+            } else if(m[1]=='system_os') {
+              tagapiurl.set('system_os', m[2]);
+            } else if(m[1]=='system_ip') {
+              tagapiurl.set('system_ip', m[2]);
+            } else if(m[1]=='system_name') {
+              tagapiurl.set('system_name', m[2]);
+            } else if(m[1]=='os_version') {
+              tagapiurl.set('os_version', m[2]);
+            } else if(m[1]=='language') {
+              tagapiurl.set('language', m[2]);
+            } else if(m[1]=='installer_type') {
+              tagapiurl.set('installer_type', m[2]);
+            } else if(m[1]=='repository') {
+              tagapiurl.set('repository', m[2]);
+            } else if(m[1]=='scan_project') {
+              tagapiurl.set('scan_project', m[2]);
+            } else if(m[1]=='domainname') {
+              tagapiurl.set('domainname', m[2]);
+            } else if(m[1]=='cms') {
+              tagapiurl.set('cms', m[2]);
+            } 
           }
       })
       callApi();
@@ -374,33 +410,63 @@ const ProjectsReports = () => {
         const regex5 = /([^:\s]+):([^:\s]+)/g;
         const regex = new RegExp(regex5,'i');
 
+        tagapiurl.delete('type');
+        tagapiurl.delete('scanner'); 
+        tagapiurl.delete('projectname'); 
+        tagapiurl.delete('docker'); 
+        tagapiurl.delete('label'); 
+        tagapiurl.delete('repoType'); 
+        tagapiurl.delete('system_os'); 
+        tagapiurl.delete('system_ip'); 
+        tagapiurl.delete('system_name'); 
+        tagapiurl.delete('os_version'); 
         tagapiurl.delete('language'); 
-        tagapiurl.delete('advisory'); 
-        tagapiurl.delete('platform');
-        tagapiurl.delete('plugin');
-        tagapiurl.delete('severity');
-        tagapiurl.delete('accessvector');
+        tagapiurl.delete('installer_type'); 
+        tagapiurl.delete('repository');  
+        tagapiurl.delete('scan_project'); 
+        tagapiurl.delete('domainname');
+        tagapiurl.delete('cms');  
+
+       
 
         chipData.forEach(function (value, index, array) {
             let m = regex.exec(value);    
             var regexcve = /cve-/;
             var regexcve2 = /CVE-/;
             if(m){
-              if(m[1]=='language'){
-                tagapiurl.set('language', m[2]);
-              } else if(m[1]=='advisory') {
-                tagapiurl.set('advisory', m[2]);
-              } else if(m[1]=='platform') {
-                tagapiurl.set('platform', m[2]);
-              } else if(m[1]=='plugin') {              
-                tagapiurl.set('plugin', m[2]);
-              } else if(m[1]=='severity') {
-                tagapiurl.set('severity', m[2]);
-              } else if(m[1]=='accessvector') {
-                tagapiurl.set('accessvector', m[2]);
-              } else if(m[1]=='type') {
+              if(m[1]=='type') {
                 tagapiurl.set('type', m[2]);
-              }
+              } else if(m[1]=='scanner') {
+                tagapiurl.set('scanner', m[2]);
+              } else if(m[1]=='projectname') {
+                tagapiurl.set('projectname', m[2]);
+              } else if(m[1]=='docker') {
+                tagapiurl.set('docker', m[2]);
+              } else if(m[1]=='label') {
+                tagapiurl.set('label', m[2]);
+              } else if(m[1]=='repoType') {
+                tagapiurl.set('repoType', m[2]);
+              } else if(m[1]=='system_os') {
+                tagapiurl.set('system_os', m[2]);
+              } else if(m[1]=='system_ip') {
+                tagapiurl.set('system_ip', m[2]);
+              } else if(m[1]=='system_name') {
+                tagapiurl.set('system_name', m[2]);
+              } else if(m[1]=='os_version') {
+                tagapiurl.set('os_version', m[2]);
+              } else if(m[1]=='language') {
+                tagapiurl.set('language', m[2]);
+              } else if(m[1]=='installer_type') {
+                tagapiurl.set('installer_type', m[2]);
+              } else if(m[1]=='repository') {
+                tagapiurl.set('repository', m[2]);
+              } else if(m[1]=='scan_project') {
+                tagapiurl.set('scan_project', m[2]);
+              } else if(m[1]=='domainname') {
+                tagapiurl.set('domainname', m[2]);
+              } else if(m[1]=='cms') {
+                tagapiurl.set('cms', m[2]);
+              } 
               
             }
         })
@@ -412,61 +478,7 @@ const ProjectsReports = () => {
             var regexcve = /cve-/;
             var regexcve2 = /CVE-/;
             if(m){
-              if(m[1]=='language'){
-                if(tagapiurl.has('language') === true || tagapiurl.has('advisory') === true || tagapiurl.has('platform') === true || tagapiurl.has('plugin') === true) {
-                  alert('You can add only language or advisory or platform or plugin');
-                } else {
-                  let newSelected = [];
-                  newSelected = newSelected.concat(chipData, 'language:'+m[2]);
-                  setChipData(newSelected);
-                  tagapiurl.set('language', m[2]);
-                }
-              } else if(m[1]=='advisory') {
-                if(tagapiurl.has('language') === true || tagapiurl.has('advisory') === true || tagapiurl.has('platform') === true || tagapiurl.has('plugin') === true) {
-                  alert('You can add only language or advisory or platform or plugin');
-                } else {
-                  let newSelected = [];
-                  newSelected = newSelected.concat(chipData, 'advisory:'+m[2]);
-                  setChipData(newSelected);
-                  tagapiurl.set('advisory', m[2]);
-                }
-              } else if(m[1]=='platform') {
-                if(tagapiurl.has('language') === true || tagapiurl.has('advisory') === true || tagapiurl.has('platform') === true || tagapiurl.has('plugin') === true) {
-                  alert('You can add only language or advisory or platform or plugin');
-                } else {
-                  let newSelected = [];
-                  newSelected = newSelected.concat(chipData, 'platform:'+m[2]);                  
-                  setChipData(newSelected);
-                  tagapiurl.set('platform', m[2]);
-                }
-              } else if(m[1]=='plugin') {
-                if(tagapiurl.has('language') === true || tagapiurl.has('advisory') === true || tagapiurl.has('platform') === true || tagapiurl.has('plugin') === true) {
-                  alert('You can add only language or advisory or platform or plugin');
-                } else {
-                  let newSelected = [];
-                  newSelected = newSelected.concat(chipData, 'plugin:'+m[2]);
-                  setChipData(newSelected);
-                  tagapiurl.set('plugin', m[2]);
-                }
-              } else if(m[1]=='severity') {
-                if(tagapiurl.has('severity') === true) {
-                  alert('Already added Severity');
-                } else {
-                  let newSelected = [];
-                  newSelected = newSelected.concat(chipData, 'severity:'+m[2]);
-                  setChipData(newSelected);
-                  tagapiurl.set('severity', m[2]);
-                }
-              } else if(m[1]=='accessvector') {
-                if(tagapiurl.has('accessvector') === true) {
-                  alert('Already added AccessVector');
-                } else {
-                  let newSelected = [];
-                  newSelected = newSelected.concat(chipData, 'accessvector:'+m[2]);
-                  setChipData(newSelected);
-                  tagapiurl.set('accessvector', m[2]);
-                }              
-              } else if(m[1]=='type') {
+              if(m[1]=='type') {
                 if(tagapiurl.has('type') === true) {
                   alert('Already added Type');
                 } else {
@@ -475,95 +487,158 @@ const ProjectsReports = () => {
                   setChipData(newSelected);
                   tagapiurl.set('type', m[2]);
                 }
-              }              
+              } else if(m[1]=='scanner') {
+                if(tagapiurl.has('scanner') === true) {
+                  alert('Already added scanner');
+                } else {
+                  let newSelected = [];
+                  newSelected = newSelected.concat(chipData, 'scanner:'+m[2]);
+                  setChipData(newSelected);
+                  tagapiurl.set('scanner', m[2]);
+                }
+              }  else if(m[1]=='projectname') {
+                if(tagapiurl.has('projectname') === true) {
+                  alert('Already added projectname');
+                } else {
+                  let newSelected = [];
+                  newSelected = newSelected.concat(chipData, 'projectname:'+m[2]);
+                  setChipData(newSelected);
+                  tagapiurl.set('projectname', m[2]);
+                }
+              } else if(m[1]=='docker') {
+                if(tagapiurl.has('docker') === true) {
+                  alert('Already added docker');
+                } else {
+                  let newSelected = [];
+                  newSelected = newSelected.concat(chipData, 'docker:'+m[2]);
+                  setChipData(newSelected);
+                  tagapiurl.set('docker', m[2]);
+                }
+              } else if(m[1]=='label') {
+                if(tagapiurl.has('label') === true) {
+                  alert('Already added label');
+                } else {
+                  let newSelected = [];
+                  newSelected = newSelected.concat(chipData, 'label:'+m[2]);
+                  setChipData(newSelected);
+                  tagapiurl.set('label', m[2]);
+                }
+              } else if(m[1]=='repoType') {
+                if(tagapiurl.has('repoType') === true) {
+                  alert('Already added repoType');
+                } else {
+                  let newSelected = [];
+                  newSelected = newSelected.concat(chipData, 'repoType:'+m[2]);
+                  setChipData(newSelected);
+                  tagapiurl.set('repoType', m[2]);
+                }
+              } else if(m[1]=='system_os') {
+                if(tagapiurl.has('system_os') === true) {
+                  alert('Already added System Os');
+                } else {
+                  let newSelected = [];
+                  newSelected = newSelected.concat(chipData, 'system_os:'+m[2]);
+                  setChipData(newSelected);
+                  tagapiurl.set('system_os', m[2]);
+                }
+              } else if(m[1]=='system_ip') {
+                if(tagapiurl.has('system_ip') === true) {
+                  alert('Already added System ip');
+                } else {
+                  let newSelected = [];
+                  newSelected = newSelected.concat(chipData, 'system_ip:'+m[2]);
+                  setChipData(newSelected);
+                  tagapiurl.set('system_ip', m[2]);
+                }
+              } else if(m[1]=='system_name') {
+                if(tagapiurl.has('system_name') === true) {
+                  alert('Already added System Name');
+                } else {
+                  let newSelected = [];
+                  newSelected = newSelected.concat(chipData, 'system_name:'+m[2]);
+                  setChipData(newSelected);
+                  tagapiurl.set('system_name', m[2]);
+                }
+              } else if(m[1]=='system_name') {
+                if(tagapiurl.has('system_name') === true) {
+                  alert('Already added System Name');
+                } else {
+                  let newSelected = [];
+                  newSelected = newSelected.concat(chipData, 'system_name:'+m[2]);
+                  setChipData(newSelected);
+                  tagapiurl.set('system_name', m[2]);
+                }
+              } else if(m[1]=='os_version') {
+                if(tagapiurl.has('os_version') === true) {
+                  alert('Already added Os Version');
+                } else {
+                  let newSelected = [];
+                  newSelected = newSelected.concat(chipData, 'os_version:'+m[2]);
+                  setChipData(newSelected);
+                  tagapiurl.set('os_version', m[2]);
+                }
+              } else if(m[1]=='language') {
+                if(tagapiurl.has('language') === true) {
+                  alert('Already added Language');
+                } else {
+                  let newSelected = [];
+                  newSelected = newSelected.concat(chipData, 'language:'+m[2]);
+                  setChipData(newSelected);
+                  tagapiurl.set('language', m[2]);
+                }
+              } else if(m[1]=='installer_type') {
+                if(tagapiurl.has('installer_type') === true) {
+                  alert('Already added Installer Type');
+                } else {
+                  let newSelected = [];
+                  newSelected = newSelected.concat(chipData, 'installer_type:'+m[2]);
+                  setChipData(newSelected);
+                  tagapiurl.set('installer_type', m[2]);
+                }
+              } else if(m[1]=='repository') {
+                if(tagapiurl.has('repository') === true) {
+                  alert('Already added Repository');
+                } else {
+                  let newSelected = [];
+                  newSelected = newSelected.concat(chipData, 'repository:'+m[2]);
+                  setChipData(newSelected);
+                  tagapiurl.set('repository', m[2]);
+                }
+              } else if(m[1]=='scan_project') {
+                if(tagapiurl.has('scan_project') === true) {
+                  alert('Already added Scan Project');
+                } else {
+                  let newSelected = [];
+                  newSelected = newSelected.concat(chipData, 'scan_project:'+m[2]);
+                  setChipData(newSelected);
+                  tagapiurl.set('scan_project', m[2]);
+                }
+              } else if(m[1]=='domainname') {
+                if(tagapiurl.has('domainname') === true) {
+                  alert('Already added Domain Name');
+                } else {
+                  let newSelected = [];
+                  newSelected = newSelected.concat(chipData, 'domainname:'+m[2]);
+                  setChipData(newSelected);
+                  tagapiurl.set('domainname', m[2]);
+                }
+              } else if(m[1]=='cms') {
+                if(tagapiurl.has('cms') === true) {
+                  alert('Already added CMS');
+                } else {
+                  let newSelected = [];
+                  newSelected = newSelected.concat(chipData, 'cms:'+m[2]);
+                  setChipData(newSelected);
+                  tagapiurl.set('cms', m[2]);
+                }
+              }        
             }
         })        
         setTagApiUrl(tagapiurl);
         setCVEInput('');
-        
     }
+   }
     
-   }
-
-
-
-     const getFieldData = () => {
-     return (
-       <>
-        <Grid
-            item
-            xs={12}
-            md={12}
-            className="cvesearchleft"
-          > 
-            <Box className="boxleftheader"
-              display="flex"
-              flexDirection="column"
-              justifyContent="center"
-              borderRadius={16}>
-            <Box
-              display="flex"
-              flexDirection="column"
-              justifyContent="center"
-              className="cvesearchremote"
-              borderRadius={16} 
-            >
-            <Box>
-            <ExpansionPanel
-                    style={{ width: '100%' }}
-                    
-                  > 
-                  <ExpansionPanelSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls="type-content"
-                      id="type-header"
-                    >
-                    <Typography variant="h3"  id="type-slider-custom" component="h2">
-                         Options
-                    </Typography>
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
-                       <List>
-                           <ListItem>
-                              <ListItemIcon>
-                                <Checkbox
-                                  edge="start"
-                                  tabIndex={-1}
-                                  disableRipple
-                                  inputProps="org"
-                                  name="type"
-                                  value="organization" 
-                                  onChange={handleChangeRemote}
-                                />
-                              </ListItemIcon>
-                              <ListItemText id="organization" primary="Organization" />
-                            </ListItem>
-                            <ListItem>
-                              <ListItemIcon>
-                                <Checkbox
-                                  edge="start"
-                                  tabIndex={-1}
-                                  disableRipple
-                                  inputProps="user"
-                                  value="user" 
-                                  name="type"
-                                  onChange={handleChangeRemote}
-                                />
-                              </ListItemIcon>
-                              <ListItemText id="user" primary="User" />
-                            </ListItem>
-                            </List>
-                    </ExpansionPanelDetails>
-               </ExpansionPanel>
-            
-             </Box> 
-            </Box>
-            </Box>
-          </Grid>
-        </>
-     )
-   }
-
    const cvesearchcenter = (tabsData,col) => {
 
     return (
@@ -674,7 +749,8 @@ const ProjectsReports = () => {
                           ))
                         }  
                       </TableRow>
-                    </TableHead><TableBody>
+                    </TableHead>
+                    {!isEmpty(tabsData.results)?<TableBody>
                        {
                           Object.entries(tabsData.results).map(([rkey, row]) => {
                             const isItemSelected = isSelected(rkey)
@@ -699,20 +775,64 @@ const ProjectsReports = () => {
                                            ))}
                                           </Box>  
                                         </>
-                                    ) : (vkey==0? (
+                                    ) : '' }
+                                    { tabsData.columns[vkey].field == 'project_details' ? (
                                         <>
-                                         <Grid item xs={12}>
-                                            <Typography
-                                              variant="h5"
-                                              color="textSecondary"
-                                            >
-                                              {row.table[`${tabsData.columns[vkey].field}`].replace(',', '\n') }
-                                            </Typography>
+                                         <Box className="projectdetails-div" flexWrap="wrap">
+                                         {Object.entries(row.table[`${tabsData.columns[vkey].field}`]).map((projectdetails) => (
+                                            <Box>
+                                              {!isEmpty(tabsData.colors[projectdetails[0]])?<Tooltip title={projectdetails[0]}><Chip
+                                                label={projectdetails[1]}
+                                                className={classes.chip}
+                                                color="secondary"
+                                                 style={{
+                                                 backgroundColor : tabsData.colors[projectdetails[0]]}}
+                                              /></Tooltip>:(
+                                                  <Tooltip title={projectdetails[0]}><span>{projectdetails[1]}</span></Tooltip>)
+                                                  }
 
-                                         </Grid>
+                                            </Box>
+                                           ))}
+                                          </Box>  
                                         </>
-                                    )  : row.table[`${tabsData.columns[vkey].field}`].replace(',', '\n'))
-                                    }
+                                    ) : '' }
+                                    { tabsData.columns[vkey].field == 'report_details' ? (
+                                        <>
+                                         <Box className="reportdetails-div"  display="flex" flexWrap="wrap">
+                                         {Object.entries(row.table[`${tabsData.columns[vkey].field}`]).map((reportdetails) => (
+                                            <Box >
+                                              {!isEmpty(tabsData.colors[reportdetails[0]])?<Tooltip title={reportdetails[0]}><Chip
+                                                label={reportdetails[1]}
+                                                className={classes.chip}
+                                                color="secondary"
+                                                 style={{
+                                                 backgroundColor : tabsData.colors[reportdetails[0]]}}
+                                              /></Tooltip>:(<Tooltip title={reportdetails[0]}><span>{reportdetails[1]}</span></Tooltip>)}
+                                            </Box>
+                                           ))}
+                                          </Box>  
+                                        </>
+                                    ) : '' }
+                                    { tabsData.columns[vkey].field == 'target_details' ? (
+                                        <>
+                                         <Box className="target_details-div"  display="flex" flexWrap="wrap">
+                                         {Object.entries(row.table[`${tabsData.columns[vkey].field}`]).map((target_details) => (
+                                          Object.entries(target_details[1]).map((targetdata) => (
+                                            <Box >
+                                              {!isEmpty(tabsData.colors[targetdata[0]])?<Tooltip title={targetdata[0]}><Chip
+                                                label={targetdata[1]}
+                                                className={classes.chip}
+                                                color="secondary"
+                                                 style={{
+                                                 backgroundColor : tabsData.colors[targetdata[0]]}}
+                                              /></Tooltip>:(<Tooltip title={targetdata[0]}><span>{targetdata[1]}</span></Tooltip>)}
+                                            </Box>
+                                            ))
+                                           ))}
+                                          </Box>  
+                                        </>
+                                    ) : '' }
+                                    
                                   </TableCell>
                                 )
                                 )}
@@ -720,7 +840,7 @@ const ProjectsReports = () => {
                           ) }
                           )
                         } 
-                    </TableBody></>)}
+                    </TableBody> : (<TableBody><TableRow><TableCell colSpan={6} style={{ textAlign:'center' }}>Not results Found</TableCell></TableRow></TableBody>)}</>)}
                   </Table>
                 </TableContainer>
               </Paper>
@@ -966,12 +1086,114 @@ const ProjectsReports = () => {
                 className={classes.container}
               > 
               <Container maxWidth="lg" className={classes.searchbar}> 
-                  
+                <Box mt={3} mb={3}
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+               > <Typography variant="h6" component="p">
+                  Find the bellow search criteria
+                </Typography> 
+                </Box>
+                <Box mt={3} mb={3}
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+               >  
+                <Typography component="p" className="search-criteria">
+                  <Chip
+                    label="type:value"
+                    size="small"
+                    className={classes.chip}
+                    color="secondary"
+                  />
+                  <Chip
+                    label="scanner:value"
+                    size="small"
+                    className={classes.chip}
+                    color="secondary"
+                  />
+                  <Chip
+                    label="projectname:value"
+                    size="small"
+                    className={classes.chip}
+                    color="secondary"
+                  />
+                  <Chip
+                    label="docker:value"
+                    size="small"
+                    className={classes.chip}
+                    color="secondary"
+                  />
+                  <Chip
+                    label="label:value"
+                    size="small"
+                    className={classes.chip}
+                    color="secondary"
+                  /><Chip
+                    label="repoType:value"
+                    size="small"
+                    className={classes.chip}
+                    color="secondary"
+                  /><Chip
+                    label="system_os:value"
+                    size="small"
+                    className={classes.chip}
+                    color="secondary"
+                  /><Chip
+                    label="system_ip:value"
+                    size="small"
+                    className={classes.chip}
+                    color="secondary"
+                  /><Chip
+                    label="system_name:value"
+                    size="small"
+                    className={classes.chip}
+                    color="secondary"
+                  /><Chip
+                    label="os_version:value"
+                    size="small"
+                    className={classes.chip}
+                    color="secondary"
+                  /><Chip
+                    label="language:value"
+                    size="small"
+                    className={classes.chip}
+                    color="secondary"
+                  /><Chip
+                    label="installer_type:value"
+                    size="small"
+                    className={classes.chip}
+                    color="secondary"
+                  /><Chip
+                    label="repository:value"
+                    size="small"
+                    className={classes.chip}
+                    color="secondary"
+                  /><Chip
+                    label="scan_project:value"
+                    size="small"
+                    className={classes.chip}
+                    color="secondary"
+                  /><Chip
+                    label="domainname:value"
+                    size="small"
+                    className={classes.chip}
+                    color="secondary"
+                  /><Chip
+                    label="cms:value"
+                    size="small"
+                    className={classes.chip}
+                    color="secondary"
+                  />
+                   
+                </Typography>
+                </Box> 
                 <Box mt={3}
                   display="flex"
                   justifyContent="center"
                   alignItems="center"
                   className={classes.searchBox}>
+
                   <TextField
                   required
                   value={cveInput}
@@ -986,7 +1208,7 @@ const ProjectsReports = () => {
                 />
                 <button onClick={addTagClick} className={classes.searchButton}>Add</button>
                 </Box>
-                {chipData.length > 0 ? (<Box maxWidth="lg" className={classes.chipbar}>
+                {Object.keys(Object.fromEntries(apiurl)).length > 0  ? (<Box maxWidth="lg" className={classes.chipbar}>
                 <Grid
                       container
                       spacing={0}
@@ -1007,9 +1229,16 @@ const ProjectsReports = () => {
                     </Grid>
                     <Box
                         display="flex">
-                        <Box m="auto">
+                        {isSearchLoading ? <Box m="auto">
+                        <Typography  component="p" color="primary" style={{
+                                                    textAlign: 'center'
+                                                  }} >
+                         <CircularProgress />
+                         </Typography>
+                         <button disabled className={classes.searchButton}>Search</button>
+                        </Box> : <Box m="auto">
                          <button onClick={handleClick} className={classes.searchButton}>Search</button>
-                        </Box>
+                        </Box>}
                       </Box>
                 </Box>
                 ): '' }
@@ -1230,8 +1459,7 @@ const ProjectsReports = () => {
 
                 </Box>
                 {getSearchBox(chipData)}
-                <Container maxWidth className="cveresult">
-                  
+                <Container maxWidth className="cveresult">                  
                   <Grid
                         spacing={3}
                         container                        

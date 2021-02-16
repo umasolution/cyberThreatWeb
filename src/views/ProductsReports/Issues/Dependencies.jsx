@@ -16,6 +16,7 @@ import moment from 'moment';
 import { Link as RouterLink ,useHistory } from 'react-router-dom';
 
 import Axios from 'axios';
+import isEmpty from '../../../Util/Util';
 import Copy from "./../../../Util/Copy";
 import { setDateFormat } from './../../../Util/Util';
 const useStyles = makeStyles((theme) => ({
@@ -342,116 +343,6 @@ const Dependencies = ({ issues, reportName, reportType,counter,historydata,proje
        )   
     }
 
-  const getPlatformResult = () => {
-    return (
-      <>
-        {
-          Object.keys(issues).map(issue => {
-            return (
-              issue !== 'severity' ?
-                (
-                  <>
-                    <Typography
-                      variant="h2"
-                      color="primary"
-                    >
-                      {issue}
-                    </Typography>
-
-                    {
-                      issues[issue].map(iss => {
-                        return (
-                          <div >
-                            {Object.keys(iss).map(i => {
-                              return (
-                                <Typography
-                                  variant="h6"
-                                  style={{ color: '#ab396a', marginLeft: '10px' }}
-                                >
-                                  {i}
-                                  {' '}
-:
-                                  {iss[i]}
-                                </Typography>
-                              )
-                            })}
-                            <Divider />
-                          </div>
-                        )
-
-                      })
-                    }
-                  </>
-                )
-                :
-                (
-                  <>
-                  </>
-                )
-            )
-          })
-        }
-
-      </>
-    )
-  }
-
-  const handleCheckBoxChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
-  };
-
-  const getLanguageReport = () => {
-    return (
-      <>
-        <div className={classes.root}>
-          <div style={{ display: 'flex' }}>
-            <List component="nav" aria-label="main mailbox folders">
-              {
-                Object.keys(state).length === fileNames.length ? fileNames.map(name => {
-                  return (
-                    <ListItem button>
-                      <FormControlLabel
-                        control={(
-                          <Checkbox
-                            checked={state[name]}
-                            onChange={handleCheckBoxChange}
-                            name={name}
-                            color="primary"
-                          />
-                        )}
-                        label={name}
-                      />
-                    </ListItem>
-                  );
-                }) : ''
-              }
-
-            </List>
-            <div style={{ width: '100%' }}>
-
-              {
-                Object.keys(state).map(key => {
-                  return (
-                    state[key] ? <File name={key} file={issues[key]} /> : ''
-                  )
-                })
-              }
-              {/* {state.isHighIssueChecked &&
-                issues.High ? <PackageJSON jsonName="High" packageJSON={issues.High} /> : ''}
-              <Divider style={{ display: 'block' }} />
-              {state.isMediumIssueChecked &&
-                issues.Medium ? <PackageJSON jsonName="Medium" packageJSON={issues.Medium} /> : ''}
-              <Divider style={{ display: 'block' }} />
-              {state.isLowIssueChecked &&
-                issues.Low ? <PackageJSON jsonName="Low" packageJSON={issues.Low} /> : ''} */}
-            </div>
-          </div>
-        </div>
-
-      </>
-    );
-  }
-
   return (
     <Grid
       container
@@ -460,7 +351,7 @@ const Dependencies = ({ issues, reportName, reportType,counter,historydata,proje
     >
       <Grid container className="report-issuelist-head-block">
         <Grid item xs={8} className="report-issuelist-search">
-          {getSearchBox()}
+          {!isEmpty(issuesvalue)?getSearchBox():''}
         </Grid>
         
         <Grid item xs={4} className="report-issuelist-dd">
@@ -591,7 +482,9 @@ const Dependencies = ({ issues, reportName, reportType,counter,historydata,proje
                         </TableRow> 
                     </TableBody>
                       
-                </>):(<> <TableHead>
+                </>):(<> 
+                   {!isEmpty(issuesvalue)?(<>
+                  <TableHead>
                       <TableRow>
                         {
                           Object.keys(issues.column).map((key, i) => (
@@ -648,7 +541,9 @@ const Dependencies = ({ issues, reportName, reportType,counter,historydata,proje
                           ) }
                           )
                         } 
-                    </TableBody></>)}
+                    </TableBody></>):(<><TableBody><TableRow><TableCell style={{ textAlign:'center' }}>Not results Found</TableCell></TableRow></TableBody></>)}
+
+                    </>)}
                   </Table>
                 </TableContainer>
               </Paper>

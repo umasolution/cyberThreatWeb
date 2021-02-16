@@ -76,7 +76,7 @@ function Notifications({alertsResponse}) {
     <>
       <Tooltip title="Notifications">
         <IconButton className={classes.iconcolor} ref={ref} onClick={handleOpen}>
-        <Badge badgeContent={alertsResponse ? alertsResponse.length : 0  }  color="secondary">
+        <Badge   color="secondary">
           <SvgIcon>
             <BellIcon />
           </SvgIcon>

@@ -167,8 +167,8 @@ function TopBar({ className, onMobileNavOpen, ...rest }) {
         {/* <Search /> */}
         {/* <Contacts /> */}
         <Notifications alertsResponse={alertsResponse}/>
-        <Alerts alertsResponse={alertsResponse}/>
-        <Settings />
+        
+        {/*<Settings />*/}
         <Box ml={2}>
          { <Account />}
         </Box>

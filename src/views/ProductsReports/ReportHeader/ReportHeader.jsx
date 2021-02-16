@@ -1,7 +1,7 @@
 import { Grid, makeStyles, Typography,Card } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import React from 'react';
-import Severity from './Severity/Severity';
+
 import moment from 'moment';
 import { setDateFormat } from './../../../Util/Util';
 const useStyles = makeStyles((theme) => ({
@@ -99,11 +99,7 @@ const ReportHeader = ({ header }) => {
           </Card> </Grid>
           ) 
       ))}
-      {/*header.Severity ?
-        <Card>
-          <Severity severity={header.Severity} />
-        </Card>
-        : ''*/}
+      
     </Grid>
   </>);
 };

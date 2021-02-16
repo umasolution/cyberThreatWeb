@@ -18,6 +18,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import MarkunreadIcon from '@material-ui/icons/Markunread';
 import MarkunreadOutlinedIcon from '@material-ui/icons/MarkunreadOutlined';
+import DraftsIcon from '@material-ui/icons/Drafts';
 import moment from 'moment';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Card from '@material-ui/core/Card';
@@ -33,7 +34,7 @@ import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-
+import SendIcon from '@material-ui/icons/Send';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -210,28 +211,6 @@ const Alerts = () => {
     }
   }
 
-  
-
-  const expandPanel = async (event, expanded, alert) => {
-    if (alert.status === 'unread') {
-        setAlert(alert, false)
-        /*try {
-         const url = `/status/setalert`;
-         await Axios.post(url,
-           {
-             "alert_type": alert.alert_type,
-             "alert_name": alert.alert_name,
-             "alert_mode" : alert.alert_mode
-           });
- 
-       } catch (error) {
-         console.error(error);
-       }*/ 
-
-    }
-  }
-  
-
   const printAlerts = () => {
     return (
       <Container className="root" maxWidth>
@@ -246,12 +225,14 @@ const Alerts = () => {
             justifyContent="left"
             height="100%"
             style={{ marginTop: '25px', width: '100%' }}
+
           >
           <Card className={classes.cardroot}>
-           
-            <CardContent  style={{ padding: '0px'}}>
+            <CardContent  style={{ padding: '0px'}} className="bold-font">
               <Typography gutterBottom variant="h3" component="h2" style={{ padding: '16px'}}>
-                Unread
+                <MarkunreadOutlinedIcon
+                  style={{ marginLeft: '10px' }}
+                />
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p" >
                 {Object.entries(alertsResponse).map(([index,alert],keyindex) => {
@@ -262,9 +243,7 @@ const Alerts = () => {
                         title={alert.alert_name + ' ' + alert.message}
                         subheader={moment(alert['updated']).fromNow()}
                         avatar={
-                          <Avatar className={classes.avatar} >
-                            U
-                          </Avatar>
+                          <Avatar src="/static/faviconm.png" />
                         }
                         action={(<>
                           <IconButton aria-label="read unread">
@@ -307,7 +286,21 @@ const Alerts = () => {
                       <Collapse in={expandedId === keyindex} timeout="auto" unmountOnExit>
                         <CardContent>
                          <Typography paragraph>
-                            {alert.messages?alert.messages:'No Message'}
+                            {!isEmpty(alert.messages)?(<><div className={classes.demo}>
+                              <List>
+                                  {Object.entries(alert.messages).map(([index,message],keyindex) => (
+                                  <ListItem>
+                                    <ListItemIcon>
+                                      <SendIcon />
+                                    </ListItemIcon>
+                                    <ListItemText
+                                      primary={message}
+                                      secondary={ null}
+                                    />
+                                  </ListItem>
+                                  ))}
+                              </List>
+                            </div></>):'No Message'}
                           </Typography>
                         </CardContent>
                       </Collapse>
@@ -329,7 +322,9 @@ const Alerts = () => {
            
             <CardContent  style={{ padding: '0px'}}>
               <Typography gutterBottom variant="h3" component="h2" style={{ padding: '16px'}}>
-                Read
+                <DraftsIcon
+                  style={{ marginLeft: '10px' }}
+                />
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p" >
                 {Object.entries(alertsResponse).map(([index,alert],keyindex) => {
@@ -340,9 +335,7 @@ const Alerts = () => {
                         title={alert.alert_name + ' ' + alert.message}
                         subheader={moment(alert['updated']).fromNow()}
                         avatar={
-                          <Avatar aria-label="recipe" className={classes.avatar}>
-                            R
-                          </Avatar>
+                          <Avatar src="/static/faviconm.png" />
                         }
                         action={(<>
                           <IconButton aria-label="read unread">
@@ -379,13 +372,27 @@ const Alerts = () => {
                         }
 
                       />                   
-                      <CardActions disableSpacing>                        
-                        
-                      </CardActions>
+                      
                       <Collapse in={expandedId === keyindex} timeout="auto" unmountOnExit>
                         <CardContent>
                          <Typography paragraph>
-                            {alert.messages?alert.messages:'No Message'}
+                            {!isEmpty(alert.messages)?(<><div className={classes.demo}>
+                              <List>
+                                  {Object.entries(alert.messages).map(([index,message],keyindex) => (
+                                  <ListItem>
+                                    <ListItemIcon>
+                                      <SendIcon />
+                                    </ListItemIcon>
+                                    <ListItemText
+                                      primary={message}
+                                      secondary={ null}
+                                    />
+                                  </ListItem>
+                                  ))}
+                              </List>
+                            </div></>):'No Message'}
+                            
+                           
                           </Typography>
                         </CardContent>
                       </Collapse>

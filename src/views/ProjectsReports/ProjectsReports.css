@@ -184,6 +184,10 @@ width:100% !important;
 .scan-report-list [class*='makeStyles-chipbar'] > .MuiGrid-container{border: 1px solid #e8e8f2;border-radius: 5px;margin-bottom:30px;}
 .scan-report-list ul li .MuiChip-deletable{background: #556177;border-radius: 5px; }
 
+.scan-report-list [class*='makeStyles-chip'] {border-radius: 5px;}
+
+/*.scan-report-list .search-criteria [class*='makeStyles-chip'] {background: #FF9F00}*/
+
 @media only screen and (min-width:1700px){
 
 .scan-report-list .cvesearchcenter .MuiTableCell-root{padding: 15px}

@@ -14,6 +14,7 @@ import ReportCount from './../ReportCount/ReportCount';
 import { Link as RouterLink ,useHistory } from 'react-router-dom';
 import moment from 'moment';
 import Axios from 'axios';
+import isEmpty from '../../../Util/Util';
 import Copy from "./../../../Util/Copy";
 import { setDateFormat } from './../../../Util/Util';
 const useStyles = makeStyles((theme) => ({
@@ -488,7 +489,9 @@ const Issues = ({ issues, reportName, reportType,counter,historydata,projectId }
                     </TableRow> 
                 </TableBody>
                   
-            </>):(<> <TableHead>
+            </>):(<> 
+              {!isEmpty(issuesvalue)?(<>
+              <TableHead>
                   <TableRow>
                     {
                       Object.keys(issuesdata.display.table).map((key, i) => (
@@ -499,7 +502,8 @@ const Issues = ({ issues, reportName, reportType,counter,historydata,projectId }
                       ))
                     }  
                   </TableRow>
-                </TableHead><TableBody>
+                </TableHead>
+                <TableBody>
                    {
                       Object.entries(issuesvalue).map(([rkey, row]) => {
                         const isItemSelected = isSelected(rkey)
@@ -527,7 +531,9 @@ const Issues = ({ issues, reportName, reportType,counter,historydata,projectId }
                       ) }
                       )
                     } 
-                </TableBody></>)}
+                </TableBody>
+                </>):(<><TableBody><TableRow><TableCell style={{ textAlign:'center' }}>Not results Found</TableCell></TableRow></TableBody></>)}
+                </>)}
               </Table>
             </TableContainer>
           </Paper>
@@ -545,7 +551,7 @@ const Issues = ({ issues, reportName, reportType,counter,historydata,projectId }
     >
       <Grid container className="report-issuelist-head-block">
         <Grid item xs={8} className="report-issuelist-search">
-          {getSearchBox()}
+          {!isEmpty(issuesvalue)?getSearchBox():''}
         </Grid>
         
         <Grid item xs={4} className="report-issuelist-dd">

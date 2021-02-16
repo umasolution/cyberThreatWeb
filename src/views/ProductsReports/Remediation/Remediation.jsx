@@ -13,6 +13,7 @@ import { Link as RouterLink ,useHistory } from 'react-router-dom';
 import moment from 'moment';
 import './Remediation.css';
 import Axios from 'axios';
+import isEmpty from '../../../Util/Util';
 import Copy from "./../../../Util/Copy";
 import { setDateFormat } from './../../../Util/Util';
 const useStyles = makeStyles((theme) => ({
@@ -341,7 +342,7 @@ const Remediation = ({remediation,counter, reportName,historydata,projectId}) =>
     >
     <Grid container className="report-issuelist-head-block">
         <Grid item xs={8} className="report-issuelist-search">
-          {getSearchBox()}
+          {!isEmpty(remediationvalue)?getSearchBox():''}
         </Grid>
         
         <Grid item xs={4} className="report-issuelist-dd">
@@ -474,7 +475,9 @@ const Remediation = ({remediation,counter, reportName,historydata,projectId}) =>
                         </TableRow> 
                     </TableBody>
                       
-                </>):(<> <TableHead>
+                </>):(<> 
+                  {!isEmpty(remediationvalue)?(<>
+                  <TableHead>
                       <TableRow>
                         {
                           Object.keys(remediation.column).map((key, i) => (
@@ -523,7 +526,9 @@ const Remediation = ({remediation,counter, reportName,historydata,projectId}) =>
                           ) }
                           )
                         } 
-                    </TableBody></>)}
+                    </TableBody></>):(<><TableBody><TableRow><TableCell style={{ textAlign:'center' }}>Not results Found</TableCell></TableRow></TableBody></>)}
+
+                    </>)}
                   </Table>
                 </TableContainer>
               </Paper>

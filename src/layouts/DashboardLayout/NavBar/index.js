@@ -18,7 +18,8 @@ import {
   ListSubheader,
   Typography,
   makeStyles,
-  IconButton
+  IconButton,
+  SvgIcon
 } from '@material-ui/core';
 import ReceiptIcon from '@material-ui/icons/ReceiptOutlined';
 import {
@@ -42,7 +43,9 @@ import {
   Share2 as ShareIcon,
   Users as UsersIcon,
   Home as HomeIcon,
+  Bell as BellIcon,
 } from 'react-feather';
+
 import Logo from 'src/components/Logo';
 import "./index.css";
 import NavItem from './NavItem';
@@ -51,6 +54,9 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { THEMES } from 'src/constants';
+import Badge from '@material-ui/core/Badge';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import SendIcon from '@material-ui/icons/Send';
 const userName = authService.getUserName();
 
 const navConfig = [
@@ -84,7 +90,7 @@ const navConfig = [
         href: '/app/management/ProjectsReports/language',
       },
       {
-        title: 'Manage Alerts',
+        title: 'Alerts',
         icon: NotificationsIcon,
         href: '/app/management/Alerts',
       }/*,
@@ -305,7 +311,7 @@ function renderNavItems({ items, ...rest }) {
       {items.reduce(
         (acc, item) => reduceChildRoutes({ acc, item, ...rest }),
         []
-      )}
+      )}    
     </List>
   );
 }
@@ -317,6 +323,15 @@ function reduceChildRoutes({
   depth = 0
 }) {
   const key = item.title + depth;
+
+  console.log(item.title);
+
+  if(item.title == 'Alerts'){
+      let iconcount = <Badge badgeContent="0" color="#FE0A7B">
+          Alerts
+          </Badge>
+      item.title = item.title;    
+  }
 
   if (item.items) {
     const open = matchPath(pathname, {
@@ -338,6 +353,7 @@ function reduceChildRoutes({
           pathname,
           items: item.items
         })}
+       
       </NavItem>
     );
   } else {
