@@ -16,14 +16,20 @@ import {
   IconButton
 } from '@material-ui/core';
 
+import PhotoCamera from '@material-ui/icons/PhotoCamera';
+
 const useStyles = makeStyles((theme) => ({
   root: {},
   name: {
     marginTop: theme.spacing(1)
   },
   avatar: {
-    height: 100,
-    width: 100
+    height: 200,
+    width: 200
+  },
+   uploadbtn: {
+    margin: theme.spacing(1),
+    
   }
 }));
 
@@ -97,13 +103,22 @@ function ProfileDetails({ user, className, ...rest }) {
     const formData = new FormData();
     formData.append("file", image.raw);
 
-    await fetch("/upload/image", {
+    /*await fetch("/upload/image", {
       method: "POST",
       headers: {
         "Content-Type": "multipart/form-data"
       },
       body: formData
-    });
+    });*/
+    try {      
+        Axios.post("/upload/image", formData).then((res) => {
+          alert(res.data.message);
+          window.location.reload();
+        });
+       
+      } catch (error) {
+        console.error(error);
+      }
   };
 
   return (
@@ -117,17 +132,23 @@ function ProfileDetails({ user, className, ...rest }) {
           alignItems="center"
           flexDirection="column"
           textAlign="center"
-        >{/*
+        >
         <div>
           <label htmlFor="upload-button">
             {image.preview ? (<>
-              <img src={image.preview} alt="dummy" width="300" height="300" />
-              <button onClick={handleUpload}>Upload</button>
+              <Avatar
+                  className={classes.avatar}
+                  src={image.preview}
+               />
+              {/*<img src={image.preview} alt="dummy" width="300" height="300" />*/}
+              <Button className={classes.uploadbtn} onClick={handleUpload} variant="contained" color="primary" component="span">Upload</Button>
+              
             </>) : (
               <>
                 <Avatar
                   className={classes.avatar}
-                  src="http://cyberthreatinfo.ca/api/image/d1851c52-3204-11eb-b1b2-080027d7b49a.png"
+
+                  src={avatar}
                 />
               </>
             )}
@@ -140,8 +161,8 @@ function ProfileDetails({ user, className, ...rest }) {
           />
           
         </div>
-*/}
-        <Avatar
+
+        {/*<Avatar
             className={classes.avatar}
             src={avatar}
           />
@@ -151,7 +172,7 @@ function ProfileDetails({ user, className, ...rest }) {
             <button onClick={onFileUpload}> 
               Upload! 
             </button> 
-        </div>
+        </div>*/}
         
           
           <Typography

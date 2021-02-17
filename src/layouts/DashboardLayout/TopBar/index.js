@@ -153,7 +153,7 @@ function TopBar({ className, onMobileNavOpen, ...rest }) {
         </Hidden>
         <Hidden mdDown>
           <RouterLink to="/">
-            <Logo />
+            <Logo className="dashboard-logo" />
           </RouterLink>
           <Box className="dashboardsearch">
           <CVETextField

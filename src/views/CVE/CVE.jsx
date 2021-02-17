@@ -19,7 +19,7 @@ import moment from 'moment';
 import MySnackbar from "../../Shared/Snackbar/MySnackbar";
 import CONSTANTS from "../../Util/Constants";
 import ResultByCVE from './ResultByCVE/ResultByCVE';
-import CVEInput from './CVEInput/CVEInput';
+import CVEInput from './CVEInputlogin/CVEInput';
 import ResultByCVEDate from './ResultByCVEDate/ResultByCVEDate';
 import authService from 'src/services/authService';
 import { useLocation } from 'react-router-dom';
@@ -212,7 +212,7 @@ const CVE = () => {
                     flexDirection="column"
                     justifyContent="left"
                     height="100%"
-                    style={{ marginTop: '25px' }}
+                    style={{ marginTop: '25px', width: '100%' }}
                 >
                     {isLoadingData && isAuthenticatedURL && getLoader()}
 

@@ -192,8 +192,24 @@ button:focus{
 }
 
 
-
-
+.cve-searchbtn .MuiInput-underline:before, .cve-searchbtn .MuiInput-underline:after {
+    border: none !important;
+}
+.menu-right-info {
+    background-color: #FF0476 !important;
+    margin-right: 20px;
+    height: 35px !important;
+    width: 35px !important;
+    font-size: 15px !important;
+    border: 2px solid #fff;
+}
+.logo-beta .MuiBadge-badge {
+  color: #fff;
+    background-color: #FF0476;
+    border-radius: 0px;
+    top: 2px;
+    right: -8px;
+}
 @media(min-width:767px) and (max-width:959px){
   .bannerBox .bannerContent{
     max-width:100%;

@@ -780,11 +780,12 @@ const ProjectsReports = () => {
                                         <>
                                          <Box className="projectdetails-div" flexWrap="wrap">
                                          {Object.entries(row.table[`${tabsData.columns[vkey].field}`]).map((projectdetails) => (
-                                            <Box>
+                                            <Box className={projectdetails[0]}>
                                               {!isEmpty(tabsData.colors[projectdetails[0]])?<Tooltip title={projectdetails[0]}><Chip
                                                 label={projectdetails[1]}
                                                 className={classes.chip}
                                                 color="secondary"
+                                                size="small"
                                                  style={{
                                                  backgroundColor : tabsData.colors[projectdetails[0]]}}
                                               /></Tooltip>:(
@@ -804,6 +805,7 @@ const ProjectsReports = () => {
                                               {!isEmpty(tabsData.colors[reportdetails[0]])?<Tooltip title={reportdetails[0]}><Chip
                                                 label={reportdetails[1]}
                                                 className={classes.chip}
+                                                size="small"
                                                 color="secondary"
                                                  style={{
                                                  backgroundColor : tabsData.colors[reportdetails[0]]}}
@@ -822,6 +824,7 @@ const ProjectsReports = () => {
                                               {!isEmpty(tabsData.colors[targetdata[0]])?<Tooltip title={targetdata[0]}><Chip
                                                 label={targetdata[1]}
                                                 className={classes.chip}
+                                                size="small"
                                                 color="secondary"
                                                  style={{
                                                  backgroundColor : tabsData.colors[targetdata[0]]}}

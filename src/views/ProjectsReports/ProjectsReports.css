@@ -188,6 +188,8 @@ width:100% !important;
 
 /*.scan-report-list .search-criteria [class*='makeStyles-chip'] {background: #FF9F00}*/
 
+.projectdetails-div .Name {font-size: 15px;font-weight: bold;}
+
 @media only screen and (min-width:1700px){
 
 .scan-report-list .cvesearchcenter .MuiTableCell-root{padding: 15px}
