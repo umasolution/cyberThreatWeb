@@ -17,6 +17,7 @@ import Axios from 'axios';
 import isEmpty from '../../../Util/Util';
 import Copy from "./../../../Util/Copy";
 import { setDateFormat } from './../../../Util/Util';
+import CircularProgress from '@material-ui/core/CircularProgress';
 const useStyles = makeStyles((theme) => ({
   root: {
       flexGrow: 1,
@@ -148,6 +149,8 @@ const Issues = ({ issues, reportName, reportType,counter,historydata,projectId }
 
   const [issuesvalue, setIssuesValue] = React.useState(issues.data);
 
+  const [isSearchLoading, setIsSearchLoading] = React.useState(false);
+
   const handleChipDelete = (chipToDelete) => () => {
     chipData.splice(chipToDelete, 1);
     let newSelected = [];
@@ -166,7 +169,8 @@ const Issues = ({ issues, reportName, reportType,counter,historydata,projectId }
       
   }
   
-  const handleClick = (event) => {       
+  const handleClick = (event) => { 
+      setIsSearchLoading(true);      
       const regex5 = /([^:\s]+):([^:\s]+)/g;
       const regex = new RegExp(regex5,'i');  
       setloadingRows(false); 
@@ -196,7 +200,6 @@ const Issues = ({ issues, reportName, reportType,counter,historydata,projectId }
           newSelected = newSelected.concat([], issues.data);                           
           setIssuesValue(newSelected);
       } else {
-
         var filter = Object.fromEntries(apiurl);
         const copy = Copy(issues.data);        
         var report = copy.filter(item => {
@@ -209,9 +212,8 @@ const Issues = ({ issues, reportName, reportType,counter,historydata,projectId }
         let newSelected = [];
         newSelected = newSelected.concat([], report);                           
         setIssuesValue(newSelected);
-      }
-
-      callApi();
+      }      
+      setIsSearchLoading(false);      
     }
 
     
@@ -365,9 +367,17 @@ const Issues = ({ issues, reportName, reportType,counter,historydata,projectId }
                     </Grid>
                     <Box
                         display="flex">
-                        <Box m="auto">
+                        
+                        {isSearchLoading ? <Box m="auto">
+                        <Typography  component="p" color="primary" style={{
+                                                    textAlign: 'center'
+                                                  }} >
+                         <CircularProgress />
+                         </Typography>
+                         <button disabled className={classes.searchButton}>Search</button>
+                        </Box> : <Box m="auto">
                          <button onClick={handleClick} className={classes.searchButton}>Search</button>
-                        </Box>
+                        </Box>}
                       </Box>
                 </Box> :''}
                 
@@ -551,7 +561,7 @@ const Issues = ({ issues, reportName, reportType,counter,historydata,projectId }
     >
       <Grid container className="report-issuelist-head-block">
         <Grid item xs={8} className="report-issuelist-search">
-          {!isEmpty(issuesvalue)?getSearchBox():''}
+          {getSearchBox()}
         </Grid>
         
         <Grid item xs={4} className="report-issuelist-dd">

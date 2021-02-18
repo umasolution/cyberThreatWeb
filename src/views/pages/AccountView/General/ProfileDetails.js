@@ -134,6 +134,14 @@ function ProfileDetails({ user, className, ...rest }) {
           textAlign="center"
         >
         <div>
+          <Typography
+            className={classes.name}
+            gutterBottom
+            variant="h3"
+            color="textPrimary"
+          >
+          Click on Image for upload New image. 
+          </Typography>
           <label htmlFor="upload-button">
             {image.preview ? (<>
               <Avatar

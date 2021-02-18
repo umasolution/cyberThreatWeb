@@ -738,7 +738,8 @@ const ProjectsReports = () => {
                         </TableRow> 
                     </TableBody>
                       
-                </>):(<> <TableHead>
+                </>):(<> 
+                  {!isEmpty(tabsData.results)?(<> <TableHead>
                       <TableRow>
                         {
                           Object.keys(tabsData.columns).map((key, i) => (
@@ -750,7 +751,7 @@ const ProjectsReports = () => {
                         }  
                       </TableRow>
                     </TableHead>
-                    {!isEmpty(tabsData.results)?<TableBody>
+                    <TableBody>
                        {
                           Object.entries(tabsData.results).map(([rkey, row]) => {
                             const isItemSelected = isSelected(rkey)
@@ -843,11 +844,13 @@ const ProjectsReports = () => {
                           ) }
                           )
                         } 
-                    </TableBody> : (<TableBody><TableRow><TableCell colSpan={6} style={{ textAlign:'center' }}>Not results Found</TableCell></TableRow></TableBody>)}</>)}
+                    </TableBody></>) : (<TableBody><TableRow><TableCell colSpan={6} style={{ textAlign:'center' }}><Typography variant="h4" component="p">
+                                        Not results Found
+                                      </Typography></TableCell></TableRow></TableBody>)}</>)}
                   </Table>
                 </TableContainer>
               </Paper>
-            {issearch ? '':(<><Pagination color="primary" count={totalpages} page={page} onChange={handleChangePage} /></>)}
+            {isEmpty(tabsData.results) ? '':(<><Pagination color="primary" count={totalpages} page={page} onChange={handleChangePage} /></>)}
           </Box>
         </Grid>
       </>

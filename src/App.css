@@ -198,8 +198,8 @@ button:focus{
 .menu-right-info {
     background-color: #FF0476 !important;
     margin-right: 20px;
-    height: 35px !important;
-    width: 35px !important;
+    height: 30px !important;
+    width: 30px !important;
     font-size: 15px !important;
     border: 2px solid #fff;
 }

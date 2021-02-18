@@ -12,6 +12,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import MySnackbar from "../../Shared/Snackbar/MySnackbar";
 import CONSTANTS from "../../Util/Constants";
+import isEmpty  from '../../Util/Util';
 import Copy from "../../Util/Copy";
 import CVETextField from './../CVE/CVEInput/CVETextField';
 import './Search.css';
@@ -99,6 +100,7 @@ export const Search = (/* {   } */) => {
         try {
             setLoadingTabs(true);
             updateSnackbar(true, CONSTANTS.FETCHING_DATA);
+            setisSearch(true);
             var url = `/search`;
             if(keyword){
                url = `/search?keyword=${keyword}`;
@@ -130,6 +132,7 @@ export const Search = (/* {   } */) => {
             setTotalpages(totalpages);
             updateSnackbar(true, CONSTANTS.FETCHING_DATA_SUCCESS);
             setLoadingTabs(false);
+            setisSearch(false);
         } catch (error) {
             console.error(error);
             updateSnackbar(true, CONSTANTS.FETCHING_DATA_FAILED);
@@ -437,7 +440,9 @@ export const Search = (/* {   } */) => {
                         </TableRow> 
                     </TableBody>
                       
-                </>):(<> <TableHead>
+                </>):(<> 
+                  {!isEmpty(tabsData.results)?(<>
+                  <TableHead>
                       <TableRow>
                         {
                           Object.keys(tabsData.columns).map((key, i) => (
@@ -493,11 +498,15 @@ export const Search = (/* {   } */) => {
                           ) }
                           )
                         }  
-                    </TableBody></>)}
+                    </TableBody></>):(<TableBody><TableRow><TableCell colSpan={6} style={{ textAlign:'center' }}><Typography variant="h4" component="p">
+                                        Not results Found
+                                      </Typography></TableCell></TableRow></TableBody>)}
+
+                    </>)}
                   </Table>
                 </TableContainer>
               </Paper>
-            {issearch ? '':(<><Pagination color="primary" count={totalpages} page={page} onChange={handleChangePage} /></>)}
+            {isEmpty(tabsData.results) ? '':(<><Pagination color="primary" count={totalpages} page={page} onChange={handleChangePage} /></>)}
           </Box>
         </Grid>
       </>
@@ -1178,7 +1187,7 @@ export const Search = (/* {   } */) => {
                     <SearchBox />
                     </Grid>
                 </Container>
-                { noresult ? getTabsData() : (tabsData.total > 0 ? getTabsData(): cvenoresult())}
+                { noresult ? getTabsData() : (tabsData.total > 0 ? getTabsData(): getTabsData())}
                 <MySnackbar closeSnackbar={() => updateSnackbar(false, '')} snackbarMessage={snackbarMessage} snackbarOpen={snackbarOpen} />
             </Grid>
         </Container>

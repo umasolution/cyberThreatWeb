@@ -16,6 +16,7 @@ import Axios from 'axios';
 import isEmpty from '../../../Util/Util';
 import Copy from "./../../../Util/Copy";
 import { setDateFormat } from './../../../Util/Util';
+import CircularProgress from '@material-ui/core/CircularProgress';
 const useStyles = makeStyles((theme) => ({
   root: {
       flexGrow: 1,
@@ -143,6 +144,8 @@ const Remediation = ({remediation,counter, reportName,historydata,projectId}) =>
 
   const [remediationvalue, setRemediationValue] = React.useState(remediation.data);
 
+  const [isSearchLoading, setIsSearchLoading] = React.useState(false);
+
   const [expand, setExpand] = React.useState(false);
    const onShowMore = () => {
       setExpand(!expand);
@@ -163,13 +166,6 @@ const Remediation = ({remediation,counter, reportName,historydata,projectId}) =>
   };
 
 
-  
-
-  const callApi = async () => {
-      
-  }
-
-  
 
   const handleClick = (event) => {       
       const regex5 = /([^:\s]+):([^:\s]+)/g;
@@ -186,7 +182,7 @@ const Remediation = ({remediation,counter, reportName,historydata,projectId}) =>
             }  
           }
       })  
-       
+      setIsSearchLoading(true);  
       if(chipData.length <= 0 ) {          
           let newSelected = [];
           newSelected = newSelected.concat([], remediation.data);                           
@@ -207,8 +203,7 @@ const Remediation = ({remediation,counter, reportName,historydata,projectId}) =>
         console.log(filter);
         setRemediationValue(newSelected);
       }
-
-      callApi();
+      setIsSearchLoading(false);
     }
 
     
@@ -320,9 +315,16 @@ const Remediation = ({remediation,counter, reportName,historydata,projectId}) =>
                     </Grid>
                     <Box
                         display="flex">
-                        <Box m="auto">
+                       {isSearchLoading ? <Box m="auto">
+                        <Typography  component="p" color="primary" style={{
+                                                    textAlign: 'center'
+                                                  }} >
+                         <CircularProgress />
+                         </Typography>
+                         <button disabled className={classes.searchButton}>Search</button>
+                        </Box> : <Box m="auto">
                          <button onClick={handleClick} className={classes.searchButton}>Search</button>
-                        </Box>
+                        </Box>}
                       </Box>
                 </Box> :''}
                 
@@ -342,7 +344,7 @@ const Remediation = ({remediation,counter, reportName,historydata,projectId}) =>
     >
     <Grid container className="report-issuelist-head-block">
         <Grid item xs={8} className="report-issuelist-search">
-          {!isEmpty(remediationvalue)?getSearchBox():''}
+          {getSearchBox()}
         </Grid>
         
         <Grid item xs={4} className="report-issuelist-dd">

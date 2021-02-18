@@ -12,6 +12,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import MySnackbar from "../../Shared/Snackbar/MySnackbar";
 import CONSTANTS from "../../Util/Constants";
+import isEmpty  from '../../Util/Util';
 import Copy from "../../Util/Copy";
 import CVETextField from './../CVE/CVEInput/CVETextField';
 import './VuldbLogin.css';
@@ -159,20 +160,23 @@ export const VuldbLogin = (/* {   } */) => {
     const [keyworddata, setKeywordData] = useState(false);
     const [mainurl, setMainUrl] = useState();
     const [issearch, setisSearch] = useState(false);
-    const [noresult, setNoResult] = useState(false);
-    const [apiurl, setApiUrl] = useState();
+    const [noresult, setNoResult] = useState(false);  
 
     const [fieldsData, setFieldsData] = useState();
+
     const [emptyData, setEmptyData] = useState(false);
 
-
-
     const aurl = new URL(Axios.defaults.baseURL);
+
     const apiparams = new URLSearchParams(aurl.search);
+
+    const [apiurl, setApiUrl] = useState(apiparams);
 
     const [tagapiurl, setTagApiUrl] = useState(apiparams);
 
     const [chipData, setChipData] = useState([]);
+
+    const [isSearchLoading, setIsSearchLoading] = React.useState(false);
 
     const handleChipDelete = (chipToDelete) => () => {
       chipData.splice(chipToDelete, 1);
@@ -226,6 +230,7 @@ export const VuldbLogin = (/* {   } */) => {
 
     const callApi = async () => {
         setloadingRows(false);
+        setIsSearchLoading(true);
         setSingleRows();
         setisSearch(true);
         setNoResult(true);
@@ -239,9 +244,11 @@ export const VuldbLogin = (/* {   } */) => {
           let totalpages = Math.ceil(response.data.total/perRow);
           setTotalpages(totalpages);
           setperRow(response.data.rowlimit);
-          setisSearch(false);                      
+          setisSearch(false);
+          setIsSearchLoading(false);                      
         } else { 
-           setEmptyData(true); 
+           setEmptyData(true);
+           setIsSearchLoading(false); 
         }
     }
 
@@ -688,6 +695,7 @@ export const VuldbLogin = (/* {   } */) => {
                     </TableBody>
                       
                 </>):(<>
+                  {!isEmpty(tabsData.results)?(<>
                   <TableHead>
                       <TableRow>
                         {
@@ -746,11 +754,14 @@ export const VuldbLogin = (/* {   } */) => {
                           )
                         }  
                     </TableBody>
+                    </>):(<TableBody><TableRow><TableCell colSpan={6} style={{ textAlign:'center' }}><Typography variant="h4" component="p">
+                                        Not results Found
+                                      </Typography></TableCell></TableRow></TableBody>)}
                     </>)}
                   </Table>
                 </TableContainer>
               </Paper>
-            {issearch ? '':(<><Pagination color="primary" count={totalpages} page={page} onChange={handleChangePage} /></>)}
+            {isEmpty(tabsData.results) ? '':(<><Pagination color="primary" count={totalpages} page={page} onChange={handleChangePage} /></>)}
           </Box>
         </Grid>
       </>
@@ -1458,7 +1469,7 @@ export const VuldbLogin = (/* {   } */) => {
                 />
                 <button onClick={addTagClick} className={classes.searchButton}>Add</button>
                 </Box>
-                {chipData.length > 0 ? (<Box maxWidth="lg" className={classes.chipbar}>
+                {Object.keys(Object.fromEntries(apiurl)).length > 0 ? (<Box maxWidth="lg" className={classes.chipbar}>
                 <Grid
                       container
                       spacing={0}
@@ -1479,9 +1490,16 @@ export const VuldbLogin = (/* {   } */) => {
                     </Grid>
                     <Box
                         display="flex">
-                        <Box m="auto">
+                        {isSearchLoading ? <Box m="auto">
+                        <Typography  component="p" color="primary" style={{
+                                                    textAlign: 'center'
+                                                  }} >
+                         <CircularProgress />
+                         </Typography>
+                         <button disabled className={classes.searchButton}>Search</button>
+                        </Box> : <Box m="auto">
                          <button onClick={handleClick} className={classes.searchButton}>Search</button>
-                        </Box>
+                        </Box>}
                       </Box>
                 </Box>
                 ): '' }
@@ -1519,7 +1537,7 @@ export const VuldbLogin = (/* {   } */) => {
                         spacing={3}
                         className={classes.container}
                       >   
-                      { noresult ? getTabsData() : (tabsData.total > 0 ? getTabsData(): cvenoresult())}
+                      { noresult ? getTabsData() : (tabsData.total > 0 ? getTabsData(): getTabsData())}
                   </Grid>
                 </Container>
                 <MySnackbar closeSnackbar={() => updateSnackbar(false, '')} snackbarMessage={snackbarMessage} snackbarOpen={snackbarOpen} />

@@ -12,6 +12,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import MySnackbar from "../../Shared/Snackbar/MySnackbar";
 import CONSTANTS from "../../Util/Constants";
+import isEmpty  from '../../Util/Util';
 import Copy from "../../Util/Copy";
 import CVETextField from './../CVE/CVEInput/CVETextField';
 import './Vuldb.css';
@@ -162,17 +163,22 @@ export const Vuldb = (/* {   } */) => {
     const [mainurl, setMainUrl] = useState();
     const [issearch, setisSearch] = useState(false);
     const [noresult, setNoResult] = useState(false);
-    const [apiurl, setApiUrl] = useState();
+    
     const [fieldsData, setFieldsData] = useState();
 
     const aurl = new URL(Axios.defaults.baseURL);
+
     const apiparams = new URLSearchParams(aurl.search);
+
+    const [apiurl, setApiUrl] = useState(apiparams);
 
     const [tagapiurl, setTagApiUrl] = useState(apiparams);
 
     const [chipData, setChipData] = useState([]);
 
     const [emptyData, setEmptyData] = useState(false);
+
+    const [isSearchLoading, setIsSearchLoading] = React.useState(false);
 
     const handleChipDelete = (chipToDelete) => () => {
       chipData.splice(chipToDelete, 1);
@@ -181,7 +187,6 @@ export const Vuldb = (/* {   } */) => {
       setChipData(newSelected);
     };
      
-    
     useEffect(() => {
         fetchFeed();
     }, [feedType]);
@@ -227,6 +232,7 @@ export const Vuldb = (/* {   } */) => {
 
     const callApi = async () => {
         setloadingRows(false);
+        setIsSearchLoading(true);
         setSingleRows();
         setisSearch(true);
         setNoResult(true);
@@ -240,9 +246,11 @@ export const Vuldb = (/* {   } */) => {
           let totalpages = Math.ceil(response.data.total/perRow);
           setTotalpages(totalpages);
           setperRow(response.data.rowlimit);
-          setisSearch(false);                      
+          setisSearch(false);
+          setIsSearchLoading(false);                       
         } else { 
-           setEmptyData(true); 
+           setEmptyData(true);
+           setIsSearchLoading(false);  
         }
     }
 
@@ -261,7 +269,6 @@ export const Vuldb = (/* {   } */) => {
         let totalpages = Math.ceil(response.data.total/perRow);
         setTotalpages(totalpages);
     };
-
     const handleClickRow = async (event, value) => {
         let url = `/search/cve?cve=${value}`;
         /*const url = `/single-searchcve.php?asds=edd3ddads&cve=${value}`;*/
@@ -276,7 +283,6 @@ export const Vuldb = (/* {   } */) => {
         setSelected(newSelected);
 
     };  
-
     const handleChangeSlider = async (event, value) => {
         let slidervalue = 0;
         apiurl.delete('offset');
@@ -305,9 +311,7 @@ export const Vuldb = (/* {   } */) => {
         setperRow(response.data.rowlimit);
         setisSearch(false);
     };
-
     const [selectvector, setSelectvector] = useState([]);
-    
     const handleChangeRemote = async (event, value) => {
         const checked = event.target.checked;
         const checkedValue = event.target.value;
@@ -349,8 +353,7 @@ export const Vuldb = (/* {   } */) => {
         setTotalpages(totalpages);
         setperRow(response.data.rowlimit);
         setisSearch(false);
-    };  
-
+    }; 
     const [selectradio, setSelectradio] = useState([]);
 
     const handleChangeRadio = async (event, value) => {
@@ -418,9 +421,7 @@ export const Vuldb = (/* {   } */) => {
             report.isShowing = event.target.checked;
             setTabsData(copy);
         }
-
     }
- 
 
     const handleChangeCVE = (event) => {
         setCVEInput(event.target.value);
@@ -704,7 +705,9 @@ export const Vuldb = (/* {   } */) => {
                         </TableRow> 
                     </TableBody>
                       
-                </>):(<> <TableHead>
+                </>):(<> 
+                  {!isEmpty(tabsData.results)?(<>
+                  <TableHead>
                       <TableRow>
                         {
                           Object.keys(tabsData.columns).map((key, i) => (
@@ -718,7 +721,8 @@ export const Vuldb = (/* {   } */) => {
                            Action
                         </TableCell>
                       </TableRow>
-                    </TableHead><TableBody>
+                    </TableHead>
+                    <TableBody>
                       {
                           Object.values(tabsData.results).map((row) => {
                             const isItemSelected = isSelected(row[`cve_id`])
@@ -760,12 +764,16 @@ export const Vuldb = (/* {   } */) => {
                           ) }
                           )
                         }  
-                    </TableBody></>)}
+                    </TableBody></>):(<TableBody><TableRow><TableCell colSpan={6} style={{ textAlign:'center' }}><Typography variant="h4" component="p">
+                                        Not results Found
+                                      </Typography></TableCell></TableRow></TableBody>)}
+
+                    </>)}
                   </Table>
                 </TableContainer>
               </Paper>            
           </Box>
-          {issearch ? '':(<><Pagination color="primary" count={totalpages} page={page} onChange={handleChangePage} /></>)}
+          {isEmpty(tabsData.results) ? '':(<><Pagination color="primary" count={totalpages} page={page} onChange={handleChangePage} /></>)}
         </Grid>
       </>
      )
@@ -1468,7 +1476,7 @@ export const Vuldb = (/* {   } */) => {
                 />
                 <button onClick={addTagClick} className={classes.searchButton}>Add</button>
                 </Box>
-                {chipData.length > 0 ? (<Box maxWidth="lg" className={classes.chipbar}>
+                {Object.keys(Object.fromEntries(apiurl)).length > 0  ? (<Box maxWidth="lg" className={classes.chipbar}>
                 <Grid
                       container
                       spacing={0}
@@ -1489,9 +1497,16 @@ export const Vuldb = (/* {   } */) => {
                     </Grid>
                     <Box
                         display="flex">
-                        <Box m="auto">
+                        {isSearchLoading ? <Box m="auto">
+                        <Typography  component="p" color="primary" style={{
+                                                    textAlign: 'center'
+                                                  }} >
+                         <CircularProgress />
+                         </Typography>
+                         <button disabled className={classes.searchButton}>Search</button>
+                        </Box> : <Box m="auto">
                          <button onClick={handleClick} className={classes.searchButton}>Search</button>
-                        </Box>
+                        </Box>}
                       </Box>
                 </Box>
                 ): '' }
@@ -1521,7 +1536,7 @@ export const Vuldb = (/* {   } */) => {
                         className={classes.container}
                       >
                       
-                      { noresult ? getTabsData() : (tabsData.total > 0 ? getTabsData(): cvenoresult())}
+                      { noresult ? getTabsData() : (tabsData.total > 0 ? getTabsData(): getTabsData())}
                   </Grid>
                 </Container>
                 <MySnackbar closeSnackbar={() => updateSnackbar(false, '')} snackbarMessage={snackbarMessage} snackbarOpen={snackbarOpen} />
