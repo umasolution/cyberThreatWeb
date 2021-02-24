@@ -99,6 +99,30 @@ width:100% !important;
 .vuldb-login [class*='makeStyles-chipbar'] > .MuiGrid-container{border: 1px solid #e8e8f2;border-radius: 5px;margin-bottom:30px;}
 .vuldb-login ul li .MuiChip-deletable{background: #556177;border-radius: 5px; }
 
+
+.vuldb-login .small-table .MuiTableCell-body, .vuldb-login .big-table .MuiTableCell-body { 
+	white-space: pre-line; 
+	font-size: 14px !important;
+    font-weight: 500 !important;
+} 
+
+.vuldb-login table { table-layout: fixed;}
+
+.vuldb-login table.small-table tr th:nth-child(n+4) {
+	display: none;
+}
+.vuldb-login table.small-table tr td:nth-child(n+4) {
+	display: none;
+}
+.vuldb-login table.small-table tr td:nth-last-child(-n+1) {
+	display: block;
+}
+
+
+.vuldb-login table.small-table th:nth-last-child(-n+1) {
+	display: block !important;
+}
+
 @media only screen and (min-width:1700px){
 
 .vuldb-login .cvesearchcenter .MuiTableCell-root{padding: 20px}

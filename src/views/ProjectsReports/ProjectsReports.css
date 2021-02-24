@@ -113,7 +113,7 @@ width:100% !important;
 	margin: 0px !important;
 }
 
-.scan-report-list .small-table,.big-table{
+.scan-report-list .small-table,.scan-report-list .big-table{
 	background: #fff;
 }  
 

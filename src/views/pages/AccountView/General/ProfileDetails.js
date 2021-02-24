@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Axios from 'axios';
 import fs from 'fs'
+import CameraAltIcon from '@material-ui/icons/CameraAlt';
 
 import {
   Avatar,
@@ -13,7 +14,8 @@ import {
   CardContent,
   Typography,
   makeStyles,
-  IconButton
+  IconButton,
+  Tooltip
 } from '@material-ui/core';
 
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
@@ -133,41 +135,46 @@ function ProfileDetails({ user, className, ...rest }) {
           flexDirection="column"
           textAlign="center"
         >
-        <div>
-          <Typography
-            className={classes.name}
-            gutterBottom
-            variant="h3"
-            color="textPrimary"
-          >
-          Click on Image for upload New image. 
-          </Typography>
-          <label htmlFor="upload-button">
-            {image.preview ? (<>
-              <Avatar
-                  className={classes.avatar}
-                  src={image.preview}
-               />
-              {/*<img src={image.preview} alt="dummy" width="300" height="300" />*/}
-              <Button className={classes.uploadbtn} onClick={handleUpload} variant="contained" color="primary" component="span">Upload</Button>
-              
-            </>) : (
-              <>
+        <div className="account-image-block">
+        <label htmlFor="upload-button">
+          <div className="camera-icon">
+            <Typography
+              color="textPrimary"
+              alignItems="center"
+            >
+            <Tooltip title="Image Upload">
+            <CameraAltIcon  />
+            </Tooltip>
+            </Typography>
+            </div>
+            <div className="upload-image">            
+              {image.preview ? (<>
                 <Avatar
-                  className={classes.avatar}
+                    className={classes.avatar}
+                    src={image.preview}
+                 />
+                {/*<img src={image.preview} alt="dummy" width="300" height="300" />*/}
+                <Button className={classes.uploadbtn} onClick={handleUpload} variant="contained" color="primary" component="span">Upload</Button>
+                
+              </>) : (
+                <>
+                  <Avatar
+                    className={classes.avatar}
 
-                  src={avatar}
-                />
-              </>
-            )}
+                    src={avatar}
+                  />
+                </>
+              )}
+            
+            
+          </div>
           </label>
-          <input
-            type="file"
-            id="upload-button"
-            style={{ display: "none" }}
-            onChange={handleChange}
-          />
-          
+            <input
+              type="file"
+              id="upload-button"
+              style={{ display: "none" }}
+              onChange={handleChange}
+            />
         </div>
 
         {/*<Avatar

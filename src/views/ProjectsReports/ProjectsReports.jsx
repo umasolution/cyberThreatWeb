@@ -21,6 +21,26 @@ import { getBackgroundColorBySeverity, getFontColorBySeverity } from '../../Util
 import './ProjectsReports.css';
 import moment from 'moment';
 import Page from 'src/components/Page';
+import clsx from 'clsx';
+
+
+
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardMedia from '@material-ui/core/CardMedia';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Collapse from '@material-ui/core/Collapse';
+import Avatar from '@material-ui/core/Avatar';
+import IconButton from '@material-ui/core/IconButton';
+
+import { red } from '@material-ui/core/colors';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import ShareIcon from '@material-ui/icons/Share';
+
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+
+
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
@@ -28,6 +48,21 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: 'inherit', // theme.palette.background.paper,
         paddingLeft: '16px !important',
         paddingRight: '16px !important',
+    },
+    cardsearch:{
+      margin : '10px',
+      boxShadow: 'none',
+      backgroundColor: 'initial'
+    },
+     expand: {
+      transform: 'rotate(0deg)',
+      marginLeft: 'auto',
+      transition: theme.transitions.create('transform', {
+        duration: theme.transitions.duration.shortest,
+      }),
+    },
+    expandOpen: {
+      transform: 'rotate(180deg)',
     },
     projectHeader: {
         color: theme.palette.primary.light
@@ -155,6 +190,12 @@ const ProjectsReports = () => {
     const [chipData, setChipData] = useState([]);
 
     const [isSearchLoading, setIsSearchLoading] = React.useState(false);
+
+    const [expanded, setExpanded] = React.useState(false);
+
+    const handleExpandClick = () => {
+      setExpanded(!expanded);
+    };
 
     const handleChipDelete = (chipToDelete) => () => {
       chipData.splice(chipToDelete, 1);
@@ -653,6 +694,10 @@ const ProjectsReports = () => {
           <Paper className={classes.root}>
                 <TableContainer className={classes.container}>
                   <Table stickyHeader aria-label="sticky table" className={loadingRows?'small-table':'big-table'}>
+                    <colgroup>
+                        <col style={{width:'15%'}}/>
+                        <col style={{width:'15%'}}/>
+                     </colgroup>
                     {issearch?(<>
                       <TableHead>
                       <TableRow>
@@ -758,7 +803,7 @@ const ProjectsReports = () => {
                           return (<TableRow hover onClick={event => handleClickRow('key',rkey)} key={rkey} role="checkbox" selected={isItemSelected} tabIndex={-1} >
 
                                 { Object.keys(tabsData.columns).map((vkey) => (
-                                 <TableCell key={tabsData.columns[vkey].field}>
+                                 <TableCell key={tabsData.columns[vkey].field} >
                                       { tabsData.columns[vkey].field == 'vulnerability' ? (
                                         <>
                                          <Box className="scoreblock-vulnerabilities-div">
@@ -782,17 +827,30 @@ const ProjectsReports = () => {
                                          <Box className="projectdetails-div" flexWrap="wrap">
                                          {Object.entries(row.table[`${tabsData.columns[vkey].field}`]).map((projectdetails) => (
                                             <Box className={projectdetails[0]}>
-                                              {!isEmpty(tabsData.colors[projectdetails[0]])?<Tooltip title={projectdetails[0]}><Chip
+                                              {!isEmpty(tabsData.colors[projectdetails[0]])?(projectdetails[0]=='Name'?<Tooltip title={projectdetails[0]}><Chip
                                                 label={projectdetails[1]}
                                                 className={classes.chip}
                                                 color="secondary"
                                                 size="small"
                                                  style={{
                                                  backgroundColor : tabsData.colors[projectdetails[0]]}}
-                                              /></Tooltip>:(
-                                                  <Tooltip title={projectdetails[0]}><span>{projectdetails[1]}</span></Tooltip>)
+                                              /></Tooltip>:''):(projectdetails[0]=='Name'?
+                                                  <Tooltip title={projectdetails[0]}><span>{projectdetails[1]}</span></Tooltip>:'')
                                                   }
-
+                                            </Box>
+                                           ))}
+                                           {Object.entries(row.table[`${tabsData.columns[vkey].field}`]).map((projectdetails) => (
+                                            <Box className={projectdetails[0]}>
+                                              {!isEmpty(tabsData.colors[projectdetails[0]])?(projectdetails[0]!='Name'?<Tooltip title={projectdetails[0]}><Chip
+                                                label={projectdetails[1]}
+                                                className={classes.chip}
+                                                color="secondary"
+                                                size="small"
+                                                 style={{
+                                                 backgroundColor : tabsData.colors[projectdetails[0]]}}
+                                              /></Tooltip>:''):(projectdetails[0]!='Name'?
+                                                  <Tooltip title={projectdetails[0]}><span>{projectdetails[1]}</span></Tooltip>:'')
+                                                  }
                                             </Box>
                                            ))}
                                           </Box>  
@@ -1092,14 +1150,25 @@ const ProjectsReports = () => {
                 className={classes.container}
               > 
               <Container maxWidth="lg" className={classes.searchbar}> 
-                <Box mt={3} mb={3}
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-               > <Typography variant="h6" component="p">
-                  Find the bellow search criteria
-                </Typography> 
-                </Box>
+                <Card className={classes.cardsearch}>
+                  <CardHeader
+                    action={
+                      <IconButton
+                        className={clsx(classes.expand, {
+                          [classes.expandOpen]: expanded,
+                        })}
+                        onClick={handleExpandClick}
+                        aria-expanded={expanded}
+                        aria-label="show more"
+                      >
+                        <ExpandMoreIcon />
+                      </IconButton>
+                    }
+                    title="Search Criteria"
+                  />
+                  <Collapse in={expanded} timeout="auto" unmountOnExit>
+                    <CardContent>
+                      
                 <Box mt={3} mb={3}
                 display="flex"
                 justifyContent="center"
@@ -1193,7 +1262,11 @@ const ProjectsReports = () => {
                   />
                    
                 </Typography>
-                </Box> 
+                </Box>
+                    </CardContent>
+                  </Collapse>
+                </Card>
+                 
                 <Box mt={3}
                   display="flex"
                   justifyContent="center"
@@ -1437,16 +1510,6 @@ const ProjectsReports = () => {
           className={classes.root}
           title="My Scans"
         >
-        <Container style={{ paddingTop: '35px', paddingLeft: '0px', paddingRight: '0px', maxWidth: 'unset' }} maxWidth="lg" className="head-inner-title">
-          <Grid style={{ width: '100%' }} container spacing={0}>
-          <Container maxWidth >
-          <Typography
-             variant="h3" color="inherit" noWrap>
-            My Scans
-            </Typography>
-            </Container>
-          </Grid>
-        </Container>
         <Container className={classes.root} maxWidth>
             <Grid
               container

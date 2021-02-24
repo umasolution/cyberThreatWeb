@@ -128,6 +128,10 @@ const useStyles = makeStyles((theme) => ({
       },
       left:0,
     },
+    longTextStyle: {
+      wordWrap: 'break-word',
+      maxWidth: 1000,
+    },
 }));
 
 export const Vuldb = (/* {   } */) => {
@@ -195,6 +199,7 @@ export const Vuldb = (/* {   } */) => {
         try {
             setLoadingTabs(true);
             updateSnackbar(true, CONSTANTS.FETCHING_DATA);
+             setisSearch(true);
             var url = `/vuln/list`;
             setMainUrl('/vuln/list');
             setApiUrl(apiparams);
@@ -207,10 +212,12 @@ export const Vuldb = (/* {   } */) => {
             setTotalpages(totalpages);
             updateSnackbar(true, CONSTANTS.FETCHING_DATA_SUCCESS);
             setLoadingTabs(false);
+            setisSearch(false);
         } catch (error) {
             console.error(error);
             updateSnackbar(true, CONSTANTS.FETCHING_DATA_FAILED);
             setLoadingTabs(false);
+            setisSearch(false);
         }
 
         try {
@@ -619,7 +626,7 @@ export const Vuldb = (/* {   } */) => {
           <Box position="relative">
           <Paper className={classes.root}>
                 <TableContainer className={classes.container}>
-                  <Table stickyHeader aria-label="sticky table">
+                  <Table stickyHeader aria-label="sticky table" className={loadingRows?'small-table':'big-table'}>
                     {issearch?(<>
                       <TableHead>
                       <TableRow>
@@ -734,7 +741,7 @@ export const Vuldb = (/* {   } */) => {
                                  <TableCell key={tabsData.columns[vkey].field}>
                                       {vkey==0 ? (
                                         <>
-                                         <Grid item xs={12}>
+                                         <Box flexWrap="wrap">
                                             <Typography
                                               variant="h5"
                                               color="textSecondary"
@@ -749,16 +756,18 @@ export const Vuldb = (/* {   } */) => {
                                             {moment(row[`pub_date`]).format('MMM DD, YYYY')}
                                             </Typography> </>:''}
 
-                                         </Grid>
+                                         </Box>
                                         </>
-                                    )  : row[`${tabsData.columns[vkey].field}`]}
+                                    )  : <Box className={classes.longTextStyle}>{row[`${tabsData.columns[vkey].field}`]}</Box>}
                                   </TableCell>
                                  </> 
                                 :''
                                 )
                                 )}
                                 <TableCell key='action'>
-                                   <Link target="_blank" to={`/CVE/${row['cve_id']}`}> <VisibilityIcon/> View full Details</Link>
+                                  <Box flexWrap="wrap">
+                                     <Link target="_blank" to={`/CVE/${row['cve_id']}`}> <VisibilityIcon/> View full Details</Link>
+                                  </Box>   
                                 </TableCell>
                             </TableRow>
                           ) }

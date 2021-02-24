@@ -36,6 +36,7 @@ import ShareIcon from '@material-ui/icons/Share';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import SendIcon from '@material-ui/icons/Send';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Page from 'src/components/Page';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -240,6 +241,7 @@ const Alerts = () => {
                     alert.status == "unread" ?(
                     <Card className={classes.subcardroot}>
                       <CardHeader
+                        onClick={() => handleExpandClick(keyindex,alert)}
                         title={alert.alert_name + ' ' + alert.message}
                         subheader={moment(alert['updated']).fromNow()}
                         avatar={
@@ -253,12 +255,7 @@ const Alerts = () => {
                             onClick={() => setAlert(alert, true)}              
                             onFocus={(event) => event.stopPropagation()}
                           />
-                        </Tooltip>):<Tooltip title="Read Alert">
-                          <MarkunreadOutlinedIcon
-                            style={{ marginLeft: '10px' }}
-                            onClick={() => setAlert(alert, false)}
-                          />
-                        </Tooltip>}
+                        </Tooltip>): ''}
                         </IconButton>
                         <IconButton
                           className={clsx(classes.expand, {
@@ -280,9 +277,7 @@ const Alerts = () => {
                         }
 
                       />                   
-                      <CardActions disableSpacing>                        
-                        
-                      </CardActions>
+                      
                       <Collapse in={expandedId === keyindex} timeout="auto" unmountOnExit>
                         <CardContent>
                          <Typography paragraph>
@@ -319,7 +314,6 @@ const Alerts = () => {
             style={{ marginTop: '25px', width: '100%' }}
           >
           <Card className={classes.cardroot}>
-           
             <CardContent  style={{ padding: '0px'}}>
               <Typography gutterBottom variant="h3" component="h2" style={{ padding: '16px'}}>
                 <DraftsIcon
@@ -409,6 +403,9 @@ const Alerts = () => {
   }
 
   return (
+  <Page
+          title="Alerts"
+        >
     <div style={{ marginLeft: '10px' }}>
       {alertsResponse && printAlerts()}
       {isLoadingData && getLoader()}
@@ -419,6 +416,7 @@ const Alerts = () => {
       />
 
     </div>
+    </Page>
   );
 };
 

@@ -125,7 +125,11 @@ const useStyles = makeStyles((theme) => ({
         bottom: -90,
       },
       left:0,
-    }
+    },
+    longTextStyle: {
+      wordWrap: 'break-word',
+      maxWidth: 1000,
+    },
 }));
 
 export const VuldbLogin = (/* {   } */) => {
@@ -193,6 +197,7 @@ export const VuldbLogin = (/* {   } */) => {
         try {
             setLoadingTabs(true);
             updateSnackbar(true, CONSTANTS.FETCHING_DATA);
+            setisSearch(true);
             var url = `/vuln/list`;
             setMainUrl('/vuln/list');
             setApiUrl(apiparams);
@@ -205,10 +210,12 @@ export const VuldbLogin = (/* {   } */) => {
             setTotalpages(totalpages);
             updateSnackbar(true, CONSTANTS.FETCHING_DATA_SUCCESS);
             setLoadingTabs(false);
+            setisSearch(false);
         } catch (error) {
             console.error(error);
             updateSnackbar(true, CONSTANTS.FETCHING_DATA_FAILED);
             setLoadingTabs(false);
+            setisSearch(false);
         }
 
         try {
@@ -622,7 +629,7 @@ export const VuldbLogin = (/* {   } */) => {
           <Box position="relative">
           <Paper className={classes.root}>
                 <TableContainer className={classes.container}>
-                  <Table stickyHeader aria-label="sticky table">
+                  <Table stickyHeader aria-label="sticky table" className={loadingRows?'small-table':'big-table'}>
                     {issearch?(<>
                       <TableHead>
                       <TableRow>
@@ -700,7 +707,7 @@ export const VuldbLogin = (/* {   } */) => {
                       <TableRow>
                         {
                           Object.keys(tabsData.columns).map((key, i) => (
-                            tabsData.columns[key].field!='pub_date'?(<><TableCell key={tabsData.columns[key].field}>
+                            tabsData.columns[key].field!='pub_date'?(<><TableCell  key={tabsData.columns[key].field}>
                                {tabsData.columns[key].field!='pub_date'?tabsData.columns[key].title:''}   
                             </TableCell></>):''   
                             
@@ -723,7 +730,7 @@ export const VuldbLogin = (/* {   } */) => {
                                  <TableCell key={tabsData.columns[vkey].field}>
                                       {vkey==0 ? (
                                         <>
-                                         <Grid item xs={12}>
+                                         <Box flexWrap="wrap">
                                             <Typography
                                               variant="h5"
                                               color="textSecondary"
@@ -738,16 +745,18 @@ export const VuldbLogin = (/* {   } */) => {
                                             {moment(row[`pub_date`]).format('MMM DD, YYYY')}
                                             </Typography> </>:''}
 
-                                         </Grid>
+                                         </Box>
                                         </>
-                                    )  : row[`${tabsData.columns[vkey].field}`]}
+                                    )  : <Box className={classes.longTextStyle}>{row[`${tabsData.columns[vkey].field}`]}</Box>}
                                   </TableCell>
                                  </> 
                                 :''
                                 )
                                 )}
                                 <TableCell key='action'>
-                                   <Link target="_blank" to={`/CVE/${row['cve_id']}`}> <VisibilityIcon/> View full Details</Link>
+                                  <Box flexWrap="wrap">
+                                     <Link target="_blank" to={`/CVE/${row['cve_id']}`}> <VisibilityIcon/> View full Details</Link>
+                                  </Box>   
                                 </TableCell>
                             </TableRow>
                           ) }
@@ -1516,16 +1525,6 @@ export const VuldbLogin = (/* {   } */) => {
         <Page
           title="Vulnerabilities DB - Niah Security"
         >
-        <Container style={{ paddingTop: '35px', paddingLeft: '0px', paddingRight: '0px', maxWidth: 'unset' }} maxWidth="lg" className="head-inner-title">
-          <Grid style={{ width: '100%' }} container spacing={0}>
-          <Container maxWidth >
-          <Typography
-             variant="h3" color="inherit" noWrap>
-            Vulnerabilities DB
-            </Typography>
-            </Container>
-          </Grid>
-        </Container>
         <Container style={{ paddingLeft: '0px', paddingRight: '0px', maxWidth: 'unset' }} maxWidth="lg">
             <Grid style={{ width: '100%' }} container spacing={1} className="vuldb-login">
                 {loadingTabs ? getLoader() : null}

@@ -349,7 +349,7 @@ function Hero({ className, ...rest }) {
               width: '100%'
             }}
             id="cve"
-            placeholder="Search Vulnerabilities"
+            placeholder="Search for a CVE, product or vendor e.g product:value or vendor:value"
           />
           <Icon className={classes.searchIcon}>search</Icon>
           <button onClick={handleClick} className={classes.searchButton}>Search</button>
