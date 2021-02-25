@@ -124,7 +124,7 @@ function PricingView() {
   return (
     <Page
       className={classes.root}
-      title="Pricing"
+      title="Niah Security"
       id="PricingView" 
     >
       <Container maxWidth="lg">

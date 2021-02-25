@@ -93,7 +93,7 @@ function LoginView() {
           alignItems="center"
         >
           <RouterLink to="/">
-            <Logo />
+            <Logo className='login-logo-bedge'/>
           </RouterLink>
           <Button
             component={RouterLink}
@@ -140,37 +140,8 @@ function LoginView() {
             image="/static/images/auth.png"
             title="Cover"
           >
-            <Typography
-              color="inherit"
-              variant="subtitle1"
-            >
-              Hella narvwhal Cosby sweater McSweeney&apos;s,
-              salvia kitsch before they sold out High Life.
-            </Typography>
-            <Box
-              alignItems="center"
-              display="flex"
-              mt={3}
-            >
-              <Avatar
-                alt="Person"
-                src="/static/images/avatars/avatar_2.png"
-              />
-              <Box ml={3}>
-                <Typography
-                  color="inherit"
-                  variant="body1"
-                >
-                  Ekaterina Tankova
-                </Typography>
-                <Typography
-                  color="inherit"
-                  variant="body2"
-                >
-                  Manager at inVision
-                </Typography>
-              </Box>
-            </Box>
+            
+            
           </CardMedia>
         </Card>
       </Container>

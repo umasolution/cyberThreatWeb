@@ -9,9 +9,12 @@ import {
   Button,
   TextField,
   FormHelperText,
-  makeStyles
+  makeStyles,
+  Grid
 } from '@material-ui/core';
 import { login } from 'src/actions/accountActions';
+import FacebookIcon from '@material-ui/icons/Facebook';
+import GitHubIcon from '@material-ui/icons/GitHub';
 
 const useStyles = makeStyles(() => ({
   root: {}
@@ -109,6 +112,37 @@ function LoginForm({ className, onSubmitSuccess, ...rest }) {
                 </FormHelperText>
               </Box>
             )}
+          </Box>
+          <Box mt={2}>
+            
+            <Grid container spacing={1}>
+              <Grid container item xs={6} >
+                 <Button
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  style={{width:'100%'}}
+                  className={classes.button}
+                  startIcon={<FacebookIcon />}
+                >
+                  Facebook
+                </Button>
+
+              </Grid>
+              <Grid container item xs={6}>
+                <Button
+                  variant="contained"
+                  color="black"
+                  size="large"
+                  style={{width:'100%'}}
+                  className={classes.button}
+                  startIcon={<GitHubIcon />}
+                >
+                  GitHub
+                </Button>
+              </Grid>
+              
+            </Grid>
           </Box>
         </form>
       )}

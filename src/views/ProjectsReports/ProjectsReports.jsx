@@ -113,12 +113,15 @@ const useStyles = makeStyles((theme) => ({
     searchbarArea: {
       width: '100%',
       bottom: -70,
-      margin: '38px auto',
+      margin: '30px auto',
       maxWidth: '100%',
       [theme.breakpoints.down('sm')]: {
         bottom: -90,
       },
       left:0,
+      paddingLeft:10,
+      paddingRight:10,
+      marginTop:5,
     },
     searchButton: {
       backgroundColor:'#ff0476',
@@ -1507,7 +1510,7 @@ const ProjectsReports = () => {
 
     return (
     <Page
-          className={classes.root}
+          
           title="My Scans"
         >
         <Container className={classes.root} maxWidth>

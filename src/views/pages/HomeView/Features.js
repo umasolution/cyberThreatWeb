@@ -105,14 +105,7 @@ function Features({ className, ...rest }) {
                   >
                     Develop using open source...with confidence
                   </Typography>
-                  <Typography
-                    variant="body1"
-                    color="textPrimary"
-                    className={classes.body1}
-                  >
-                    Not just a set of tools, the package includes the most common use cases of
-                    user flows like User Management, Second Level Layout.
-                  </Typography>
+                  
                 </Box>
               </Box>
             </Grid>
@@ -137,14 +130,7 @@ function Features({ className, ...rest }) {
                   >
                     Use public container images...with confidence.
                   </Typography>
-                  <Typography
-                    variant="body1"
-                    color="textPrimary"
-                    className={classes.body1}
-                  >
-                   The kit provides support for multiple third-party plugins right out of the box
-                    like Chart.js, Dropzone.js, Kanban Plugin and many more.
-                  </Typography>
+                  
                 </Box>
               </Box>
             </Grid>
@@ -169,15 +155,7 @@ function Features({ className, ...rest }) {
                   >
                    Scan your containers...with confidence
                   </Typography>
-                  <Typography
-                    variant="body1"
-                    color="textPrimary"
-                    gutterBottom
-                    className={classes.body1}
-                  >
-                    We&apos;ve included the source Sketch &amp; Figma files to Plus &amp;
-                    Extended licenses so you can get creative! Build layouts with confidence.
-                  </Typography>
+                  
                 </Box>
               </Box>
             </Grid>
@@ -202,14 +180,7 @@ function Features({ className, ...rest }) {
                   >
                    Don't stop at scanning your code and containers. Scan your Virtual Machines and Servers...with confidence.
                   </Typography>
-                  <Typography
-                    variant="body1"
-                    color="textPrimary"
-                    gutterBottom
-                    className={classes.body1}
-                  >
-                    With our powerful scanning technology detect vulnerabilities in your code, standard applications, containers and operating system. Consolidate tools for better ROI.
-                  </Typography>
+                  
                 </Box>
               </Box>
             </Grid>

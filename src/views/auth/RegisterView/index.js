@@ -58,7 +58,7 @@ function RegisterView() {
           alignItems="center"
         >
           <RouterLink to="/">
-            <Logo />
+            <Logo className='login-logo-bedge' />
           </RouterLink>
           <Button
             component={RouterLink}
