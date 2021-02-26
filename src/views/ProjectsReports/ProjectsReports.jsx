@@ -50,7 +50,6 @@ const useStyles = makeStyles((theme) => ({
         paddingRight: '16px !important',
     },
     cardsearch:{
-      margin : '10px',
       boxShadow: 'none',
       backgroundColor: 'initial'
     },

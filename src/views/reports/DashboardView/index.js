@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: 45,
     paddingRight: 45 
   },formControl: {
-    margin: theme.spacing(1),
+    margin: 0,
     minWidth: 120,
   },
 }));

@@ -115,7 +115,7 @@ width:100% !important;
 	display: none;
 }
 .vuldb-login table.small-table tr td:nth-last-child(-n+1) {
-	display: block;
+	display: table-cell;
 }
 
 
@@ -123,9 +123,13 @@ width:100% !important;
 	display: block !important;
 }
 
+.vuldb-login .cveresult table tr th{font-size: 15px !important;font-weight: 500 !important;padding: 20px 20px !important;border-bottom: 1px solid #e1e4e8 !important;}
+.vuldb-login .cveresult table tr td{font-size: 12px !important;font-weight: 500 !important;padding: 0px 20px !important;border-bottom: 1px solid #e1e4e8 !important;}
+
+
 @media only screen and (min-width:1700px){
 
-.vuldb-login .cvesearchcenter .MuiTableCell-root{padding: 20px}
+.vuldb-login .cvesearchcenter .MuiTableCell-root{padding: 0px 10px;}
 .vuldb-login td.MuiTableCell-root.MuiTableCell-body.loading-cell {
     padding: 0px 5px;
 }

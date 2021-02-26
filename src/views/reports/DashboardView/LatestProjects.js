@@ -85,6 +85,7 @@ function LatestProjects({ className, project_details, ...rest }) {
             style={{ width: '100%' }}
             className="secondary"
             options={{
+              pageSize: 10,  
               toolbarStyle: {
                 fontSize: 19,
                 fontFamily: '"Montserrat",sans-serif !important',

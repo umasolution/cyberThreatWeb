@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    height:129
+    height:85
   },
   label: {
     marginLeft: theme.spacing(1)

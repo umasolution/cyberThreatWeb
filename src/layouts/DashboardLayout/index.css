@@ -32,7 +32,7 @@
 
 .dashboardtitle .MuiBreadcrumbs-root a.MuiTypography-root{font-size: 22px; color: #666666; font-weight: 600;text-transform: uppercase;}
 .dashboardData > div > .MuiPaper-root .MuiGrid-container .MuiGrid-item{align-self: center;}
-.dashboardData > div >  .MuiPaper-root{border-radius: 8px;border: 0;box-shadow: 0 4px 32px 0 rgba(0,0,0,0.06);padding: 20px;}
+.dashboardData > div >  .MuiPaper-root{border-radius: 8px;border: 0;box-shadow: 0 4px 32px 0 rgba(0,0,0,0.06);padding: 10px;}
 
 .dashboardData > div >  .MuiPaper-root h3.MuiTypography-root{font-size: 16px;margin:0; }
 
@@ -58,4 +58,11 @@ right: 0px;content: "";}
 #myDiv .modebar ,#myDiv2 .modebar {
   position: absolute;
   top: -50px;
+}
+
+.products_summary .MuiCardHeader-title,.projects_summary .MuiCardHeader-title,.chartlist .MuiCardHeader-title,.open_vulnerabilities h6{
+  color: #546e7a;
+  text-transform: uppercase;
+  font-size: 16px !important;
+  font-weight: 600;
 }

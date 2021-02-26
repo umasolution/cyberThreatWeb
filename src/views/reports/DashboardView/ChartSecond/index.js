@@ -75,6 +75,7 @@ function ChartSecond({ className, chartsMainKey,chartsKey,chartsData, ...rest })
       title: '',
       margin: {
         b: 120,
+        t: 40
       },
     };
     const config = { responsive: true,displayModeBar: true };

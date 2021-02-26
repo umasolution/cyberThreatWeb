@@ -115,7 +115,7 @@ width:100% !important;
 	display: none;
 }
 .vuldb-front table.small-table tr td:nth-last-child(-n+1) {
-	display: block;
+	display: table-cell;
 }
 
 
@@ -126,7 +126,7 @@ width:100% !important;
 
 @media only screen and (min-width:1700px){
 
-.vuldb-front .cvesearchcenter .MuiTableCell-root{padding: 20px}
+.vuldb-front .cvesearchcenter .MuiTableCell-root{padding: 8px}
 .vuldb-front td.MuiTableCell-root.MuiTableCell-body.loading-cell {
     padding: 0px 5px;
 }

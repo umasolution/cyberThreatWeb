@@ -74,6 +74,7 @@ function PerformanceOverTime({ className, chartsMainKey,chartsKey,chartsData, ..
       title: '',
       margin: {
         b: 120,
+        t: 40
       },
     };
     const config = { responsive: true,displayModeBar: true };
