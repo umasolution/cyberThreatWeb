@@ -229,6 +229,14 @@ button:focus{
     padding: 10px !important;
 }
 
+@media only screen and (max-width: 767px) {
+
+.modebar-container {display: none;}
+
+}  
+
+
+
 @media(min-width:767px) and (max-width:959px){
   .bannerBox .bannerContent{
     max-width:100%;

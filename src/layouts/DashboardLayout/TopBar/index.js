@@ -143,13 +143,18 @@ function TopBar({ className, onMobileNavOpen, ...rest }) {
         <Hidden lgUp>
           <IconButton
             className={classes.menuButton}
-            color="inherit"
+            color="red"
             onClick={onMobileNavOpen}
           >
             <SvgIcon fontSize="small">
               <MenuIcon />
             </SvgIcon>
           </IconButton>
+          <Box>
+            <RouterLink to="/">
+                <Logo className="dashboard-logo" />
+            </RouterLink>
+          </Box>
         </Hidden>
         <Hidden mdDown>
           <RouterLink to="/">

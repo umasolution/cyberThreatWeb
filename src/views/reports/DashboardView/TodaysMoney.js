@@ -52,7 +52,7 @@ function TodaysMoney({ className,header, value,index, ...rest }) {
         <Grid
           item
           lg={9}
-          xs={12}
+          xs={9}
         >
           <Typography
           component="h3"
@@ -67,7 +67,7 @@ function TodaysMoney({ className,header, value,index, ...rest }) {
         <Grid
           item
           lg={3}
-          xs={12}
+          xs={3}
         >
           <Avatar variant="rounded" className={`rounded-dashboard rounded-color-${index}`}>
             {value}
