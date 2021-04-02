@@ -18,6 +18,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
+import moment from 'moment';
+import { setDateFormat } from './../../../../Util/Util';
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -48,7 +50,7 @@ function PerformanceOverTime({ className, chartsMainKey,chartsKey,chartsData, ..
       for (let j = 0; j < keys.length; j++) {
         const key = keys[j];
         if (key.toLowerCase() === 'date') {
-          xAxis.push(progress[key]);
+          xAxis.push(moment(setDateFormat(progress[key])).format("MMM Do HH:mm:ss"));
           continue;
         }
         let entry = yAxises.get(key);

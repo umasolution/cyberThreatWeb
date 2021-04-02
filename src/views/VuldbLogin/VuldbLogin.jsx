@@ -36,6 +36,8 @@ import moment from 'moment';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Skeleton from '@material-ui/lab/Skeleton';
 import Page from 'src/components/Page';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import IconButton from '@material-ui/core/IconButton';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -289,6 +291,18 @@ export const VuldbLogin = (/* {   } */) => {
         setSelected(newSelected);
 
     };  
+
+    const handleRemoveRow = async (event, value) => {
+        setloadingRows(false);
+        setSingleRows(false);
+        setloadingRows(false);
+        
+        const selectedIndex = selected.indexOf(value);
+        let newSelected = [];
+        newSelected = newSelected.concat([], []);
+        setSelected(newSelected);
+
+    };
 
     const handleChangeSlider = async (event, value) => {
         let slidervalue = 0;
@@ -1144,6 +1158,9 @@ export const VuldbLogin = (/* {   } */) => {
                           flexDirection="column"
                           justifyContent="center"
                           borderRadius={16}>
+                          <IconButton className={classes.customizedButton}>
+                            <HighlightOffIcon  onClick={handleRemoveRow}/>
+                          </IconButton>
                           <Box className="boxdetailhead">
                               <Box className="boxdetailtitle">
                                   <Typography gutterBottom variant="h5" component="h2">
@@ -1264,7 +1281,7 @@ export const VuldbLogin = (/* {   } */) => {
                           <Box className="boxdetailhead">
                               <Box className="boxdetailtitle">
                                   <Typography gutterBottom variant="h5" component="h2">
-                                    Valnerability Snapshot
+                                    Vulnerability Snapshot
                                   </Typography>
                               </Box> 
                               <Box className="boxtitlecontent"> 
@@ -1545,5 +1562,6 @@ export const VuldbLogin = (/* {   } */) => {
         </Page>
     );
 };
+
 
 export default VuldbLogin;

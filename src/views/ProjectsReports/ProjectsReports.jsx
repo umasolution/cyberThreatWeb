@@ -39,7 +39,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -155,6 +155,9 @@ const useStyles = makeStyles((theme) => ({
         bottom: -90,
       },
       left:0,
+    },
+    customizedButton: {
+     
     }
 }));
 
@@ -303,6 +306,18 @@ const ProjectsReports = () => {
         const selectedIndex = selected.indexOf(value);
         let newSelected = [];
         newSelected = newSelected.concat([], value);
+        setSelected(newSelected);
+
+    };
+
+    const handleRemoveRow = async (event, value) => {
+        setloadingRows(false);
+        setSingleRows(false);
+        setloadingRows(false);
+        
+        const selectedIndex = selected.indexOf(value);
+        let newSelected = [];
+        newSelected = newSelected.concat([], []);
         setSelected(newSelected);
 
     };
@@ -939,6 +954,9 @@ const ProjectsReports = () => {
                           flexDirection="column"
                           justifyContent="center"
                           borderRadius={16}>
+                          <IconButton className={classes.customizedButton}>
+                            <HighlightOffIcon  onClick={handleRemoveRow}/>
+                          </IconButton>
                           <Box className="boxdetailhead">
                               {singlerows.scan_insights ? (
                                 <> 

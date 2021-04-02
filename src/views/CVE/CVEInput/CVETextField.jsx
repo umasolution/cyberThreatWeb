@@ -11,8 +11,6 @@ const styles = theme => ({
     "&::placeholder": {
       textOverflow: "ellipsis !important",
       color: "white",
-
-
       fontSize: 14
     },
   },
@@ -44,8 +42,8 @@ const CVETextField = (props) => {
           input: classes.input
         },
         startAdornment: (
-          <InputAdornment position="start">
-            <SearchIcon style={{ color: 'white'}} />
+          <InputAdornment position="start" onChange={keyPress}>
+            <SearchIcon style={{ color: 'white'}} onChange={keyPress} />
           </InputAdornment>
         ),
       }}

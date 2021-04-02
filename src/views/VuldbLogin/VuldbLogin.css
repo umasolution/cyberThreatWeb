@@ -47,7 +47,7 @@
 .vuldb-login .boxdetailtitle{padding: 10px 10px;border-radius: 10px 10px 0px 0px;background: #e8edf5; }
 .vuldb-login .boxdetailtitle h2{margin: 0; color: #027ae2;font-weight: 600;font-size: 18px; text-align: center;}
 
-.vuldb-login .cvesearchright-inner .boxtitlecontent > div{padding:23px 15px;margin-bottom: 15px;}
+.vuldb-login .cvesearchright-inner .boxtitlecontent > div{padding:10px 15px;margin-bottom: 15px;}
 .vuldb-login .cvesearchright-inner .boxtitlecontent > div.scoreblock-div{border-bottom: 1px solid #dde4ee;}
 .vuldb-login .scoreblock-div{display: flex;}
 .vuldb-login .scoreblock {padding:0 5px;}
@@ -65,7 +65,7 @@
 .vuldb-login .insightlist .MuiTypography-displayBlock{font-size: 17px;color: #333;font-weight: 600;}
 
 .vuldb-login .loading-cell{padding: 10px;}
-.vuldb-login .boxtitlecontent .snapshotlist .MuiListItem-gutters{padding: 0px 0 15px 0;;}
+.vuldb-login .boxtitlecontent .snapshotlist .MuiListItem-gutters{padding: 0px 0 5px 0;;}
 .vuldb-login .snapshotlist .MuiTypography-root > div{width: 50%;font-size: 17px; color: #333;font-weight: 600;display: inline-block;vertical-align: top;}
 
 
@@ -103,7 +103,7 @@ width:100% !important;
 .vuldb-login .small-table .MuiTableCell-body, .vuldb-login .big-table .MuiTableCell-body { 
 	white-space: pre-line; 
 	font-size: 14px !important;
-    font-weight: 500 !important;
+    font-weight: 600 !important;
 } 
 
 .vuldb-login table { table-layout: fixed;}
@@ -126,6 +126,16 @@ width:100% !important;
 .vuldb-login .cveresult table tr th{font-size: 15px !important;font-weight: 500 !important;padding: 20px 20px !important;border-bottom: 1px solid #e1e4e8 !important;}
 .vuldb-login .cveresult table tr td{font-size: 12px !important;font-weight: 500 !important;padding: 0px 20px !important;border-bottom: 1px solid #e1e4e8 !important;}
 
+.vuldb-login .niahinsightlist span {
+	font-size: 17px;
+    color: #333;
+    font-weight: 600;
+}
+
+.vuldb-login .MuiListItem-root {
+	padding-top: 0px;
+    padding-bottom: 5px;
+}
 
 @media only screen and (min-width:1700px){
 

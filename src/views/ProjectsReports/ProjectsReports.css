@@ -12,7 +12,7 @@
     width: 40%;
     word-break: break-all;
 }
-.scan-report-list .cvesearchcenter .MuiTableRow-root.MuiTableRow-hover:hover{background: #027ae2}
+.scan-report-list .cvesearchcenter .MuiTableRow-root.MuiTableRow-hover:hover{background: #027ae2;color: #fff;}
 .scan-report-list .cvesearchcenter .MuiTableRow-root.MuiTableRow-hover:hover .MuiTableCell-root,.cvesearchcenter .MuiTableRow-root.MuiTableRow-hover:hover .MuiTypography-h5,.cvesearchcenter .MuiTableRow-root.MuiTableRow-hover:hover .MuiTypography-h6,.cvesearchcenter .MuiTableRow-root.MuiTableRow-hover:hover .MuiTableCell-root a,
 .scan-report-list .cvesearchcenter .MuiTableRow-root.MuiTableRow-hover.Mui-selected .MuiTableCell-root,.cvesearchcenter .MuiTableRow-root.MuiTableRow-hover.Mui-selected .MuiTypography-h5,.cvesearchcenter .MuiTableRow-root.MuiTableRow-hover.Mui-selected .MuiTypography-h6,.cvesearchcenter .MuiTableRow-root.MuiTableRow-hover.Mui-selected .MuiTableCell-root a{color: #fff;}
 
@@ -78,7 +78,7 @@
 }
 .scan-report-list .cveresult .MuiTableContainer-root{overflow: visible;}
 .scan-report-list .cveresult .Mui-selected,.cveresult tr.Mui-selected,.cveresult tr.Mui-selected td:last-child{position: relative;}
-.scan-report-list .cveresult tr.Mui-selected td:last-child::after{position: absolute;content: "";width: 31px;height: 60px;right: -24px;top: 0;bottom: 0;margin: auto; width: 0; height: 0;border-top: 18px solid transparent;border-bottom: 18px solid transparent;border-right: 22px solid #027ae2;}
+.scan-report-list .cveresult tr.Mui-selected td:nth-last-child(2)::after{position: absolute;content: "";width: 31px;height: 60px;right: -24px;top: 0;bottom: 0;margin: auto; width: 0; height: 0;border-top: 18px solid transparent;border-bottom: 18px solid transparent;border-right: 22px solid #027ae2;}
 .scan-report-list .snapshot-content.description{
 width:100% !important;
 }
@@ -120,13 +120,13 @@ width:100% !important;
 .scan-report-list .cveresult .cvesearchleft{padding-left: 0;padding-right: 0;}
 
 
-.scan-report-list .cveresult .cvesearchcenter .MuiTableRow-root.MuiTableRow-hover:hover{background: #F6F8FA;}
+/*.scan-report-list .cveresult .cvesearchcenter .MuiTableRow-root.MuiTableRow-hover:hover{background: #F6F8FA;}*/
 .scan-report-list .cveresult table tr th{font-size: 15px !important;font-weight: 500 !important;padding: 20px 20px !important;border-bottom: 1px solid #e1e4e8 !important;}
 .scan-report-list .cveresult table tr td{font-size: 12px !important;font-weight: 500 !important;padding: 5px 20px !important;border-bottom: 1px solid #e1e4e8 !important;}
 .scan-report-list .cveresult table tr td h5{font-size: 15px !important;font-weight: 500 !important;color: #000}
 .scan-report-list .cveresult .cvesearchcenter .MuiTableRow-root.MuiTableRow-hover:hover .MuiTypography-h5{color: #000;}
-.scan-report-list .cveresult .cvesearchcenter .MuiTableRow-root.MuiTableRow-hover:hover .MuiTableCell-root{color: #263238;}
-.scan-report-list .cveresult .cvesearchcenter .MuiTableRow-root.MuiTableRow-hover.Mui-selected .MuiTableCell-root{background: #f6f8fa;color: #263238;}
+/*.scan-report-list .cveresult .cvesearchcenter .MuiTableRow-root.MuiTableRow-hover:hover .MuiTableCell-root{color: #263238;}*/
+/*.scan-report-list .cveresult .cvesearchcenter .MuiTableRow-root.MuiTableRow-hover.Mui-selected .MuiTableCell-root{background: #f6f8fa;color: #263238;}*/
 .scan-report-list .cveresult .cvesearchcenter .MuiTableRow-root.MuiTableRow-hover.Mui-selected .MuiTypography-h5{color: #263238;}
 
 .scan-report-list .cveresult .cvesearchcenter .MuiTableCell-stickyHeader{border-bottom: 1px solid #e1e4e8 !important;background: none;font-weight: 600 !important;background: #f6f8fa;}
@@ -201,7 +201,7 @@ width:100% !important;
 .scan-report-list td.MuiTableCell-root.MuiTableCell-body.loading-cell {
     padding: 0px 5px;
 }
-.scan-report-list .cvesearchcenter .MuiTableCell-root,.cvesearchcenter .MuiTypography-h5{  font-size: 15px; }
+.scan-report-list .cvesearchcenter .MuiTableCell-root,.scan-report-list .cvesearchcenter .MuiTypography-h5{  font-size: 16px; }
 
 .scan-report-list .scoreblock-inner > div{font-size: 16px;}
 

@@ -229,6 +229,10 @@ button:focus{
     padding: 10px !important;
 }
 
+.class-vulDB .dashboardsearch {
+  display: none;
+}
+
 @media only screen and (max-width: 767px) {
 
 .modebar-container {display: none;}

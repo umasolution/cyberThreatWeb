@@ -48,7 +48,7 @@
 .vuldb-front .boxdetailtitle{padding: 10px 10px;border-radius: 10px 10px 0px 0px;background: #e8edf5; }
 .vuldb-front .boxdetailtitle h2{margin: 0; color: #027ae2;font-weight: 600;font-size: 18px; text-align: center;}
 
-.vuldb-front .cvesearchright-inner .boxtitlecontent > div{padding:23px 15px;margin-bottom: 15px;}
+.vuldb-front .cvesearchright-inner .boxtitlecontent > div{padding:10px 15px;margin-bottom: 15px;}
 .vuldb-front .cvesearchright-inner .boxtitlecontent > div.scoreblock-div{border-bottom: 1px solid #dde4ee;}
 .vuldb-front .scoreblock-div{display: flex;}
 .vuldb-front .scoreblock {padding:0 5px;}
@@ -60,13 +60,13 @@
 .vuldb-front .meterleft h2{font-size: 16px;font-weight: 600;margin-bottom: 10px;}
 .vuldb-front .meterleft h2 a{text-decoration: none;color: #e43838} 
 
-.vuldb-front .boxtitlecontent .insightlist .MuiListItem-gutters{padding: 0px 0 15px 0;}
+.vuldb-front .boxtitlecontent .insightlist .MuiListItem-gutters{padding: 0px 0 5px 0;}
 .vuldb-front .boxtitlecontent .insightlist .MuiListItem-gutters:last-child{padding-bottom: 0;}
 .vuldb-front .boxtitlecontent .insightlist .MuiListItem-gutters .MuiSvgIcon-root{color: #333;}
 .vuldb-front .insightlist .MuiTypography-displayBlock{font-size: 17px;color: #333;font-weight: 600;}
 
 .vuldb-front .loading-cell{padding: 10px;}
-.vuldb-front .boxtitlecontent .snapshotlist .MuiListItem-gutters{padding: 0px 0 15px 0;;}
+.vuldb-front .boxtitlecontent .snapshotlist .MuiListItem-gutters{padding: 0px 0 5px 0;;}
 .vuldb-front .snapshotlist .MuiTypography-root > div{width: 50%;font-size: 17px; color: #333;font-weight: 600;display: inline-block;vertical-align: top;}
 
 
@@ -102,8 +102,8 @@ width:100% !important;
 
 .vuldb-front .small-table .MuiTableCell-body, .vuldb-front .big-table .MuiTableCell-body { 
 	white-space: pre-line; 
-	font-size: 14px !important;
-    font-weight: 500 !important;
+	font-size: 15px !important;
+    font-weight: 600 !important;
 } 
 
 .vuldb-front table { table-layout: fixed;}

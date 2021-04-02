@@ -985,7 +985,7 @@ export const Search = (/* {   } */) => {
                                       <Box className="boxdetailhead">
                                           <Box className="boxdetailtitle">
                                               <Typography gutterBottom variant="h5" component="h2">
-                                                Valnerability Snapshot
+                                                Vulnerability Snapshot
                                               </Typography>
                                           </Box> 
                                           <Box className="boxtitlecontent"> 
