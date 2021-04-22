@@ -25,8 +25,10 @@
   margin-top: 15px;
 }
 
-.bold-font {
+/*.bold-font {
+  font-weight: bold !important;
+}*/
+
+.bold-font .MuiCardHeader-title {
   font-weight: bold !important;
 }
-
-

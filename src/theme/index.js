@@ -66,6 +66,47 @@ const themeConfigs = [
     shadows: softShadows
   },
   {
+    name: THEMES.NEWLIGHT,
+    overrides: {
+      MuiInputBase: {
+        input: {
+          '&::placeholder': {
+            opacity: 1,
+            color: colors.blueGrey[600]
+          }
+        }
+      }
+    },
+    palette: {
+      type: 'light',
+      action: {
+        active: colors.blueGrey[600]
+      },
+      background: {
+        main: '#185d98',
+        default: colors.common.white,
+        dark: '#f4f6f8',
+        paper: colors.common.white,
+        active : '#155288',
+        color1 : '#00d1ce',
+        color2 : '#fe0a7b',
+        color3 : '#ff9f00',
+        color4 : '#027de7',
+      },
+      primary: {
+        main: colors.indigo[600]
+      },
+      secondary: {
+        main: '#5850EC'
+      },
+      text: {
+        primary: colors.blueGrey[900],
+        secondary: colors.blueGrey[600]
+      }
+    },
+    shadows: softShadows
+  },
+  {
     name: THEMES.ONE_DARK,
     palette: {
       type: 'dark',
@@ -134,7 +175,6 @@ export function createTheme(settings = {}) {
     console.warn(new Error(`The theme ${settings.theme} is not valid`));
     [themeConfig] = themeConfigs;
   }
-
   let theme = createMuiTheme(
     _.merge(
       {},
@@ -143,33 +183,39 @@ export function createTheme(settings = {}) {
       { direction: settings.direction },
       {
         typography:  {
-          fontFamily: '"Roboto","Helvetica","Arial",sans-serif !important',
+            fontFamily: '"Montserrat",sans-serif !important',
             h1: {
-          fontFamily: '"Roboto","Helvetica","Arial",sans-serif !important',
-
+              fontFamily: '"Montserrat",sans-serif !important',
             },
             h2: {
-              fontFamily: '"Roboto","Helvetica","Arial",sans-serif !important',
+              fontFamily: '"Montserrat",sans-serif !important',
             },
             h3: {
-              fontFamily: '"Roboto","Helvetica","Arial",sans-serif !important',
+              fontFamily: '"Montserrat",sans-serif !important',
             },
             h4: {
-              fontFamily: '"Roboto","Helvetica","Arial",sans-serif !important',
+              fontFamily: '"Montserrat",sans-serif !important',
             },
             h5: {
-              fontFamily: '"Roboto","Helvetica","Arial",sans-serif !important',
+              fontFamily: '"Montserrat",sans-serif !important',
             },
             h6: {
               fontSize: 16,
-              fontFamily: '"Roboto","Helvetica","Arial",sans-serif !important',
+              fontFamily: '"Montserrat",sans-serif !important',
               color: '#546e7a',
             },
             body1: {
               fontSize: 13,
-              fontFamily: '"Roboto","Helvetica","Arial",sans-serif !important',
+              fontFamily: '"Montserrat",sans-serif !important',
             }
-          }
+          },
+         fontfamily: {
+            regular: '400',
+            medium: '500',
+            semiBold: '600',
+            light: '300',
+            bold: '700'
+         } 
       }
     )
   );

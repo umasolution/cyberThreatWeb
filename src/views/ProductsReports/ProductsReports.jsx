@@ -19,25 +19,33 @@ import Remediation from './Remediation/Remediation';
 import ReportSummary from './ReportSummary/ReportSummary';
 import DockerSummaries from './DockerSummaries/DockerSummaries';
 import DockerPackages from './DockerPackages/DockerPackages';
+import Page from 'src/components/Page';
 import './ProductsReports.css';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     width: '100%',
-    backgroundColor: '#f1f1f1',
+    backgroundColor: '#fafafc',
   },
   tabRoot: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
+  },
+  container: {
+    [theme.breakpoints.up('lg')]: {
+    },
+    paddingLeft: 45,
+    paddingRight: 45 
   }
 }));
 
 const ProductsReports = () => {
   const classes = useStyles();
 
-  const { reportType, reportName } = useParams();
+  const { reportName, projectId  } = useParams();
   const [loading, setLoading] = useState(false);
+  const [reportType, setReportType] = useState();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [productReportResponse, setProductReportResponse] = useState();
@@ -51,18 +59,25 @@ const ProductsReports = () => {
 
   useEffect(() => {
     fetchProductsReports();
-  }, [reportName]);
+  }, [reportName, projectId]);
 
   const fetchProductsReports = async () => {
     try {
       setLoading(true);
       updateSnackbar(true, CONSTANTS.FETCHING_DATA);
-      const url = `/report/project/reportname`;
+      const url = `/report/reportname`;
+      /*const url = `/report/project/reportname`;*/
       const response = await Axios.post(url, {
-        emailAdd: authService.getUserName(),
-        reportName
+        project_id: projectId,
+        report_name: reportName
       });
       const res = response.data;
+      if (res.header.report_type) {
+        setReportType(res.header.report_type);
+      }
+      if (res.header.scanner_type) {
+        setReportType(res.header.scanner_type);
+      }
       if (res.header.docker && res.header.docker === 'True') {
         setIsDocker(true);
       }
@@ -130,7 +145,7 @@ const ProductsReports = () => {
             {productReportResponse.summary ? <Tab  className="summary-tab" label="Summary" /> : ''}
             <Tab className="issue-tab" label="Issues" />
             {!isDocker ? <Tab className="inventory-tab" label="Inventory" />  : ''}
-            {((reportType === 'platform') && !isDocker) ? <Tab className="remediation-tab" label="Remediation" /> : ''}
+            {((reportType === 'platform' || reportType === 'system' ) && !isDocker) ? <Tab className="remediation-tab" label="Remediation" /> : ''}
           </Tabs>
         </AppBar>
         <TabPanel value={tabValue} index={0}>
@@ -144,24 +159,15 @@ const ProductsReports = () => {
         </TabPanel>
         <TabPanel value={tabValue} index={1}>
           {!isDocker
-            ? <Issues reportType={reportType} reportName={reportName} issues={productReportResponse.Issues} />
+            ? <Issues reportType={reportType} reportName={reportName} issues={productReportResponse.Issues} counter={productReportResponse.summary.counter} historydata={productReportResponse.summary.history} projectId={projectId}/>
             : <DockerIssues reportType={reportType} reportName={reportName} issues={productReportResponse.images} />}
 
         </TabPanel>
         <TabPanel value={tabValue} index={2}>
-          {(reportType === 'language' || reportType === 'application') ?
-
-            productReportResponse.filesArray ? <File name="" file={productReportResponse.filesArray} />
-              :
-              <Dependencies issues={reportType === 'application' ? productReportResponse.applications : productReportResponse.files} reportType={reportType} reportName={reportName} />
-
-            :
-            reportType === 'platform' ?
-              <File name="" file={productReportResponse.packages?.pkgDetails} />
-              : ''}
+          {productReportResponse.inventory ? (<Dependencies issues={reportType === 'application' ? productReportResponse.inventory : productReportResponse.inventory} reportType={reportType} reportName={reportName} counter={productReportResponse.summary.counter} historydata={productReportResponse.summary.history} projectId={projectId}  />) : ''}             
         </TabPanel>
         <TabPanel value={tabValue} index={3}>
-          <Remediation data={productReportResponse.remediation} />
+          <Remediation remediation={productReportResponse.remediation} counter={productReportResponse.summary.counter} reportName={reportName} historydata={productReportResponse.summary.history} projectId={projectId} />
         </TabPanel>
       </>
     );
@@ -185,7 +191,11 @@ const ProductsReports = () => {
 
 
   return (
-    <Container className={classes.root} maxWidth="lg">
+  <Page
+          className={classes.root}
+          title="My Report"
+        >
+    <Container className={classes.container} maxWidth={false}>
       <Grid
         container
         spacing={1}
@@ -195,13 +205,13 @@ const ProductsReports = () => {
           flexDirection="column"
           justifyContent="left"
           height="100%"
-          style={{ marginTop: '25px' }}
+          style={{ marginTop: '25px',width: '100%' }}
         >
           {productReportResponse ?
             (
               <>
-                <ReportHeader header={productReportResponse.header} />
-                {getTabs()}
+                <Box className="report-header-data"><ReportHeader header={productReportResponse.header} /></Box>
+                <Box className="report-tabs-data">{getTabs()}</Box>
               </>
             )
             : ''}
@@ -212,6 +222,7 @@ const ProductsReports = () => {
         </Box>
       </Grid>
     </Container>
+    </Page>
 
   );
 };

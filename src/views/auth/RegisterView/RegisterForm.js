@@ -17,7 +17,8 @@ import {
 import { register } from 'src/actions/accountActions';
 
 const useStyles = makeStyles(() => ({
-  root: {}
+  root: {},
+  input:{color:'#000 !important'}
 }));
 
 function RegisterForm({ className, onSubmitSuccess, ...rest }) {
@@ -49,8 +50,10 @@ function RegisterForm({ className, onSubmitSuccess, ...rest }) {
           await dispatch(register(values));
           onSubmitSuccess();
         } catch (error) {
+          console.log(error);
+          const message = error || 'Something went wrong';
           setStatus({ success: false });
-          setErrors({ submit: error.message });
+          setErrors({ submit: message });
           setSubmitting(false);
         }
       }}
@@ -76,6 +79,7 @@ function RegisterForm({ className, onSubmitSuccess, ...rest }) {
             label="First Name"
             margin="normal"
             name="firstName"
+            className={classes.input}
             onBlur={handleBlur}
             onChange={handleChange}
             type="firstName"
@@ -89,6 +93,7 @@ function RegisterForm({ className, onSubmitSuccess, ...rest }) {
             label="Last Name"
             margin="normal"
             name="lastName"
+            className={classes.input}
             onBlur={handleBlur}
             onChange={handleChange}
             type="lastName"
@@ -102,6 +107,7 @@ function RegisterForm({ className, onSubmitSuccess, ...rest }) {
             label="Email Address"
             margin="normal"
             name="email"
+            className={classes.input}
             onBlur={handleBlur}
             onChange={handleChange}
             type="email"
@@ -114,6 +120,7 @@ function RegisterForm({ className, onSubmitSuccess, ...rest }) {
             helperText={touched.password && errors.password}
             label="Password"
             margin="normal"
+            className={classes.input}
             name="password"
             onBlur={handleBlur}
             onChange={handleChange}
@@ -151,6 +158,13 @@ function RegisterForm({ className, onSubmitSuccess, ...rest }) {
             <FormHelperText error>
               {errors.policy}
             </FormHelperText>
+          )}
+          {errors.submit && (
+            <Box mt={3}>
+              <FormHelperText error>
+                {errors.submit}
+              </FormHelperText>
+            </Box>
           )}
           <Box mt={2}>
             <Button

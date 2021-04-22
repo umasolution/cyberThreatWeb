@@ -20,6 +20,38 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     backgroundColor: theme.palette.secondary.main,
     color: theme.palette.secondary.contrastText
+  },
+  featureImage:{
+    boxShadow: '4px 0px 65px rgba(43, 40, 30, 0.10)',
+    marginBottom:'25px',
+  },
+  mainH4: {
+    fontWeight: theme.fontfamily.semiBold,
+    fontSize:'16px',
+  },
+  body1: {
+    fontWeight: theme.fontfamily.medium,
+    fontSize:'14px'
+  },
+  welcomText: {
+    maxWidth:675,
+    margin:'0 auto',
+    color:'#333333',
+    fontSize:14,
+    marginBottom:50,
+  },
+  featureBox: {
+    height:'100%',
+    boxShadow:'4px 0px 67px rgba(46,57,124,0.07)',
+    padding:'26px',
+    [theme.breakpoints.down('xs')]: {
+      height:'auto',
+      marginBottom:'25px'
+    },
+  },
+  gridBox: {
+    padding:'0 8px !important',
+    
   }
 }));
 
@@ -30,37 +62,50 @@ function Features({ className, ...rest }) {
     <div
       className={clsx(classes.root, className)}
       {...rest}
-    >
+    > 
+      <Container maxWidth="md">       
+        <Box mt={3}>
+          <Typography
+            align="center"
+            variant="subtitle1"
+            color="textSecondary"
+            className={classes.welcomText}
+          >
+            Welcome to the first platform created for freelancers and agencies
+            for showcasing and finding the best clinets in the market.
+            30% of our income goes into Whale Charity
+          </Typography>
+        </Box>
+      </Container>
       <Container maxWidth="lg">
-        <Box mt={2}>
+        <Box mt={2} >
           <Grid
             container
             spacing={1}
+            className="gridBox-Container"
           >
             <Grid
               item
               xs={12}
               md={3}
+              className="gridBox"
             >
-              <Box display="flex">
-                <Avatar className={classes.avatar}>
-                  01
-                </Avatar>
-                <Box ml={2}>
+              <Box className={classes.featureBox} borderRadius={16} boxShadow={3} p={2} m={1} minHeight={250}>
+                <img
+                  alt="Features"
+                  className={classes.featureImage}
+                    src="/static/ic_1.png"
+                  />
+                <Box>
                   <Typography
                     variant="h4"
                     gutterBottom
                     color="textPrimary"
+                    className={classes.mainH4}
                   >
                     Develop using open source...with confidence
                   </Typography>
-                  <Typography
-                    variant="body1"
-                    color="textPrimary"
-                  >
-                    {/* Not just a set of tools, the package includes the most common use cases of
-                    user flows like User Management, Second Level Layout. */}
-                  </Typography>
+                  
                 </Box>
               </Box>
             </Grid>
@@ -68,26 +113,24 @@ function Features({ className, ...rest }) {
               item
               xs={12}
               md={3}
+              className="gridBox"
             >
-              <Box display="flex">
-                <Avatar className={classes.avatar}>
-                  02
-                </Avatar>
-                <Box ml={2}>
+              <Box className={classes.featureBox} borderRadius={16} boxShadow={3} p={2} m={1} minHeight={250}>
+               <img
+                  alt="Features"
+                  className={classes.featureImage}
+                    src="/static/ic_2.png"
+                  />
+                <Box>
                   <Typography
                     variant="h4"
                     gutterBottom
                     color="textPrimary"
+                    className={classes.mainH4}
                   >
                     Use public container images...with confidence.
                   </Typography>
-                  <Typography
-                    variant="body1"
-                    color="textPrimary"
-                  >
-                    {/* The kit provides support for multiple third-party plugins right out of the box
-                    like Chart.js, Dropzone.js, Kanban Plugin and many more. */}
-                  </Typography>
+                  
                 </Box>
               </Box>
             </Grid>
@@ -95,27 +138,24 @@ function Features({ className, ...rest }) {
               item
               xs={12}
               md={3}
+              className="gridBox"
             >
-              <Box display="flex">
-                <Avatar className={classes.avatar}>
-                  03
-                </Avatar>
-                <Box ml={2}>
+              <Box className={classes.featureBox} borderRadius={16} boxShadow={3} p={2} m={1} minHeight={250}>
+                <img
+                  alt="Features"
+                  className={classes.featureImage}
+                    src="/static/ic_3.png"
+                  />
+                <Box>
                   <Typography
                     variant="h4"
                     gutterBottom
                     color="textPrimary"
+                    className={classes.mainH4}
                   >
                    Scan your containers...with confidence
                   </Typography>
-                  <Typography
-                    variant="body1"
-                    color="textPrimary"
-                    gutterBottom
-                  >
-                    {/* We&apos;ve included the source Sketch &amp; Figma files to Plus &amp;
-                    Extended licenses so you can get creative! Build layouts with confidence. */}
-                  </Typography>
+                  
                 </Box>
               </Box>
             </Grid>
@@ -123,30 +163,28 @@ function Features({ className, ...rest }) {
               item
               xs={12}
               md={3}
+              className="gridBox"
             >
-              <Box display="flex">
-                <Avatar className={classes.avatar}>
-                  04
-                </Avatar>
-                <Box ml={2}>
+              <Box className={classes.featureBox} borderRadius={16} boxShadow={3} p={2} m={1} minHeight={250}>
+                <img
+                  alt="Features"
+                  className={classes.featureImage}
+                    src="/static/ic_4.png"
+                  />
+                <Box>
                   <Typography
                     variant="h4"
                     gutterBottom
                     color="textPrimary"
+                    className={classes.mainH4}
                   >
                    Don't stop at scanning your code and containers. Scan your Virtual Machines and Servers...with confidence.
                   </Typography>
+                  
                 </Box>
               </Box>
             </Grid>
           </Grid>
-          <Typography
-                    variant="body1"
-                    color="textPrimary"
-                    gutterBottom
-                  >
-                    With our powerful scanning technology detect vulnerabilities in your code, standard applications, containers and operating system. Consolidate tools for better ROI.
-                  </Typography>
         </Box>
       </Container>
     </div>

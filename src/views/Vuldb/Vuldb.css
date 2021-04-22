@@ -1,0 +1,152 @@
+
+
+.vuldb-front .cvesearchslider {
+	width: 300px;
+}
+.vuldb-front .topSearch.MuiContainer-maxWidthLg{max-width: 1400px;}
+
+
+.vuldb-front .topSearch .MuiInput-underline:before{display: none;}
+
+
+.vuldb-front .topSearch .MuiInputBase-input{font-size: 14px;color: #000 !important;}
+
+.vuldb-front .cvesearchleft .MuiTypography-h3 {font-size: 18px;font-weight: 600;color: #333333;letter-spacing: 0.5px;}
+
+
+.vuldb-front .cvesearchcenter .MuiTableCell-root,.cvesearchcenter .MuiTypography-h5{ font-weight: 700; font-size: 14px;color: #333333;text-transform: capitalize;border: 0;}
+.vuldb-front .cvesearchcenter .MuiTableCell-stickyHeader{background: #e8ebf0;}
+
+.vuldb-front .cvesearchcenter .MuiTableCell-root a .MuiSvgIcon-root{vertical-align: middle;}
+.vuldb-front .cvesearchcenter .MuiTableCell-root a{color: #027de7;text-decoration: none;}
+
+
+.vuldb-front .cvesearchcenter .MuiTableRow-root.MuiTableRow-hover:hover{background: #027ae2}
+.vuldb-front .cvesearchcenter .MuiTableRow-root.MuiTableRow-hover:hover .MuiTableCell-root,.cvesearchcenter .MuiTableRow-root.MuiTableRow-hover:hover .MuiTypography-h5,.cvesearchcenter .MuiTableRow-root.MuiTableRow-hover:hover .MuiTypography-h6,.cvesearchcenter .MuiTableRow-root.MuiTableRow-hover:hover .MuiTableCell-root a,
+.vuldb-front .cvesearchcenter .MuiTableRow-root.MuiTableRow-hover.Mui-selected .MuiTableCell-root,.cvesearchcenter .MuiTableRow-root.MuiTableRow-hover.Mui-selected .MuiTypography-h5,.cvesearchcenter .MuiTableRow-root.MuiTableRow-hover.Mui-selected .MuiTypography-h6,.cvesearchcenter .MuiTableRow-root.MuiTableRow-hover.Mui-selected .MuiTableCell-root a{color: #fff;}
+
+.vuldb-front .cvesearchcenter .MuiPagination-root{margin: 30px 0;}
+
+.vuldb-front .cvesearchcenter .MuiPagination-root ul{display: inline-block;width: 100%; text-align: center;}
+
+.vuldb-front .cvesearchcenter .MuiPagination-root ul li{display: inline-block;}
+
+
+.vuldb-front .boxdetailhead .boxtitlecontent .meter{display: flex;margin-bottom: -55px;}
+
+.vuldb-front .cvesearchleft .boxleftheader > div{margin-bottom: 15px;}
+.vuldb-front .cvesearchremote .cvesearchremote-inner{box-shadow: 0 0 0 1px rgba(63,63,68,0.05), 0 1px 2px 0 rgba(63,63,68,0.15);border-radius: 6px;padding: 15px 24px;}
+.vuldb-front .cvesearchremote .MuiListItem-gutters{padding: 0px 0 10px 0;}
+.vuldb-front .cvesearchremote-inner .MuiListItemText-root{margin: 0;}
+.vuldb-front .cvesearchleft .MuiListItem-root .MuiListItemText-root .MuiTypography-body1{font-size: 18px; font-weight: 600;color: #333;}
+
+
+.vuldb-front .cvesearchright-inner{background: #fff;padding: 15px;box-shadow: 0 0 0 1px rgba(63,63,68,0.05), 0 1px 2px 0 rgba(63,63,68,0.15);}
+.vuldb-front .cvesearchtopheader{background: #fff;padding: 15px;box-shadow: 0 0 0 1px rgba(63,63,68,0.05), 0 1px 2px 0 rgba(63,63,68,0.15);}
+
+.vuldb-front .cvesearchright-inner > div{background: #f4f6fa;border-radius: 10px;margin-bottom: 15px;}
+.vuldb-front .boxdetailtitle{padding: 10px 10px;border-radius: 10px 10px 0px 0px;background: #e8edf5; }
+.vuldb-front .boxdetailtitle h2{margin: 0; color: #027ae2;font-weight: 600;font-size: 18px; text-align: center;}
+
+.vuldb-front .cvesearchright-inner .boxtitlecontent > div{padding:10px 15px;margin-bottom: 15px;}
+.vuldb-front .cvesearchright-inner .boxtitlecontent > div.scoreblock-div{border-bottom: 1px solid #dde4ee;}
+.vuldb-front .scoreblock-div{display: flex;}
+.vuldb-front .scoreblock {padding:0 5px;}
+.vuldb-front .scoreblock-inner{display: table;width: 100%;height: 45px;border-radius: 5px;background: #fff;  }
+.vuldb-front .scoreblock-inner > div{display: table-cell; vertical-align: middle;padding: 5px;font-size: 14px; font-weight: 600; text-align: center;}
+.vuldb-front .scoretitle{border: 1px solid #d0d8e5;border-radius: 3px 0 0 3px; color: #333;}
+.vuldb-front .scorevalue{background: #027ae2; color: #fff;border-radius: 0px 3px 3px 0px;}
+
+.vuldb-front .meterleft h2{font-size: 16px;font-weight: 600;margin-bottom: 10px;}
+.vuldb-front .meterleft h2 a{text-decoration: none;color: #e43838} 
+
+.vuldb-front .boxtitlecontent .insightlist .MuiListItem-gutters{padding: 0px 0 5px 0;}
+.vuldb-front .boxtitlecontent .insightlist .MuiListItem-gutters:last-child{padding-bottom: 0;}
+.vuldb-front .boxtitlecontent .insightlist .MuiListItem-gutters .MuiSvgIcon-root{color: #333;}
+.vuldb-front .insightlist .MuiTypography-displayBlock{font-size: 17px;color: #333;font-weight: 600;}
+
+.vuldb-front .loading-cell{padding: 10px;}
+.vuldb-front .boxtitlecontent .snapshotlist .MuiListItem-gutters{padding: 0px 0 5px 0;;}
+.vuldb-front .snapshotlist .MuiTypography-root > div{width: 50%;font-size: 17px; color: #333;font-weight: 600;display: inline-block;vertical-align: top;}
+
+
+.vuldb-front .boxtitlecontent.explo-list{padding: 10px 15px;}
+.vuldb-front .boxtitlecontent.explo-list .MuiExpansionPanelSummary-content h2{font-size: 17px;font-weight: 600;}
+.vuldb-front .boxtitlecontent.explo-list .MuiExpansionPanelDetails-root .MuiTypography-root a{padding-bottom: 10px;word-break: break-all;}
+.vuldb-front .cveresult .Mui-selected {
+	background-color: #027ae2;
+	color: #fff;
+}
+.vuldb-front .cvesearchcenter .MuiTypography-h6{font-size: 13px;}
+.vuldb-front .cvesearchcenter .MuiTableRow-root {
+	cursor: pointer;
+}
+.vuldb-front .cveresult .MuiTableContainer-root{overflow: visible;}
+.vuldb-front .cveresult .Mui-selected,.cveresult tr.Mui-selected,.cveresult tr.Mui-selected td:last-child{position: relative;}
+.vuldb-front .cveresult tr.Mui-selected td:last-child::after{position: absolute;content: "";width: 31px;height: 60px;right: -24px;top: 0;bottom: 0;margin: auto; width: 0; height: 0;border-top: 18px solid transparent;border-bottom: 18px solid transparent;border-right: 22px solid #027ae2;}
+.vuldb-front .snapshot-content.description{
+width:100% !important;
+}
+
+
+
+.vuldb-front .MuiContainer-root > .MuiGrid-container{box-shadow: 4px 0px 54px rgba(0,0,0,0.1);padding: 0px 0px;border-radius: 5px;}
+.vuldb-front .MuiContainer-root > .MuiGrid-container > .MuiContainer-root{max-width: 100%;box-shadow: none;border-radius: 0;padding: 35px;}
+
+.vuldb-front [class*='makeStyles-searchBox']{max-width: 100%;border-radius: 5px;box-shadow: none;}
+.vuldb-front .MuiInput-formControl.MuiInput-underline::before,.vuldb-front .MuiInput-formControl.MuiInput-underline::after {display: none;}
+.vuldb-front .MuiInput-formControl input.MuiInputBase-input{height: 30px;font-weight: 500;font-size: 14px;}
+.vuldb-front [class*='makeStyles-searchButton']{border-radius: 10px; }
+.vuldb-front [class*='makeStyles-chipbar'] > .MuiGrid-container{border: 1px solid #e8e8f2;border-radius: 5px;margin-bottom:30px;}
+.vuldb-front ul li .MuiChip-deletable{background: #556177;border-radius: 5px; }
+
+.vuldb-front .small-table .MuiTableCell-body, .vuldb-front .big-table .MuiTableCell-body { 
+	white-space: pre-line; 
+	font-size: 15px !important;
+    font-weight: 600 !important;
+} 
+
+.vuldb-front table { table-layout: fixed;}
+
+.vuldb-front table.small-table tr th:nth-child(n+4) {
+	display: none;
+}
+.vuldb-front table.small-table tr td:nth-child(n+4) {
+	display: none;
+}
+.vuldb-front table.small-table tr td:nth-last-child(-n+1) {
+	display: table-cell;
+}
+
+
+.vuldb-front table.small-table th:nth-last-child(-n+1) {
+	display: block !important;
+}
+
+
+@media only screen and (min-width:1700px){
+
+.vuldb-front .cvesearchcenter .MuiTableCell-root{padding: 8px}
+.vuldb-front td.MuiTableCell-root.MuiTableCell-body.loading-cell {
+    padding: 0px 5px;
+}
+.vuldb-front .cvesearchcenter .MuiTableCell-root,.cvesearchcenter .MuiTypography-h5{  font-size: 15px; }
+
+.vuldb-front .scoreblock-inner > div{font-size: 16px;}
+
+}
+
+@media only screen and (max-width:1400px){
+
+.vuldb-front .cvesearchcenter .MuiTableCell-root{padding: 12px 10px;font-size: 13px;}
+
+.vuldb-front .cvesearchcenter .MuiTypography-h5{font-size: 13px;}
+
+.vuldb-front .cvesearchleft .MuiTypography-h3,.boxdetailtitle h2{font-size: 16px;}
+
+.vuldb-front .cvesearchleft .MuiListItem-root .MuiListItemText-root .MuiTypography-body1{font-size: 16px;}
+.vuldb-front .meterleft h2,.vuldb-front .insightlist .MuiTypography-displayBlock,.vuldb-front .snapshotlist .MuiTypography-root > div,.boxtitlecontent.explo-list .MuiExpansionPanelSummary-content h2{font-size: 14px;}
+.vuldb-front .MuiExpansionPanelSummary-root{padding: 0px 15px;}
+.vuldb-front .scoreblock-inner > div{font-size: 12px;}
+
+}

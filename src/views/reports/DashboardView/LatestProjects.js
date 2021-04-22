@@ -60,7 +60,7 @@ const theme = createMuiTheme({
     MuiTypography: {
       h6: {
         fontSize: 16,
-        fontFamily: '"Roboto","Helvetica","Arial",sans-serif !important',
+        fontFamily: '"Montserrat",sans-serif !important',
         color: '#546e7a',
       },
     },
@@ -76,11 +76,6 @@ function LatestProjects({ className, project_details, ...rest }) {
       className={clsx(classes.root, className)}
       {...rest}
     >
-      {/* <CardHeader
-        action={<GenericMoreButton />}
-        title="Latest Projects"
-      /> */}
-      {/* <Divider /> */}
       <Box>
         <ThemeProvider theme={theme}>
           <MaterialTable
@@ -90,100 +85,31 @@ function LatestProjects({ className, project_details, ...rest }) {
             style={{ width: '100%' }}
             className="secondary"
             options={{
+              pageSize: 10,  
+              toolbarStyle: {
+                fontSize: 19,
+                fontFamily: '"Montserrat",sans-serif !important',
+                fontWeight: 400
+              },
               cellStyle: {
-                fontSize: 13,
-                fontFamily: '"Roboto","Helvetica","Arial",sans-serif !important',
+                fontSize: 19,
+                fontFamily: '"Montserrat",sans-serif !important',
+                fontWeight: 400
               },
               headerStyle: {
-                fontSize: 16,
-                fontFamily: '"Roboto","Helvetica","Arial",sans-serif !important',
-                color: '#546e7a',
+                fontSize: 19,
+                fontFamily: '"Montserrat",sans-serif !important',
+                fontWeight: 600,
+                borderBottom: '1px solid rgba(224, 224, 224, 1)'
               },
               rowStyle: x => {
                 if (x.tableData.id % 2 === 0) {
-                    return {backgroundColor: "#e7e7ef"}
+                    /*return {backgroundColor: "#f9f9fc"}*/
                 }
             }
             }}
           />
         </ThemeProvider>
-        {/* <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell sortDirection="desc">
-                  <Tooltip
-                    enterDelay={300}
-                    title="Sort"
-                  >
-                    <TableSortLabel
-                      active
-                      direction="desc"
-                    >
-                      Project Name
-                    </TableSortLabel>
-                  </Tooltip>
-                </TableCell>
-                <TableCell>
-                  Owner
-                </TableCell>
-                <TableCell>
-                  Amount
-                </TableCell>
-                <TableCell>
-                  Technology
-                </TableCell>
-                <TableCell align="right">
-                  Date
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {projects.map((project) => (
-                <TableRow
-                  hover
-                  key={project.id}
-                >
-                  <TableCell>
-                    {project.title}
-                  </TableCell>
-                  <TableCell>
-                    <Box
-                      display="flex"
-                      alignItems="center"
-                    >
-                      <Avatar
-                        alt="Author"
-                        className={classes.avatar}
-                        src={project.author.avatar}
-                      >
-                        {getInitials(project.author.name)}
-                      </Avatar>
-                      <Box ml={1}>
-                        {project.author.name}
-                      </Box>
-                    </Box>
-                  </TableCell>
-                  <TableCell>
-                    {project.currency}
-                    {project.price}
-                  </TableCell>
-                  <TableCell>
-                    {project.technologies.map((technology) => (
-                      <img
-                        alt="Tech"
-                        key={technology}
-                        className={classes.technology}
-                        src={technologyMap[technology]}
-                      />
-                    ))}
-                  </TableCell>
-                  <TableCell align="right">
-                    {moment(project.createdAt).format('DD MMM, YYYY')}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table> */}
       </Box>
     </Card>
   );

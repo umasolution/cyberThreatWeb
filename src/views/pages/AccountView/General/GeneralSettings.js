@@ -17,7 +17,8 @@ import {
   Switch,
   TextField,
   Typography,
-  makeStyles
+  makeStyles,
+  FormControl,select
 } from '@material-ui/core';
 import { updateProfile } from 'src/actions/accountActions';
 import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
@@ -37,7 +38,7 @@ function GeneralSettings({ user, className, ...rest }) {
   const [state,setState] = useState();
   const [country,setCountry] = useState();
 
-  useEffect(() => {
+  useEffect(() => {    
     if(user){
       setState(user.state);
       setCountry(user.country);
@@ -48,21 +49,24 @@ function GeneralSettings({ user, className, ...rest }) {
     <Formik
       enableReinitialize
       initialValues={{
-        address: user.address,
-        company: user.company,
+        address1: user.address1,
+        address2: user.address2,
+        company: user.company_name,
         country: country,
-        emailAdd: user.emailAdd,
-        fName: user.fName,
-        lName: user.lName,
+        email_id: user.email_id,
+        firstname: user.firstname,
+        lastname: user.lastname,
         phone: user.phone,
-        position: user.position,
+        team_name: user.team_name,
         state: state,
+        company_id: user.company_id,
+        team_id:user.team_id
       }}
       validationSchema={Yup.object().shape({
-        country: Yup.string().max(255).required('Country is required'),
-        emailAdd: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-        fName: Yup.string().max(255).required('First name is required'),
-        lName: Yup.string().max(255).required('Last name is required')
+        /*country: Yup.string().max(255).required('Country is required'),*/
+        email_id: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
+        firstname: Yup.string().max(255).required('First name is required'),
+        lastname: Yup.string().max(255).required('Last name is required')
       })}
       onSubmit={async (values, {
         resetForm,
@@ -112,16 +116,16 @@ function GeneralSettings({ user, className, ...rest }) {
                     xs={12}
                   >
                     <TextField
-                      error={Boolean(touched.fName && errors.fName)}
+                      error={Boolean(touched.firstname && errors.firstname)}
                       fullWidth
-                      helperText={touched.fName && errors.fName}
+                      helperText={touched.firstname && errors.firstname}
                       label="First Name"
-                      name="fName"
+                      name="firstname"
                       onBlur={handleBlur}
                       onChange={handleChange}
                       required
-                      type="fName"
-                      value={values.fName}
+                      type="firstname"
+                      value={values.firstname}
                       variant="outlined"
                     />
                   </Grid>
@@ -131,16 +135,16 @@ function GeneralSettings({ user, className, ...rest }) {
                     xs={12}
                   >
                     <TextField
-                      error={Boolean(touched.lName && errors.lName)}
+                      error={Boolean(touched.lastname && errors.lastname)}
                       fullWidth
-                      helperText={touched.lName && errors.lName}
+                      helperText={touched.lastname && errors.lastname}
                       label="Last Name"
-                      name="lName"
+                      name="lastname"
                       onBlur={handleBlur}
                       onChange={handleChange}
                       required
-                      type="lName"
-                      value={values.lName}
+                      type="lastname"
+                      value={values.lastname}
                       variant="outlined"
                     />
                   </Grid>
@@ -150,17 +154,17 @@ function GeneralSettings({ user, className, ...rest }) {
                     xs={12}
                   >
                     <TextField
-                      error={Boolean(touched.emailAdd && errors.emailAdd)}
+                      error={Boolean(touched.email_id && errors.email_id)}
                       fullWidth
-                      helperText={touched.emailAdd && errors.emailAdd ? errors.emailAdd : 'We will use this email to contact you'}
+                      helperText={touched.email_id && errors.email_id ? errors.email_id : 'We will use this email to contact you'}
                       label="Email Address"
-                      name="emailAdd"
+                      name="email_id"
                       onBlur={handleBlur}
                       onChange={handleChange}
                       required
                       disabled
-                      type="emailAdd"
-                      value={values.emailAdd}
+                      type="email_id"
+                      value={values.email_id}
                       variant="outlined"
                     />
                   </Grid>
@@ -185,19 +189,20 @@ function GeneralSettings({ user, className, ...rest }) {
                     item
                     md={6}
                     xs={12}
-                  >
-                    <CountryDropdown
-                      value={values.country}
-                      onChange={(country) => {setCountry(country)}} />
+                    className="countryDropdown"
+                  ><CountryDropdown
+                      value={country}
+                      onChange={(country) => {setCountry(country)}} />                   
                   </Grid>
                   <Grid
                     item
                     md={6}
                     xs={12}
+                    className="RegionDropdown"
                   >
                     <RegionDropdown
                       country={values.country}
-                      value={values.state}
+                      value={state}
                       onChange={(state) => setState(state)} />
 
                   </Grid>
@@ -207,16 +212,35 @@ function GeneralSettings({ user, className, ...rest }) {
                     xs={12}
                   >
                     <TextField
-                      error={Boolean(touched.address && errors.address)}
+                      error={Boolean(touched.address1 && errors.address1)}
                       fullWidth
-                      helperText={touched.address && errors.address}
-                      label="Address"
-                      name="address"
+                      helperText={touched.address1 && errors.address1}
+                      label="Address 1"
+                      name="address1"
                       onBlur={handleBlur}
                       onChange={handleChange}
                       required
-                      type="address"
-                      value={values.address}
+                      type="address1"
+                      value={values.address1}
+                      variant="outlined"
+                    />
+                  </Grid>
+                  <Grid
+                    item
+                    md={6}
+                    xs={12}
+                  >
+                    <TextField
+                      error={Boolean(touched.address2 && errors.address2)}
+                      fullWidth
+                      helperText={touched.address2 && errors.address2}
+                      label="Address 2"
+                      name="address2"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      required
+                      type="address2"
+                      value={values.address2}
                       variant="outlined"
                     />
                   </Grid>
@@ -234,6 +258,7 @@ function GeneralSettings({ user, className, ...rest }) {
                       onBlur={handleBlur}
                       onChange={handleChange}
                       required
+                      disabled
                       type="company"
                       value={values.company}
                       variant="outlined"
@@ -245,16 +270,17 @@ function GeneralSettings({ user, className, ...rest }) {
                     xs={12}
                   >
                     <TextField
-                      error={Boolean(touched.position && errors.position)}
+                      error={Boolean(touched.team_name && errors.team_name)}
                       fullWidth
-                      helperText={touched.position && errors.position}
-                      label="Designation"
-                      name="position"
+                      helperText={touched.team_name && errors.team_name}
+                      label="Team Name"
+                      name="team_name"
                       onBlur={handleBlur}
                       onChange={handleChange}
                       required
-                      type="position"
-                      value={values.position}
+                      disabled
+                      type="team_name"
+                      value={values.team_name}
                       variant="outlined"
                     />
                   </Grid>

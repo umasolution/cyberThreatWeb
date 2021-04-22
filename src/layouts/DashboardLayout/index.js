@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core';
 import NavBar from './NavBar';
 import TopBar from './TopBar';
+import "./index.css";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,10 +41,12 @@ function DashboardLayout({ children }) {
   return (
     <div className={classes.root}>
       <TopBar onMobileNavOpen={() => setMobileNavOpen(true)} />
-      <NavBar
-        onMobileClose={() => setMobileNavOpen(false)}
-        openMobile={isMobileNavOpen}
-      />
+      <div className="user-nav">
+        <NavBar
+          onMobileClose={() => setMobileNavOpen(false)}
+          openMobile={isMobileNavOpen}
+        />
+      </div>
       <div className={classes.wrapper} style={{ backgroundColor: '#f1f1f1' }}>
         <div className={classes.contentContainer}>
           <div className={classes.content}>

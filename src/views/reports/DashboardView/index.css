@@ -1,0 +1,64 @@
+
+.rounded-dashboard{
+  padding: 30px;
+  font-weight: 600;
+  float: right;
+}
+.rounded-color-0{
+  color: #fff;
+  background-color: #00d1ce;
+}
+.rounded-color-1{
+  color: #fff;
+  background-color: #fe0a7b;
+}
+.rounded-color-2{
+  color: #fff;
+  background-color: #ff9f00;
+}
+.rounded-color-3{
+  color: #fff;
+  background-color: #027de7;
+}
+
+.chart-data div#chart-simple-select {
+    color: #000 !important;
+}
+
+.user-nav a[class*='makeStyles-active'] {background: #155288; }
+.user-nav a[class*='makeStyles-active']::after {opacity: 1 !important;}
+
+.dashboardtitle select.type-dropdown{border: 1px solid #c5c5c5;height: 40px; padding: 6px 20px;border-radius: 50px;appearance: none;-webkit-appearance: none;width: 250px;}
+
+.user-nav .MuiDrawer-paperAnchorDockedLeft{border: 0;}
+.MuiDrawer-paperAnchorLeft .MuiList-subheader .MuiList-root .MuiListItem-root a.MuiButton-root:after{opacity: 0}
+.MuiDrawer-paperAnchorLeft .MuiList-subheader .MuiList-root .MuiListItem-root a.MuiButton-root:hover:after{opacity: 1;}
+.products_summary .MuiTextField-root.secondary,.projects_summary .MuiTextField-root.secondary{width: calc(100% - 40px);padding: 15px 0 15px 15px;margin-left: 0 !important;border-radius: 50px;}
+.products_summary .MuiFormControl-root.secondary .MuiInput-formControl,.projects_summary .MuiFormControl-root.secondary .MuiInput-formControl{border: 1px solid #c5c5c5;border-radius: 50px;height: 42px;width: 100%;}
+.products_summary .MuiFormControl-root.secondary .MuiInput-formControl input,.projects_summary .MuiFormControl-root.secondary .MuiInput-formControl input{padding: 0px 15px;height: 40px;width: 100%;}
+.products_summary .MuiFormControl-root.secondary .MuiInput-formControl:before,.projects_summary .MuiFormControl-root.secondary .MuiInput-formControl:before,.products_summary .MuiFormControl-root.secondary .MuiInput-formControl:after,.projects_summary .MuiFormControl-root.secondary .MuiInput-formControl:after{display: none;}
+.products_summary .MuiPaper-root .MuiIconButton-root,.projects_summary .MuiPaper-root .MuiIconButton-root{padding: 24px 5px;}
+
+
+.products_summary .MuiTableCell-body,.projects_summary .MuiTableCell-body{font-size: 20px;color: #027de7;padding: 12px 10px;}
+.products_summary .MuiTableCell-body p,.projects_summary .MuiTableCell-body p{font-weight: 700;}
+.products_summary .MuiTableRow-root .MuiTableCell-body:last-child,.projects_summary .MuiTableRow-root .MuiTableCell-body:last-child{color: #444444;}
+.products_summary .MuiTable-root .ReactVirtualized__List,.projects_summary .MuiTable-root .ReactVirtualized__List{height: 372px !important;}
+
+
+.open_vulnerabilities > .MuiPaper-rounded.MuiCard-root{border-radius: 10px;}
+
+.open_vulnerabilities .MuiBox-root > [class*='MuiPaper-root'] > [class*='MuiToolbar-root']{background: #f6f8fa;border-bottom: 1px solid #e1e4e8;padding: 10px 15px;}
+.open_vulnerabilities .MuiBox-root h6{font-size: 15px;}
+.open_vulnerabilities [class*='MuiFormControl-root']{border: 1px solid #c5c5c5;padding: 5px 10px;border-radius: 50px;}
+.open_vulnerabilities [class*='MuiFormControl-root'] [class*='MuiInputBase-root']:before,.open_vulnerabilities [class*='MuiFormControl-root'] [class*='MuiInputBase-root']::after{display: none;}
+.open_vulnerabilities table tr:hover{background: #F6F8FA;}
+.open_vulnerabilities table tr th{font-size: 15px !important;font-weight: 600 !important;padding: 10px 20px !important;}
+.open_vulnerabilities table tr td{font-size: 15px !important;font-weight: 400 !important;padding: 10px 20px !important;}
+.open_vulnerabilities table tr th{border-bottom: 1px solid #e1e4e8 !important;background: none;}
+
+.ReactVirtualized__List > div{max-width: 100% !important;width: 100% !important;height: auto !important;display: table;}
+
+.dashboardtitle .MuiOutlinedInput-input{
+  padding: 10px 30px 10px 14px;
+}

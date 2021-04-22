@@ -1,11 +1,12 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable react/prop-types */
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { useLocation, matchPath } from 'react-router';
 import { Link as RouterLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import PropTypes from 'prop-types';
+import Axios from 'axios';
 import {
   Avatar,
   Box,
@@ -18,7 +19,8 @@ import {
   ListSubheader,
   Typography,
   makeStyles,
-  IconButton
+  IconButton,
+  SvgIcon
 } from '@material-ui/core';
 import ReceiptIcon from '@material-ui/icons/ReceiptOutlined';
 import {
@@ -40,16 +42,25 @@ import {
   MessageCircle as MessageCircleIcon,
   PieChart as PieChartIcon,
   Share2 as ShareIcon,
-  Users as UsersIcon
+  Users as UsersIcon,
+  Home as HomeIcon,
+  Bell as BellIcon,
 } from 'react-feather';
+
 import Logo from 'src/components/Logo';
+import "./index.css";
 import NavItem from './NavItem';
 import authService from './../../../services/authService';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-
+import { THEMES } from 'src/constants';
+import Badge from '@material-ui/core/Badge';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import SendIcon from '@material-ui/icons/Send';
 const userName = authService.getUserName();
+
+
 
 const navConfig = [
   {
@@ -57,7 +68,7 @@ const navConfig = [
     items: [
       {
         title: 'Dashboard',
-        icon: PieChartIcon,
+        icon: HomeIcon,
         href: '/app/reports/dashboard'
       } 
     ]
@@ -69,7 +80,7 @@ const navConfig = [
       {
         title: 'Vulnerabilities DB',
         icon: UsersIcon,
-        href: '/app/feedDB/application',
+        href: '/app/vulDB',
       },
     ]
   },
@@ -77,24 +88,14 @@ const navConfig = [
     subheader: '',
     items: [
       {
-        title: 'My Projects',
+        title: 'My Scans',
         icon: UsersIcon,
         href: '/app/management/ProjectsReports/language',
       },
       {
         title: 'Alerts',
         icon: NotificationsIcon,
-        href: '/app/management/Alerts',
-      },
-      {
-        title: 'Manage Token',
-        icon: UsersIcon,
-        href: '/app/management/APIToken',
-      },
-      {
-        title: 'Account',
-        href: '/app/account',
-        icon: UserIcon
+        href: '/app/management/Alerts',        
       }
     ]
   },
@@ -269,7 +270,7 @@ const navConfig = [
   } */
 ];
 
-if(userName === 'jay.net.in@gmail.com'){
+/*if(userName === 'jay.net.in@gmail.com'){
   navConfig.push({
     subheader: 'Admin',
     items: [
@@ -295,15 +296,15 @@ if(userName === 'jay.net.in@gmail.com'){
       },
     ]
   });
-}
+}*/
 
-function renderNavItems({ items, ...rest }) {
+function renderNavItems({ items,alertsResponse, ...rest }) {
   return (
     <List disablePadding>
       {items.reduce(
-        (acc, item) => reduceChildRoutes({ acc, item, ...rest }),
+        (acc, item) => reduceChildRoutes({ acc, item, alertsResponse,...rest }),
         []
-      )}
+      )}    
     </List>
   );
 }
@@ -312,9 +313,31 @@ function reduceChildRoutes({
   acc,
   pathname,
   item,
-  depth = 0
+  depth = 0,
+  alertsResponse
 }) {
   const key = item.title + depth;
+
+   
+
+  if(item.title == 'Alerts'){
+      if(alertsResponse && alertsResponse.length > 0) {
+        item.info = () => (
+            <Avatar className="menu-right-info">{alertsResponse ? (alertsResponse.length > 10 ? '10+': alertsResponse.length) : 0}</Avatar>
+            
+          )
+
+          {/*item.info = () => (
+            <Chip
+              color="primary"
+              className="menu-right-info"
+              size="small"
+              label={alertsResponse ? alertsResponse.length : 0}
+            />
+          )*/}
+      }  
+        
+  }
 
   if (item.items) {
     const open = matchPath(pathname, {
@@ -336,6 +359,7 @@ function reduceChildRoutes({
           pathname,
           items: item.items
         })}
+       
       </NavItem>
     );
   } else {
@@ -354,14 +378,25 @@ function reduceChildRoutes({
   return acc;
 }
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   mobileDrawer: {
-    width: 256
+    width: 256,
+    ...(theme.name === THEMES.NEWLIGHT
+    ? {
+        backgroundColor: theme.palette.background.main,
+      }
+    : {}),
   },
   desktopDrawer: {
     width: 256,
     top: 64,
-    height: 'calc(100% - 64px)'
+    borderRight: 0,
+    height: 'calc(100% - 64px)',
+    ...(theme.name === THEMES.NEWLIGHT
+      ? {
+          backgroundColor: theme.palette.background.main,
+        }
+      : {}),
   },
   avatar: {
     cursor: 'pointer',
@@ -375,12 +410,26 @@ function NavBar({ openMobile, onMobileClose, }) {
   const location = useLocation();
   const { user } = useSelector((state) => state.account);
 
+  const [alertsResponse, setAlertsResponse] = useState(null);
+
   useEffect(() => {
+    getAlerts();
     if (openMobile && onMobileClose) {
       onMobileClose();
     }
-    // eslint-disable-next-line
+    
   }, [location.pathname]);
+
+  const getAlerts = async () => {
+    try {
+      const url = `/corner/getalert`;
+      const response = await Axios.get(url);
+      setAlertsResponse(response.data);      
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
 
   const content = (
     <Box
@@ -396,7 +445,7 @@ function NavBar({ openMobile, onMobileClose, }) {
             justifyContent="center"
           >
             <RouterLink to="/">
-              <Logo />
+              <Logo className="dashboard-logo"/>
             </RouterLink>
           </Box>
         </Hidden>
@@ -449,7 +498,7 @@ function NavBar({ openMobile, onMobileClose, }) {
                 </ListSubheader>
               )}
             >
-              {renderNavItems({ items: config.items, pathname: location.pathname })}
+              {renderNavItems({ items: config.items, pathname: location.pathname,alertsResponse })}
             </List>
           ))}
         </Box>

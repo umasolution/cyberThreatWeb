@@ -1,8 +1,14 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
+
+img{
+  max-width:100%;
+}
 .details-header {
   display: inline;
   color: #263238;
   font-size: 16px;
-  font-family: "Roboto","Helvetica","Arial",sans-serif !important;
+  font-family: "Montserrat",sans-serif !important;
   font-weight: 400;
   line-height: 1.6;
   letter-spacing: -0.05px;
@@ -13,7 +19,7 @@
 
 .secondary {
   font-size: 13px !important;
-  font-family: "Roboto","Helvetica","Arial",sans-serif !important;
+  font-family: "Montserrat",sans-serif !important;
   /* line-height: 1.42857143' */
 }
 
@@ -48,7 +54,7 @@
 .red-font {
   color: red !important;
   font-size: 18px !important;
-  font-family: "Roboto","Helvetica","Arial",sans-serif !important;
+  font-family: "Montserrat",sans-serif !important;
 }
 
 .divider {
@@ -65,10 +71,6 @@
   width: fit-content;
 }
 
-.MuiContainer-maxWidthLg{
-  max-width: none !important;
-}
-
 .background-shadow {
   background: linear-gradient(60deg, #ec407a, #d81b60);
   box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14),
@@ -82,4 +84,173 @@
   margin-top: -20px;
   margin-left: -13px;
   height: fit-content;
+}
+
+.bannerBox .bannerContainer{
+  padding:0;
+}
+.bannerBox .bannerContent{
+  max-width:475px;
+  width:100%;
+  float: right;
+}
+.bannerBox label + .MuiInput-formControl{
+  margin-top:0;
+}
+.bannerBox .MuiInputBase-input{
+  color: #333 !important;
+}
+.bannerBox .MuiInput-underline:before,
+.bannerBox .MuiInput-underline:after{
+  border: none !important;
+}
+button{
+  cursor: pointer;
+}
+button:focus{
+  outline:0;
+}
+.gridBox-Container .gridBox {
+  padding:0 8px !important;
+}
+.gridBox-Container .gridBox h4{
+    padding-top:16px;
+    position: relative;
+    margin-bottom:15px;
+}
+.gridBox-Container .gridBox h4:before{
+    content: '';
+    width:50px;
+    height:2px;
+    position: absolute;
+    top:0;
+    left:0px;
+}
+.gridBox-Container .gridBox:first-child h4:before{
+    background:#00d1ce;
+}
+.gridBox-Container .gridBox:nth-child(2) h4:before{
+    background:#fe0a7b;
+}
+.gridBox-Container .gridBox:nth-child(3) h4:before{
+    background:#ff9f00;
+}
+.gridBox-Container .gridBox:nth-child(4) h4:before{
+    background:#027de7;
+}
+
+.price-top{
+  display: flex;
+}
+.price-top img{
+  box-shadow: 4px 0px 81px rgba(43, 40, 30, 0.11);
+}
+.price-top .right-content{
+  width:calc(100% - 75px);
+  padding-left:25px;
+  font-size:14px;
+  color: #484848;
+}
+.price-top .right-content h3{
+  font-size:16px;
+  color: #333;
+  font-weight: 700;
+  letter-spacing:0.8px;
+}
+.price-top .right-content .price-tag{
+  font-size:26px;
+  font-weight: 600;
+  letter-spacing:0.8px;
+  color: #333; 
+}
+.services-list{
+  padding:0;
+}
+.services-list li {
+  padding: 0;
+  margin-bottom: 20px;
+  color: #444;
+}
+.services-list li img{
+  margin-right:15px;
+}
+.services-list li > div{
+  margin:0;
+}
+.services-list li > div span{
+  font-size: 15px;
+  font-weight: 500;
+}
+.countryDropdown select,.RegionDropdown select{border: 1px solid rgba(0, 0, 0, 0.26);padding: 18.5px 14px;font-size: 13px;font-family: "Montserrat",sans-serif !important;font-weight: 400;line-height: 1.1876em;border-radius: 4px;width: 100%;height: 55px;}
+.countryDropdown select:hover,.RegionDropdown select:hover{border-color: #263238;}
+.countryDropdown select:focus,.RegionDropdown select:focus{border-color: #3949ab;box-shadow: 0 0 4px 0 #3949ab  }
+
+.head-inner-title h3 {
+    font-size: 22px;
+    color: #666666;
+    font-weight: 600;
+}
+
+
+.cve-searchbtn .MuiInput-underline:before, .cve-searchbtn .MuiInput-underline:after {
+    border: none !important;
+}
+.menu-right-info {
+    background-color: #FF0476 !important;
+    margin-right: 20px;
+    height: 30px !important;
+    width: 30px !important;
+    font-size: 15px !important;
+    border: 2px solid #fff;
+}
+.logo-beta .MuiBadge-badge {
+  color: #fff;
+    background-color: #FF0476;
+    border-radius: 0px;
+    top: 2px;
+    right: -8px;
+}
+
+
+.account-image-block{position: relative;}
+.account-image-block .camera-icon{position: absolute;top: 50%;transform: translate(-50%,-50%);-webkit-transform: translate(-50%,-50%);-ms-transform: translate(-50%,-50%); left: 50%;z-index: 1;opacity: 0;transition: all ease 0.5s;-webkit-transition: all ease 0.5s;-ms-transition: all ease 0.5s;}
+
+.camera-icon svg{fill: #fff;font-size: 45px;} 
+
+.account-image-block:hover .camera-icon{opacity: 1;}
+.upload-image{position: relative;cursor: pointer;}
+.upload-image:after{position: absolute;content: "";background:rgba(0,0,0,0.5);top: 0;bottom: 0;left: 0;right: 0;border-radius: 100%;opacity: 0;  }
+.account-image-block:hover .upload-image:after{opacity: 1;} 
+
+.login-logo-bedge + span.MuiBadge-badge,.dashboard-logo + span.MuiBadge-badge{right: -25px;top: -5px;}
+
+
+.MuiGrid-spacing-xs-3 > .MuiGrid-item {
+    padding: 10px !important;
+}
+
+.class-vulDB .dashboardsearch {
+  display: none;
+}
+
+@media only screen and (max-width: 767px) {
+
+.modebar-container {display: none;}
+
+}  
+
+
+
+@media(min-width:767px) and (max-width:959px){
+  .bannerBox .bannerContent{
+    max-width:100%;
+  }
+  .bannerBox .MuiGrid-grid-xs-12{
+    max-width: 50%;
+    flex-basis: 50%;
+  }
+  .gridBox-Container .gridBox{
+    margin-bottom:25px;
+    max-width:50%
+  }
 }

@@ -1,15 +1,24 @@
 import React, { useEffect } from 'react';
 import { Plotly } from "../../../../Util/Constants";
+import {
+  Box,
+  Card,
+  CardHeader,
+  CardContent,
+  Divider,
+  makeStyles
+} from '@material-ui/core';
 
-const CWEPieChart = ({ cwe, divId, bgColor = "#f1f1f1", width = 360, height= 280, title="CWE" }) => {
+const CWEPieChart = ({ cwe, divId, bgColor = "#fff", width = 200, height= 200, title="CWE" }) => {
   useEffect(() => {
     if (cwe) {
       const labels = [];
       const values = [];
-      cwe.forEach(sev => {
-        labels.push(Object.keys(sev)[0]);
-        values.push(sev[Object.keys(sev)[0]]);
-      })
+      for (var key in cwe) {
+        labels.push(key);
+        values.push(cwe[key]);
+      } 
+
       const data = [
         {
           labels,
@@ -20,21 +29,33 @@ const CWEPieChart = ({ cwe, divId, bgColor = "#f1f1f1", width = 360, height= 280
         }
       ];
       var layout = {
-        title: title,
+        title: '',
         width:  width,
         height: height,
-        margin: { "t": 30, "b": 10, "l": 0, "r": 0 },
+        margin: { "t": 20, "b": 20, "l": 10, "r": 10 },
         showlegend: false,
         plot_bgcolor: bgColor,
         paper_bgcolor: bgColor,
       };
-      var config = { responsive: true }
+      var config = { responsive: true,displayModeBar: false }
       Plotly.newPlot(`CWEPieChartDiv-${divId}`, data, layout, config);
     }
   }, [])
 
   return (
-    <div id={`CWEPieChartDiv-${divId}`} />
+    <Card>
+    <CardHeader
+        title={title}        
+      />
+      <Divider />
+      <CardContent className="chart-data">
+        <Box> 
+        <div id={`CWEPieChartDiv-${divId}`} />
+        </Box>
+
+      </CardContent>
+    </Card>
+    
   );
 };
 

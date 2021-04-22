@@ -8,12 +8,21 @@ import {
     ListItemIcon,
     ListItemText,
     ExpansionPanelDetails,
-    Paper
+    Paper,
 } from '@material-ui/core';
 import MaterialTable from 'material-table';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Link } from 'react-router-dom';
 import './ResultByCVE.css';
+import moment from 'moment';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Skeleton from '@material-ui/lab/Skeleton';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -75,7 +84,7 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
     const classes = useStyles();
 
 
-    const getCVEExpansionPanel = () => {
+    const getCVEExpansionPanel = (Items) => {
         if (cveTables && cveTables.length > 0) {
             return cveTables.map((table) => {
                 return (
@@ -130,7 +139,8 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
 
     const getCVEHeaderGrid12 = () => {
         return (
-            <Grid item xs={12}>
+            <Grid item xs={12}
+            >
                 <Grid container spacing={1}>
                     <Grid item xs={4}>
                         <Paper color="primary.main"  className={[classes.paper, 'paper-border'].join(' ')}>
@@ -185,12 +195,243 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
             </Grid>
         );
     }
+   
 
-    const getReference = (cveNVDDetails, key) => {
+    const getReference = (References) => {
         return (
-            <Typography className={classes.secondaryText}>
-                {cveNVDDetails.Dashboard[key].split(',').map(url => <a target="_blank" style={{ display: 'inline-block' }} href={url}>{url}</a>)}
+        <Grid item xs={12}
+        className="accordian-sec mb-3"  
+        >
+            <Typography
+              variant="h5"
+              color="textSecondary"
+            >
+              Reference 
             </Typography>
+            <ExpansionPanel
+                    key='References'
+                    style={{ width: '100%' }}
+                    className="accordian-block"
+                  > 
+                  <ExpansionPanelSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="references-content"
+                      id="references-header"
+                    >
+                    <Typography variant="h3" component="h2">
+                        Reference 
+                    </Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                       <Typography
+                            variant="caption"
+                            color="textSecondary"
+                          >
+                            {References.split(',').map(url => <a target="_blank" style={{ display: 'inline-block' }} href={url}>{url}</a>)}
+                          </Typography>
+                    </ExpansionPanelDetails>
+               </ExpansionPanel>
+            
+        </Grid>                
+        )
+    }
+
+    const getCVVScoreDetail = (cveNVDDetails) => {
+        return (
+        <Grid item xs={12}
+        className="accordian-sec mb-3" 
+        >
+            <Typography
+              variant="h5"
+              color="textSecondary"
+            >
+              CVSS Score Details 
+            </Typography>
+            <ExpansionPanel
+                    key='References'
+                    style={{ width: '100%' }}
+                    className="accordian-block"
+                  > 
+                  <ExpansionPanelSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="references-content"
+                      id="references-header"
+                    >
+                    <Typography variant="h3" component="h2">
+                        CVSS 2.0 
+                    </Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                       <TableContainer component={Paper}>
+                          <Table className={classes.table} aria-label="simple table">
+                            <TableBody>
+                                 {Object.entries(cveNVDDetails.CVSS20).map(([key, value]) => (
+                                   <TableRow key={key}>
+                                      <TableCell component="th" scope="row">
+                                        {key}
+                                      </TableCell>
+                                      <TableCell align="right">{value}</TableCell>
+                                    </TableRow>
+                                ))}                                
+                            </TableBody>
+                          </Table>
+                        </TableContainer>
+                    </ExpansionPanelDetails>
+               </ExpansionPanel>
+              <ExpansionPanel
+                    key='References'
+                    style={{ width: '100%' }}
+                    className="accordian-block"
+                  > 
+                  <ExpansionPanelSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="references-content"
+                      id="references-header"
+                    >
+                    <Typography variant="h3" component="h2">
+                        CVSS 3.0 
+                    </Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                       <TableContainer component={Paper}>
+                          <Table className={classes.table} aria-label="simple table">
+                            <TableBody>
+                                 {Object.entries(cveNVDDetails.CVSS30).map(([key, value]) => (
+                                   <TableRow key={key}>
+                                      <TableCell component="th" scope="row">
+                                        {key}
+                                      </TableCell>
+                                      <TableCell align="right">{value}</TableCell>
+                                    </TableRow>
+                                ))}                                
+                            </TableBody>
+                          </Table>
+                        </TableContainer>
+                    </ExpansionPanelDetails>
+               </ExpansionPanel> 
+            
+        </Grid>                
+        )
+    }
+
+    
+
+    const getExploits = (cveNVDDetails) => {
+        return (
+            <Grid item xs={12}>
+                <Typography
+                  variant="h5"
+                  color="textSecondary"
+                >
+                  Exploits 
+                </Typography>
+                <List style={{ width: '100%' }} dense={false}>
+                   {Object.keys(cveNVDDetails.Exploits).map((cKey, index) => 
+                       <ExpansionPanel
+                            key={cKey}
+                            style={{ width: '100%' }}
+                          > 
+                          <ExpansionPanelSummary
+                              expandIcon={<ExpandMoreIcon />}
+                              aria-controls="panel1a-content"
+                              id="panel1a-header"
+                            >
+                            <Typography variant="h3" component="h2">
+                                {cveNVDDetails.Exploits[cKey].Advisory}
+                            </Typography>
+                            </ExpansionPanelSummary>
+                            <ExpansionPanelDetails>
+                               <Typography
+                                    variant="caption"
+                                    color="textSecondary"
+                                  >
+                                    {Object.keys(cveNVDDetails.Exploits[cKey].Reference).map((rKey) =>
+                                        <a target="_blank" style={{ display: 'inline-block' }} href={cveNVDDetails.Exploits[cKey].Reference[rKey]}>{cveNVDDetails.Exploits[cKey].Reference[rKey]}</a>
+                                    )}
+                                  </Typography>
+                            </ExpansionPanelDetails>
+                       </ExpansionPanel>
+                   )}  
+                </List>
+            </Grid>
+        )
+    }
+
+    const getProducts = (productsdata) => {
+        return (
+            <Grid item xs={12}
+            className="cve-product-table"
+            >
+                <MaterialTable
+                    title="Products"
+                    columns={productsdata.columns}
+                    data={productsdata.data}
+                    style={{ width: '100%' }}
+                    className="secondary table-inner"
+                    options={{
+                      toolbarStyle: {
+                        fontSize: 19,
+                        fontFamily: '"Montserrat",sans-serif !important',
+                        fontWeight: 600
+                      },
+                      cellStyle: {
+                        fontSize: 19,
+                        fontFamily: '"Montserrat",sans-serif !important',
+                        fontWeight: 600
+                      },
+                      headerStyle: {
+                        fontSize: 19,
+                        fontFamily: '"Montserrat",sans-serif !important',
+                        color: '#546e7a',
+                        fontWeight: 600,
+                        borderBottom: '1px solid rgba(224, 224, 224, 1)'
+                      },
+                      rowStyle: x => {
+                        if (x.tableData.id % 2 === 0) {
+                            return {backgroundColor: "#f9f9fc"}
+                        }
+                    }
+                    }}
+                  />
+            </Grid>
+        )
+    }
+
+    const getMicrosoftAdvisory = (MicrosoftAdvisorydata) => {
+        return (
+            <Grid item xs={12}>
+                <MaterialTable
+                    title="Products"
+                    columns={MicrosoftAdvisorydata.columns}
+                    data={MicrosoftAdvisorydata.data}
+                    style={{ width: '100%' }}
+                    className="secondary"
+                    options={{
+                      toolbarStyle: {
+                        fontSize: 19,
+                        fontFamily: '"Montserrat",sans-serif !important',
+                        fontWeight: 600
+                      },
+                      cellStyle: {
+                        fontSize: 19,
+                        fontFamily: '"Montserrat",sans-serif !important',
+                        fontWeight: 600
+                      },
+                      headerStyle: {
+                        fontSize: 19,
+                        fontFamily: '"Montserrat",sans-serif !important',
+                        color: '#546e7a',
+                        fontWeight: 600,
+                        borderBottom: '1px solid rgba(224, 224, 224, 1)'
+                      },
+                      rowStyle: x => {
+                        if (x.tableData.id % 2 === 0) {
+                            return {backgroundColor: "#f9f9fc"}
+                        }
+                    }
+                    }}
+                  />
+            </Grid>
         )
     }
 
@@ -198,127 +439,427 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
     const getCVENVDDetails = () => {
         return (
             <div>
-                <Grid container spacing={1}>
-                    {getCVEHeaderGrid12()}
-                    <Grid item xs={12}>
-                        <Grid container spacing={1}>
-                            <Grid item xs={6}>
-                                {Object.keys(cveNVDDetails.Dashboard).map(key => {
-                                    return (
-                                        <>
-                                            <Paper style={{ overflow: 'inherit', marginTop: '16px' }} key={key} elevation={3} className={[classes.paper, 'paper-border'].join(' ')}>
-                                                <div className="background-shadow background-margin">
-                                                    {key}
-                                                </div>
-
-                                                {
-                                                    key === 'Reference' ? getReference(cveNVDDetails, key) : (
-                                                        <Typography className={classes.secondaryText}>
-                                                            {cveNVDDetails.Dashboard[key]}
-                                                        </Typography>
-                                                    )
-                                                }
-
-
-                                            </Paper>
-                                            <Divider />
-                                        </>
-                                    )
-                                })}
-
+                <Grid container spacing={1}
+                className="cve-detail-main"
+                >
+                    <Grid item xs={12}
+                    className="datepub-block mb-5"
+                    >
+                        <Grid container spacing={1} 
+                        className="box-shadow"  
+                        >
+                            <Grid item xs={4}
+                            className="pubdate-title"   
+                            >
+                                <Typography variant="h1" component="h2">
+                                    {cve}
+                                </Typography>
+                                {cveNVDDetails.pub_date ? (
+                                <>  
+                                <Typography
+                                    variant="caption"
+                                    color="textSecondary"
+                                    className="pub_date"
+                                  >
+                                    Date Published : {moment(cveNVDDetails.pub_date).fromNow()}
+                                  </Typography>
+                                </>
+                            )
+                                : ''}
+                                
                             </Grid>
-                            <Grid item xs={6}>
-                                {cveNVDDetails.Metadata['Base Score'] ? (
-                                    <>
-                                        <Paper style={{ overflow: 'inherit', marginTop: '16px', marginLeft: '2px', }} elevation={3} className={[classes.paper, 'paper-border'].join(' ')}>
-                                            <div className="flex">
-                                                <div className="background-shadow background-margin">
-                                                    Base Score
-                                                </div>
-                                                <Typography
-                                                    variant="h1"
-                                                    color="secondary"
-                                                    className="base-score-value"
-                                                >
-                                                    {cveNVDDetails.Metadata['Base Score']}
-                                                </Typography>
-                                            </div>
-                                        </Paper>
-                                        <Divider />
-                                    </>
-                                )
-                                    : ''}
-                                <Grid container spacing={0}>
-                                    <Grid item xs={6}>
-                                        {Object.keys(cveNVDDetails.Metadata).map((key, index) => {
-                                            return index > 4 && key !== 'Base Score' ? (
-                                                <>
-                                                    <Paper style={{ overflow: 'inherit', marginTop: '16px', marginLeft: '2px', }} key={key} elevation={3} className={[classes.paper, 'paper-border'].join(' ')}>
-                                                        <div className="flex">
-                                                            <div className="background-shadow background-margin">
-                                                                {key}
-                                                            </div>
-                                                            <Typography
-                                                                className={classes.secondaryText}
+                            <Grid item xs={5}
+                            className="pubdate-button"
+                            >
+                                {cveNVDDetails.CVSS30.attackVector ? (
+                                <>  
+                                <Typography
+                                    variant="h5"
+                                    color="textSecondary"
+                                    className="acce-vact"
+                                  >
+                                    AccessVector
+                                  </Typography>
+                                <Typography
+                                    variant="h5"
+                                    color="textSecondary"
+                                    className={classes.attackVector}
+                                  >
+                                    {cveNVDDetails.CVSS30.attackVector}
+                                  </Typography>
+                                </>
+                            )
+                                : ''}
+                            </Grid>
 
-                                                            >
-                                                                {cveNVDDetails.Metadata[key]}
-                                                            </Typography>
-                                                        </div>
-
-                                                    </Paper>
-                                                    <Divider />
-                                                </>
-                                            ) : ''
-                                        })}
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                        {Object.keys(cveNVDDetails.Metadata).map((key, index) => {
-                                            return index < 4 && key !== 'Base Score' ? (
-                                                <>
-                                                    <Paper style={{ overflow: 'inherit', marginTop: '16px', marginLeft: '10px', }} key={key} elevation={3} className={[classes.paper, 'paper-border'].join(' ')}>
-                                                        <div className="flex">
-                                                            <div className="background-shadow background-margin">
-                                                                {key}
-                                                            </div>
-                                                            <Typography
-                                                                className={classes.secondaryText}
-                                                            >
-                                                                {cveNVDDetails.Metadata[key]}
-                                                            </Typography>
-                                                        </div>
-
-                                                    </Paper>
-                                                    <Divider />
-                                                </>
-                                            ) : ''
-                                        })}
-                                    </Grid>
-                                </Grid>
-
+                            <Grid item xs={3}>
+                                
                             </Grid>
                         </Grid>
-
                     </Grid>
-
+                    <Grid item xs={12}
+                    className="mb-5"
+                    >
+                        <Grid container spacing={4}>
+                            {cveNVDDetails.CVSS30['baseScore'] ? (
+                                <>  
+                                    <Grid item xs={4}
+                                     className="baseScore-block" 
+                                    >
+                                    <Paper style={{ overflow: 'inherit', marginTop: '16px', marginLeft: '2px', }} elevation={3} className={[classes.paper, 'baseScore-block-inner'].join(' ')}>
+                                        <div className="baseScore-box">
+                                            <div className="baseScore-block-title">
+                                                CVSS 3.0 Score
+                                            </div>
+                                            <Typography
+                                                variant="h1"
+                                                color="secondary"
+                                                className="base-score-value"
+                                            >
+                                                {cveNVDDetails.CVSS30['baseScore']}
+                                            </Typography>
+                                        </div>
+                                    </Paper>
+                                    </Grid>
+                                </>
+                            )
+                                : ''}
+                            {cveNVDDetails.CVSS20['baseScore'] ? (
+                                <>  
+                                    <Grid item xs={4}
+                                    className="baseScore-block"
+                                    >
+                                    <Paper style={{ overflow: 'inherit', marginTop: '16px', marginLeft: '2px', }} elevation={3} className={[classes.paper, 'baseScore-block-inner'].join(' ')}>
+                                        <div className="baseScore-box">
+                                            <div className="baseScore-block-title">
+                                                CVSS 2.0 Score
+                                            </div>
+                                            <Typography
+                                                variant="h1"
+                                                color="secondary"
+                                                className="base-score-value"
+                                            >
+                                                {cveNVDDetails.CVSS20['baseScore']}
+                                            </Typography>
+                                        </div>
+                                    </Paper>
+                                    </Grid>
+                                </>
+                            )
+                                : ''}
+                            {cveNVDDetails.CWE ? (
+                                <>  
+                                    <Grid item xs={4}
+                                    className="baseScore-block"
+                                    >
+                                    <Paper style={{ overflow: 'inherit', marginTop: '16px', marginLeft: '2px', }} elevation={3} className={[classes.paper, 'baseScore-block-inner'].join(' ')}>
+                                        <div className="baseScore-box">
+                                            <div className="baseScore-block-title">
+                                                CWE
+                                            </div>
+                                            <Typography
+                                                variant="h1"
+                                                color="secondary"
+                                                className="base-score-value"
+                                            >
+                                                {cveNVDDetails.CWE}
+                                            </Typography>
+                                        </div>
+                                    </Paper>
+                                    </Grid>
+                                </>
+                            )
+                                : ''}
+                                
+                            {cveNVDDetails.vulnerabilitytype ? (
+                                <>  
+                                    <Grid item xs={4}
+                                    className="baseScore-block"
+                                    >
+                                    <Paper style={{ overflow: 'inherit', marginTop: '16px', marginLeft: '2px', }} elevation={3} className={[classes.paper, 'baseScore-block-inner'].join(' ')}>
+                                        <div className="baseScore-box">
+                                            <div className="baseScore-block-title">
+                                                Vulnerability Type(s)
+                                            </div>
+                                            <Typography
+                                                variant="h1"
+                                                color="secondary"
+                                                className="base-score-value"
+                                            >
+                                                {cveNVDDetails.vulnerabilitytype}
+                                            </Typography>
+                                        </div>
+                                    </Paper>
+                                    </Grid>
+                                </>
+                            )
+                                : ''}            
+                        </Grid>        
+                    </Grid>
+                    
+                    {cveNVDDetails.title ? (
+                        <>
+                         <Grid item xs={12} className="cve-title mb-3">
+                            <Typography
+                              variant="h5"
+                              color="textSecondary"
+                            >
+                              Title 
+                            </Typography>
+                            <Typography
+                              variant="body2"
+                              color="textPrimary"
+                            >
+                              {cveNVDDetails.title}
+                            </Typography>
+                         </Grid>
+                        </>
+                        
+                    )
+                        : ''}
+                    {cveNVDDetails.description ? (
+                        <>
+                        <Grid item xs={12}
+                        className="mb-3 cve-descp"
+                        >
+                            <Typography
+                              variant="h5"
+                              color="textSecondary"
+                            >
+                              Description 
+                            </Typography>
+                            <Typography
+                              variant="body2"
+                              color="textPrimary"
+                            >
+                              {cveNVDDetails.description}
+                            </Typography>
+                         </Grid>
+                        </>
+                        
+                    )
+                        : ''}
+                    {getExploits(cveNVDDetails)}       
+                    {cveNVDDetails.Reference ? getReference(cveNVDDetails.Reference) : ''}
+                    {getCVVScoreDetail(cveNVDDetails)}
+                    {cveNVDDetails.Products ? getProducts(cveNVDDetails.Products) : ''}
+                    
                 </Grid>
             </div>
+        );
+    }
+    const noCVENVDDetails = () => {
+        return (
+           
+                <Grid container spacing={1}
+                className="cve-detail-main"
+                >
+                    <Grid item xs={12}
+                    className="datepub-block mb-5"
+                    >
+                        <Grid container spacing={1} 
+                        className="box-shadow"  
+                        >
+                            <Grid item xs={4}
+                            className="pubdate-title"   
+                            >
+                                <Typography variant="h1" component="h2">
+                                    <Skeleton animation="wave" height="20px" width="100%" />
+                                </Typography>
+                                <Typography
+                                    variant="caption"
+                                    color="textSecondary"
+                                    className="pub_date"
+                                  >
+                                   <Skeleton animation="wave" height="20px" width="100%" />
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={5}
+                            className="pubdate-button"
+                            >
+                                <Typography
+                                    variant="h5"
+                                    color="textSecondary"
+                                    className="acce-vact"
+                                  >
+                                    <Skeleton animation="wave" height="20px" width="100%" />
+                                  </Typography>
+                                <Typography
+                                    variant="h5"
+                                    color="textSecondary"
+                                    className={classes.attackVector}
+                                  >
+                                    <Skeleton animation="wave" height="20px" width="100%" />
+                                  </Typography>
+                            </Grid>
+
+                            <Grid item xs={3}>
+                                
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    <Grid item xs={12}
+                    className="mb-5"
+                    >
+                        <Grid container spacing={4}>
+                                <Grid item xs={3}
+                                 className="baseScore-block" 
+                                >
+                                <Paper style={{ overflow: 'inherit', marginTop: '16px', marginLeft: '2px', }} elevation={3} className={[classes.paper, 'baseScore-block-inner'].join(' ')}>
+                                    <div className="baseScore-box">
+                                        <div className="baseScore-block-title">
+                                            <Skeleton animation="wave" height="20px" width="100%" />
+                                        </div>
+                                        <Typography
+                                            variant="h1"
+                                            color="secondary"
+                                            className="base-score-value"
+                                        >
+                                            <Skeleton animation="wave" height="20px" width="100%" />
+                                        </Typography>
+                                    </div>
+                                </Paper>
+                                </Grid>
+                                <Grid item xs={3}
+                                 className="baseScore-block" 
+                                >
+                                <Paper style={{ overflow: 'inherit', marginTop: '16px', marginLeft: '2px', }} elevation={3} className={[classes.paper, 'baseScore-block-inner'].join(' ')}>
+                                    <div className="baseScore-box">
+                                        <div className="baseScore-block-title">
+                                            <Skeleton animation="wave" height="20px" width="100%" />
+                                        </div>
+                                        <Typography
+                                            variant="h1"
+                                            color="secondary"
+                                            className="base-score-value"
+                                        >
+                                            <Skeleton animation="wave" height="20px" width="100%" />
+                                        </Typography>
+                                    </div>
+                                </Paper>
+                                </Grid>
+                                <Grid item xs={3}
+                                 className="baseScore-block" 
+                                >
+                                <Paper style={{ overflow: 'inherit', marginTop: '16px', marginLeft: '2px', }} elevation={3} className={[classes.paper, 'baseScore-block-inner'].join(' ')}>
+                                    <div className="baseScore-box">
+                                        <div className="baseScore-block-title">
+                                            <Skeleton animation="wave" height="20px" width="100%" />
+                                        </div>
+                                        <Typography
+                                            variant="h1"
+                                            color="secondary"
+                                            className="base-score-value"
+                                        >
+                                            <Skeleton animation="wave" height="20px" width="100%" />
+                                        </Typography>
+                                    </div>
+                                </Paper>
+                                </Grid>
+                                <Grid item xs={3}
+                                 className="baseScore-block" 
+                                >
+                                <Paper style={{ overflow: 'inherit', marginTop: '16px', marginLeft: '2px', }} elevation={3} className={[classes.paper, 'baseScore-block-inner'].join(' ')}>
+                                    <div className="baseScore-box">
+                                        <div className="baseScore-block-title">
+                                            <Skeleton animation="wave" height="20px" width="100%" />
+                                        </div>
+                                        <Typography
+                                            variant="h1"
+                                            color="secondary"
+                                            className="base-score-value"
+                                        >
+                                            <Skeleton animation="wave" height="20px" width="100%" />
+                                        </Typography>
+                                    </div>
+                                </Paper>
+                                </Grid>
+                                
+                                      
+                        </Grid>        
+                    </Grid>
+                    
+                    
+                     <Grid item xs={12} className="cve-title mb-3">
+                        <Typography
+                          variant="h5"
+                          color="textSecondary"
+                        >
+                           <Skeleton animation="wave" height="20px" width="100%" /> 
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          color="textPrimary"
+                        >
+                           <Skeleton animation="wave" height="20px" width="100%" />
+                        </Typography>
+                     </Grid>
+                        
+                    <Grid item xs={12} className="cve-title mb-3">
+                        <Typography
+                          variant="h5"
+                          color="textSecondary"
+                        >
+                           <Skeleton animation="wave" height="20px" width="100%" /> 
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          color="textPrimary"
+                        >
+                           <Skeleton animation="wave" height="20px" width="100%" />
+                        </Typography>
+                     </Grid> 
+
+                     <Grid item xs={12} className="cve-title mb-3">
+                        <Typography
+                          variant="h5"
+                          color="textSecondary"
+                        >
+                           <Skeleton animation="wave" height="20px" width="100%" /> 
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          color="textPrimary"
+                        >
+                           <Skeleton animation="wave" height="20px" width="100%" />
+                        </Typography>
+                     </Grid> 
+
+                     <Grid item xs={12} className="cve-title mb-3">
+                        <Typography
+                          variant="h5"
+                          color="textSecondary"
+                        >
+                           <Skeleton animation="wave" height="20px" width="100%" /> 
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          color="textPrimary"
+                        >
+                           <Skeleton animation="wave" height="20px" width="100%" />
+                        </Typography>
+                     </Grid>    
+
+                </Grid>
+           
         );
     }
 
     const getByCVEData = () => {
         return (
             <>
-                {cveNVDDetails ? (
+                {cveNVDDetails ? (<>
                     <div>
                         {getCVENVDDetails()}
                     </div>
-                )
+                    <div style={{ margin: '10px 0 10px 0', width: '100%' }} >
+                        {getCVEExpansionPanel(cveNVDDetails.Products)}
+                    </div>
+                </>)
                     :
-                    null}
-                <div style={{ margin: '10px 0 10px 0', width: '100%' }} >
-                    {getCVEExpansionPanel()}
-                </div>
+                    noCVENVDDetails()
+                    }
+                
             </>
         )
     }

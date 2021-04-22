@@ -84,7 +84,7 @@ export function register(values) {
 export function updateProfile(update) {
 
   return async (dispatch) => {
-    await axios.post('/profile/general/edit', { ...update });
+    await axios.post('/getProfile/general/update', { ...update });
     dispatch({
       type: UPDATE_PROFILE,
       payload: { user: authService.getUserName() }
@@ -94,7 +94,7 @@ export function updateProfile(update) {
 
 export function updateNotifications(update) {
   return async (dispatch) => {
-    await axios.post('/profile/notification/edit', { ...update, emailAdd: authService.getUserName() });
+    await axios.post('/getProfile/notification/update', { ...update });
     dispatch({
       type: UPDATE_PROFILE,
       payload: { user: authService.getUserName() }
@@ -103,10 +103,20 @@ export function updateNotifications(update) {
   };
 }
 
-export function updatePassword(update) {
+export function updatePassword_old(update) {
 
   return async (dispatch) => {
     await axios.post('/profile/security/edit', { passWord: update.password,oldPassword: update.oldPassword, emailAdd: authService.getUserName() });
+    dispatch({
+      type: UPDATE_PROFILE,
+      payload: { user: authService.getUserName() }
+    })
+  };
+}
+export function updatePassword(update) {
+
+  return async (dispatch) => {
+    await axios.post('/profile/password/update', { updated_password: update.password,current_password: update.oldPassword });
     dispatch({
       type: UPDATE_PROFILE,
       payload: { user: authService.getUserName() }

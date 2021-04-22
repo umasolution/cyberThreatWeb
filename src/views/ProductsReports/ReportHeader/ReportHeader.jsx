@@ -1,8 +1,9 @@
-import { Grid, makeStyles, Typography } from '@material-ui/core';
+import { Grid, makeStyles, Typography,Card } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import React from 'react';
-import Severity from './Severity/Severity';
 
+import moment from 'moment';
+import { setDateFormat } from './../../../Util/Util';
 const useStyles = makeStyles((theme) => ({
   mainGrid: {
     display: 'flex',
@@ -23,51 +24,84 @@ const useStyles = makeStyles((theme) => ({
   secondaryText: {
     color: "inherit",
     display: 'inline'
-  }
+  },
+  cardMain: {
+    margin: theme.spacing(1),
+    padding: theme.spacing(1)
+  },
 }));
 
 const ReportHeader = ({ header }) => {
 
   const classes = useStyles();
 
-
-  return (
+  return (<>
     <Grid
       container
       spacing={1}
-      className={classes.mainGrid}
+      className="report-main-title"
     >
-      {
-        Object.keys(header).map(title => {
-          return (
-            (title !== 'Severity' && title !== 'docker') ? (
-              <Paper key={title}>
-                <Typography
-                  variant="h6"
-                  color="textPrimary"
-                  className={classes.title}
-                >
-                  {title}
-                </Typography>
-                <Typography className={classes.secondaryText}>
-                  {header[title]}
-                </Typography>
-              </Paper>
-            )
-              : ''
-          )
-        }
-        )
-      }
-      {header.Severity ?
-        <Paper>
-          <Severity severity={header.Severity} />
-        </Paper>
-        : ''}
+      <Typography
+        variant="h6"
+        color="textPrimary"
+        className={classes.title}
+      >
+        SCAN REPORT FOR {header.Project.toUpperCase()}
+      </Typography>
     </Grid>
-
-
-  );
+    
+    <Grid
+      container
+      spacing={1}
+      className="report-main-box"
+    >
+      
+      {Object.entries(header.display).map((severity) => (
+        severity[1].field == 'Date'?
+        ( <Grid
+              item
+              lg={4}
+              md={6}
+              sm={12}
+              xs={12}
+              xl={4}              
+            >
+           <Card key={severity[0]} className={classes.cardMain}>
+            <Typography
+              variant="h6"
+              color="textPrimary"
+              className={classes.title}
+            >
+              {severity[1].title}
+            </Typography>
+            <Typography className={classes.secondaryText}>
+              {moment(setDateFormat(header[severity[1].field]).replace('_', ' ')).format("MMM DD, YYYY hh:mm a")}
+            </Typography>
+          </Card> </Grid>) : (<Grid
+              item
+              lg={4}
+              md={6}
+              sm={12}
+              xs={12}
+              xl={4}
+            >
+            <Card key={severity[0]} className={classes.cardMain}>
+            <Typography
+              variant="h6"
+              color="textPrimary"
+              className={classes.title}
+            >
+              {severity[1].title}
+            </Typography>
+            <Typography className={classes.secondaryText}>
+              {header[severity[1].field]}
+            </Typography>
+          </Card> </Grid>
+          ) 
+      ))}
+      
+    </Grid>
+  </>);
 };
 
 export default ReportHeader;

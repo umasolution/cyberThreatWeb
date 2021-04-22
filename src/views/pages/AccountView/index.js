@@ -36,7 +36,7 @@ function AccountView() {
   const [userProfileData, setUserProfileData] = useState();
   const tabs = [
     { value: 'general', label: 'General' },
-    // { value: 'subscription', label: 'Subscription' },
+    { value: 'subscription', label: 'Subscription' },
     { value: 'notifications', label: 'Notifications' },
     { value: 'security', label: 'Security' }
   ];
@@ -54,9 +54,10 @@ function AccountView() {
       try {
         setLoading(true);
         updateSnackbar(true, CONSTANTS.FETCHING_DATA);
-        const url = `/getProfile?emailAdd=${authService.getUserName()}`;
-        let response = await Axios.get(url);
-        setUserProfileData(response.data);
+        const url = `/getProfile`;
+        let response = await Axios.get(url);        
+        setUserProfileData(response.data);       
+        
         updateSnackbar(true, CONSTANTS.FETCHING_DATA_SUCCESS);
         setLoading(false);
       } catch (error) {
@@ -91,7 +92,7 @@ const updateSnackbar = (open, message) => {
       className={classes.root}
       title="Settings"
     >
-      <Container maxWidth="lg">
+      <Container maxWidth>
         <Header />
         <Box mt={3}>
           <Tabs
@@ -113,9 +114,9 @@ const updateSnackbar = (open, message) => {
         </Box>
         <Divider />
         <Box mt={3}>
-          {currentTab === 'general' && userProfileData && <General general={userProfileData.General} />}
-          {/* {currentTab === 'subscription' && userProfileData && <Subscription />} */}
-          {currentTab === 'notifications' && userProfileData && <Notifications notification={userProfileData.Notification} />}
+          {currentTab === 'general' && userProfileData && <General general={userProfileData.general} />}
+          {currentTab === 'subscription' && userProfileData && <Subscription subscription={userProfileData.subscription} />}
+          {currentTab === 'notifications' && userProfileData && <Notifications general={userProfileData.general} notification={userProfileData.notification} />}
           {currentTab === 'security' && userProfileData && <Security security={userProfileData.Security} />}
         </Box>
         {loading ? getLoader() : null}

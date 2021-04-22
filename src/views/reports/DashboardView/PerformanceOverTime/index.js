@@ -18,6 +18,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
+import moment from 'moment';
+import { setDateFormat } from './../../../../Util/Util';
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -26,9 +28,9 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-function PerformanceOverTime({ className, chartsData, ...rest }) {
+function PerformanceOverTime({ className, chartsMainKey,chartsKey,chartsData, ...rest }) {
   const classes = useStyles();
-  const apps = Object.keys(chartsData['Progress Chart'])
+  const apps = Object.keys(chartsData.data);
   const [app, setApp] = React.useState(apps[0]);
 
   useEffect(() => {
@@ -36,10 +38,11 @@ function PerformanceOverTime({ className, chartsData, ...rest }) {
   }, [app]);
 
   const createChart = () => {
-    let progressChartData = chartsData['Progress Chart'];
+    let progressChartData = chartsData.data;
     progressChartData = progressChartData[app];
-    console.log(progressChartData);
-    const xAxis = [];
+   
+    if(typeof progressChartData != 'undefined'){
+      const xAxis = [];
     const yAxises = new Map();
     for (let i = 0; i < progressChartData.length; i++) {
       const progress = progressChartData[i];
@@ -47,7 +50,7 @@ function PerformanceOverTime({ className, chartsData, ...rest }) {
       for (let j = 0; j < keys.length; j++) {
         const key = keys[j];
         if (key.toLowerCase() === 'date') {
-          xAxis.push(progress[key]);
+          xAxis.push(moment(setDateFormat(progress[key])).format("MMM Do HH:mm:ss"));
           continue;
         }
         let entry = yAxises.get(key);
@@ -61,7 +64,6 @@ function PerformanceOverTime({ className, chartsData, ...rest }) {
     }
     var dd = [];
     for (let [key, value] of yAxises.entries()) {
-      console.log(key + " = " + value)
       dd.push({
         x: xAxis,
         y: value,
@@ -71,13 +73,15 @@ function PerformanceOverTime({ className, chartsData, ...rest }) {
       })
     }
     var layout = {
-      title: 'Performance Over Time',
+      title: '',
       margin: {
         b: 120,
+        t: 40
       },
     };
-    const config = { responsive: true };
+    const config = { responsive: true,displayModeBar: true };
     Plotly.newPlot('myDiv', dd, layout, config);
+    }
   }
 
   const handleChange = (event) => {
@@ -89,24 +93,17 @@ function PerformanceOverTime({ className, chartsData, ...rest }) {
       className={clsx(classes.root, className)}
       {...rest}
     >
-      <CardContent>
-
+    <CardHeader
+        title={chartsData.title}        
+      />
+      <Divider />
+      <CardContent className="chart-data">
         <Box
           height={375}
            
         >
-          <FormControl style={{ width: '20%' }}>
-            <InputLabel id="demo-simple-select-label">Progress Chart</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={app}
-              onChange={handleChange}
-            >
-              {apps.map(appp => <MenuItem value={appp}>{appp}</MenuItem>)}
-            </Select>
-          </FormControl>
           <div id='myDiv' />
+
         </Box>
 
       </CardContent>

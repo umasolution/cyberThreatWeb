@@ -48,28 +48,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function Subscription({ className, ...rest }) {
+function Subscription({ className,subscription, ...rest }) {
   const classes = useStyles();
-  const isMountedRef = useIsMountedRef();
-  const [subscription, setSubscription] = useState(null);
-
-  const getSubscription = useCallback(() => {
-    axios
-      .get('/api/account/subscription')
-      .then((response) => {
-        if (isMountedRef.current) {
-          setSubscription(response.data.subscription);
-        }
-      });
-  }, [isMountedRef]);
-
-  useEffect(() => {
-    getSubscription();
-  }, [getSubscription]);
-
-  if (!subscription) {
-    return null;
-  }
+  
 
   return (
     <Card
@@ -87,114 +68,15 @@ function Subscription({ className, ...rest }) {
                 variant="h4"
                 color="textPrimary"
               >
-                {subscription.currency}
-                {subscription.price}
+                {subscription.title.subscription_name?subscription.title.subscription_name:'Free'}              
               </Typography>
-              <Typography
-                display="inline"
-                variant="subtitle1"
-              >
-                /mo
-              </Typography>
+              
             </div>
-            <Box
-              display="flex"
-              alignItems="center"
-            >
-              <img
-                alt="Product"
-                className={classes.productImage}
-                src="/static/images/products/product_freelancer.svg"
-              />
-              <Typography
-                variant="overline"
-                color="textSecondary"
-              >
-                {subscription.name}
-              </Typography>
-            </Box>
-          </Box>
-          <Divider />
-          <Box className={classes.details}>
-            <div>
-              <Typography
-                variant="body2"
-                color="textPrimary"
-              >
-                {`${subscription.proposalsLeft} proposals left`}
-              </Typography>
-              <Typography
-                variant="body2"
-                color="textPrimary"
-              >
-                {`${subscription.templatesLeft} templates`}
-              </Typography>
-            </div>
-            <div>
-              <Typography
-                variant="body2"
-                color="textPrimary"
-              >
-                {`${subscription.invitesLeft} invites left`}
-              </Typography>
-              <Typography
-                variant="body2"
-                color="textPrimary"
-              >
-                {`${subscription.adsLeft} ads left`}
-              </Typography>
-            </div>
-            <div>
-              {subscription.hasAnalytics && (
-                <Typography
-                  variant="body2"
-                  color="textPrimary"
-                >
-                  Analytics dashboard
-                </Typography>
-              )}
-              {subscription.hasEmailAlerts && (
-                <Typography
-                  variant="body2"
-                  color="textPrimary"
-                >
-                  Email alerts
-                </Typography>
-              )}
-            </div>
-          </Box>
+           
+          </Box>          
         </Paper>
-        <Box
-          mt={2}
-          display="flex"
-          justifyContent="flex-end"
-        >
-          <Button
-            size="small"
-            color="secondary"
-            variant="contained"
-          >
-            Upgrade plan
-          </Button>
-        </Box>
-        <Box mt={2}>
-          <Typography
-            variant="body2"
-            color="textSecondary"
-          >
-            The refunds don&apos;t work once you have the subscription, but you can
-            always
-            {' '}
-            <Link
-              color="secondary"
-              component={RouterLink}
-              to="#"
-            >
-              Cancel your subscription
-            </Link>
-            .
-          </Typography>
-        </Box>
+        
+        
       </CardContent>
     </Card>
   );

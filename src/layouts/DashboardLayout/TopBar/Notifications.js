@@ -24,6 +24,7 @@ import {
 } from "react-feather";
 import { getNotifications } from "src/actions/notificationsActions";
 import Badge from '@material-ui/core/Badge';
+import { THEMES } from 'src/constants';
 
 const iconsMap = {
   order_placed: PackageIcon,
@@ -39,6 +40,15 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
     color: theme.palette.secondary.contrastText,
   },
+  iconcolor : {
+    ...(theme.name === THEMES.NEWLIGHT
+      ? {
+          color: theme.palette.background.main,
+        }
+      : {
+        color: 'inherit',
+      }),
+  }
 }));
 
 function Notifications({alertsResponse}) {
@@ -65,8 +75,8 @@ function Notifications({alertsResponse}) {
   return (
     <>
       <Tooltip title="Notifications">
-        <IconButton color="inherit" ref={ref} onClick={handleOpen}>
-        <Badge badgeContent={alertsResponse ? alertsResponse.length : 0  }  color="secondary">
+        <IconButton className={classes.iconcolor} ref={ref} onClick={handleOpen}>
+        <Badge   color="secondary">
           <SvgIcon>
             <BellIcon />
           </SvgIcon>
@@ -83,11 +93,11 @@ function Notifications({alertsResponse}) {
         onClose={handleClose}
         open={isOpen}
       >
-        <Box p={2}>
+        {/*<Box p={2}>
           <Typography variant="h5" color="textPrimary">
             Notifications
           </Typography>
-        </Box>
+        </Box>*/}
         {alertsResponse?.length === 0 ? (
           <Box p={2}>
             <Typography variant="h6" color="textPrimary">

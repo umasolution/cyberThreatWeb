@@ -1,0 +1,71 @@
+
+.rounded-color-0{
+  color: #fff;
+  background-color: #00d1ce;
+}
+.rounded-color-1{
+  color: #fff;
+  background-color: #fe0a7b;
+}
+.rounded-color-2{
+  color: #fff;
+  background-color: #ff9f00;
+}
+.rounded-color-3{
+  color: #fff;
+  background-color: #027de7;
+}
+.dashboardsearch{margin-left: 100px;}
+.MuiFormControl-root.searchbtn{ width: 320px !important;}
+.dashboardsearch .MuiInput-formControl {border: 1px solid #c5c5c5;border-radius: 50px;display: inline-block;height: 40px;}
+.dashboardsearch .MuiInput-formControl:before,.dashboardsearch .MuiInput-formControl:after{display: none;}
+.dashboardsearch .MuiInput-formControl .MuiInputAdornment-positionStart{height: 40px;max-height: inherit;max-width: 100%;
+    position: relative;display: inline-block;position: absolute;right: 20px; top: 0;bottom: 0;margin: auto; width: 30px;height: 32px;}
+ .dashboardsearch .MuiSvgIcon-root{ color: #c5c5c5 !important;font-size: 32px;}
+.dashboardsearch .MuiInputBase-input{height: 100%;box-sizing: border-box;padding: 5px 50px 5px 20px;}
+.dashboardsearch .MuiInputBase-input:placeholder{}
+
+.dashboardsearch .MuiInputBase-input::-webkit-input-placeholder {color: #a8a8a8;}
+.dashboardsearch .MuiInputBase-input:-ms-input-placeholder {color: #a8a8a8;}
+.dashboardsearch .MuiInputBase-input::placeholder {color: #a8a8a8;}
+
+
+.dashboardtitle .MuiBreadcrumbs-root a.MuiTypography-root{font-size: 22px; color: #666666; font-weight: 600;text-transform: uppercase;}
+.dashboardData > div > .MuiPaper-root .MuiGrid-container .MuiGrid-item{align-self: center;}
+.dashboardData > div >  .MuiPaper-root{border-radius: 8px;border: 0;box-shadow: 0 4px 32px 0 rgba(0,0,0,0.06);padding: 10px;}
+
+.dashboardData > div >  .MuiPaper-root h3.MuiTypography-root{font-size: 16px;margin:0; }
+
+ .MuiTable-root .ReactVirtualized__List{width: 100% !important;}
+ 
+
+.MuiDrawer-paperAnchorLeft .scrollbar-container > .MuiBox-root{padding: 0;}
+.MuiDrawer-paperAnchorLeft .MuiList-subheader {padding-bottom: 0;}
+.MuiDrawer-paperAnchorLeft .MuiList-subheader .MuiListSubheader-root{color: #fff;padding: 0 10px;}
+.MuiDrawer-paperAnchorLeft .MuiList-subheader .MuiList-root .MuiListItem-root a.MuiButton-root{position: relative;border-bottom: 1px solid rgba(89,110,158,0.4);}
+
+.MuiDrawer-paperAnchorLeft .MuiList-subheader .MuiList-root .MuiListItem-root a.MuiButton-root:hover{background: #155288;}
+
+.MuiDrawer-paperAnchorLeft .MuiList-subheader .MuiList-root .MuiListItem-root a.MuiButton-root:after {width: 0;height: 0;border-width: 20px 10px 20px 0;border-color: transparent #FFFFFF transparent transparent;border-style: solid;position: absolute;
+right: 0px;content: "";}
+
+.user-nav a[class*='makeStyles-active'] {background: #155288; }
+.user-nav a[class*='makeStyles-active']::after {opacity: 1 !important;}
+
+.MuiDrawer-paperAnchorLeft .MuiList-subheader .MuiList-root .MuiListItem-root a.MuiButton-root:after{opacity: 0}
+.MuiDrawer-paperAnchorLeft .MuiList-subheader .MuiList-root .MuiListItem-root a.MuiButton-root:hover:after{opacity: 1;}
+
+#myDiv .modebar ,#myDiv2 .modebar {
+  position: absolute;
+  top: -50px;
+}
+
+.products_summary .MuiCardHeader-title,.projects_summary .MuiCardHeader-title,.chartlist .MuiCardHeader-title,.open_vulnerabilities h6{
+  color: #546e7a;
+  text-transform: uppercase;
+  font-size: 16px !important;
+  font-weight: 600;
+}
+.scrollbar-container .logo-beta {
+  display: none;
+}

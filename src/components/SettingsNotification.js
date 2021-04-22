@@ -33,7 +33,7 @@ function SettingsNotification() {
   const { saveSettings } = useSettings();
 
   const handleSwitch = () => {
-    saveSettings({ theme: THEMES.LIGHT });
+    saveSettings({ theme: THEMES.NEWLIGHT });
     Cookies.set('settingsUpdated', 'true');
     setOpen(false);
   };

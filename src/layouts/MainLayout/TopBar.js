@@ -11,10 +11,15 @@ import {
   Hidden,
   Typography,
   Link,
-  makeStyles
-
+  makeStyles,
+  Drawer,
+  IconButton,
+  List,
+  ListItem,
+  Container
 } from '@material-ui/core';
 import Logo from 'src/components/Logo';
+import TopMenu from './TopMenu';
 import ScrollTo from "react-scroll-into-view";
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -25,24 +30,37 @@ import Popper from '@material-ui/core/Popper';
 import MenuList from '@material-ui/core/MenuList';
 import { withStyles } from '@material-ui/core/styles';
 import ListItemText from '@material-ui/core/ListItemText';
+import MenuIcon from '@material-ui/icons/Menu';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: theme.palette.background.default
+    backgroundColor: theme.palette.background.default,
+    boxShadow:'0px 0px 50px rgba(0,0,0,0.06)',
+  },
+  header: {
+    '& > MuiContainer-root': {
+      maxWidth:1140 
+    }
   },
   paper: {
     marginRight: theme.spacing(2),
   },
   toolbar: {
-    height: 64
+    height: 85
   },
   logo: {
     marginRight: theme.spacing(2)
   },
+  logoBox : {
+
+  },
   link: {
-    fontWeight: theme.typography.fontWeightMedium,
+    fontWeight: theme.fontfamily.regular,
+    fontSize:'14px',
+    color:'#000000',
+    letterSpacing:'0.8px',
     '& + &': {
-      marginLeft: theme.spacing(2)
+      marginLeft: theme.spacing(4)
     }
   },
   divider: {
@@ -52,7 +70,22 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2)
   },
   typography: {
-    fontFamily: '"Roboto","Helvetica","Arial",sans-serif !important',
+    fontFamily: '"Montserrat",sans-serif !important',
+  },
+  priceBTN : {
+    fontWeight: theme.fontfamily.semiBold
+  },
+  appResponsive:{
+    '& > div' :{
+      marginBottom: theme.spacing(2),
+      '& > ul' :{
+        padding:'15px 10px',
+        '& > li' :{
+          display:'flex',
+          width:'auto',   
+        },
+      }
+    }    
   }
 }));
 
@@ -89,7 +122,7 @@ const StyledMenuItem = withStyles((theme) => ({
 
 function TopBar({ className, ...rest }) {
   const classes = useStyles();
-
+  const [mobileOpen, setMobileOpen] = React.useState(false);
   const [menuState, setMenuState] = useState({ anchorEl: null, open: false, });
   const anchorRef = React.useRef(null);
 
@@ -107,6 +140,10 @@ function TopBar({ className, ...rest }) {
     });
   };
 
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
 
   return (
     <AppBar
@@ -114,100 +151,99 @@ function TopBar({ className, ...rest }) {
       color="default"
       {...rest}
     >
-      <Toolbar className={classes.toolbar}>
+      <Container maxWidth="lg">
+      <Toolbar id="top-header" className={classes.toolbar}>
+        <div className={classes.logoBox}>
         <RouterLink to="/">
           <Logo className={classes.logo} />
         </RouterLink>
-        <Hidden mdDown>
-          <Typography
-            variant="caption"
-            color="textSecondary"
-          >
-            Cyber Threat Info
-          </Typography>
-        </Hidden>
-        <Box flexGrow={1} />
-        <Link
-          className={classes.link}
-          color="textSecondary"
-          component={RouterLink}
-          to="/vulDB/application"
-          underline="none"
-          variant="body2"
-        >
-          Vulnerabilities DB
-        </Link>
-        <Link
-          aria-controls="customized-menu"
-          aria-haspopup="true"
-          onClick={handleClick}
-          onMouseOver={handleClick}
-          style={{ marginRight: '10px' }}
-          className={classes.link}
-          color="textSecondary"
-          underline="none"
-          variant="body2"
-        >
-          Products
+        </div>
+        <Box flexGrow={2} />
+        <Hidden smDown>          
+      <Link className={classes.link}
+        color="textSecondary"
+        component={RouterLink}
+        to="/vulDB"
+        underline="none"
+        variant="body2"
+      >
+        Vulnerabilities DB
       </Link>
-        <StyledMenu
-          id="customized-menu"
-          anchorEl={menuState.anchorEl}
-          keepMounted
-          open={Boolean(menuState.anchorEl)}
-          onClose={handleClose}
-          MenuListProps={{ onMouseLeave: handleClose }}
-        >
-          <StyledMenuItem>
-            <ListItemText
-
-              primary="Open Source Vulnerability Scanner"
-              secondary="Enabling developers to easily find and automatically fix open source vulnerabilities"
-            />
-          </StyledMenuItem>
-        </StyledMenu>
-        <Link
-          className={classes.link}
-          color="textSecondary"
-          component={RouterLink}
-          to="/app"
-          underline="none"
-          variant="body2"
-        >
-          Sign In
-        </Link>
-        <Link
-          className={classes.link}
-          color="textSecondary"
-          component={RouterLink}
-          to="/docs"
-          underline="none"
-          variant="body2"
-        >
-          Support
-        </Link>
-        <Divider className={classes.divider} />
-        <ScrollTo smooth selector="#PricingView">
-          <Link
-            className={classes.link}
-            color="textSecondary"
-            underline="none"
-            variant="body2"
-            style={{ cursor: 'pointer' }}
+      <Link className={classes.link}
+        color="textSecondary"
+        component={RouterLink}
+        to="/about-us"
+        underline="none"
+        variant="body2"
+      >
+        About Us
+      </Link>
+      <Link
+        aria-controls="customized-menu"
+        aria-haspopup="true"
+        onClick={handleClick}
+        onMouseOver={handleClick}
+        style={{ marginRight: '10px' }}
+        className={classes.link}
+        color="textSecondary"
+        underline="none"
+        variant="body2"
+      >
+        Products
+      </Link>
+      <Link
+        className={classes.link}
+        color="textSecondary"
+        component={RouterLink}
+        to="/app"
+        underline="none"
+        variant="body2"
+      >
+        Sign In
+      </Link>
+      <ScrollTo smooth selector="#PricingView">
+        <Button style={{
+            borderRadius: 35,
+            marginLeft : 25,
+            backgroundColor: "#ff0476",
+            padding: "5px 30px",
+            height:'37px',
+            boxShadow:'none',
+            fontSize:'14px',
+            fontWeight:'600',
+            letterSpacing:'1px',
+            
+        }} className={classes.priceBTN} variant="contained" color="secondary">
+          Pricing
+        </Button>
+      </ScrollTo>  
+        </Hidden>
+        <Hidden mdUp>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerToggle}
           >
-            Pricing
-        </Link>
-        </ScrollTo>
-        {/* <Button
-          color="secondary"
-          component="a"
-          href="https://material-ui.com/store/items/devias-kit-pro"
-          variant="contained"
-          size="small"
-        >
-          Get the kit
-        </Button> */}
+           <MenuIcon />
+          </IconButton>
+        </Hidden>
       </Toolbar>
+      <Hidden mdUp implementation="js">
+        <Drawer
+          variant="temporary"
+          anchor={"right"}
+          open={mobileOpen}
+          classes={{
+            paper: classes.drawerPaper
+          }}
+          onClose={handleDrawerToggle}
+        >
+          <div className={classes.appResponsive}>
+           <TopMenu />
+          </div>
+        </Drawer>
+      </Hidden>
+      </Container>
     </AppBar>
   );
 }

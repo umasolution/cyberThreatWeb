@@ -63,11 +63,11 @@ const TabsData = ({ reportType, tabsData, expandPanel, bgcolor }) => {
         options={{
           cellStyle: {
             fontSize: 13,
-            fontFamily: '"Roboto","Helvetica","Arial",sans-serif !important',
+            fontFamily: '"Montserrat",sans-serif !important',
           },
           headerStyle: {
             fontSize: 16,
-            fontFamily: '"Roboto","Helvetica","Arial",sans-serif !important',
+            fontFamily: '"Montserrat",sans-serif !important',
             color: '#546e7a',
           },
           rowStyle: x => {

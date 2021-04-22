@@ -1,9 +1,17 @@
-import { Card, CardHeader, ListItem, ListItemText, makeStyles, TextField, Typography } from '@material-ui/core';
+import { Card, CardHeader, ListItem, ListItemText, makeStyles, TextField, Typography,Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  TableSortLabel,Divider } from '@material-ui/core';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import React, { useRef, useState } from 'react';
 import { List as VirtualizedList } from 'react-virtualized';
 import Copy from "../../../../Util/Copy";
+import IconButton from '@material-ui/core/IconButton';
+import SearchIcon from '@material-ui/icons/Search';
+import CloseIcon from '@material-ui/icons/Close';
 
 
 const useStyles = makeStyles(() => ({
@@ -22,26 +30,31 @@ function TeamTasks({ className, project_vuln_details, ...rest }) {
   const [searchedLibDetails, setSearchedLibDetails] = useState(Copy(project_vuln_details));
   const [searchInput, setSearchInput] = useState();
 
+   const [openSearch, setOpenSearch] = useState(false);
+
+  const handleSearchOpen = () => {
+    setOpenSearch(true);
+  };
+
+  const handleSearchClose = () => {
+    setOpenSearch(false);
+  };
+
   const rowRenderer = ({ index, isScrolling, key, style }) => {
+    console.log(searchedLibDetails);
     return searchedLibDetails && (
-      <div className="odd-even-background"  key={key} style={style}>
-        <ListItem
-          classes={{ divider: classes.itemDivider }}
-          divider
-          className="spaceBetween"
-          key={searchedLibDetails[index].project}
-        >
-          <Typography color="inherit"
+       <TableRow className="odd-even-background">
+          <TableCell style={{width: '50%'}}><Typography color="inherit"
             className="secondary"
           >
-            {searchedLibDetails[index].project}
-          </Typography>
-          <Typography color="inherit"
-            className="secondary">
-            {searchedLibDetails[index].count}
-          </Typography>
-        </ListItem>
-      </div>
+             {searchedLibDetails[index].name}
+          </Typography></TableCell>
+          <TableCell style={{width: '10%'}}><Typography color="inherit"
+            className="secondary"
+          >
+            {searchedLibDetails[index].value}
+          </Typography></TableCell>
+        </TableRow>
     )
       ;
   };
@@ -59,28 +72,26 @@ function TeamTasks({ className, project_vuln_details, ...rest }) {
       className={clsx(classes.root, className)}
       {...rest}
     >
-        <Typography
-        component="h4"
-        gutterBottom
-        variant="overline"
-        className="margin-general fontsize"
-        color="textSecondary"
-      >
-       Projects with most vulnerabilities
-        </Typography>
-
-      <TextField
+      
+    { openSearch ? null : <CardHeader
+        title="Projects with most vulnerabilities"
+      /> }
+      { openSearch ? <TextField
+        required
         value={searchInput}
         onChange={handleChangeSearch}
-        style={{
-          marginLeft: '15px'
-        }}
         className="secondary"
         labelClassName="secondary"
+        style={{
+          marginLeft: '15px',
+        }}
         id="search"
-        label="Search"
-      />
-
+        placeholder="Search"
+      /> : null }
+      
+      <Divider />
+      <Table>
+        <TableBody>
       {searchedLibDetails && (
         <VirtualizedList
           rowCount={searchedLibDetails.length}
@@ -91,6 +102,8 @@ function TeamTasks({ className, project_vuln_details, ...rest }) {
           overscanRowCount={3}
         />
       )}
+       </TableBody>
+      </Table>
     </Card>
   );
 }

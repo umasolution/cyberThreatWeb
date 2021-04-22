@@ -16,28 +16,39 @@ import {
 } from 'react-router-dom';
 import moment from 'moment';
 import CVEInput from './../../CVE/CVEInput/CVEInput';
+import Icon from '@material-ui/core/Icon';
+
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: theme.palette.background.dark,
+    backgroundColor: theme.palette.background.light,
     paddingTop: 5,
-    paddingBottom: 20,
+    paddingBottom: 140,
+    [theme.breakpoints.down('xs')]: {
+      padding:30,
+    },
+    [theme.breakpoints.down('sm')]: {
+      paddingBottom:30,
+    },
     [theme.breakpoints.down('md')]: {
-      paddingTop: 60,
-      paddingBottom: 60
-    }
+      paddingLeft:45,
+    },
+    boxShadow:'0px 0px 50px rgba(0,0,0,0.06)',
+    marginBottom:100,
+    position:'relative',
   },
   image: {
-    perspectiveOrigin: 'left center',
-    transformStyle: 'preserve-3d',
-    perspective: 1500,
+    //perspectiveOrigin: 'left center',
+    //transformStyle: 'preserve-3d',
+    //perspective: 1500,
+    textAlign:'right',
     '& > img': {
-      maxWidth: '90%',
+      maxWidth: '100%',
       height: 'auto',
-      transform: 'rotateY(-35deg) rotateX(15deg)',
+      //transform: 'rotateY(-35deg) rotateX(15deg)',
       backfaceVisibility: 'hidden',
-      boxShadow: theme.shadows[16]
+      //boxShadow: theme.shadows[16]
     }
   },
   shape: {
@@ -45,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
     top: 0,
     left: 0,
     '& > img': {
-      maxWidth: '90%',
+      maxWidth: '100%',
       height: 'auto'
     }
   },
@@ -53,27 +64,120 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '10px'
   },
   mainContent: {
-    background: '-webkit-linear-gradient(330.58deg,#50649f,#31468e 79.71%)',
-    padding: '10px'
+    padding: '0'
   },
   mainContentH3: {
     // fontFamily: 'PrentonRPProLight,sans-serif',
-    fontFamily: '"Roboto","Helvetica","Arial",sans-serif !important',
-    fontWeight: '200',
-    fontSize: '22px',
-    color: '#fff'
+    fontFamily: '"Montserrat",sans-serif !important',
+    fontWeight: theme.fontfamily.bold,
+    fontSize: '26px',
+    marginBottom: '25px',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '22px',
+      marginBottom: '15px'
+    },
   },
   mainContentH2: {
-    fontSize: '48px',
-    color: '#fff',
+    fontWeight: theme.fontfamily.light,
     marginBottom: '25px',
-    fontFamily: '"Roboto","Helvetica","Arial",sans-serif !important',
+    fontFamily: '"Montserrat",sans-serif !important',
   },
   mainContentP: {
     color: '#fff'
+  },
+  mainContentsub: {
+    marginTop:'20px', 
+  },
+  mainBannerBtn : {
+    marginTop:'30px',
+    '& > Button': {
+      backgroundColor:'#027de7',
+      border:'none',
+      padding:'15px 30px',
+      lineHeight:'16px',
+      borderRadius: '25px',
+      boxShadow: 'none',
+    },
+    '& > mainContent': {
+      padding:'0',
+    },
+    [theme.breakpoints.down('sm')]: {
+      marginTop:0,
+      marginBottom:30,
+    },
+  },
+  mainContentH5: {
+     fontWeight: theme.fontfamily.regular,
+     fontFamily: '"Montserrat",sans-serif',
+     fontSize: '16px',
+     color: '#484848',
+     marginBottom:'15px',
+  },
+  bannerBox:{
+    '& > bannerContainer': {
+      padding:'0',
+    }
+  },
+  searchbarArea: {
+    position:'absolute',
+    width: '100%',
+    bottom: -70,
+    [theme.breakpoints.down('sm')]: {
+      bottom: -90,
+    },
+    left:0,
+  },
+  searchbar: {
+    backgroundColor: theme.palette.background.light,
+    maxWidth:1180,
+    background: '#fff url(/static/bg_searchbar.png)',
+    padding:'35px 0px',
+    boxShadow:'4px 0px 54px rgba(0,0,0,0.1)',
+    borderRadius: 5,
+    [theme.breakpoints.down('sm')]: {
+      padding:'15px 10px',
+    },
+  },
+  searchBox: {
+    marginTop: 0,
+    maxWidth:815,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    backgroundColor: '#fff',
+    boxShadow:'4px 0px 27px rgba(0,0,0,0.08)',
+    height:62,
+    borderRadius:50,
+    border:'1px solid #e8e8f2',
+    padding:8,
+    position: 'relative',
+    '& > div' : {
+      paddingLeft: 60,
+    }
+  },
+  searchIcon: {
+    position:'absolute',
+    left:'30px',
+    color:'#747474',
+    fontSize:'25px',
+  },
+  searchButton: {
+    backgroundColor:'#ff0476',
+    padding:'0 !important',
+    textAlign: 'center',
+    width: 176,
+    height: 45,
+    lineHeight: '45px',
+    color: '#fff',
+    borderRadius: 50,
+    fontWeight: theme.fontfamily.bold,
+    fontFamily: '"Montserrat",sans-serif',
+    letterSpacing: '1px',
+    border:0,
+    fontSize:'16px',
   }
 
 }));
+
 
 function Hero({ className, ...rest }) {
   const classes = useStyles();
@@ -92,11 +196,42 @@ function Hero({ className, ...rest }) {
   };
 
   const onSearchClicked = () => {
-    if (searchByCVE) {
-      history.push(`/CVE/${cveInput}`);
+    if (cveInput) {
+      const regex5 = /([^:\s]+):([^:\s]+)/g;
+      const regex = new RegExp(regex5,'i');
+      let m = regex.exec(cveInput);
+      var regexcve = /cve-/;
+      var regexcve2 = /CVE-/;
+      if(m){
+        if(m[1]=='product'){
+          history.push(`/search/CVE/?product=${m[2]}`);          
+        } else if(m[1]=='vendor') {
+          history.push(`/search/CVE/?vendor=${m[2]}`);         
+        } else {
+          var result = regexcve.test(cveInput);
+          var result2 = regexcve2.test(cveInput);
+          if(result){
+             history.push(`/CVE/${cveInput}`); 
+          } else if(result2){
+            history.push(`/CVE/${cveInput}`);  
+          } else {
+             history.push(`/search/CVE/?keyword=${cveInput}`);
+          }
+        }
+      } else {
+        var result = regexcve.test(cveInput);
+        var result2 = regexcve2.test(cveInput);
+        
+        if(result){
+           history.push(`/CVE/${cveInput}`); 
+        } else if(result2){
+           history.push(`/CVE/${cveInput}`);  
+        } else {
+           history.push(`/search/CVE/?keyword=${cveInput}`);
+        }
+      }
     } else {
-      // history.push(`/CVE/${moment(cveSearchStartDate).format("YYYY-MM-DD")}/${moment(cveSearchEndDate).format("YYYY-MM-DD")}`);
-      history.push(`/CVE/${cveSearchStartDate}/${cveSearchEndDate}`);
+      history.push(`/CVE/${moment(cveSearchStartDate).format("YYYY-MM-DD")}/${moment(cveSearchEndDate).format("YYYY-MM-DD")}`);
     }
   }
 
@@ -105,6 +240,9 @@ function Hero({ className, ...rest }) {
       onSearchClicked();
     }
   }
+  const handleClick = (event) => {
+      onSearchClicked();
+   }
 
   const setCVESearchDate = (dateType, date) => {
     if (dateType === 'startDate') {
@@ -120,26 +258,15 @@ function Hero({ className, ...rest }) {
 
 
   return (
+    <div className="bannerBox">
     <div
       className={clsx(classes.root, className)}
       {...rest}
     >
-      <Container maxWidth="lg">
-        <TextField
-          required
-          value={cveInput}
-          onKeyDown={keyPress}
-          onChange={handleChangeCVE}
-          style={{
-            width: '500px'
-          }}
-          id="cve"
-          placeholder="Search Vulnerabilities"
-          label="Search Vulnerabilities"
-        />
+      <Container maxWidth={false} className="bannerContainer">
         <Grid
           container
-          spacing={3}
+          spacing={0}
           className={classes.container}
         >
           <Grid
@@ -152,44 +279,28 @@ function Hero({ className, ...rest }) {
               flexDirection="column"
               justifyContent="center"
               height="100%"
+              className="bannerContent"
             >
               <div className={classes.mainContent}>
                 <h3 className={classes.mainContentH3}>Continuous Integration.</h3>
                 <h3 className={classes.mainContentH3}>Continuous Development.</h3>
                 <h3 className={classes.mainContentH3}>Continuous Confidence.</h3>
               </div>
-
-              <Box mt={3}>
-                <Grid
-                  container
-                  spacing={3}
-                >
-                  <Grid item>
-                    <Typography
-                      variant="h5"
-                      color="secondary"
-                    >
-                      Add confidence to your CI/CD process. Develop securely while you deploy continously with confidence.
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <Typography
-                      variant="h5"
-                      color="secondary"
-                    >
-                      Confidently scan for vulnerablities in your source code, container image, virtual machine or physical servers.
-                    </Typography>
-                  </Grid>
-                  <Grid item style={{ width: '100%' }}>
-                    <Typography
-                      variant="h5"
-                      color="secondary"
-                    >
-                      Make every check in a secure checkin
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </Box>
+              <div className="mainContentSub">
+                <h5 className={classes.mainContentH5}>Confidently scan for vulnerablities in your source code,</h5>
+                <h5 className={classes.mainContentH5}>container image, virtual machine or physical servers.</h5>
+              </div>
+              <div className={classes.mainBannerBtn}><Button
+                color="secondary"
+                size="large"
+                type="button"
+                variant="contained"
+                onClick={gotoRegister}
+                style={{marginTop: '8px'}}
+              >
+                Explore More
+              </Button></div>
+              
             </Box>
           </Grid>
           <Grid
@@ -198,16 +309,10 @@ function Hero({ className, ...rest }) {
             md={7}
           >
             <Box position="relative">
-              <div className={classes.shape}>
-                <img
-                  alt="Shapes"
-                  src="/static/home/shapes.svg"
-                />
-              </div>
               <div className={classes.image}>
                 <img
                   alt="Presentation"
-                  src="/static/home/dark-light-typing.png"
+                  src="/static/home/hero_banner.png"
                 />
               </div>
             </Box>
@@ -226,75 +331,33 @@ function Hero({ className, ...rest }) {
           </Box>
           </Grid>
         </Grid>
-      <Grid item xs={12}>
-        <Grid container    spacing={2}>
-          
-        <Grid item>
-            <Typography
-              variant="h1"
-              color="secondary"
-            >
-              10%
-                    </Typography>
-            <Typography
-              variant="overline"
-              color="textSecondary"
-            >
-              more vulnerabilities than NVD
-                    </Typography>
-          </Grid>
-          <Grid item>
-            <Typography
-              variant="h1"
-              color="secondary"
-            >
-              300+
-                    </Typography>
-            <Typography
-              variant="overline"
-              color="textSecondary"
-            >
-              projects scanned
-                    </Typography>
-          </Grid>
-          <Grid item>
-            <Typography
-              variant="h1"
-              color="secondary"
-            >
-              500+
-                    </Typography>
-            <Typography
-              variant="overline"
-              color="textSecondary"
-            >
-              vulnerabilities discovered for developers like you.
-                    </Typography>
-          </Grid>
-        </Grid>
-      </Grid>
-      <Grid item>
-          <Typography
-              variant="h4"
-              color="textSecondary"
-            >
-              A more reliable scoring system to prioritize the most important vulnerabilities
-            </Typography>
-             
-          </Grid>
-          
-          <Button
-                color="secondary"
-                size="large"
-                type="button"
-                variant="contained"
-                onClick={gotoRegister}
-                style={{marginTop: '8px'}}
-              >
-                SIGN UP FOR A FREE ACCOUNT
-        </Button>
-      </Container>
       
+      </Container>
+      <div className={classes.searchbarArea}> 
+        <Container maxWidth="lg" className={classes.searchbar}>    
+          <Box mt={3}
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            className={classes.searchBox}>
+            <TextField
+            required
+            value={cveInput}
+            onKeyDown={keyPress}
+            onChange={handleChangeCVE}
+            style={{
+              width: '100%'
+            }}
+            id="cve"
+            placeholder="Search for a CVE, product or vendor e.g product:value or vendor:value"
+          />
+          <Icon className={classes.searchIcon}>search</Icon>
+          <button onClick={handleClick} className={classes.searchButton}>Search</button>
+          </Box>
+        </Container>
+      </div>
+      
+    </div >
     </div >
   );
 }

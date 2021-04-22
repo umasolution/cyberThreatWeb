@@ -143,7 +143,7 @@ function NavBar({ openMobile, onMobileClose }) {
       <Hidden lgUp>
         <Box p={2}>
           <RouterLink to="/">
-            <Logo />
+            <Logo className="dashboard-logo"/>
           </RouterLink>
         </Box>
       </Hidden>

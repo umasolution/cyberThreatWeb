@@ -6,17 +6,22 @@ import {
   Box,
   Card,
   Typography,
-  makeStyles
+  makeStyles,
+  Grid
 } from '@material-ui/core';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import Label from 'src/components/Label';
+import { THEMES } from 'src/constants';
+import './index.css';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(1),
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    height:85
   },
   label: {
     marginLeft: theme.spacing(1)
@@ -26,49 +31,49 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.secondary.contrastText,
     height: 48,
     width: 48
+  },
+  contentH3: {
+     fontWeight: theme.fontfamily.semiBold,
+     fontSize: '20px',
+     lineHeight: 1.5
   }
 }));
 
-function TodaysMoney({ className,header, value, ...rest }) {
-  const classes = useStyles();
-  const data = {
-    value: '24,000',
-    currency: '$',
-    difference: 4
-  };
+function TodaysMoney({ className,header, value,index, ...rest }) {
+  const classes = useStyles();  
 
   return (
     <Card
       className={clsx(classes.root, className)}
       {...rest}
     >
-      <Box flexGrow={1}>
-        <Typography
+      <Grid container
+          spacing={2}>
+        <Grid
+          item
+          lg={9}
+          xs={9}
+        >
+          <Typography
           component="h3"
           gutterBottom
+          className={classes.contentH3}
           variant="overline"
           color="textSecondary"
         >
          {header}
         </Typography>
-        <Box
-          display="flex"
-          alignItems="center"
-          flexWrap="wrap"
+        </Grid>
+        <Grid
+          item
+          lg={3}
+          xs={3}
         >
-          <Typography
-            variant="h3"
-            color="textPrimary"
-          >
+          <Avatar variant="rounded" className={`rounded-dashboard rounded-color-${index}`}>
             {value}
-           
-          </Typography>
-          
-        </Box>
-      </Box>
-     {/*  <Avatar className={classes.avatar}>
-        <AttachMoneyIcon />
-      </Avatar> */}
+          </Avatar>
+        </Grid>
+      </Grid>
     </Card>
   );
 }

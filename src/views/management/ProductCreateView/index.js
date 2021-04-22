@@ -22,7 +22,7 @@ function ProductCreateView() {
       title="Product Create"
     >
       <Container maxWidth="lg">
-        <Header />
+        
         <ProductCreateForm />
       </Container>
     </Page>

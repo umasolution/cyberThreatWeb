@@ -4,8 +4,10 @@ import Page from 'src/components/Page';
 import Hero from './Hero';
 import Features from './Features';
 import Testimonials from './Testimonials';
+import LeftRightImage from './LeftRightImage';
 import CTA from './CTA';
 import FAQS from './FAQS';
+import SearchBar from './SearchBar';
 import PricingView from './../PricingView';
 
 const useStyles = makeStyles(() => ({
@@ -22,7 +24,7 @@ function HomeView() {
     >
       <Hero />
       <Features />
-      <Testimonials />
+      <LeftRightImage />
       <PricingView />
       <CTA />
     </Page>

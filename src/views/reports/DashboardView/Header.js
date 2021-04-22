@@ -11,7 +11,8 @@ import {
   MenuItem,
   SvgIcon,
   Typography,
-  makeStyles
+  makeStyles,
+  Switch 
 } from '@material-ui/core';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import { Calendar as CalendarIcon } from 'react-feather';
@@ -42,6 +43,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+const handleChange = (event) => {
+  const checked = event.target.checked;  
+  console.log(checked);
+};
+
 function Header({ className, ...rest }) {
   const classes = useStyles();
   const actionRef = useRef(null);
@@ -56,7 +62,7 @@ function Header({ className, ...rest }) {
       className={clsx(classes.root, className)}
       {...rest}
     >
-      {/* <Grid item>
+      <Grid item>
         <Breadcrumbs
           separator={<NavigateNextIcon fontSize="small" />}
           aria-label="breadcrumb"
@@ -70,45 +76,24 @@ function Header({ className, ...rest }) {
             Dashboard
           </Link>
         </Breadcrumbs>
-      </Grid> */}
-      <Grid item>
-        <Button
-          ref={actionRef}
-          onClick={() => setMenuOpen(true)}
-        >
-          <SvgIcon
-            fontSize="small"
-            className={classes.actionIcon}
-          >
-            <CalendarIcon />
-          </SvgIcon>
-          {timeRange}
-        </Button>
-        <Menu
-          anchorEl={actionRef.current}
-          onClose={() => setMenuOpen(false)}
-          open={isMenuOpen}
-          PaperProps={{ className: classes.menu }}
-          getContentAnchorEl={null}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center'
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'center'
-          }}
-        >
-          {timeRanges.map((t) => (
-            <MenuItem
-              key={t.value}
-              onClick={() => setTimeRange(t.text)}
-            >
-              {t.text}
-            </MenuItem>
-          ))}
-        </Menu>
       </Grid>
+      <Grid item
+      className="pubdate-button"
+      >  
+      <Typography component="div">
+        <Grid component="label" container alignItems="center" spacing={1}>
+          <Grid item>Organization </Grid>
+          <Grid item>
+            <Switch
+            onChange={handleChange}
+            name="checkorg"
+            inputProps={{ 'aria-label': 'secondary checkbox' }}
+          />
+          </Grid>
+          <Grid item>Private Reports</Grid>
+        </Grid>
+      </Typography>
+      </Grid>      
     </Grid>
   );
 }

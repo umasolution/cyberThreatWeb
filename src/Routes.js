@@ -13,10 +13,11 @@ import DashboardLayout from 'src/layouts/DashboardLayout';
 import DocsLayout from 'src/layouts/DocsLayout';
 import MainLayout from 'src/layouts/MainLayout';
 import HomeView from 'src/views/pages/HomeView';
+import AboutView from 'src/views/pages/AboutView';
 import LoadingScreen from 'src/components/LoadingScreen';
 import AuthGuard from 'src/components/AuthGuard';
 import GuestGuard from 'src/components/GuestGuard';
-import CheckBrowserVul from './views/CheckBrowserVul/CheckBrowserVul';
+
 
 const routesConfig = [
   {
@@ -47,17 +48,6 @@ const routesConfig = [
     component: lazy(() => import('src/views/auth/RegisterView'))
   },
   {
-    exact: true,
-    path: '/check-browser-vulnerability',
-    // component: lazy(() => import('src/views/CheckBrowserVul/CheckBrowserVul'))
-    component: CheckBrowserVul
-  },
-  {
-    exact: true,
-    path: '/register-unprotected',
-    component: lazy(() => import('src/views/auth/RegisterView'))
-  },
-  {
     path: '/app',
     guard: AuthGuard,
     layout: DashboardLayout,
@@ -79,11 +69,6 @@ const routesConfig = [
       },
       {
         exact: true,
-        path: '/app/reports/dashboard-alternative',
-        component: lazy(() => import('src/views/reports/DashboardAlternativeView'))
-      },
-      {
-        exact: true,
         path: '/app/reports',
         component: () => <Redirect to="/app/reports/dashboard" />
       },
@@ -94,13 +79,13 @@ const routesConfig = [
       },
       {
         exact: true,
-        path: '/app/CVE/:cve',
-        component: lazy(() => import('src/views/CVE/CVE'))
+        path: '/app/vulDB',
+        component: lazy(() => import('src/views/VuldbLogin/VuldbLogin'))
       },
       {
         exact: true,
-        path: '/app/management/APIToken',
-        component: lazy(() => import('src/views/management/APIToken/APIToken'))
+        path: '/app/CVE/:cve',
+        component: lazy(() => import('src/views/CVE/CVE'))
       },
       {
         exact: true,
@@ -185,19 +170,6 @@ const routesConfig = [
       {
         exact: true,
         path: [
-          '/app/chat/new',
-          '/app/chat/:threadKey'
-        ],
-        component: lazy(() => import('src/views/chat/ChatView'))
-      },
-      {
-        exact: true,
-        path: '/app/chat',
-        component: () => <Redirect to="/app/chat/new" />
-      },
-      {
-        exact: true,
-        path: [
           '/app/mail/label/:customLabel/:mailId?',
           '/app/mail/:systemLabel/:mailId?'
         ],
@@ -274,84 +246,15 @@ const routesConfig = [
         component: lazy(() => import('src/views/extra/editors/QuillEditorView'))
       },
       {
-        component: () => <Redirect to="/404" />
-      }
-    ]
-  },
-  {
-    path: '/docs',
-    layout: DocsLayout,
-    routes: [
+        exact: true,
+        path: '/app/productsreports/:projectId/:reportName',
+        component: lazy(() => import('src/views/ProductsReports/ProductsReports'))
+      }/*,
       {
         exact: true,
-        path: '/docs',
-        component: () => <Redirect to="/docs/welcome" />
-      },
-      {
-        exact: true,
-        path: '/docs/welcome',
-        component: lazy(() => import('src/views/docs/WelcomeView'))
-      },
-      {
-        exact: true,
-        path: '/docs/getting-started',
-        component: lazy(() => import('src/views/docs/GettingStartedView'))
-      },
-      {
-        exact: true,
-        path: '/docs/environment-variables',
-        component: lazy(() => import('src/views/docs/EnvironmentVariablesView'))
-      },
-      {
-        exact: true,
-        path: '/docs/deployment',
-        component: lazy(() => import('src/views/docs/DeploymentView'))
-      },
-      {
-        exact: true,
-        path: '/docs/api-calls',
-        component: lazy(() => import('src/views/docs/ApiCallsView'))
-      },
-      {
-        exact: true,
-        path: '/docs/analytics',
-        component: lazy(() => import('src/views/docs/AnalyticsView'))
-      },
-      {
-        exact: true,
-        path: '/docs/authentication',
-        component: lazy(() => import('src/views/docs/AuthenticationView'))
-      },
-      {
-        exact: true,
-        path: '/docs/routing',
-        component: lazy(() => import('src/views/docs/RoutingView'))
-      },
-      {
-        exact: true,
-        path: '/docs/settings',
-        component: lazy(() => import('src/views/docs/SettingsView'))
-      },
-      {
-        exact: true,
-        path: '/docs/state-management',
-        component: lazy(() => import('src/views/docs/StateManagementView'))
-      },
-      {
-        exact: true,
-        path: '/docs/theming',
-        component: lazy(() => import('src/views/docs/ThemingView'))
-      },
-      {
-        exact: true,
-        path: '/docs/support',
-        component: lazy(() => import('src/views/docs/SupportView'))
-      },
-      {
-        exact: true,
-        path: '/docs/changelog',
-        component: lazy(() => import('src/views/docs/ChangelogView'))
-      },
+        path: '/app/productsreports/:reportType/:reportName',
+        component: lazy(() => import('src/views/ProductsReports/ProductsReports'))
+      }*/,
       {
         component: () => <Redirect to="/404" />
       }
@@ -368,9 +271,14 @@ const routesConfig = [
       },
       {
         exact: true,
+        path: '/about-us',
+        component: AboutView
+      }/*,
+      {
+        exact: true,
         path: '/vulDB/:feedType',
         component: lazy(() => import('src/views/Feed/Feed'))
-      },
+      }*/,
       {
         exact: true,
         path: '/CVE/:cve',
@@ -383,13 +291,18 @@ const routesConfig = [
       },
       {
         exact: true,
-        path: '/ProductsReports/:reportType/:reportName',
-        component: lazy(() => import('src/views/ProductsReports/ProductsReports'))
+        path: '/CVE/:cveStartDate/:cveEndDate',
+        component: lazy(() => import('src/views/CVE/CVE'))
       },
       {
         exact: true,
-        path: '/CVE/:cveStartDate/:cveEndDate',
-        component: lazy(() => import('src/views/CVE/CVE'))
+        path: '/Search/CVE',
+        component: lazy(() => import('src/views/Search/Search'))
+      },
+      {
+        exact: true,
+        path: '/vulDB',
+        component: lazy(() => import('src/views/Vuldb/Vuldb'))
       },
       /* {
         exact: true,

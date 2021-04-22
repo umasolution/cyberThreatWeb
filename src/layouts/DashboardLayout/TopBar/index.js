@@ -20,6 +20,7 @@ import { useHistory } from "react-router";
 import Account from "./Account";
 import Contacts from "./Contacts";
 import Notifications from "./Notifications";
+import Alerts from "./Alerts";
 import Search from "./Search";
 import Settings from "./Settings";
 import "./index.css";
@@ -35,6 +36,12 @@ const useStyles = makeStyles((theme) => ({
       ? {
           boxShadow: "none",
           backgroundColor: theme.palette.primary.main,
+        }
+      : {}),
+    ...(theme.name === THEMES.NEWLIGHT
+      ? {
+          boxShadow: "none",
+          backgroundColor: theme.palette.background.default,
         }
       : {}),
     ...(theme.name === THEMES.ONE_DARK
@@ -71,15 +78,13 @@ function TopBar({ className, onMobileNavOpen, ...rest }) {
     try {
       updateLoadingData(true);
       const url = `/corner/getalert`;
-      const response = await Axios.post(url, {
-        emailAdd: authService.getUserName(),
-      });
-      if (!response.data || !response.data.header) {
+      const response = await Axios.get(url);
+      
+      if (!response.data) {
         updateLoadingData(false);
         return;
-      }
-      console.log(response.data);
-      setAlertsResponse(response.data.header);
+      }      
+      setAlertsResponse(response.data);
       /* const res =  [
         {
            "CVEID":"CVE-2020-12345",
@@ -138,31 +143,39 @@ function TopBar({ className, onMobileNavOpen, ...rest }) {
         <Hidden lgUp>
           <IconButton
             className={classes.menuButton}
-            color="inherit"
+            color="red"
             onClick={onMobileNavOpen}
           >
             <SvgIcon fontSize="small">
               <MenuIcon />
             </SvgIcon>
           </IconButton>
+          <Box>
+            <RouterLink to="/">
+                <Logo className="dashboard-logo" />
+            </RouterLink>
+          </Box>
         </Hidden>
         <Hidden mdDown>
           <RouterLink to="/">
-            <Logo />
+            <Logo className="dashboard-logo" />
           </RouterLink>
+          <Box className="dashboardsearch">
+          <CVETextField
+            cveInput={cveInput}
+            keyPress={keyPress}
+            handleChangeCVE={handleChangeCVE}
+          />
+          </Box>
         </Hidden>
         <Box ml={2} flexGrow={1} />
-        <CVETextField
-          cveInput={cveInput}
-          keyPress={keyPress}
-          handleChangeCVE={handleChangeCVE}
-        />
         {/* <Search /> */}
         {/* <Contacts /> */}
         <Notifications alertsResponse={alertsResponse}/>
-        <Settings />
+        
+        {/*<Settings />*/}
         <Box ml={2}>
-          <Account />
+         { <Account />}
         </Box>
       </Toolbar>
     </AppBar>
