@@ -28,7 +28,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-function PerformanceOverTime({ className, chartsMainKey,chartsKey,chartsData, ...rest }) {
+function PerformanceOverTime({ className, chartsMainKey,chartsKey,chartsData,boxHeight, ...rest }) {
   const classes = useStyles();
   const apps = Object.keys(chartsData.data);
   const [app, setApp] = React.useState(apps[0]);
@@ -99,7 +99,7 @@ function PerformanceOverTime({ className, chartsMainKey,chartsKey,chartsData, ..
       <Divider />
       <CardContent className="chart-data">
         <Box
-          height={375}
+          height={boxHeight ?  boxHeight : 375}
            
         >
           <div id='myDiv' />

@@ -21,15 +21,17 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    height:129
+    height:'100%',
+    width:'100%'
   },
   label: {
     marginLeft: theme.spacing(1)
   },
   avatar: {
-    backgroundColor: theme.palette.secondary.main,
-    color: theme.palette.secondary.contrastText,
-    height: 48,
+   
+    [theme.breakpoints.down('md')]: {
+      width:'100%'
+    },
     width: 48
   },
   contentH3: {
@@ -39,8 +41,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function ReportCount({ className,header,value,index, ...rest }) {
+function ReportCount({ className,header,gridSize,value,index, ...rest}) {
   const classes = useStyles();  
+  
   
   return (
     <Grid
@@ -72,7 +75,7 @@ function ReportCount({ className,header,value,index, ...rest }) {
         </Grid>
         <Grid
           item
-          lg={3}
+          lg={gridSize?12:3}
           xs={12}
         >
           <Avatar variant="rounded" className={`rounded-dashboard rounded-color-${index}`}>

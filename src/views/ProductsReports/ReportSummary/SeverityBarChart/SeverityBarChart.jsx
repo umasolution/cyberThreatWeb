@@ -10,7 +10,19 @@ import {
   makeStyles
 } from '@material-ui/core';
 
-const SeverityBarChart = ({ severity, divId, displayModeBar = true, title = 'Severity', bgColor = "#fff", width = 280, height = 175 }) => {
+
+const useStyles = makeStyles((theme) => ({
+  card : {
+    display:'flex',
+    justifyContent : 'center',
+    alignItems : 'center'
+  }
+}));
+
+const SeverityBarChart = ({ severity, divId, displayModeBar = true, title = 'Severity', bgColor = "#fff", width = 300, height = 175 }) => {
+
+  const classes = useStyles();
+  
 
   useEffect(() => {
 
@@ -47,7 +59,7 @@ const SeverityBarChart = ({ severity, divId, displayModeBar = true, title = 'Sev
         title:'',
         width,
         height,
-        margin: { "t": 0, "b": 20, "l": 10, "r": 10 },
+        margin: { "t": 0, "b": 75, "l": 20, "r": 10 },
         showlegend: false,
         plot_bgcolor: bgColor,
         paper_bgcolor: bgColor,
@@ -73,7 +85,7 @@ const SeverityBarChart = ({ severity, divId, displayModeBar = true, title = 'Sev
           linecolor: '#a3a3a3',
           zeroline: true,
           zerolinecolor: '#a3a3a3',
-          zerolinewidth: 1,
+          zerolinewidth: 2,
         },
       };
       const config = { responsive: true ,displayModeBar: false };
@@ -88,7 +100,7 @@ const SeverityBarChart = ({ severity, divId, displayModeBar = true, title = 'Sev
       />
       <Divider />
       <CardContent className="chart-data">
-        <Box> 
+        <Box className = {classes.card}> 
         <div id={`SeverityBarChartDiv-${divId}`} />
         </Box>
 

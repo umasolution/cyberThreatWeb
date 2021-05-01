@@ -9,7 +9,18 @@ import {
   makeStyles
 } from '@material-ui/core';
 
+
+const useStyles = makeStyles((theme) => ({
+  box : {
+    display:'flex',
+    justifyContent : 'center',
+    alignItems : 'center'
+  }
+}));
+
 const CWEPieChart = ({ cwe, divId, bgColor = "#fff", width = 200, height= 200, title="CWE" }) => {
+  const classes = useStyles();
+
   useEffect(() => {
     if (cwe) {
       const labels = [];
@@ -49,7 +60,7 @@ const CWEPieChart = ({ cwe, divId, bgColor = "#fff", width = 200, height= 200, t
       />
       <Divider />
       <CardContent className="chart-data">
-        <Box> 
+        <Box className={classes.box}> 
         <div id={`CWEPieChartDiv-${divId}`} />
         </Box>
 

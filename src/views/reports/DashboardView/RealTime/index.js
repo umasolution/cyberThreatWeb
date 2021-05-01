@@ -8,10 +8,11 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import React, { useRef, useState } from 'react';
 import { List as VirtualizedList } from 'react-virtualized';
+import { useHistory } from 'react-router';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import Copy from "../../../../Util/Copy";
 import './index.css';
-import { Link } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import CloseIcon from '@material-ui/icons/Close';
@@ -22,6 +23,9 @@ const useStyles = makeStyles((theme) => ({
   navigateNextIcon: {
     marginLeft: theme.spacing(1)
   },
+  link : {
+    cursor : 'pointer'
+  }
 }));
 
 function getRandomInt(min, max) {
@@ -36,6 +40,7 @@ function getRandomInt(min, max) {
 function RealTime({ className, lib_details,headtitle, ...rest }) {
   const classes = useStyles();
   const isMountedRef = useIsMountedRef();
+  const history = useHistory();
 
   const originalLibDetails = useRef(lib_details);
 
@@ -83,7 +88,7 @@ function RealTime({ className, lib_details,headtitle, ...rest }) {
           <TableCell style={{width: '50%'}}><Typography color="inherit"
             className="secondary"
           >
-             {searchedLibDetails[index].name}
+             <Link className = {classes.link} onClick={()=>onProductClick(searchedLibDetails[index])} >{searchedLibDetails[index].name}</Link>
           </Typography></TableCell>
           <TableCell style={{width: '10%'}}><Typography color="inherit"
             className="secondary"
@@ -99,6 +104,11 @@ function RealTime({ className, lib_details,headtitle, ...rest }) {
     const filteredResult = originalLibDetails.current.filter(details => details.name.toLowerCase().includes(event.target.value));
     setSearchedLibDetails(filteredResult);
     setSearchInput(event.target.value);
+  }
+
+  const onProductClick = (product) => {
+    history.push( '/app/dashboard/productDetailVul',
+                  product);
   }
 
   return (

@@ -16,7 +16,7 @@ const ReportSummary = ({ summary, headerDate, projectName, isDocker = false, div
   return (
     <Grid
       container
-      spacing={1}
+      spacing={2}
       style={{ display: 'block', margin: '5px' }}
     >
       <Grid

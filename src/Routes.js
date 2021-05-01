@@ -256,6 +256,11 @@ const routesConfig = [
         component: lazy(() => import('src/views/ProductsReports/ProductsReports'))
       }*/,
       {
+        exact: true,
+        path: '/app/dashboard/productDetailVul',
+        component: lazy(() => import('src/views/ProductDetailVul'))
+      },
+      {
         component: () => <Redirect to="/404" />
       }
     ]
