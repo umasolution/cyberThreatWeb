@@ -643,7 +643,7 @@ export const VuldbLogin = (/* {   } */) => {
           <Box position="relative">
           <Paper className={classes.root}>
                 <TableContainer className={classes.container}>
-                  <Table stickyHeader aria-label="sticky table" className={loadingRows?'small-table':'big-table'}>
+                  <Table stickyHeader aria-label="sticky table" className={loadingRows?'big-table':'big-table'}>
                     {issearch?(<>
                       <TableHead>
                       <TableRow>
@@ -1139,7 +1139,7 @@ export const VuldbLogin = (/* {   } */) => {
     const getTabsData = () => {
         return (
             <>
-              {loadingRows ?cvesearchcenter(tabsData,8):cvesearchcenter(tabsData,12)}
+              {loadingRows ?cvesearchcenter(tabsData,12):cvesearchcenter(tabsData,12)}
               {loadingRows ?(<>  
               <Grid
                 item
