@@ -1,4 +1,8 @@
 
+
+.vuldb-login tbody.MuiTableBody-root {
+	background-color: #fff;
+}
 .vuldb-login .cvesearchslider {
 	width: 300px;
 }
@@ -14,7 +18,7 @@
 
 
 .vuldb-login .cvesearchcenter .MuiTableCell-root,.cvesearchcenter .MuiTypography-h5{ font-weight: 700; font-size: 14px;color: #333333;text-transform: capitalize;border: 0;}
-.vuldb-login .cvesearchcenter .MuiTableCell-stickyHeader{background: #e8ebf0;}
+.vuldb-login .cvesearchcenter .MuiTableCell-stickyHeader{background: #f6f8fa;}
 
 .vuldb-login .cvesearchcenter .MuiTableCell-root a .MuiSvgIcon-root{vertical-align: middle;}
 .vuldb-login .cvesearchcenter .MuiTableCell-root a{color: #027de7;text-decoration: none;}

@@ -233,6 +233,41 @@ button:focus{
   display: none;
 }
 
+
+
+
+.vuldb-login .MuiGrid-root.cvesearchright{position: fixed;top: 0;right: 0;z-index: 9999;bottom: 0;padding: 0 !important;}
+.vuldb-login .cvesearchright .cvesearchright-inner{height: calc(100% - 0px);overflow-y: scroll;}
+.vuldb-login .cvesearchright .cvesearchright-inner button.MuiButtonBase-root{justify-content: start;margin-bottom: 20px;}
+.vuldb-login .cvesearchright .cvesearchright-inner > div:last-child .boxdetailhead{border:0px; }
+.vuldb-login .cvesearchright .boxdetailhead{padding-bottom: 30px;margin-bottom: 0px;border-bottom:1px solid #e6e9ef;}
+.vuldb-login .cvesearchright .boxdetailtitle{background: none;}
+.vuldb-login .cvesearchright .boxdetailtitle h2{font-size: 16px;text-align: left;color: #333;margin-bottom: 05px;}
+.vuldb-login .cvesearchright .boxtitlecontent{border:1px solid #e6e9ef;border-radius: 10px; }
+.vuldb-login .cvesearchright .meterright{text-align: right;}
+.vuldb-login .cvesearchright .boxdetailhead .boxtitlecontent .meter{margin-bottom: 0;}
+.vuldb-login .cvesearchright .meter .meterleft{align-self: center;}
+.vuldb-login .cvesearchright .boxtitlecontent ul.niahinsightlist li{padding-left: 0;padding-right: 0;}
+.vuldb-login .cvesearchright-inner > div{background: none !important;}
+
+.vuldb-front .MuiGrid-root.cvesearchright{position: fixed;top: 0;right: 0;z-index: 9999;bottom: 0;padding: 0 !important;}
+.vuldb-front .cvesearchright .cvesearchright-inner{height: calc(100% - 0px);overflow-y: scroll;}
+.vuldb-front .cvesearchright .cvesearchright-inner button.MuiButtonBase-root{justify-content: start;margin-bottom: 20px;}
+.vuldb-front .cvesearchright .cvesearchright-inner > div:last-child .boxdetailhead{border:0px; }
+.vuldb-front .cvesearchright .boxdetailhead{padding-bottom: 30px;margin-bottom: 0px;border-bottom:1px solid #e6e9ef;}
+.vuldb-front .cvesearchright .boxdetailtitle{background: none;}
+.vuldb-front .cvesearchright .boxdetailtitle h2{font-size: 16px;text-align: left;color: #333;margin-bottom: 05px;}
+.vuldb-front .cvesearchright .boxtitlecontent{border:1px solid #e6e9ef;border-radius: 10px; }
+.vuldb-front .cvesearchright .meterright{text-align: right;}
+.vuldb-front .cvesearchright .boxdetailhead .boxtitlecontent .meter{margin-bottom: 0;}
+.vuldb-front .cvesearchright .meter .meterleft{align-self: center;}
+.vuldb-front .cvesearchright .boxtitlecontent ul.niahinsightlist li{padding-left: 0;padding-right: 0;}
+.vuldb-front .cvesearchright-inner > div{background: none !important;}
+
+
+
+
+
 @media only screen and (max-width: 767px) {
 
 .modebar-container {display: none;}
