@@ -2,7 +2,7 @@ import { Container, Grid, LinearProgress, makeStyles, TextField,Typography,Box,
 ListItem,ListItemIcon,ListItemText,List,ExpansionPanel,ExpansionPanelSummary,ExpansionPanelDetails,
 Slider,
 Paper,Table,TableBody,TableCell,TableContainer,TableHead,TablePagination,TableRow,
-Card,CardActionArea,CardActions,CardContent,CardMedia,Radio,RadioGroup,FormLabel,Chip,Icon
+Card,CardActionArea,CardActions,CardContent,CardMedia,Radio,RadioGroup,FormLabel,Chip,Icon,CardHeader,Collapse
 } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -38,6 +38,8 @@ import Skeleton from '@material-ui/lab/Skeleton';
 import Page from 'src/components/Page';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import IconButton from '@material-ui/core/IconButton';
+import Divider from '@material-ui/core/Divider';
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -132,6 +134,37 @@ const useStyles = makeStyles((theme) => ({
       wordWrap: 'break-word',
       maxWidth: 1000,
     },
+    flexContainer: {
+      display: 'flex',
+      flexDirection: 'row',
+      padding: 0,
+    },
+    cardsearch:{
+      boxShadow: 'none',
+      backgroundColor: 'initial'
+    },
+    expand: {
+      transform: 'rotate(0deg)',
+      marginLeft: 'auto',
+      transition: theme.transitions.create('transform', {
+        duration: theme.transitions.duration.shortest,
+      }),
+    },
+    expandOpen: {
+      transform: 'rotate(180deg)',
+    },
+    projectHeader: {
+        color: theme.palette.primary.light
+    },
+    input : {
+      "&::placeholder": {
+        textOverflow: "ellipsis !important",
+        color: "white",
+
+
+        fontSize: 14
+      },
+    },
 }));
 
 export const VuldbLogin = (/* {   } */) => {
@@ -183,6 +216,56 @@ export const VuldbLogin = (/* {   } */) => {
     const [chipData, setChipData] = useState([]);
 
     const [isSearchLoading, setIsSearchLoading] = React.useState(false);
+
+    const [searchtype, setSearchType] = useState('home');
+
+    const [expanded, setExpanded] = React.useState(false);
+
+
+    const [searchlanguage, SetSearchLanguage] = React.useState();
+    const [searchproduct, SetSearchProduct] = React.useState();
+    const [searchplatform, SetSearchPlatform] = React.useState();
+    const [searchplugin, SetSearchPlugin] = React.useState();
+    const [searchvendor, SetSearchVendor] = React.useState();
+    const [searchseverity, SetSearchSeverity] = React.useState();
+    const [searchaccessvector, SetSearchAccessvector] = React.useState();
+    
+    
+    /*const [expanded, setExpanded] = React.useState(false);
+    const [expanded, setExpanded] = React.useState(false);*/
+
+    const handleSearchLanguage = (e) => {
+        SetSearchLanguage(e.target.value);
+    };
+
+    const handleSearchProduct = (e) => {
+        SetSearchProduct(e.target.value);
+    };
+
+    const handleSearchPlatform = (e) => {
+        SetSearchPlatform(e.target.value);
+    };
+
+    const handleSearchPlugin = (e) => {
+        SetSearchPlugin(e.target.value);
+    };
+
+    const handleSearchVendor = (e) => {
+        SetSearchVendor(e.target.value);
+    };
+
+    const handleSearchSeverity = (e) => {
+        SetSearchSeverity(e.target.value);
+    };
+
+    const handleSearchAccessvector = (e) => {
+        SetSearchAccessvector(e.target.value);
+    };
+   
+    const handleExpandClick = () => {
+      setExpanded(!expanded);
+    };
+
 
     const handleChipDelete = (chipToDelete) => () => {
       chipData.splice(chipToDelete, 1);
@@ -447,6 +530,84 @@ export const VuldbLogin = (/* {   } */) => {
         }
 
     }
+
+    const handleAdvanceClick = (event) => {
+      console.log(searchlanguage);
+      console.log(searchproduct);
+      console.log(searchplatform);
+      console.log(searchplugin);
+      console.log(searchvendor);
+      apiurl.delete('offset');
+      apiurl.delete('limit'); 
+      apiurl.delete('type');
+      apiurl.delete('language'); 
+      apiurl.delete('product'); 
+      apiurl.delete('severity');
+      apiurl.delete('accessvector');
+
+      if(!isEmpty(searchlanguage)){
+         apiurl.set('type', 'language');
+         apiurl.set('product', searchlanguage);
+      }
+
+      if(!isEmpty(searchproduct)){
+         apiurl.set('type', 'product');
+         apiurl.set('product', searchproduct);
+      }
+
+      if(!isEmpty(searchplatform)){
+         apiurl.set('type', 'platform');
+         apiurl.set('product', searchplatform);
+      }
+
+      if(!isEmpty(searchplugin)){
+         apiurl.set('type', 'plugin');
+         apiurl.set('product', searchplugin);
+      }
+
+      if(!isEmpty(searchvendor)){
+         apiurl.set('type', 'vendor');
+         apiurl.set('product', searchvendor);
+      }
+
+      if(!isEmpty(searchseverity)){
+         apiurl.set('severity', searchseverity);
+      }
+
+      if(!isEmpty(searchaccessvector)){
+         apiurl.set('accessvector', searchaccessvector);
+      }
+
+      
+
+      const regex5 = /([^:\s]+):([^:\s]+)/g;
+      const regex = new RegExp(regex5,'i');
+      chipData.forEach(function (value, index, array) {
+          let m = regex.exec(value);    
+          var regexcve = /cve-/;
+          var regexcve2 = /CVE-/;
+          if(m){
+            if(m[1]=='language'){
+              apiurl.set('type', 'language');
+              apiurl.set('product', m[2]);
+            } else if(m[1]=='advisory') {
+              apiurl.set('type', 'advisory');
+              apiurl.set('product', m[2]);
+            } else if(m[1]=='platform') {
+              apiurl.set('type', 'platform');
+              apiurl.set('product', m[2]);
+            } else if(m[1]=='plugin') {              
+              apiurl.set('type', 'plugin');
+              apiurl.set('product', m[2]);
+            } else if(m[1]=='severity') {
+              apiurl.set('severity', m[2]);
+            } else if(m[1]=='accessvector') {
+              apiurl.set('accessvector', m[2]);
+            } 
+          }
+      })
+      callApi();
+    }  
 
     const handleClick = (event) => {
       apiurl.delete('offset');
@@ -1474,8 +1635,26 @@ export const VuldbLogin = (/* {   } */) => {
                 spacing={0}
                 className={classes.container}
               > 
-              <Container maxWidth="lg" className={classes.searchbar}> 
-                 
+              <Container maxWidth="lg" className={classes.searchbar}>
+                <Box mt={3}
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  className={classes.searchBoxTop}>
+                  <List component="ul" className={classes.flexContainer}>
+                    <ListItem>                    
+                      <ListItemText>
+                        Home
+                      </ListItemText>
+                    </ListItem>
+                     <Divider orientation="vertical" flexItem />
+                    <ListItem>
+                      <ListItemText>
+                        Browse
+                      </ListItemText>
+                    </ListItem>
+                  </List>
+                </Box> 
                 <Box mt={3}
                   display="flex"
                   justifyContent="center"
@@ -1527,9 +1706,184 @@ export const VuldbLogin = (/* {   } */) => {
                          <button onClick={handleClick} className={classes.searchButton}>Search</button>
                         </Box>}
                       </Box>
+                      
                 </Box>
                 ): '' }
-                
+                <Box mt={3}
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  className={classes.searchAdvanceBox}>
+                <Card className={classes.cardsearch}>
+                  <CardHeader
+                    action={
+                      <IconButton
+                        className={clsx(classes.expand, {
+                          [classes.expandOpen]: expanded,
+                        })}
+                        onClick={handleExpandClick}
+                        aria-expanded={expanded}
+                        aria-label="show more"
+                      >
+                        <ExpandMoreIcon />
+                      </IconButton>
+                    }
+                    title="Advance Search"
+                  />
+                  <Collapse in={expanded} timeout="auto" unmountOnExit>
+                    <CardContent>
+                    <Grid container spacing={3}>
+                         <Grid item xs={12} sm={6}>
+                            <Grid
+                                item
+                                md={4}
+                                sm={6}
+                                xs={12}
+                              >
+                              <Grid
+                                item
+                                xs={12}
+                              >
+                              <Typography variant="h3" component="h2">
+                                Language
+                              </Typography>
+                              </Grid>
+                              <Grid
+                                item
+                                xs={12}
+                              >
+                                <TextField
+                                  label="language"
+                                  name="language"
+                                  type="language"
+                                  onChange={handleSearchLanguage}
+                                />
+                              </Grid>
+                             </Grid>
+                             <Grid
+                                item
+                                md={4}
+                                sm={6}
+                                xs={12}
+                              >
+                              <Typography variant="h3" component="h2">
+                                Application/product
+                              </Typography>
+                                <TextField
+                                  label="Wordpress"
+                                  name="product"
+                                  type="product"
+                                  onChange={handleSearchProduct}
+                                />
+                             </Grid>
+                             <Grid
+                                item
+                                md={4}
+                                sm={6}
+                                xs={12}
+                              >
+                              <Typography variant="h3" component="h2">
+                                Platform
+                              </Typography>
+                                <TextField
+                                  label="platform"
+                                  name="platform"
+                                  type="platform"
+                                  onChange={handleSearchPlatform}
+                                />
+                             </Grid>
+                             <Grid
+                                item
+                                md={4}
+                                sm={6}
+                                xs={12}
+                              >
+                              <Typography variant="h3" component="h2">
+                                Plugin
+                              </Typography>
+                                <TextField
+                                  label="plugin"
+                                  name="plugin"
+                                  type="plugin"
+                                  onChange={handleSearchPlugin}
+                                />
+                             </Grid>
+                             <Grid
+                                item
+                                md={4}
+                                sm={6}
+                                xs={12}
+                              >
+                              <Typography variant="h3" component="h2">
+                                Vendor
+                              </Typography>
+                                <TextField
+                                  label="vendor"
+                                  name="vendor"
+                                  type="vendor"
+                                  onChange={handleSearchVendor}
+                                />
+                             </Grid>
+                         </Grid> 
+                         <Grid item xs={12} sm={6}>                          
+                          <Box
+                              display="flex"
+                              flexDirection="column"                              
+                              borderRadius={16}
+                            > 
+                              <Typography variant="h3"  id="severity-slider-custom" component="h2">
+                                Severity
+                              </Typography>
+                              <Box
+                                  display="flex"
+                                  flexDirection="column"
+                                  className="cvesearchslider"
+                                  borderRadius={16}
+                                >
+                                <Slider
+                                  defaultValue={0}
+                                  aria-labelledby="severity-slider-custom"
+                                  step={1}
+                                  min={0}
+                                  max={3}
+                                  marks={severitys}
+                                />
+                              </Box>
+                            </Box> 
+                          
+                          <Box
+                              display="flex"
+                              flexDirection="column"                              
+                              borderRadius={16}
+                            > 
+                              <Typography variant="h3"  id="severity-slider-custom" component="h2">
+                                Severity
+                              </Typography>
+                              <Box
+                                  display="flex"
+                                  flexDirection="column"
+                                  className="cvesearchslider"
+                                  borderRadius={16}
+                                >
+                                <Slider
+                                  defaultValue={0}
+                                  aria-labelledby="severity-slider-custom"
+                                  step={1}
+                                  min={0}
+                                  max={3}
+                                  marks={severitys}
+                                />
+                              </Box>
+                            </Box> 
+                        </Grid>
+                    </Grid>    
+                        <Box m="auto">
+                         <button onClick={handleAdvanceClick} className={classes.searchButton}>Search</button>
+                        </Box>
+                        </CardContent>
+                      </Collapse>
+                    </Card>
+                    </Box>
               </Container>
                </Grid> 
           </Container>

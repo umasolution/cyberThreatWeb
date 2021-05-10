@@ -264,8 +264,33 @@ button:focus{
 .vuldb-front .cvesearchright .boxtitlecontent ul.niahinsightlist li{padding-left: 0;padding-right: 0;}
 .vuldb-front .cvesearchright-inner > div{background: none !important;}
 
+.scan-report-list .MuiGrid-root.cvesearchright{position: fixed;top: 0;right: 0;z-index: 9999;bottom: 0;padding: 0 !important;}
+.scan-report-list .cvesearchright .cvesearchright-inner{height: calc(100% - 0px);overflow-y: scroll;}
+.scan-report-list .cvesearchright .cvesearchright-inner button.MuiButtonBase-root{justify-content: start;margin-bottom: 20px;}
+.scan-report-list .cvesearchright .cvesearchright-inner > div:last-child .boxdetailhead{border:0px; }
+.scan-report-list .cvesearchright .boxdetailhead{padding-bottom: 30px;margin-bottom: 0px;border-bottom:1px solid #e6e9ef;}
+.scan-report-list .cvesearchright .boxdetailtitle{background: none;}
+.scan-report-list .cvesearchright .boxdetailtitle h2{font-size: 16px;text-align: left;color: #333;margin-bottom: 05px;}
+.scan-report-list .cvesearchright .boxtitlecontent{border:1px solid #e6e9ef;border-radius: 10px; }
+.scan-report-list .cvesearchright .meterright{text-align: right;}
+.scan-report-list .cvesearchright .boxdetailhead .boxtitlecontent .meter{margin-bottom: 0;}
+.scan-report-list .cvesearchright .meter .meterleft{align-self: center;}
+.scan-report-list .cvesearchright .boxtitlecontent ul.niahinsightlist li{padding-left: 0;padding-right: 0;}
+.scan-report-list .cvesearchright-inner > div{background: none !important;}
 
-
+.report-issues-tab .MuiGrid-root.report-issuelist-right{position: fixed;top: 0;right: 0;z-index: 9999;bottom: 0;padding: 0 !important;}
+.report-issues-tab .report-issuelist-right .cvesearchright-inner{height: calc(100% - 0px);overflow-y: scroll;}
+.report-issues-tab .report-issuelist-right .cvesearchright-inner button.MuiButtonBase-root{justify-content: start;margin-bottom: 20px;}
+.report-issues-tab .report-issuelist-right .cvesearchright-inner > div:last-child .boxdetailhead{border:0px; }
+.report-issues-tab .report-issuelist-right .boxdetailhead{padding-bottom: 30px;margin-bottom: 0px;border-bottom:1px solid #e6e9ef;}
+.report-issues-tab .report-issuelist-right .boxdetailtitle{background: none;}
+.report-issues-tab .report-issuelist-right .boxdetailtitle h2{font-size: 16px;text-align: left;color: #333;margin-bottom: 05px;}
+.report-issues-tab .report-issuelist-right .boxtitlecontent{border:1px solid #e6e9ef;border-radius: 10px; }
+.report-issues-tab .report-issuelist-right .meterright{text-align: right;}
+.report-issues-tab .report-issuelist-right .boxdetailhead .boxtitlecontent .meter{margin-bottom: 0;}
+.report-issues-tab .report-issuelist-right .meter .meterleft{align-self: center;}
+.report-issues-tab .report-issuelist-right .boxtitlecontent ul.niahinsightlist li{padding-left: 0;padding-right: 0;}
+.report-issues-tab .cvesearchright-inner > div{background: none !important;}
 
 
 @media only screen and (max-width: 767px) {

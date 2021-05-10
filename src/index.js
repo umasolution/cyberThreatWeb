@@ -23,7 +23,8 @@ import Axios from 'axios';
 enableES5();
 
 
-Axios.defaults.baseURL = 'http://cyberthreatinfo.ca/api';
+/*Axios.defaults.baseURL = 'http://cyberthreatinfo.ca/api';*/
+Axios.defaults.baseURL = 'http://niahsecurity.online/api';
 /*Axios.defaults.baseURL = 'https://niah.smartcodders.com/';*/
 
 const store = configureStore();

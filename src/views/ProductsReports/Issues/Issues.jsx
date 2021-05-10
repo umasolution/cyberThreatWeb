@@ -18,6 +18,8 @@ import isEmpty from '../../../Util/Util';
 import Copy from "./../../../Util/Copy";
 import { setDateFormat } from './../../../Util/Util';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import IconButton from '@material-ui/core/IconButton';
 const useStyles = makeStyles((theme) => ({
   root: {
       flexGrow: 1,
@@ -168,6 +170,18 @@ const Issues = ({ issues, reportName, reportType,counter,historydata,projectId }
   const callApi = async () => {
       
   }
+
+  const handleRemoveRow = async (event, value) => {
+        setloadingRows(false);
+        setSingleRows(false);
+        setloadingRows(false);
+        
+        const selectedIndex = selected.indexOf(value);
+        let newSelected = [];
+        newSelected = newSelected.concat([], []);
+        setSelected(newSelected);
+
+    };
   
   const handleClick = (event) => { 
       setIsSearchLoading(true);      
@@ -600,7 +614,7 @@ const Issues = ({ issues, reportName, reportType,counter,historydata,projectId }
               spacing={2}
               className="report-issues-tab"
            > 
-     {loadingRows ?cvesearchcenter(issuesdata,8):cvesearchcenter(issuesdata,12)}
+     {loadingRows ?cvesearchcenter(issuesdata,12):cvesearchcenter(issuesdata,12)}
      {loadingRows ?(<>  
               <Grid
                 item
@@ -619,6 +633,9 @@ const Issues = ({ issues, reportName, reportType,counter,historydata,projectId }
                           flexDirection="column"
                           justifyContent="center"
                           borderRadius={16}>
+                          <IconButton className={classes.customizedButton}>
+                            <HighlightOffIcon onClick={handleRemoveRow}/>
+                          </IconButton>
                           <Box className="boxdetailhead">
                               <Box className="boxdetailtitle">
                                   <Typography gutterBottom variant="h5" component="h2">

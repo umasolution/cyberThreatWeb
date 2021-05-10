@@ -127,7 +127,7 @@ function PricingView() {
       title="Niah Security"
       id="PricingView" 
     >
-      <Container maxWidth="lg">
+      {/*<Container maxWidth="lg">
         <Typography
           align="center"
           variant="h2"
@@ -150,7 +150,7 @@ function PricingView() {
             30% of our income goes into Whale Charity
           </Typography>
         </Box>
-      </Container>
+      </Container>*/}
       <Box mt="50px" mb="100px">
         <Container maxWidth="lg">
           <Grid

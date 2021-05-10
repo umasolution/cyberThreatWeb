@@ -24,8 +24,8 @@ function HomeView() {
     >
       <Hero />
       <Features />
-      <LeftRightImage />
-      <PricingView />
+      {/*<LeftRightImage />
+      <PricingView />*/}
       <CTA />
     </Page>
   );
