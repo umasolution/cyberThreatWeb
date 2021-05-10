@@ -29,6 +29,8 @@ import LatestProjects from '../../views/reports/DashboardView/LatestProjects';
 import IconButton from '@material-ui/core/IconButton';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import DisplayDetail from './DisplayDetail';
+import CweTreeMap from './CweTreeMap';
 
 
 
@@ -60,39 +62,53 @@ const useStyles = makeStyles((theme) => ({
         width: '100%'
     },
     blueBox: {
-        backgroundColor: '#027de7',
-        color: 'white',
+        backgroundColor: theme.palette.info.dark,
         width: '100%',
         paddingTop: '5px',
-        textAlign: 'center'
+        textAlign: 'center',
+        fontSize: '12px',
+        fontWeight: '600',
+        color: 'white'
     },
     whiteBox: {
+        backgroundColor: theme.palette.common.white,
         width: '100%',
         height: '30px',
         paddingTop: '5px',
         textAlign: 'center'
 
+
+    },
+    boxContent: {
+
+        fontSize: '14px',
+        fontWeight: '600'
     },
     box: {
         height: '20%',
         background: 'linear-gradient(45deg, #99ebff 30%, #e6faff 90%)',
-        fontWeight: 'bold'
+
     },
     grid: {
         margin: '10px',
         backgroundColor: '#f0f0f5'
     },
     link: {
-        color: 'white',
+
         cursor: 'pointer'
     },
     info: {
         paddingBottom: 10
     },
-    accordianHeader : {
-        marginTop:'0.5%',
-        marginLeft:'1%',
-     
+    accordianRoot: {
+        backgroundColor: theme.palette.background.dark,
+    },
+    accordianHeader: {
+        marginTop: '0.5%',
+        marginLeft: '1%',
+        textTransform: 'upperCase',
+        fontWeight: '600'
+
     }
 
 }));
@@ -179,7 +195,7 @@ const ProductDetailVul = () => {
                             return (
                                 <>
                                     {Object.keys(header).map((key, index) =>
-                                        <ReportCount header={key} value={header[key]} index={index} gridSize={true} />
+                                        <DisplayDetail header={key} value={header[key]} index={index} gridSize={true} />
                                     )}
                                 </>
 
@@ -190,18 +206,18 @@ const ProductDetailVul = () => {
                 </Grid>
 
                 <Grid container spacing={2} className={classes.info}>
-                    <Grid item lg={3}
+                    <Grid item lg={4}
                         sm={6}
                         xs={12}>
                         <Paper elevation={3} className={classes.paperSmall}>
                             <div className={classes.row}>
-                                <div className={classes.whiteBox}>
-                                    <Typography align="center" variant="caption" >
+                                <div className={classes.blueBox}>
+                                    <Typography className={classes.boxContent} align="center" variant="caption" >
                                         Latest Version
                          </Typography>
                                 </div>
-                                <div className={classes.blueBox}>
-                                    <Typography align="center" variant="caption" >
+                                <div className={classes.whiteBox}>
+                                    <Typography className={classes.boxContent} align="center" variant="caption" >
                                         <Link className={classes.link}>2.2.3</Link>
                                     </Typography>
                                 </div>
@@ -210,18 +226,18 @@ const ProductDetailVul = () => {
                         </Paper>
                     </Grid>
 
-                    <Grid item lg={3}
+                    <Grid item lg={4}
                         sm={6}
                         xs={12}>
                         <Paper elevation={3} className={classes.paperSmall}>
                             <div className={classes.row}>
-                                <div className={classes.whiteBox}>
-                                    <Typography align="center" variant="caption" >
+                                <div className={classes.blueBox}>
+                                    <Typography className={classes.boxContent} align="center" variant="caption" >
                                         Package
                          </Typography>
                                 </div>
-                                <div className={classes.blueBox}>
-                                    <Typography align="center" variant="caption" >
+                                <div className={classes.whiteBox}>
+                                    <Typography className={classes.boxContent} align="center" variant="caption" >
                                         > 5 Years
                          </Typography>
                                 </div>
@@ -230,18 +246,18 @@ const ProductDetailVul = () => {
                         </Paper>
                     </Grid>
 
-                    <Grid item lg={3}
+                    <Grid item lg={4}
                         sm={6}
                         xs={12}>
                         <Paper elevation={3} className={classes.paperSmall}>
                             <div className={classes.row}>
-                                <div className={classes.whiteBox}>
-                                    <Typography align="center" variant="caption" >
+                                <div className={classes.blueBox}>
+                                    <Typography className={classes.boxContent} align="center" variant="caption" >
                                         Last Updated
                          </Typography>
                                 </div>
-                                <div className={classes.blueBox}>
-                                    <Typography align="center" variant="caption" >
+                                <div className={classes.whiteBox}>
+                                    <Typography className={classes.boxContent} align="center" variant="caption" >
                                         21st August, 2020
                          </Typography>
                                 </div>
@@ -250,7 +266,7 @@ const ProductDetailVul = () => {
                         </Paper>
                     </Grid>
                 </Grid>
-                <Accordion square expanded={firstAccordianOpen} onChange={() => { setFirstAccordianOpen(!firstAccordianOpen) }}>
+                <Accordion className={classes.accordianRoot} square expanded={firstAccordianOpen} onChange={() => { setFirstAccordianOpen(!firstAccordianOpen) }}>
                     <AccordionSummary aria-controls="panel1d-content" id="panel1d-header" style={{ backgroundColor: '#f6f8fa' }}>
                         <IconButton aria-label="expand row" size="small" onClick={() => setFirstAccordianOpen(!firstAccordianOpen)}>
                             {firstAccordianOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
@@ -279,7 +295,8 @@ const ProductDetailVul = () => {
                                 >
                                     {
                                         product && product.chart && product.chart.cwe ?
-                                            <CWEPieChart title="CWE Chart" cwe={product.chart.cwe} width={400} divId="productVul" /> : ""
+                                            //<CWEPieChart title="CWE Chart" cwe={product.chart.cwe} width={400} divId="productVul" /> : ""
+                                            <CweTreeMap title="CWE Chart" cwe={product.chart.cwe}/> : ""
                                     }
 
                                 </Grid>
@@ -313,10 +330,10 @@ const ProductDetailVul = () => {
                         </Grid>
                     </AccordionDetails>
                 </Accordion>
-                <Accordion square
+                <Accordion className={classes.accordianRoot} square
                     expanded={secondAccordianOpen}
                     onChange={() => { setSecondAccordianOpen(!secondAccordianOpen) }}>
-                    <AccordionSummary aria-controls="panel1d-content" id="panel2d-header" style={{backgroundColor:'#f6f8fa'}} >
+                    <AccordionSummary aria-controls="panel1d-content" id="panel2d-header" style={{ backgroundColor: '#f6f8fa' }} >
                         <IconButton aria-label="expand row" size="small" onClick={() => setSecondAccordianOpen(!secondAccordianOpen)}>
                             {secondAccordianOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                         </IconButton>
