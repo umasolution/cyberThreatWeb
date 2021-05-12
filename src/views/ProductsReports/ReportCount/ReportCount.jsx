@@ -36,8 +36,8 @@ const useStyles = makeStyles((theme) => ({
   },
   contentH3: {
      fontWeight: theme.fontfamily.semiBold,
-     fontSize: '20px',
-     lineHeight: 1.5
+     fontSize: '16px',
+     lineHeight: '1.5'
   }
 }));
 
