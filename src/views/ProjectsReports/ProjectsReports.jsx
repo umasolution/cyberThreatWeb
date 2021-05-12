@@ -710,7 +710,7 @@ const ProjectsReports = () => {
           <Box position="relative">
           <Paper className={classes.root}>
                 <TableContainer className={classes.container}>
-                  <Table stickyHeader aria-label="sticky table" className={loadingRows?'small-table':'big-table'}>
+                  <Table stickyHeader aria-label="sticky table" className={loadingRows?'big-table':'big-table'}>
                     <colgroup>
                         <col style={{width:'15%'}}/>
                         <col style={{width:'15%'}}/>
@@ -935,7 +935,7 @@ const ProjectsReports = () => {
    const getTabsData = () => {
         return (
             <>
-              {loadingRows ?cvesearchcenter(tabsData,8):cvesearchcenter(tabsData,12)}
+              {loadingRows ?cvesearchcenter(tabsData,12):cvesearchcenter(tabsData,12)}
               {loadingRows ?(<>  
               <Grid
                 item

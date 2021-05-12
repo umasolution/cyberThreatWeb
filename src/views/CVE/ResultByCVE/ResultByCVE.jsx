@@ -22,6 +22,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Skeleton from '@material-ui/lab/Skeleton';
+import isEmpty from './../../../Util/Util';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -326,7 +327,7 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                   Exploits 
                 </Typography>
                 <List style={{ width: '100%' }} dense={false}>
-                   {Object.keys(cveNVDDetails.Exploits).map((cKey, index) => 
+                   {!isEmpty(cveNVDDetails.Exploits) ? Object.keys(cveNVDDetails.Exploits).map((cKey, index) => 
                        <ExpansionPanel
                             key={cKey}
                             style={{ width: '100%' }}
@@ -351,7 +352,7 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                                   </Typography>
                             </ExpansionPanelDetails>
                        </ExpansionPanel>
-                   )}  
+                   ) :''}  
                 </List>
             </Grid>
         )
@@ -397,13 +398,13 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
         )
     }
 
-    const getMicrosoftAdvisory = (MicrosoftAdvisorydata) => {
+    const getAdvisory = (Advisorydata) => {
         return (
             <Grid item xs={12}>
                 <MaterialTable
-                    title="Products"
-                    columns={MicrosoftAdvisorydata.columns}
-                    data={MicrosoftAdvisorydata.data}
+                    title="{Advisorydata.title}"
+                    columns={Advisorydata.columns}
+                    data={Advisorydata.data}
                     style={{ width: '100%' }}
                     className="secondary"
                     options={{
@@ -639,10 +640,15 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                         
                     )
                         : ''}
-                    {getExploits(cveNVDDetails)}       
-                    {cveNVDDetails.Reference ? getReference(cveNVDDetails.Reference) : ''}
+                    {!isEmpty(cveNVDDetails.Exploits)?getExploits(cveNVDDetails):''}       
+                    {!isEmpty(cveNVDDetails.Reference) ? getReference(cveNVDDetails.Reference) : ''}
                     {getCVVScoreDetail(cveNVDDetails)}
-                    {cveNVDDetails.Products ? getProducts(cveNVDDetails.Products) : ''}
+                    {!isEmpty(cveNVDDetails.Products) ? getProducts(cveNVDDetails.Products) : ''}
+                    {!isEmpty(cveNVDDetails.microsoft_advisory) ? getAdvisory(cveNVDDetails.microsoft_advisory) : ''}
+                    {!isEmpty(cveNVDDetails.library_advisory) ? getAdvisory(cveNVDDetails.library_advisory) : ''}
+                    {!isEmpty(cveNVDDetails.plugin_advisory) ? getAdvisory(cveNVDDetails.plugin_advisory) : ''}
+                    {!isEmpty(cveNVDDetails.application_advisory) ? getAdvisory(cveNVDDetails.application_advisory) : ''}
+                    {!isEmpty(cveNVDDetails.platform_advisory) ? getAdvisory(cveNVDDetails.platform_advisory) : ''}
                     
                 </Grid>
             </div>
