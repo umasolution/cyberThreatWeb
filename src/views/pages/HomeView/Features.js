@@ -63,7 +63,7 @@ function Features({ className, ...rest }) {
       className={clsx(classes.root, className)}
       {...rest}
     > 
-      <Container maxWidth="md">       
+      {/*<Container maxWidth="md">       
         <Box mt={3}>
           <Typography
             align="center"
@@ -76,7 +76,7 @@ function Features({ className, ...rest }) {
             30% of our income goes into Whale Charity
           </Typography>
         </Box>
-      </Container>
+      </Container>*/}
       <Container maxWidth="lg">
         <Box mt={2} >
           <Grid

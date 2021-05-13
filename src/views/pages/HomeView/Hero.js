@@ -298,9 +298,10 @@ function Hero({ className, ...rest }) {
                 onClick={gotoRegister}
                 style={{marginTop: '8px'}}
               >
-                Explore More
-              </Button></div>
-              
+                Sign up for free
+              </Button>
+              </div>
+              <h5 className={classes.mainContentH5} style={{marginTop: '8px'}}>No credit card required</h5>
             </Box>
           </Grid>
           <Grid
@@ -314,6 +315,7 @@ function Hero({ className, ...rest }) {
                   alt="Presentation"
                   src="/static/home/hero_banner.png"
                 />
+
               </div>
             </Box>
           </Grid>
