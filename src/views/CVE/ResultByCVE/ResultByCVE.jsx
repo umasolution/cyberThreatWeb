@@ -389,7 +389,7 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                       },
                       rowStyle: x => {
                         if (x.tableData.id % 2 === 0) {
-                            return {backgroundColor: "#f9f9fc"}
+                           
                         }
                     }
                     }}
@@ -400,9 +400,11 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
 
     const getAdvisory = (Advisorydata) => {
         return (
-            <Grid item xs={12}>
+            <Grid item xs={12}
+            className="cve-product-table"
+            >
                 <MaterialTable
-                    title="{Advisorydata.title}"
+                    title={Advisorydata.title}
                     columns={Advisorydata.columns}
                     data={Advisorydata.data}
                     style={{ width: '100%' }}
@@ -427,7 +429,7 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                       },
                       rowStyle: x => {
                         if (x.tableData.id % 2 === 0) {
-                            return {backgroundColor: "#f9f9fc"}
+                            
                         }
                     }
                     }}

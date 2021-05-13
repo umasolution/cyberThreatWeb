@@ -367,6 +367,7 @@ export const VuldbLogin = (/* {   } */) => {
         setSingleRows();
         setloadingRows(true);
         let response = await Axios.get(url);
+        response.data.cve_id = value;
         setSingleRows(response.data);
         const selectedIndex = selected.indexOf(value);
         let newSelected = [];
@@ -888,9 +889,9 @@ export const VuldbLogin = (/* {   } */) => {
                             
                           ))
                         }  
-                        <TableCell key='action'>
+                        {/*<TableCell key='action'>
                            Action
-                        </TableCell>
+                        </TableCell>*/}
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -928,11 +929,11 @@ export const VuldbLogin = (/* {   } */) => {
                                 :''
                                 )
                                 )}
-                                <TableCell key='action'>
+                                {/*<TableCell key='action'>
                                   <Box flexWrap="wrap">
-                                     <Link target="_blank" to={`/CVE/${row['cve_id']}`}> <VisibilityIcon/> View full Details</Link>
+                                     <Link target="_blank" to={`/app/CVE/${row['cve_id']}`}> <VisibilityIcon/> View full Details</Link>
                                   </Box>   
-                                </TableCell>
+                                </TableCell>*/}
                             </TableRow>
                           ) }
                           )
@@ -1322,6 +1323,9 @@ export const VuldbLogin = (/* {   } */) => {
                           <IconButton className={classes.customizedButton}>
                             <HighlightOffIcon  onClick={handleRemoveRow}/>
                           </IconButton>
+                          <Box className="view-more-btn">
+                             <Link target="_blank" to={`/app/CVE/${singlerows.cve_id}`}>View Full Details</Link>
+                          </Box>
                           <Box className="boxdetailhead">
                               <Box className="boxdetailtitle">
                                   <Typography gutterBottom variant="h5" component="h2">

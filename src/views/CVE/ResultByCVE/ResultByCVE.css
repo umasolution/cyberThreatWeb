@@ -1,3 +1,4 @@
+.cve-product-table {margin-bottom: 30px;}
 .paper {
   padding: 10px;
 }
@@ -57,12 +58,12 @@ body,.makeStyles-wrapper-8{background: #fafafc !important;}
 .baseScore-box .base-score-value{background: none;font-size: 45px;letter-spacing: 0.75px;font-weight: 600;color: #333;display: inline-block;padding: 32px 10px;}
 
 
-.cve-descp h5,.cve-title h5,.cve-detail-main h5 {font-size: 22px;color: #333;letter-spacing: 0.75px;margin-bottom: 15px;font-weight: 600;}
+.cve-descp h5,.cve-title h5,.cve-detail-main h5,.cve-product-table h6 {font-size: 22px;color: #333;letter-spacing: 0.75px;margin-bottom: 15px;font-weight: 600;}
 .cve-descp p{font-size: 17px;color: #444444;letter-spacing: 0.2px;line-height: 30px;font-weight: 500;}
 
-.cve-product-table table{border: 1px solid #d6d6d7 !important;}
-.cve-product-table table thead tr td,.cve-product-table table thead tr th{background: #e8e7ea;color: #333333 !important;font-size: 18px !important; border-bottom: 0 !important;}
-.cve-product-table table thead tr th{background: #e8e7ea;border-bottom: 1px solid #d6d6d7 !important;}
+/*.cve-product-table table{border: 1px solid #d6d6d7 !important;}*/
+/*.cve-product-table table thead tr td,.cve-product-table table thead tr th{background: #e8e7ea;color: #333333 !important;font-size: 18px !important; border-bottom: 0 !important;}
+.cve-product-table table thead tr th{background: #e8e7ea;border-bottom: 1px solid #d6d6d7 !important;}*/
 
 .accordian-block {background: #f3f3f3;box-shadow: none;margin-bottom: 15px;}
 .accordian-block:before{display: none;}
@@ -77,13 +78,42 @@ body,.makeStyles-wrapper-8{background: #fafafc !important;}
 .accordian-block tr th {font-weight: 600;}
 .accordian-block .MuiPaper-root{box-shadow: none;}
 
-.cve-product-table > div{background: #f3f3f3;}
-.cve-product-table > .MuiPaper-root{padding: 10px 15px;}
-.cve-product-table h6.MuiTypography-h6{font-size: 18px;font-weight: 600;letter-spacing: 0.75px;color: #333;}
+/*.cve-product-table > div{background: #f3f3f3;}*/
+/*.cve-product-table > .MuiPaper-root{padding: 10px 15px;}*/
+/*.cve-product-table h6.MuiTypography-h6{font-size: 18px;font-weight: 600;letter-spacing: 0.75px;color: #333;}*/
 
-.cve-product-table .MuiTextField-root{min-width: 500px;
+/*.cve-product-table .MuiTextField-root{min-width: 500px;
 padding-left: 16px;
-height: 50px;}
-.cve-product-table .MuiInput-root{background: #fff;height: 42px;padding: 10px;border: 0;}
+height: 50px;}*/
+.cve-product-table .MuiInput-root{height: 42px;padding: 10px;border: 0;}
 .cve-product-table .MuiInput-root:before{display: none;}
 
+.cve-product-table > [class*='MuiPaper-root'] > [class*='MuiToolbar-root']{
+    background: #f6f8fa;
+    border-bottom: 1px solid #e1e4e8;
+    padding: 10px 15px;
+}
+.cve-product-table [class*='MuiFormControl-root'] {
+    border: 1px solid #c5c5c5;
+    padding: 5px 10px;
+    border-radius: 50px;
+}
+
+.cve-product-table table tr th {
+    border-bottom: 1px solid #e1e4e8 !important;
+    background: none;
+}
+.cve-product-table table tr td {
+    font-size: 15px !important;
+    font-weight: 400 !important;
+    padding: 10px 20px !important;
+}
+.cve-product-table table tr:hover {
+    background: #F6F8FA;
+}
+
+.cve-product-table table tr th {
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    padding: 10px 20px !important;
+}

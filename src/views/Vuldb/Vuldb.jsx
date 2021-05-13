@@ -229,12 +229,18 @@ export const Vuldb = (/* {   } */) => {
     const [searchplatform, SetSearchPlatform] = React.useState();
     const [searchplugin, SetSearchPlugin] = React.useState();
     const [searchvendor, SetSearchVendor] = React.useState();
+
     const [searchseverity, SetSearchSeverity] = React.useState();
+
     const [searchaccessvector, SetSearchAccessvector] = React.useState();
 
     const [searchBrowseType, SetSearchBrowseType] = React.useState('product');
 
+    const [searchHomeType, SetSearchHomeType] = React.useState();
+
     const [searchProductType, SetSearchProductType] = React.useState();
+
+    const [keywordSearch, SetKeywordSearch] = React.useState();
 
     const handleSearchLanguage = (e) => {
         SetSearchLanguage(e.target.value);
@@ -256,20 +262,50 @@ export const Vuldb = (/* {   } */) => {
         SetSearchVendor(e.target.value);
     };
 
-    const handleSearchSeverity = (e) => {
-        SetSearchSeverity(e.target.value);
+    const handleSearchSeverity = (e,value) => {
+        SetSearchSeverity(value);
     };
 
-    const handleSearchAccessvector = (e) => {
-        SetSearchAccessvector(e.target.value);
+    const [searchVector, setSearchVector] = useState([]);
+
+    const handleSearchAccessvector = (e, value) => {
+    	const checked = e.target.checked;
+        const checkedValue = e.target.value;
+        const checkedName = e.target.name;
+        /*SetSearchAccessvector(e.target.value);*/
+        apiurl.delete('accessVector', checkedValue);
+        if(checkedValue=='local'){
+          if(checked){
+            searchVector.push(checkedValue);
+          } else {
+            apiurl.delete('accessVector', checkedValue);
+            var index = searchVector.indexOf(checkedValue);
+            delete searchVector[index];
+          }
+        } else if(checkedValue=='remote'){
+           if(checked){
+            searchVector.push(checkedValue);
+          } else {
+            apiurl.delete('accessVector', checkedValue);
+            var index = searchVector.indexOf(checkedValue);
+            delete searchVector[index];
+          }
+        }
+        setSearchVector(selectvector);
+        const myList = (
+          selectvector.map((item, i) => apiurl.append('accessVector', item))
+        )
     };
 
     const handleProductType = (e) => {
         SetSearchProductType(e.target.value);
     };
 
+     const handleKeywordSearch = (e) => {
+        SetKeywordSearch(e.target.value);
+    };
+
     const handleBrowseRadio = async (event) => {
-        console.log(event.target.value);
         const productType = event.target.value;
         SetSearchBrowseType(productType);
         if(productType!='product'){
@@ -277,7 +313,10 @@ export const Vuldb = (/* {   } */) => {
         }
         
     } 
-
+    const handleHomeRadio = async (event) => {
+        const homeType = event.target.value;
+        SetSearchHomeType(homeType);
+    } 
     const handleSearchType = (value) => {
         setSearchType(value);
         if(value=='browse'){
@@ -292,8 +331,6 @@ export const Vuldb = (/* {   } */) => {
     };
 
     const [emptyData, setEmptyData] = useState(false);
-
-    
 
     const handleChipDelete = (chipToDelete) => () => {
       chipData.splice(chipToDelete, 1);
@@ -420,9 +457,9 @@ export const Vuldb = (/* {   } */) => {
         var url = `/scan/browse?${apiurl.toString()}`;
         let response = await Axios.get(url);
         if(response) {
-          response.data.results = response.data;
+          /*response.data.results = response.data;
           response.data.columns = [{field: "product", title: "Product"},{field: "producttype", title: "Product Type"},
-          {field: "totalvuln", title: "Total Vuln"},{field: "vendor", title: "Vendor"},{field: "severity", title: "Severity"}];
+          {field: "totalvuln", title: "Total Vuln"},{field: "vendor", title: "Vendor"},{field: "severity", title: "Severity"}];*/
           setTabsData(response.data);
           setPage(1);
           let totalpages = Math.ceil(response.data.total/perRow);
@@ -458,6 +495,7 @@ export const Vuldb = (/* {   } */) => {
         setSingleRows();
         setloadingRows(true);
         let response = await Axios.get(url);
+        response.data.cve_id = value;
         setSingleRows(response.data);
         const selectedIndex = selected.indexOf(value);
         let newSelected = [];
@@ -693,34 +731,36 @@ export const Vuldb = (/* {   } */) => {
       apiurl.delete('product'); 
       apiurl.delete('severity');
       apiurl.delete('accessvector');
-
-      if(!isEmpty(searchlanguage)){
-         apiurl.set('type', 'language');
-         apiurl.set('product', searchlanguage);
-      }
+      console.log(searchseverity);
+      if(!isEmpty(searchHomeType)){
+		 apiurl.set('type', searchHomeType);
+		 if(!isEmpty(keywordSearch)){
+		 	apiurl.set('product', keywordSearch);
+		 } else {
+		 	apiurl.set('product', 'all');	
+		 }
+	  }
 
       if(!isEmpty(searchproduct)){
-         apiurl.set('type', 'product');
          apiurl.set('product', searchproduct);
       }
 
-      if(!isEmpty(searchplatform)){
-         apiurl.set('type', 'platform');
-         apiurl.set('product', searchplatform);
-      }
-
-      if(!isEmpty(searchplugin)){
-         apiurl.set('type', 'plugin');
-         apiurl.set('product', searchplugin);
-      }
-
       if(!isEmpty(searchvendor)){
-         apiurl.set('type', 'vendor');
-         apiurl.set('product', searchvendor);
+         apiurl.set('vendor', searchvendor);
       }
 
       if(!isEmpty(searchseverity)){
-         apiurl.set('severity', searchseverity);
+         let slidervalue = 0;
+         if(searchseverity==1){
+          slidervalue = 'LOW';
+          apiurl.set('severity', slidervalue);
+        } else if(searchseverity==2){
+          slidervalue = 'MEDIUM';
+          apiurl.set('severity', slidervalue);
+        } else if(searchseverity==3){
+          slidervalue = 'HIGH';
+          apiurl.set('severity', slidervalue);
+        } 
       }
 
       if(!isEmpty(searchaccessvector)){
@@ -1054,9 +1094,9 @@ export const Vuldb = (/* {   } */) => {
                             
                           ))
                         }  
-                        <TableCell key='action'>
+                        {/*<TableCell key='action'>
                            Action
-                        </TableCell>
+                        </TableCell>*/}
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -1094,11 +1134,11 @@ export const Vuldb = (/* {   } */) => {
                                 :''
                                 )
                                 )}
-                                <TableCell key='action'>
+                                {/*<TableCell key='action'>
                                   <Box flexWrap="wrap">
                                      <Link target="_blank" to={`/CVE/${row['cve_id']}`}> <VisibilityIcon/> View full Details</Link>
                                   </Box>   
-                                </TableCell>
+                                </TableCell>*/}
                             </TableRow>
                           ) }
                           )
@@ -1486,6 +1526,9 @@ export const Vuldb = (/* {   } */) => {
                           <IconButton className={classes.customizedButton}>
                             <HighlightOffIcon  onClick={handleRemoveRow}/>
                           </IconButton>
+                          <Box className="view-more-btn">
+                             <Link target="_blank" to={`/app/CVE/${singlerows.cve_id}`}>View Full Details</Link>
+                          </Box>
                           <Box className="boxdetailhead">
                               <Box className="boxdetailtitle">
                                   <Typography gutterBottom variant="h5" component="h2">
@@ -1909,20 +1952,26 @@ export const Vuldb = (/* {   } */) => {
                                 item
                                 xs={12}
                               >
-                              <Typography variant="h3" component="h2">
-                                Language
-                              </Typography>
-                              </Grid>
-                              <Grid
-                                item
-                                xs={12}
-                              >
-                                <TextField
-                                  label="language"
-                                  name="language"
-                                  type="language"
-                                  onChange={handleSearchLanguage}
-                                />
+                              <RadioGroup aria-label="hometype" name="hometype" value={searchHomeType} onChange={(e) => handleHomeRadio(e)}>
+	                              <FormControlLabel value="language" control={<Radio />} label={capitalizeFirstLetter('language')} />
+	                              <FormControlLabel value="application" control={<Radio />} label={capitalizeFirstLetter('application')} />
+	                              <FormControlLabel value="platform" control={<Radio />} label={capitalizeFirstLetter('Platform')} />
+	                              <FormControlLabel value="plugin" control={<Radio />} label={capitalizeFirstLetter('Plugin')} />
+	                          </RadioGroup>
+	                          {searchHomeType=='language'?(<TextField
+                                  label="Keyword Type"
+                                  name="keywordsearch"
+                                  type="keywordsearch"
+                                  placeholder="e.g. os, application, hardware"
+                                  onChange={handleKeywordSearch}
+                                />):''}
+                              {searchHomeType=='application'?(<TextField
+                                  label="Keyword Type"
+                                  name="keywordsearch"
+                                  type="keywordsearch"
+                                  placeholder="e.g. os, application, hardware"
+                                  onChange={handleKeywordSearch}
+                                />):''}  
                               </Grid>
                              </Grid>
                              <Grid
@@ -1932,7 +1981,7 @@ export const Vuldb = (/* {   } */) => {
                                 xs={12}
                               >
                               <Typography variant="h3" component="h2">
-                                Application/product
+                                Product
                               </Typography>
                                 <TextField
                                   label="Wordpress"
@@ -1941,38 +1990,7 @@ export const Vuldb = (/* {   } */) => {
                                   onChange={handleSearchProduct}
                                 />
                              </Grid>
-                             <Grid
-                                item
-                                md={4}
-                                sm={6}
-                                xs={12}
-                              >
-                              <Typography variant="h3" component="h2">
-                                Platform
-                              </Typography>
-                                <TextField
-                                  label="platform"
-                                  name="platform"
-                                  type="platform"
-                                  onChange={handleSearchPlatform}
-                                />
-                             </Grid>
-                             <Grid
-                                item
-                                md={4}
-                                sm={6}
-                                xs={12}
-                              >
-                              <Typography variant="h3" component="h2">
-                                Plugin
-                              </Typography>
-                                <TextField
-                                  label="plugin"
-                                  name="plugin"
-                                  type="plugin"
-                                  onChange={handleSearchPlugin}
-                                />
-                             </Grid>
+                             
                              <Grid
                                 item
                                 md={4}
@@ -2011,12 +2029,13 @@ export const Vuldb = (/* {   } */) => {
                                   step={1}
                                   min={0}
                                   max={3}
+                                  onChange={handleSearchSeverity}
                                   marks={severitys}
                                 />
                               </Box>
                             </Box> 
                           
-                          <Box
+                          {/*<Box
                               display="flex"
                               flexDirection="column"                              
                               borderRadius={16}
@@ -2039,14 +2058,14 @@ export const Vuldb = (/* {   } */) => {
                                   marks={cvss}
                                 />
                               </Box>
-                            </Box>
+                            </Box>*/}
                            <Box
                               display="flex"
                               flexDirection="column"                              
                               borderRadius={16}
                             > 
                              <List>
-                              <ListItem>
+                              {/*<ListItem>
                                 <ListItemIcon>
                                   <Checkbox
                                     edge="start"
@@ -2100,7 +2119,7 @@ export const Vuldb = (/* {   } */) => {
                                   />
                                 </ListItemIcon>
                                 <ListItemText id="remote-code-execution" primary="Remote Code Execution vulnerabilities" />
-                              </ListItem>
+                              </ListItem>*/}
                               <ListItem>
                                 <ListItemIcon>
                                   <Checkbox
@@ -2110,7 +2129,7 @@ export const Vuldb = (/* {   } */) => {
                                     inputProps="Remote"
                                     name="remote"
                                     value="remote" 
-                                    onChange={handleChangeAdvance}
+                                    onChange={handleSearchAccessvector}
                                   />
                                 </ListItemIcon>
                                 <ListItemText id="remote" primary="Remote" />
@@ -2124,7 +2143,7 @@ export const Vuldb = (/* {   } */) => {
                                     inputProps="Local"
                                     name="local"
                                     value="local" 
-                                    onChange={handleChangeAdvance}
+                                    onChange={handleSearchAccessvector}
                                   />
                                 </ListItemIcon>
                                 <ListItemText id="local" primary="Local" />

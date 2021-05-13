@@ -184,6 +184,31 @@ width:100% !important;
     border-bottom: 1px solid #e1e4e8 !important;
 }
 
+.vuldb-front .cvesearchright .view-more-btn {
+    width: 100%;
+    font-size: 17px;
+    color: #333;
+    font-weight: 600;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.vuldb-front .cvesearchright .view-more-btn a {
+    background: #185d98;
+    text-decoration: none;
+    display: inline-block;
+    padding: 12px 20px;
+    color: #fff;
+    border: 2px solid #185d98;
+    line-height: 1;
+    font-family: "Montserrat",sans-serif !important;
+}
+
+.vuldb-front .cvesearchright .view-more-btn {
+    text-align: center;
+    margin-top: 0px;
+}
+
 @media only screen and (min-width:1700px){
 
 /*.vuldb-front .cvesearchcenter .MuiTableCell-root{padding: 8px}*/
