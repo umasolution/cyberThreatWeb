@@ -1,19 +1,198 @@
-.report-dashboardData > div .MuiAvatar-root{width: 100%;height: 100%;font-size: 18px;font-weight: 500;padding: 10px 26px;}
-.rounded-color-0 {
-    color: #fff;
-    background-color: #00d1ce;
+
+.drawer {
+  flex-shrink: 0;
+}
+.open_vulnerabilities tbody.MuiTableBody-root {
+	background-color: #fff;
+}
+.open_vulnerabilities .cvesearchslider {
+	width: 300px;
+}
+.open_vulnerabilities .topSearch.MuiContainer-maxWidthLg{max-width: 1400px;}
+
+
+.open_vulnerabilities .topSearch .MuiInput-underline:before{display: none;}
+
+
+.open_vulnerabilities .topSearch .MuiInputBase-input{font-size: 14px;color: #000 !important;}
+
+.open_vulnerabilities .cvesearchleft .MuiTypography-h3 {font-size: 18px;font-weight: 600;color: #333333;letter-spacing: 0.5px;}
+
+
+.open_vulnerabilities .cvesearchcenter .MuiTableCell-root,.cvesearchcenter .MuiTypography-h5{ font-weight: 700; font-size: 14px;color: #333333;text-transform: capitalize;border: 0;}
+.open_vulnerabilities .cvesearchcenter .MuiTableCell-stickyHeader{background: #f6f8fa;}
+
+.open_vulnerabilities .cvesearchcenter .MuiTableCell-root a .MuiSvgIcon-root{vertical-align: middle;}
+.open_vulnerabilities .cvesearchcenter .MuiTableCell-root a{color: #027de7;text-decoration: none;}
+
+
+.open_vulnerabilities .cvesearchcenter .MuiTableRow-root.MuiTableRow-hover:hover{background: #027ae2}
+.open_vulnerabilities .cvesearchcenter .MuiTableRow-root.MuiTableRow-hover:hover .MuiTableCell-root,.cvesearchcenter .MuiTableRow-root.MuiTableRow-hover:hover .MuiTypography-h5,.cvesearchcenter .MuiTableRow-root.MuiTableRow-hover:hover .MuiTypography-h6,.cvesearchcenter .MuiTableRow-root.MuiTableRow-hover:hover .MuiTableCell-root a,
+.open_vulnerabilities .cvesearchcenter .MuiTableRow-root.MuiTableRow-hover.Mui-selected .MuiTableCell-root,.cvesearchcenter .MuiTableRow-root.MuiTableRow-hover.Mui-selected .MuiTypography-h5,.cvesearchcenter .MuiTableRow-root.MuiTableRow-hover.Mui-selected .MuiTypography-h6,.cvesearchcenter .MuiTableRow-root.MuiTableRow-hover.Mui-selected .MuiTableCell-root a{color: #fff;}
+
+.open_vulnerabilities .cvesearchcenter .MuiPagination-root{margin: 30px 0;}
+
+.open_vulnerabilities .cvesearchcenter .MuiPagination-root ul{display: inline-block;width: 100%; text-align: center;}
+
+.open_vulnerabilities .cvesearchcenter .MuiPagination-root ul li{display: inline-block;}
+
+
+.open_vulnerabilities .boxdetailhead .boxtitlecontent .meter{display: flex;margin-bottom: -55px;}
+
+.open_vulnerabilities .cvesearchleft .boxleftheader > div{margin-bottom: 15px;}
+.open_vulnerabilities .cvesearchremote .cvesearchremote-inner{box-shadow: 0 0 0 1px rgba(63,63,68,0.05), 0 1px 2px 0 rgba(63,63,68,0.15);border-radius: 6px;padding: 15px 24px;}
+.open_vulnerabilities .cvesearchremote .MuiListItem-gutters{padding: 0px 0 10px 0;}
+.open_vulnerabilities .cvesearchremote-inner .MuiListItemText-root{margin: 0;}
+.open_vulnerabilities .cvesearchleft .MuiListItem-root .MuiListItemText-root .MuiTypography-body1{font-size: 18px; font-weight: 600;color: #333;}
+
+
+.open_vulnerabilities .cvesearchright-inner{background: #fff;padding: 15px;box-shadow: 0 0 0 1px rgba(63,63,68,0.05), 0 1px 2px 0 rgba(63,63,68,0.15);}
+.open_vulnerabilities .cvesearchtopheader{background: #fff;padding: 15px;box-shadow: 0 0 0 1px rgba(63,63,68,0.05), 0 1px 2px 0 rgba(63,63,68,0.15);}
+
+.open_vulnerabilities .cvesearchright {    
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 9999;
+  bottom: 0;
+  padding: 0 !important;
+height:100%}
+
+.open_vulnerabilities .cvesearchright .cvesearchright-inner {
+  height: calc(100% - 0px);
+  overflow-y: scroll;
 }
 
-.rounded-color-1{
-    color: #fff;
-    background-color: #fe0a7b;
-  }
-  .rounded-color-2{
-    color: #fff;
-    background-color: #ff9f00;
-  }
-  .rounded-color-3{
-    color: #fff;
-    background-color: #027de7;
-  }
-  
+
+.open_vulnerabilities  .cvesearchright-inner button.MuiButtonBase-root{justify-content: start;margin-bottom: 20px;}
+.open_vulnerabilities .cvesearchright-inner > div:last-child .boxdetailhead{border:0px; }
+.open_vulnerabilities  .boxdetailhead{padding-bottom: 30px;margin-bottom: 0px;border-bottom:1px solid #e6e9ef;}
+.open_vulnerabilities  .boxdetailtitle{background: none;}
+.open_vulnerabilities  .boxdetailtitle h2{font-size: 16px;text-align: left;color: #333;margin-bottom: 05px;}
+.open_vulnerabilities  .boxtitlecontent{border:1px solid #e6e9ef;border-radius: 10px; }
+.open_vulnerabilities  .meterright{text-align: right;}
+.open_vulnerabilities .boxdetailhead .boxtitlecontent .meter{margin-bottom: 0;}
+.open_vulnerabilities  .meter .meterleft{align-self: center;}
+.open_vulnerabilities .boxtitlecontent ul.niahinsightlist li{padding-left: 0;padding-right: 0;}
+.open_vulnerabilities .cvesearchright-inner > div{background: none !important;}
+
+
+.open_vulnerabilities .cvesearchright-inner > div{background: #f4f6fa;border-radius: 10px;margin-bottom: 15px;}
+
+
+.open_vulnerabilities .cvesearchright-inner .boxtitlecontent > div{padding:10px 15px;margin-bottom: 15px;}
+.open_vulnerabilities .cvesearchright-inner .boxtitlecontent > div.scoreblock-div{border-bottom: 1px solid #dde4ee;}
+.open_vulnerabilities .scoreblock-div{display: flex;}
+.open_vulnerabilities .scoreblock {padding:0 5px;}
+.open_vulnerabilities .scoreblock-inner{display: table;width: 100%;height: 45px;border-radius: 5px;background: #fff;  }
+.open_vulnerabilities .scoreblock-inner > div{display: table-cell; vertical-align: middle;padding: 5px;font-size: 14px; font-weight: 600; text-align: center;}
+.open_vulnerabilities .scoretitle{border: 1px solid #d0d8e5;border-radius: 3px 0 0 3px; color: #333;}
+.open_vulnerabilities .scorevalue{background: #027ae2; color: #fff;border-radius: 0px 3px 3px 0px;}
+
+.open_vulnerabilities .meterleft h2{font-size: 16px;font-weight: 600;margin-bottom: 10px;}
+.open_vulnerabilities .meterleft h2 a{text-decoration: none;color: #e43838} 
+
+.open_vulnerabilities .boxtitlecontent .insightlist .MuiListItem-gutters{padding: 0px 0 15px 0;}
+.open_vulnerabilities .boxtitlecontent .insightlist .MuiListItem-gutters:last-child{padding-bottom: 0;}
+.open_vulnerabilities .boxtitlecontent .insightlist .MuiListItem-gutters .MuiSvgIcon-root{color: #333;}
+.open_vulnerabilities .insightlist .MuiTypography-displayBlock{font-size: 17px;color: #333;font-weight: 600;}
+
+.open_vulnerabilities .loading-cell{padding: 10px;}
+.open_vulnerabilities .boxtitlecontent .snapshotlist .MuiListItem-gutters{padding: 0px 0 5px 0;;}
+.open_vulnerabilities .snapshotlist .MuiTypography-root > div{width: 50%;font-size: 17px; color: #333;font-weight: 600;display: inline-block;vertical-align: top;}
+
+
+.open_vulnerabilities .boxtitlecontent.explo-list{padding: 10px 15px;}
+.open_vulnerabilities .boxtitlecontent.explo-list .MuiExpansionPanelSummary-content h2{font-size: 17px;font-weight: 600;}
+.open_vulnerabilities .boxtitlecontent.explo-list .MuiExpansionPanelDetails-root .MuiTypography-root a{padding-bottom: 10px;word-break: break-all;}
+.open_vulnerabilities .cveresult .Mui-selected {
+	background-color: #027ae2;
+	color: #fff;
+}
+.open_vulnerabilities .cvesearchcenter .MuiTypography-h6{font-size: 13px;}
+.open_vulnerabilities .cvesearchcenter .MuiTableRow-root {
+	cursor: pointer;
+}
+.open_vulnerabilities .cveresult .MuiTableContainer-root{overflow: visible;}
+.open_vulnerabilities .cveresult .Mui-selected,.cveresult tr.Mui-selected,.cveresult tr.Mui-selected td:last-child{position: relative;}
+.open_vulnerabilities .cveresult tr.Mui-selected td:last-child::after{position: absolute;content: "";width: 31px;height: 60px;right: -24px;top: 0;bottom: 0;margin: auto; width: 0; height: 0;border-top: 18px solid transparent;border-bottom: 18px solid transparent;border-right: 22px solid #027ae2;}
+.open_vulnerabilities .snapshot-content.description{
+width:100% !important;
+}
+
+
+
+
+.open_vulnerabilities .MuiContainer-root > .MuiGrid-container > .MuiContainer-root{max-width: 100%;box-shadow: none;border-radius: 0;padding: 35px;}
+
+.open_vulnerabilities [class*='makeStyles-searchBox']{max-width: 100%;border-radius: 5px;box-shadow: none;}
+.open_vulnerabilities .MuiInput-formControl.MuiInput-underline::before,.open_vulnerabilities .MuiInput-formControl.MuiInput-underline::after {display: none;}
+.open_vulnerabilities .MuiInput-formControl input.MuiInputBase-input{height: 30px;font-weight: 500;font-size: 14px;}
+.open_vulnerabilities [class*='makeStyles-searchButton']{border-radius: 10px; }
+.open_vulnerabilities [class*='makeStyles-chipbar'] > .MuiGrid-container{border: 1px solid #e8e8f2;border-radius: 5px;margin-bottom:30px;}
+.open_vulnerabilities ul li .MuiChip-deletable{background: #556177;border-radius: 5px; }
+
+
+.open_vulnerabilities .small-table .MuiTableCell-body, .open_vulnerabilities .big-table .MuiTableCell-body { 
+	white-space: pre-line; 
+	font-size: 14px !important;
+    font-weight: 600 !important;
+} 
+
+.open_vulnerabilities table { table-layout: fixed;}
+
+.open_vulnerabilities table.small-table tr th:nth-child(n+4) {
+	display: none;
+}
+.open_vulnerabilities table.small-table tr td:nth-child(n+4) {
+	display: none;
+}
+.open_vulnerabilities table.small-table tr td:nth-last-child(-n+1) {
+	display: table-cell;
+}
+
+
+.open_vulnerabilities table.small-table th:nth-last-child(-n+1) {
+	display: block !important;
+}
+
+.open_vulnerabilities .cveresult table tr th{font-size: 15px !important;font-weight: 500 !important;padding: 20px 20px !important;border-bottom: 1px solid #e1e4e8 !important;}
+.open_vulnerabilities .cveresult table tr td{font-size: 12px !important;font-weight: 500 !important;padding: 0px 20px !important;border-bottom: 1px solid #e1e4e8 !important;}
+
+.open_vulnerabilities .niahinsightlist span {
+	font-size: 17px;
+    color: #333;
+    font-weight: 600;
+}
+
+.open_vulnerabilities .MuiListItem-root {
+	padding-top: 0px;
+    padding-bottom: 5px;
+}
+
+@media only screen and (min-width:1700px){
+
+.open_vulnerabilities .cvesearchcenter .MuiTableCell-root{padding: 0px 10px;}
+.open_vulnerabilities td.MuiTableCell-root.MuiTableCell-body.loading-cell {
+    padding: 0px 5px;
+}
+.open_vulnerabilities .cvesearchcenter .MuiTableCell-root,.cvesearchcenter .MuiTypography-h5{  font-size: 15px; }
+
+.open_vulnerabilities .scoreblock-inner > div{font-size: 16px;}
+
+}
+
+@media only screen and (max-width:1400px){
+
+.open_vulnerabilities .cvesearchcenter .MuiTableCell-root{padding: 12px 10px;font-size: 13px;}
+
+.open_vulnerabilities .cvesearchcenter .MuiTypography-h5{font-size: 13px;}
+
+.open_vulnerabilities .cvesearchleft .MuiTypography-h3,.boxdetailtitle h2{font-size: 16px;}
+
+.open_vulnerabilities .cvesearchleft .MuiListItem-root .MuiListItemText-root .MuiTypography-body1{font-size: 16px;}
+.open_vulnerabilities .meterleft h2,.open_vulnerabilities .insightlist .MuiTypography-displayBlock,.open_vulnerabilities .snapshotlist .MuiTypography-root > div,.boxtitlecontent.explo-list .MuiExpansionPanelSummary-content h2{font-size: 14px;}
+.open_vulnerabilities .MuiExpansionPanelSummary-root{padding: 0px 15px;}
+.open_vulnerabilities .scoreblock-inner > div{font-size: 12px;}
+
+}

@@ -68,7 +68,7 @@ const theme = createMuiTheme({
 });
 
 
-function LatestProjects({ className, project_details, ...rest }) {
+function LatestProjects({ className, project_details,onClickRow, ...rest }) {
   const classes = useStyles();
 
   return (
@@ -84,6 +84,7 @@ function LatestProjects({ className, project_details, ...rest }) {
             data={project_details.data}
             style={{ width: '100%' }}
             className="secondary"
+            onRowClick = {(event,row) => {console.log(row);onClickRow('key',row[`vulnerability`].split('/')[0])}}
             options={{
               pageSize: 10,  
               toolbarStyle: {

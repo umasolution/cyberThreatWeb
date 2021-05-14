@@ -1,22 +1,25 @@
 import Page from 'src/components/Page';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useLocation } from 'react-router';
 import {
     Container,
     makeStyles,
     Grid,
+    Drawer,
     Typography,
     Card,
     CardContent,
     Paper,
     Link,
-    LinearProgress
+    LinearProgress,
+    Box, List, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, ListItem, ListItemIcon, ListItemText
 
 } from '@material-ui/core';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import Axios from 'axios';
 import CWEPieChart from '../../views/ProductsReports/ReportSummary/CWEPieChart/CWEPieChart';
 import SeverityBarChart from '../../views/ProductsReports/ReportSummary/SeverityBarChart/SeverityBarChart';
@@ -29,8 +32,14 @@ import LatestProjects from '../../views/reports/DashboardView/LatestProjects';
 import IconButton from '@material-ui/core/IconButton';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import Skeleton from '@material-ui/lab/Skeleton';
+import ShowMoreText from "react-show-more-text";
+import ReactSpeedometer from "react-d3-speedometer"
+import SendIcon from '@material-ui/icons/Send';
+import moment from 'moment';
 import DisplayDetail from './DisplayDetail';
 import CweTreeMap from './CweTreeMap';
+import ErrorDisplay from './ErrorDisplay';
 
 
 
@@ -109,6 +118,18 @@ const useStyles = makeStyles((theme) => ({
         textTransform: 'upperCase',
         fontWeight: '600'
 
+    },
+    dragger: {
+        width: '5px',
+        cursor: 'ew-resize',
+        padding: '4px 0 0',
+        borderTop: '1px solid #ddd',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        bottom: 0,
+        zIndex: '100',
+        backgroundColor: '#f4f7f9'
     }
 
 }));
@@ -129,6 +150,49 @@ const ProductDetailVul = () => {
     const [firstAccordianOpen, setFirstAccordianOpen] = useState({ txt: 'Collapse', expand: true });
     const [secondAccordianOpen, setSecondAccordianOpen] = useState({ txt: 'Collapse', expand: true });
 
+    const [loadingRows, setloadingRows] = useState(false);
+    const [singlerows, setSingleRows] = useState();
+
+    const [expand, setExpand] = useState(false);
+    const [selected, setSelected] = useState([]);
+
+    const defaultDrawerWidth = 400;
+    const [drawerWidth, setDrawerWidth] = useState(defaultDrawerWidth);
+    const [openDrawer, setOpenDrawer] = useState(false);
+
+    const toggleDrawer = (anchor, open) => (event) => {
+        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+            return;
+        }
+        setDrawerWidth(defaultDrawerWidth);
+        setOpenDrawer(false);
+    };
+
+    const handleMousedown = e => {
+        document.addEventListener("mouseup", handleMouseup, true);
+        document.addEventListener("mousemove", handleMousemove, true);
+    };
+
+    const handleMousemove = useCallback(e => {
+        let offsetRight =
+            document.body.offsetWidth - (e.clientX - document.body.offsetLeft);
+        let minWidth = 400;
+        let maxWidth = 1200;
+        if (offsetRight > minWidth && offsetRight < maxWidth) {
+            setDrawerWidth(offsetRight);
+        }
+    }, []);
+
+    const handleMouseup = e => {
+        document.removeEventListener("mouseup", handleMouseup, true);
+        document.removeEventListener("mousemove", handleMousemove, true);
+    };
+
+
+    const onShowMore = () => {
+        setExpand(!expand);
+    };
+
 
     useEffect(() => {
         // API call
@@ -140,7 +204,11 @@ const ProductDetailVul = () => {
         setLoading(true);
         const url = `/details/product`;
         // Below Data is hard coded as this is the only combination which has data. TODO
-        const response = await Axios.post(url, { type: "application", application: "tomcat", product: "tomcat" });
+        //const response = await Axios.post(url, { type: "application", application: "tomcat", product: "tomcat" });
+        const response = await Axios.post(url, { type: "application", 
+                                                application: location.state.name.split('@')[1], 
+                                                product: location.state.name.split('@')[1] });
+        
 
         setProduct(response.data);
 
@@ -160,6 +228,37 @@ const ProductDetailVul = () => {
         return null;
     };
 
+    const handleRemoveRow = async (event, value) => {
+        setloadingRows(false);
+        setSingleRows(false);
+        setloadingRows(false);
+
+        const selectedIndex = selected.indexOf(value);
+        let newSelected = [];
+        newSelected = newSelected.concat([], []);
+        setSelected(newSelected);
+        setOpenDrawer(false);
+
+    };
+
+    const handleClickRow = async (event, value) => {
+        value = 'CVE-2019-20465';
+
+        let url = `/search/cve?cve=${value}`;
+        /*const url = `/single-searchcve.php?asds=edd3ddads&cve=${value}`;*/
+        setloadingRows(true);
+        setSingleRows();
+        setloadingRows(true);
+        let response = await Axios.get(url);
+        setSingleRows(response.data);
+        const selectedIndex = selected.indexOf(value);
+        let newSelected = [];
+        newSelected = newSelected.concat([], value);
+        setSelected(newSelected);
+        setOpenDrawer(true);
+
+    };
+
     const getBody = () => {
         return (
             <>
@@ -174,9 +273,7 @@ const ProductDetailVul = () => {
                             <Typography gutterBottom variant="h5" component="h2">
                                 Showing vulnerabilities in  {convertFirstLetterToCaps(location.state.name.split('@')[1])}
                             </Typography>
-                            <Typography variant="body2" color="textSecondary" component="p">
-                                Python is an interpreted high-level general-purpose programming language. Python's design philosophy emphasizes code readability with its notable use of significant indentation. Its language constructs as well as its object-oriented approach aim to help programmers write clear, logical code for small and large-scale projects
-                            </Typography>
+
                         </CardContent>
                     </Card>
 
@@ -205,7 +302,7 @@ const ProductDetailVul = () => {
 
                 </Grid>
 
-                <Grid container spacing={2} className={classes.info}>
+                {/*  <Grid container spacing={2} className={classes.info}>
                     <Grid item lg={4}
                         sm={6}
                         xs={12}>
@@ -265,7 +362,7 @@ const ProductDetailVul = () => {
                             </div>
                         </Paper>
                     </Grid>
-                </Grid>
+                </Grid>*/}
                 <Accordion className={classes.accordianRoot} square expanded={firstAccordianOpen} onChange={() => { setFirstAccordianOpen(!firstAccordianOpen) }}>
                     <AccordionSummary aria-controls="panel1d-content" id="panel1d-header" style={{ backgroundColor: '#f6f8fa' }}>
                         <IconButton aria-label="expand row" size="small" onClick={() => setFirstAccordianOpen(!firstAccordianOpen)}>
@@ -279,44 +376,39 @@ const ProductDetailVul = () => {
                             spacing={2}
                             className="report-summary-box"
                         >
+
                             <Grid
                                 item
                                 style={{ marginBottom: 10 }}
-                                lg={4}
+                                lg={6}
                                 xs={12}
                                 className="reports-charts-cwe"
                             >
-                                <Grid
-                                    item
-                                    style={{ marginBottom: 10 }}
-                                    lg={12}
-                                    xs={12}
-                                    className="reports-charts-cwe"
-                                >
-                                    {
-                                        product && product.chart && product.chart.cwe ?
-                                            //<CWEPieChart title="CWE Chart" cwe={product.chart.cwe} width={400} divId="productVul" /> : ""
-                                            <CweTreeMap title="CWE Chart" cwe={product.chart.cwe}/> : ""
-                                    }
+                                {
+                                    product && product.chart && product.chart.cwe && Object.keys(product.chart.cwe).length > 0 ?
+                                        //<CWEPieChart title="CWE Chart" cwe={product.chart.cwe} width={400} divId="productVul" /> : ""
+                                        <CweTreeMap title="CWE Chart" cwe={product.chart.cwe} /> : <ErrorDisplay title="CWE Chart" content="No Records to Display." />
+                                }
 
-                                </Grid>
-                                <Grid
-                                    item
-                                    style={{ marginBottom: 10 }}
-                                    lg={12}
-                                    xs={12}
-                                    className="reports-charts-severity"
-                                >
-                                    {
-                                        product && product.chart && product.chart.cwe && product.chart.severity ?
-                                            <SeverityBarChart title="Severity Chart" severity={product.chart.severity} width={500} divId="productVul" /> : ""
-                                    }
+                            </Grid>
+                            <Grid
+                                item
+                                style={{ marginBottom: 10 }}
+                                lg={6}
+                                xs={12}
+                                className="reports-charts-severity"
+                            >
+                                {
+                                    product && product.chart && product.chart.cwe && product.chart.severity && Object.keys(product.chart.severity).length > 0 ?
+                                        <SeverityBarChart title="Severity Chart" severity={product.chart.severity} width={500} divId="productVul" /> : <ErrorDisplay title="Severity Chart" content="No Records to Display." />
+                                }
 
-                                </Grid>
+
                             </Grid>
 
 
-                            <Grid
+
+                            {/* <Grid
                                 item
                                 style={{ marginBottom: 10 }}
                                 lg={8}
@@ -325,7 +417,7 @@ const ProductDetailVul = () => {
                             >
                                 <PerformanceOverTime chartsMainKey="0" chartsKey="chart3" chartsData={lineChartData} boxHeight={480} />
 
-                            </Grid>
+                           </Grid> */}
 
                         </Grid>
                     </AccordionDetails>
@@ -372,11 +464,329 @@ const ProductDetailVul = () => {
                                 lg={12}
                                 xl={12}
                                 xs={12}
-                                className="open_vulnerabilities"
+                                className = "open_vulnerabilities"
+
                             >
-                                {tableData ? <LatestProjects project_details={tableData} /> : "Loading ...."}
+                                {tableData ? <LatestProjects project_details={tableData} onClickRow={handleClickRow} /> : "Loading ...."}
                             </Grid>
+
                         </Grid>
+                        {loadingRows ? (<>
+                            <Drawer
+                                className="open_vulnerabilities cvesearchright drawer"
+                                anchor="right" open={openDrawer}
+                                onClose={toggleDrawer('right', false)}
+                                PaperProps={{ style: { width: drawerWidth } }}>
+                                    
+                                    <Box
+                                        className=" cvesearchright-inner"
+                                        borderRadius={5}
+                                    >
+                                        {singlerows ? (
+                                            <>
+                                                <Box className={classes.boxrightheader}
+                                                    display="flex"
+                                                    flexDirection="column"
+                                                    justifyContent="center"
+                                                    borderRadius={16}>
+                                                    <IconButton className={classes.customizedButton}>
+                                                        <HighlightOffIcon onClick={handleRemoveRow} />
+                                                    </IconButton>
+                                                    <Box className="boxdetailhead">
+                                                        <Box className="boxdetailtitle">
+                                                            <Typography gutterBottom variant="h5" component="h2">
+                                                                Severity Scores
+                                  </Typography>
+                                                        </Box>
+                                                        <Box className="boxtitlecontent">
+                                                            {singlerows.severity ? (
+                                                                <> <Typography variant="body2" color="textSecondary" component="div" className="scoreblock-div">
+
+                                                                    {Object.entries(singlerows.severity).map((severity) => (
+                                                                        <>
+                                                                            <Box className="scoreblock MuiGrid-grid-md-6">
+                                                                                <Box className="scoreblock-inner">
+                                                                                    <Box className="scoretitle">
+                                                                                        {severity[0]}
+                                                                                    </Box>
+                                                                                    <Box className="scorevalue">
+                                                                                        {severity[1]}
+                                                                                    </Box>
+                                                                                </Box>
+                                                                            </Box>
+                                                                        </>
+                                                                    ))}
+
+                                                                </Typography>
+                                                                </>
+                                                            ) : ''}
+
+                                                            {singlerows.niah_meter ? (
+                                                                <>
+                                                                    <Grid
+                                                                        className="meter"
+                                                                    >
+                                                                        <Grid
+                                                                            xs={6}
+                                                                            md={6}
+                                                                            className="meterleft"
+                                                                        >
+                                                                            <Typography gutterBottom variant="h5" component="h2">
+                                                                                {singlerows.niah_meter.title}
+                                                                            </Typography>
+                                                                            <Typography gutterBottom variant="h5" component="h2">
+                                                                                <a target="_blank" rel="noopener noreferrer" href={singlerows.niah_meter.patch_now}>Patch Now</a>
+                                                                            </Typography>
+                                                                        </Grid>
+                                                                        <Grid
+                                                                            xs={6}
+                                                                            md={6}
+                                                                            className="meterright"
+                                                                        >
+                                                                            <ReactSpeedometer
+                                                                                maxSegmentLabels={0}
+                                                                                width={150}
+                                                                                height={150}
+                                                                                value={singlerows.niah_meter.speedometer.default}
+                                                                                customSegmentStops={parseInt(singlerows.niah_meter.speedometer.segments)}
+                                                                                minValue={parseInt(singlerows.niah_meter.speedometer.min)}
+                                                                                maxValue={parseInt(singlerows.niah_meter.speedometer.max)}
+                                                                                segmentColors={singlerows.niah_meter.speedometer.colors}
+                                                                                needleHeightRatio={0.6}
+                                                                                ringWidth={10}
+                                                                                height={150}
+                                                                                needleColor={'#000000'}
+                                                                                valueFormat={'d'}
+
+                                                                            />
+
+                                                                        </Grid>
+                                                                    </Grid>
+                                                                </>
+                                                            ) : ''}
+                                                        </Box>
+                                                    </Box>
+                                                </Box>
+                                                {singlerows.NIAH_Insights ? (
+                                                    <>
+                                                        <Box className={classes.boxrightheader}
+                                                            display="flex"
+                                                            flexDirection="column"
+                                                            justifyContent="center"
+                                                            borderRadius={16}>
+                                                            <Box className="boxdetailhead">
+                                                                <Box className="boxdetailtitle">
+                                                                    <Typography gutterBottom variant="h5" component="h2">
+                                                                        NIAH Insights
+                                  </Typography>
+                                                                </Box>
+                                                                <Box className="boxtitlecontent">
+                                                                    <Typography variant="body2" color="textSecondary" component="div">
+                                                                        <List component="ul" className="niahinsightlist">
+                                                                            {Object.values(singlerows.NIAH_Insights).map((insights) => (
+                                                                                <>
+                                                                                    <ListItem>
+                                                                                        <ListItemIcon>
+                                                                                            <SendIcon />
+                                                                                        </ListItemIcon>
+                                                                                        <ListItemText>{insights}</ListItemText>
+                                                                                    </ListItem>
+                                                                                </>
+                                                                            ))}
+                                                                        </List>
+                                                                    </Typography>
+                                                                </Box>
+                                                            </Box>
+                                                        </Box>
+
+                                                    </>
+                                                )
+                                                    : ''}
+                                                {singlerows.snapshot ? (
+                                                    <>
+                                                        <Box className={classes.boxrightheader}
+                                                            display="flex"
+                                                            flexDirection="column"
+                                                            justifyContent="center"
+                                                            borderRadius={16}>
+                                                            <Box className="boxdetailhead">
+                                                                <Box className="boxdetailtitle">
+                                                                    <Typography gutterBottom variant="h5" component="h2">
+                                                                        Vulnerability Snapshot
+                                  </Typography>
+                                                                </Box>
+                                                                <Box className="boxtitlecontent">
+                                                                    <Typography variant="body2" color="textSecondary" component="div">
+                                                                        <List component="ul" className="snapshotlist">
+                                                                            {Object.entries(singlerows.snapshot).map((snapshot) => (
+                                                                                <>
+                                                                                    {snapshot[1] ? (
+                                                                                        <>
+                                                                                            {snapshot[0] == "Description" ? (
+                                                                                                <ListItem>
+                                                                                                    <ListItemText>
+                                                                                                        <Box className="snapshot-title">{snapshot[0]} :  </Box>
+                                                                                                        <Box className="snapshot-content description"><ShowMoreText
+                                                                                                            lines={3}
+                                                                                                            more={"Read More"}
+                                                                                                            less={"Less More"}
+                                                                                                            onClick={onShowMore}
+                                                                                                            expanded={expand}
+                                                                                                            maxWidth={500}
+                                                                                                        >
+                                                                                                            {snapshot[1]}
+                                                                                                        </ShowMoreText></Box>
+                                                                                                    </ListItemText>
+                                                                                                </ListItem>
+                                                                                            ) : <ListItem>
+                                                                                                <ListItemText>
+                                                                                                    {snapshot[0] == "publishedDate" ? (<>
+                                                                                                        <Box className="snapshot-title">Published Date: </Box>
+                                                                                                        <Box className="snapshot-content">{moment(snapshot[1]).format('MMM DD, YYYY')}</Box></>) :
+                                                                                                        (<>
+                                                                                                            <Box className="snapshot-title">{snapshot[0]} : </Box>
+                                                                                                            <Box className="snapshot-content">{snapshot[1]}</Box>
+                                                                                                        </>)}
+                                                                                                </ListItemText>
+                                                                                            </ListItem>}
+                                                                                        </>) : ''}
+                                                                                </>
+                                                                            ))}
+                                                                        </List>
+                                                                    </Typography>
+                                                                </Box>
+                                                            </Box>
+                                                        </Box>
+
+                                                    </>
+                                                )
+                                                    : ''}
+                                                {singlerows.Exploits ? (
+                                                    <>
+                                                        <Box className={classes.boxrightheader}
+                                                            display="flex"
+                                                            flexDirection="column"
+                                                            justifyContent="center"
+                                                            borderRadius={16}>
+                                                            <Box className="boxdetailhead">
+                                                                <Box className="boxdetailtitle">
+                                                                    <Typography gutterBottom variant="h5" component="h2">
+                                                                        Exploits
+                                  </Typography>
+                                                                </Box>
+                                                                <Box className="boxtitlecontent explo-list">
+                                                                    <List style={{ width: '100%' }} dense={false}>
+                                                                        {Object.keys(singlerows.Exploits).map((cKey, index) =>
+                                                                            <ExpansionPanel
+                                                                                key={cKey}
+                                                                                style={{ width: '100%' }}
+                                                                            >
+                                                                                <ExpansionPanelSummary
+                                                                                    expandIcon={<ExpandMoreIcon />}
+                                                                                    aria-controls="panel1a-content"
+                                                                                    id="panel1a-header"
+                                                                                >
+                                                                                    <Typography component="h2">
+                                                                                        {singlerows.Exploits[cKey].Advisory}
+                                                                                    </Typography>
+                                                                                </ExpansionPanelSummary>
+                                                                                <ExpansionPanelDetails>
+                                                                                    <Typography
+                                                                                        variant="caption"
+                                                                                        color="textSecondary"
+                                                                                    >
+                                                                                        {Object.keys(singlerows.Exploits[cKey].Reference).map((rKey) =>
+                                                                                            <a target="_blank" style={{ display: 'inline-block' }} href={singlerows.Exploits[cKey].Reference[rKey]}>{singlerows.Exploits[cKey].Reference[rKey]}</a>
+                                                                                        )}
+                                                                                    </Typography>
+                                                                                </ExpansionPanelDetails>
+                                                                            </ExpansionPanel>
+                                                                        )}
+                                                                    </List>
+                                                                </Box>
+                                                            </Box>
+                                                        </Box>
+
+                                                    </>
+                                                )
+                                                    : ''}
+
+                                            </>
+                                        )
+                                            : (<> <Box className={classes.boxrightheader}
+                                                display="flex"
+                                                flexDirection="column"
+                                                justifyContent="center"
+                                                borderRadius={16}>
+                                                <Box className="boxdetailhead">
+                                                    <Box className="boxdetailtitle">
+                                                        <Typography gutterBottom variant="h5" component="h2">
+                                                            <Skeleton animation="wave" height="20px" width="100%" />
+                                                        </Typography>
+                                                    </Box>
+                                                    <Box className="boxtitlecontent">
+                                                        <Skeleton animation="wave" height="100px" width="100%" />
+                                                    </Box>
+                                                </Box>
+                                            </Box>
+                                                <Box className={classes.boxrightheader}
+                                                    display="flex"
+                                                    flexDirection="column"
+                                                    justifyContent="center"
+                                                    borderRadius={16}>
+                                                    <Box className="boxdetailhead">
+                                                        <Box className="boxdetailtitle">
+                                                            <Typography gutterBottom variant="h5" component="h2">
+                                                                <Skeleton animation="wave" height="20px" width="100%" />
+                                                            </Typography>
+                                                        </Box>
+                                                        <Box className="boxtitlecontent">
+                                                            <Skeleton animation="wave" height="200px" width="100%" />
+                                                        </Box>
+                                                    </Box>
+                                                </Box> <Box className={classes.boxrightheader}
+                                                    display="flex"
+                                                    flexDirection="column"
+                                                    justifyContent="center"
+                                                    borderRadius={16}>
+                                                    <Box className="boxdetailhead">
+                                                        <Box className="boxdetailtitle">
+                                                            <Typography gutterBottom variant="h5" component="h2">
+                                                                <Skeleton animation="wave" height="20px" width="100%" />
+                                                            </Typography>
+                                                        </Box>
+                                                        <Box className="boxtitlecontent">
+                                                            <Skeleton animation="wave" height="200px" width="100%" />
+                                                        </Box>
+                                                    </Box>
+                                                </Box><Box className={classes.boxrightheader}
+                                                    display="flex"
+                                                    flexDirection="column"
+                                                    justifyContent="center"
+                                                    borderRadius={16}>
+                                                    <Box className="boxdetailhead">
+                                                        <Box className="boxdetailtitle">
+                                                            <Typography gutterBottom variant="h5" component="h2">
+                                                                <Skeleton animation="wave" height="20px" width="100%" />
+                                                            </Typography>
+                                                        </Box>
+                                                        <Box className="boxtitlecontent">
+                                                            <Skeleton animation="wave" height="200px" width="100%" />
+                                                        </Box>
+                                                    </Box>
+                                                </Box> </>)}
+                                    </Box>
+
+                                   
+                                <div
+                                    id="dragger"
+                                    onMouseDown={event => {
+                                        handleMousedown(event);
+                                    }}
+                                    className={classes.dragger}
+                                />
+                            </Drawer>
+                        </>) : ''}
                     </AccordionDetails>
                 </Accordion>
 

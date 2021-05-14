@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const SeverityBarChart = ({ severity, divId, displayModeBar = true, title = 'Severity', bgColor = "#fff", width = 300, height = 175 }) => {
+const SeverityBarChart = ({ severity, divId, displayModeBar = true, title = 'Severity', bgColor = "#fff", width = 300, height = 200 }) => {
 
   const classes = useStyles();
   
