@@ -1,4 +1,6 @@
-
+.drawer {
+    flex-shrink: 0;
+  }
 
 .vuldb-login tbody.MuiTableBody-root {
 	background-color: #fff;

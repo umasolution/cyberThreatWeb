@@ -1,5 +1,7 @@
 
-
+.drawer {
+  flex-shrink: 0;
+}
 .open_vulnerabilities tbody.MuiTableBody-root {
 	background-color: #fff;
 }
@@ -62,22 +64,21 @@ height:100%}
 }
 
 
-.open_vulnerabilities .cvesearchright .cvesearchright-inner button.MuiButtonBase-root{justify-content: start;margin-bottom: 20px;}
-.open_vulnerabilities .cvesearchright .cvesearchright-inner > div:last-child .boxdetailhead{border:0px; }
-.open_vulnerabilities .cvesearchright .boxdetailhead{padding-bottom: 30px;margin-bottom: 0px;border-bottom:1px solid #e6e9ef;}
-.open_vulnerabilities .cvesearchright .boxdetailtitle{background: none;}
-.open_vulnerabilities .cvesearchright .boxdetailtitle h2{font-size: 16px;text-align: left;color: #333;margin-bottom: 05px;}
-.open_vulnerabilities .cvesearchright .boxtitlecontent{border:1px solid #e6e9ef;border-radius: 10px; }
-.open_vulnerabilities .cvesearchright .meterright{text-align: right;}
-.open_vulnerabilities .cvesearchright .boxdetailhead .boxtitlecontent .meter{margin-bottom: 0;}
-.open_vulnerabilities .cvesearchright .meter .meterleft{align-self: center;}
-.open_vulnerabilities .cvesearchright .boxtitlecontent ul.niahinsightlist li{padding-left: 0;padding-right: 0;}
+.open_vulnerabilities  .cvesearchright-inner button.MuiButtonBase-root{justify-content: start;margin-bottom: 20px;}
+.open_vulnerabilities .cvesearchright-inner > div:last-child .boxdetailhead{border:0px; }
+.open_vulnerabilities  .boxdetailhead{padding-bottom: 30px;margin-bottom: 0px;border-bottom:1px solid #e6e9ef;}
+.open_vulnerabilities  .boxdetailtitle{background: none;}
+.open_vulnerabilities  .boxdetailtitle h2{font-size: 16px;text-align: left;color: #333;margin-bottom: 05px;}
+.open_vulnerabilities  .boxtitlecontent{border:1px solid #e6e9ef;border-radius: 10px; }
+.open_vulnerabilities  .meterright{text-align: right;}
+.open_vulnerabilities .boxdetailhead .boxtitlecontent .meter{margin-bottom: 0;}
+.open_vulnerabilities  .meter .meterleft{align-self: center;}
+.open_vulnerabilities .boxtitlecontent ul.niahinsightlist li{padding-left: 0;padding-right: 0;}
 .open_vulnerabilities .cvesearchright-inner > div{background: none !important;}
 
 
 .open_vulnerabilities .cvesearchright-inner > div{background: #f4f6fa;border-radius: 10px;margin-bottom: 15px;}
-.open_vulnerabilities .boxdetailtitle{padding: 10px 10px;border-radius: 10px 10px 0px 0px;background: #e8edf5; }
-.open_vulnerabilities .boxdetailtitle h2{margin: 0; color: #027ae2;font-weight: 600;font-size: 18px; text-align: center;}
+
 
 .open_vulnerabilities .cvesearchright-inner .boxtitlecontent > div{padding:10px 15px;margin-bottom: 15px;}
 .open_vulnerabilities .cvesearchright-inner .boxtitlecontent > div.scoreblock-div{border-bottom: 1px solid #dde4ee;}

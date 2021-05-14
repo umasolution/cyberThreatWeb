@@ -1,6 +1,6 @@
 import { Container, Grid, LinearProgress, makeStyles, TextField,Typography,Box,
 ListItem,ListItemIcon,ListItemText,List,ExpansionPanel,ExpansionPanelSummary,ExpansionPanelDetails,
-Slider,
+Slider,Drawer,
 Paper,Table,TableBody,TableCell,TableContainer,TableHead,TablePagination,TableRow,
 Card,CardActionArea,CardActions,CardContent,CardMedia,Radio,RadioGroup,FormLabel,Chip,Icon,CardHeader,Collapse
 } from '@material-ui/core';
@@ -8,7 +8,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Tab from '@material-ui/core/Tab';
 import Axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useCallback } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import MySnackbar from "../../Shared/Snackbar/MySnackbar";
 import CONSTANTS from "../../Util/Constants";
@@ -165,6 +165,18 @@ const useStyles = makeStyles((theme) => ({
         fontSize: 14
       },
     },
+    dragger: {
+      width: '5px',
+      cursor: 'ew-resize',
+      padding: '4px 0 0',
+      borderTop: '1px solid #ddd',
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      bottom: 0,
+      zIndex: '100',
+      backgroundColor: '#f4f7f9'
+    }
 }));
 
 export const VuldbLogin = (/* {   } */) => {
@@ -229,6 +241,39 @@ export const VuldbLogin = (/* {   } */) => {
     const [searchvendor, SetSearchVendor] = React.useState();
     const [searchseverity, SetSearchSeverity] = React.useState();
     const [searchaccessvector, SetSearchAccessvector] = React.useState();
+
+    const defaultDrawerWidth = 400;
+    const [drawerWidth,setDrawerWidth] = useState(defaultDrawerWidth);
+    const [openDrawer,setOpenDrawer] = useState(false);
+
+    const toggleDrawer = (anchor, open) => (event) => {
+      if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {     
+        return;
+      }
+      setDrawerWidth(defaultDrawerWidth);
+      setOpenDrawer(false);
+    };
+
+    const handleMousedown = e => {
+      document.addEventListener("mouseup", handleMouseup, true);
+      document.addEventListener("mousemove", handleMousemove, true);
+    };
+  
+    const handleMousemove = useCallback(e => {
+      let offsetRight =
+      document.body.offsetWidth - (e.clientX - document.body.offsetLeft);
+    let minWidth = 400;
+    let maxWidth = 1200;
+    if (offsetRight > minWidth && offsetRight < maxWidth) {
+     setDrawerWidth(offsetRight);
+    }
+    }, []);
+  
+    const handleMouseup = e => {
+      document.removeEventListener("mouseup", handleMouseup, true);
+      document.removeEventListener("mousemove", handleMousemove, true);
+    };
+  
     
     
     /*const [expanded, setExpanded] = React.useState(false);
@@ -363,7 +408,7 @@ export const VuldbLogin = (/* {   } */) => {
     const handleClickRow = async (event, value) => {
         let url = `/search/cve?cve=${value}`;
         /*const url = `/single-searchcve.php?asds=edd3ddads&cve=${value}`;*/
-        setloadingRows(false);
+        setloadingRows(true);
         setSingleRows();
         setloadingRows(true);
         let response = await Axios.get(url);
@@ -372,6 +417,7 @@ export const VuldbLogin = (/* {   } */) => {
         let newSelected = [];
         newSelected = newSelected.concat([], value);
         setSelected(newSelected);
+        setOpenDrawer(true);
 
     };  
 
@@ -384,6 +430,8 @@ export const VuldbLogin = (/* {   } */) => {
         let newSelected = [];
         newSelected = newSelected.concat([], []);
         setSelected(newSelected);
+        setOpenDrawer(false);
+
 
     };
 
@@ -1302,11 +1350,13 @@ export const VuldbLogin = (/* {   } */) => {
             <>
               {loadingRows ?cvesearchcenter(tabsData,12):cvesearchcenter(tabsData,12)}
               {loadingRows ?(<>  
-              <Grid
-                item
-                xs={12}
-                md={4}
-                className="cvesearchright"
+                <Drawer 
+                className="vuldb-login drawer"  
+                anchor="right" open={openDrawer} 
+                onClose={toggleDrawer('right',false)} 
+                PaperProps={{ style: { width: drawerWidth } }}>
+              <div
+                className="cvesearchright" 
               >
               <Box
                 className="cvesearchright-inner"
@@ -1607,7 +1657,15 @@ export const VuldbLogin = (/* {   } */) => {
                        </Box> </>)}
                     </Box>
               
-              </Grid> 
+              </div> 
+              <div
+              id="dragger"
+              onMouseDown={event => {
+                handleMousedown(event);
+              }}
+              className={classes.dragger}
+            />
+              </Drawer>
               </>) :''}
          </>
         )
