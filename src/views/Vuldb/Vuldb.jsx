@@ -146,6 +146,9 @@ const useStyles = makeStyles((theme) => ({
       boxShadow: 'none',
       backgroundColor: 'initial'
     },
+    advancecardsearch:{
+      width: '100% !Important'
+    },
     expand: {
       transform: 'rotate(0deg)',
       marginLeft: 'auto',
@@ -242,6 +245,11 @@ export const Vuldb = (/* {   } */) => {
 
     const [keywordSearch, SetKeywordSearch] = React.useState();
 
+    const [homeTypeClass, SetHomeTypeClass] = React.useState('active');
+
+    const [browseTypeClass, SetBrowseTypeClass] = React.useState();
+    
+
     const handleSearchLanguage = (e) => {
         SetSearchLanguage(e.target.value);
     };
@@ -291,9 +299,9 @@ export const Vuldb = (/* {   } */) => {
             delete searchVector[index];
           }
         }
-        setSearchVector(selectvector);
+        setSearchVector(searchVector);
         const myList = (
-          selectvector.map((item, i) => apiurl.append('accessVector', item))
+          searchVector.map((item, i) => apiurl.append('accessVector', item))
         )
     };
 
@@ -321,8 +329,12 @@ export const Vuldb = (/* {   } */) => {
         setSearchType(value);
         if(value=='browse'){
           callApi_browse();
+          SetHomeTypeClass();
+          SetBrowseTypeClass('active');
         } else {
           callApi_home();
+          SetBrowseTypeClass();
+          SetHomeTypeClass('active');
         }
     };
 
@@ -415,6 +427,7 @@ export const Vuldb = (/* {   } */) => {
         setSingleRows();
         setisSearch(true);
         setNoResult(true);
+        apiurl.delete('productname');
         apiurl.delete('offset');
         apiurl.delete('limit');        
         var url = `${mainurl}?${apiurl.toString()}`;
@@ -446,6 +459,7 @@ export const Vuldb = (/* {   } */) => {
         apiurl.delete('product'); 
         apiurl.delete('severity');
         apiurl.delete('accessvector');
+        apiurl.delete('productname');
         apiurl.delete('offset');
         apiurl.delete('limit'); 
         if(!isEmpty(searchBrowseType)){
@@ -453,13 +467,9 @@ export const Vuldb = (/* {   } */) => {
         } else {
            apiurl.set('type', 'product');  
         }      
-        
         var url = `/scan/browse?${apiurl.toString()}`;
         let response = await Axios.get(url);
         if(response) {
-          /*response.data.results = response.data;
-          response.data.columns = [{field: "product", title: "Product"},{field: "producttype", title: "Product Type"},
-          {field: "totalvuln", title: "Total Vuln"},{field: "vendor", title: "Vendor"},{field: "severity", title: "Severity"}];*/
           setTabsData(response.data);
           setPage(1);
           let totalpages = Math.ceil(response.data.total/perRow);
@@ -742,7 +752,7 @@ export const Vuldb = (/* {   } */) => {
 	  }
 
       if(!isEmpty(searchproduct)){
-         apiurl.set('product', searchproduct);
+         apiurl.set('productname', searchproduct);
       }
 
       if(!isEmpty(searchvendor)){
@@ -777,6 +787,7 @@ export const Vuldb = (/* {   } */) => {
       apiurl.delete('product'); 
       apiurl.delete('severity');
       apiurl.delete('accessvector');
+      apiurl.delete('keyword');
       const regex5 = /([^:\s]+):([^:\s]+)/g;
       const regex = new RegExp(regex5,'i');
       chipData.forEach(function (value, index, array) {
@@ -800,8 +811,10 @@ export const Vuldb = (/* {   } */) => {
               apiurl.set('severity', m[2]);
             } else if(m[1]=='accessvector') {
               apiurl.set('accessvector', m[2]);
+            } else if(m[1]=='keyword') {
+              apiurl.set('keyword', m[2]);
             } 
-          }
+          } 
       })
       callApi();
     } 
@@ -828,11 +841,10 @@ export const Vuldb = (/* {   } */) => {
         tagapiurl.delete('plugin');
         tagapiurl.delete('severity');
         tagapiurl.delete('accessvector');
+        tagapiurl.delete('keyword');
 
         chipData.forEach(function (value, index, array) {
             let m = regex.exec(value);    
-            var regexcve = /cve-/;
-            var regexcve2 = /CVE-/;
             if(m){
               if(m[1]=='language'){
                 tagapiurl.set('language', m[2]);
@@ -846,16 +858,18 @@ export const Vuldb = (/* {   } */) => {
                 tagapiurl.set('severity', m[2]);
               } else if(m[1]=='accessvector') {
                 tagapiurl.set('accessvector', m[2]);
+              }  else if(m[1]=='keyword') {
+                tagapiurl.set('keyword', m[2]);
               } 
-            }
+            } else {
+	          	tagapiurl.set('keyword', value);
+	        }	
         })
 
 
         const split_cveInput = cveInput.split("OR");
         split_cveInput.forEach(function (value, index, array) {
-            let m = regex.exec(value);    
-            var regexcve = /cve-/;
-            var regexcve2 = /CVE-/;
+            let m = regex.exec(value); 
             if(m){
               if(m[1]=='language'){
                 if(tagapiurl.has('language') === true || tagapiurl.has('advisory') === true || tagapiurl.has('platform') === true || tagapiurl.has('plugin') === true) {
@@ -911,8 +925,26 @@ export const Vuldb = (/* {   } */) => {
                   setChipData(newSelected);
                   tagapiurl.set('accessvector', m[2]);
                 }
+              } else if(m[1]=='keyword') {
+                if(tagapiurl.has('keyword') === true) {
+                  alert('Already added keyword');
+                } else {
+                  let newSelected = [];
+                  newSelected = newSelected.concat(chipData, 'keyword:'+m[2]);
+                  setChipData(newSelected);
+                  tagapiurl.set('keyword', m[2]);
+                }
               } 
-            }
+            } else {
+	            if(tagapiurl.has('keyword') === true) {
+	              alert('Already added Keyword');
+	            } else {
+	              let newSelected = [];
+	              newSelected = newSelected.concat(chipData, 'keyword:'+value);
+	              setChipData(newSelected);
+	              tagapiurl.set('keyword', value);
+	            }
+	        } 
         })        
         setTagApiUrl(tagapiurl);
         setCVEInput('');
@@ -1847,15 +1879,15 @@ export const Vuldb = (/* {   } */) => {
                   display="flex"
                   justifyContent="center"
                   alignItems="center"
-                  className={classes.searchBoxTop}>
+                  className='searchBoxTop'>
                   <List component="ul" className={classes.flexContainer}>
-                    <ListItem>                    
+                    <ListItem className={homeTypeClass}>                    
                       <ListItemText>
                         <Button value="home" onClick={() => { handleSearchType('home') }}>Home</Button>
                       </ListItemText>
                     </ListItem>
                      <Divider orientation="vertical" flexItem />
-                    <ListItem>
+                    <ListItem className={browseTypeClass}>
                       <ListItemText>
                         <Button value="browse" onClick={() => { handleSearchType('browse') }} >Browse</Button>
                       </ListItemText>
@@ -1920,8 +1952,8 @@ export const Vuldb = (/* {   } */) => {
                   display="flex"
                   justifyContent="center"
                   alignItems="center"
-                  className={classes.searchAdvanceBox}>
-                <Card className={classes.cardsearch}>
+                  className={classes.searchAdvanceBox} className='advanceboxnew'>
+                <Card className={classes.advancecardsearch}>
                   <CardHeader
                     action={
                       <IconButton
@@ -1941,10 +1973,10 @@ export const Vuldb = (/* {   } */) => {
                     <CardContent>
                     { searchtype=='home'?
                     (<Grid container spacing={3}>
-                         <Grid item xs={12} sm={6}>
+                         <Grid item xs={12} sm={6} className='AdvanceSearchLeft'>
                             <Grid
                                 item
-                                md={4}
+                                md={12}
                                 sm={6}
                                 xs={12}
                               >
@@ -1959,59 +1991,78 @@ export const Vuldb = (/* {   } */) => {
 	                              <FormControlLabel value="plugin" control={<Radio />} label={capitalizeFirstLetter('Plugin')} />
 	                          </RadioGroup>
 	                          {searchHomeType=='language'?(<TextField
-                                  label="Keyword Type"
                                   name="keywordsearch"
                                   type="keywordsearch"
-                                  placeholder="e.g. os, application, hardware"
+                                  className='input-box keyword-box'
+                                  placeholder="e.g. npm, java, python, ruby"
                                   onChange={handleKeywordSearch}
                                 />):''}
                               {searchHomeType=='application'?(<TextField
-                                  label="Keyword Type"
                                   name="keywordsearch"
                                   type="keywordsearch"
-                                  placeholder="e.g. os, application, hardware"
+                                  className='input-box keyword-box'
+                                  placeholder="e.g. wordpress, struts, netweaver"
+                                  onChange={handleKeywordSearch}
+                                />):''}
+                                {searchHomeType=='platform'?(<TextField
+                                  name="keywordsearch"
+                                  type="keywordsearch"
+                                  className='input-box keyword-box'
+                                  placeholder="e.g. windows, redhat, ubuntu"
+                                  onChange={handleKeywordSearch}
+                                />):''}
+                                {searchHomeType=='plugin'?(<TextField
+                                  name="keywordsearch"
+                                  type="keywordsearch"
+                                  className='input-box keyword-box'
+                                  placeholder="e.g Wordpress, Drupal..."
                                   onChange={handleKeywordSearch}
                                 />):''}  
                               </Grid>
                              </Grid>
                              <Grid
                                 item
-                                md={4}
-                                sm={6}
+                                md={12}
+                                sm={12}
                                 xs={12}
+                                className='input-wrap'
                               >
                               <Typography variant="h3" component="h2">
                                 Product
                               </Typography>
                                 <TextField
-                                  label="Wordpress"
                                   name="product"
                                   type="product"
+                                  placeholder="e.g Wordpress, Drupal..."
+                                  className='input-box'
                                   onChange={handleSearchProduct}
                                 />
                              </Grid>
                              
                              <Grid
                                 item
-                                md={4}
-                                sm={6}
+                                md={12}
+                                sm={12}
                                 xs={12}
+                                className='input-wrap'
                               >
                               <Typography variant="h3" component="h2">
                                 Vendor
                               </Typography>
                                 <TextField
-                                  label="vendor"
+                                  placeholder="e.g. Oracle, SAP, Microsoft"
                                   name="vendor"
                                   type="vendor"
+                                  className='input-box'
                                   onChange={handleSearchVendor}
                                 />
                              </Grid>
                          </Grid> 
-                         <Grid item xs={12} sm={6}>                          
+                         <Grid item xs={12} sm={6} className='AdvanceSearchRight'>                          
                           <Box
                               display="flex"
-                              flexDirection="column"                              
+                              flexDirection="column" 
+                              className='cvesearchslider-box'                             
                               borderRadius={16}
                             > 
                               <Typography variant="h3"  id="severity-slider-custom" component="h2">
@@ -2034,98 +2085,15 @@ export const Vuldb = (/* {   } */) => {
                                 />
                               </Box>
                             </Box> 
-                          
-                          {/*<Box
-                              display="flex"
-                              flexDirection="column"                              
-                              borderRadius={16}
-                            > 
-                              <Typography variant="h3"  id="severity-slider-custom" component="h2">
-                                CVSS
-                              </Typography>
-                              <Box
-                                  display="flex"
-                                  flexDirection="column"
-                                  className="cvesearchslider"
-                                  borderRadius={16}
-                                >
-                                <Slider
-                                  defaultValue={0}
-                                  aria-labelledby="cvss-slider-custom"
-                                  step={1}
-                                  min={0}
-                                  max={10}
-                                  marks={cvss}
-                                />
-                              </Box>
-                            </Box>*/}
                            <Box
                               display="flex"
                               flexDirection="column"                              
                               borderRadius={16}
                             > 
                              <List>
-                              {/*<ListItem>
-                                <ListItemIcon>
-                                  <Checkbox
-                                    edge="start"
-                                    tabIndex={-1}
-                                    disableRipple
-                                    name="exploitation-detected"
-                                    value="exploitation-detected" 
-                                    onChange={handleChangeAdvance}
-                                  />
-                                </ListItemIcon>
-                                <ListItemText id="exploitation-detected" primary="Exploitation Detected" />
-                              </ListItem>
                               <ListItem>
                                 <ListItemIcon>
                                   <Checkbox
-                                    edge="start"
-                                    tabIndex={-1}
-                                    disableRipple
-                                    inputProps="Public proof-of-concept avilable"
-                                    name="proof-of-concept"
-                                    value="proof-of-concept" 
-                                    onChange={handleChangeAdvance}
-                                  />
-                                </ListItemIcon>
-                                <ListItemText id="proof-of-concept" primary="Public proof-of-concept avilable" />
-                              </ListItem>
-                              <ListItem>
-                                <ListItemIcon>
-                                  <Checkbox
-                                    edge="start"
-                                    tabIndex={-1}
-                                    disableRipple
-                                    inputProps="Exploitation Deemed More Likely"
-                                    name="exploitation-deemed"
-                                    value="exploitation-deemed" 
-                                    onChange={handleChangeAdvance}
-                                  />
-                                </ListItemIcon>
-                                <ListItemText id="exploitation-deemed" primary="Exploitation Deemed More Likely" />
-                              </ListItem>
-                              <ListItem>
-                                <ListItemIcon>
-                                  <Checkbox
-                                    edge="start"
-                                    tabIndex={-1}
-                                    disableRipple
-                                    inputProps="Remote Code Execution vulnerabilities"
-                                    name="remote-code-execution"
-                                    value="remote-code-execution" 
-                                    onChange={handleChangeAdvance}
-                                  />
-                                </ListItemIcon>
-                                <ListItemText id="remote-code-execution" primary="Remote Code Execution vulnerabilities" />
-                              </ListItem>*/}
-                              <ListItem>
-                                <ListItemIcon>
-                                  <Checkbox
-                                    edge="start"
-                                    tabIndex={-1}
-                                    disableRipple
                                     inputProps="Remote"
                                     name="remote"
                                     value="remote" 
@@ -2137,9 +2105,6 @@ export const Vuldb = (/* {   } */) => {
                               <ListItem>
                                 <ListItemIcon>
                                   <Checkbox
-                                    edge="start"
-                                    tabIndex={-1}
-                                    disableRipple
                                     inputProps="Local"
                                     name="local"
                                     value="local" 
@@ -2151,17 +2116,19 @@ export const Vuldb = (/* {   } */) => {
                               
                               </List>
                            </Box> 
-                           <Box
-                              display="flex">
-                              {isSearchLoadingHome ? <Box m="auto">
-                              <Typography  component="p" color="primary" style={{textAlign: 'center'}} >
-                               <CircularProgress />
-                               </Typography>
-                               <button disabled onClick={handleAdvanceClick} className={classes.searchButton}>Search</button>
-                              </Box> : <Box m="auto">
-                               <button onClick={handleAdvanceClick} className={classes.searchButton}>Search</button>
-                              </Box>}
-                            </Box> 
+                        </Grid>
+                        <Grid xs={12} sm={12}>
+                        <Box
+                          display="flex">
+                          {isSearchLoadingHome ? <Box m="auto">
+                          <Typography  component="p" color="primary" style={{textAlign: 'center'}} >
+                           <CircularProgress />
+                           </Typography>
+                           <button disabled onClick={handleAdvanceClick} className={classes.searchButton}>Search</button>
+                          </Box> : <Box m="auto">
+                           <button onClick={handleAdvanceClick} className={classes.searchButton}>Search</button>
+                          </Box>}
+                        </Box>
                         </Grid>
                     </Grid>
                     ):(<><Box
@@ -2175,7 +2142,6 @@ export const Vuldb = (/* {   } */) => {
                           <RadioGroup aria-label="browseradio" name="browseradio" value={searchBrowseType} onChange={(e) => handleBrowseRadio(e)}>
                               <FormControlLabel value="product" control={<Radio />} label={capitalizeFirstLetter('product')} />
                               {searchBrowseType=='product'?(<TextField
-                                  label="Product Type"
                                   name="producttype"
                                   type="producttype"
                                   placeholder="e.g. os, application, hardware"

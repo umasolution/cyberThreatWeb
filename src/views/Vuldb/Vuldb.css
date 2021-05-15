@@ -1,7 +1,7 @@
 
 
 .vuldb-front .cvesearchslider {
-	width: 300px;
+    width: 300px;
 }
 .vuldb-front .topSearch.MuiContainer-maxWidthLg{max-width: 1400px;}
 
@@ -74,12 +74,12 @@
 .vuldb-front .boxtitlecontent.explo-list .MuiExpansionPanelSummary-content h2{font-size: 17px;font-weight: 600;}
 .vuldb-front .boxtitlecontent.explo-list .MuiExpansionPanelDetails-root .MuiTypography-root a{padding-bottom: 10px;word-break: break-all;}
 .vuldb-front .cveresult .Mui-selected {
-	background-color: #027ae2;
-	color: #fff;
+    background-color: #027ae2;
+    color: #fff;
 }
 .vuldb-front .cvesearchcenter .MuiTypography-h6{font-size: 13px;}
 .vuldb-front .cvesearchcenter .MuiTableRow-root {
-	cursor: pointer;
+    cursor: pointer;
 }
 .vuldb-front .cveresult .MuiTableContainer-root{overflow: visible;}
 .vuldb-front .cveresult .Mui-selected,.cveresult tr.Mui-selected,.cveresult tr.Mui-selected td:last-child{position: relative;}
@@ -101,26 +101,26 @@ width:100% !important;
 .vuldb-front ul li .MuiChip-deletable{background: #556177;border-radius: 5px; }
 
 .vuldb-front .small-table .MuiTableCell-body, .vuldb-front .big-table .MuiTableCell-body { 
-	white-space: pre-line; 
-	font-size: 15px !important;
+    white-space: pre-line; 
+    font-size: 15px !important;
     font-weight: 600 !important;
 } 
 
 .vuldb-front table { table-layout: fixed;}
 
 .vuldb-front table.small-table tr th:nth-child(n+4) {
-	display: none;
+    display: none;
 }
 .vuldb-front table.small-table tr td:nth-child(n+4) {
-	display: none;
+    display: none;
 }
 .vuldb-front table.small-table tr td:nth-last-child(-n+1) {
-	display: table-cell;
+    display: table-cell;
 }
 
 
 .vuldb-front table.small-table th:nth-last-child(-n+1) {
-	display: block !important;
+    display: block !important;
 }
 
 .vuldb-front .cveresult .b-scoreblock-severity-div {
@@ -208,6 +208,29 @@ width:100% !important;
     text-align: center;
     margin-top: 0px;
 }
+
+
+/********************advance Search********************/
+.advanceboxnew > .MuiPaper-root{padding: 15px;}
+.advanceboxnew > div.MuiCard-root > .MuiCardHeader-root{border: 1px solid #e8e8f2; border-left: 4px solid rgb(2 125 231); padding: 8px 15px;border-radius: 5px;}
+.AdvanceSearchLeft .MuiFormGroup-root[role="radiogroup"]{flex-direction: inherit;}
+.AdvanceSearchLeft .MuiFormControlLabel-root{width: 25%;margin: 0;}
+.AdvanceSearchLeft .MuiFormControlLabel-root span.MuiFormControlLabel-label{font-size: 14px;font-weight: 500;}
+.AdvanceSearchLeft .MuiFormControlLabel-root span.MuiRadio-root{padding-left: 0;}
+.AdvanceSearchLeft .input-wrap{display: -webkit-box;display: -ms-flexbox;display: flex;-ms-flex-wrap: wrap;flex-wrap: wrap;margin-top: 15px;margin-bottom: 15px}
+.AdvanceSearchLeft .input-wrap h2{width: 20%;font-size: 16px;align-self: center;color: #333;}
+.AdvanceSearchLeft .input-box.keyword-box{width: 100%;margin-top: 10px;}
+.AdvanceSearchLeft .input-wrap .input-box{width: 80%;} 
+.AdvanceSearchLeft .input-box label.MuiInputLabel-formControl{font-size: 14px;top: 8px;left: 15px;font-weight: 500;}
+.AdvanceSearchLeft .input-box label.MuiInputLabel-root.Mui-focused,.AdvanceSearchLeft .input-wrap .input-box label.MuiInputLabel-root.MuiFormLabel-filled{top: -8px;}
+.AdvanceSearchLeft .input-box .MuiInput-formControl input{border: 1px solid #e8e8f2; padding: 8px 15px; font-size: 14px;}
+
+.vuldb-front .AdvanceSearchRight .cvesearchslider{margin-left: 8px;}
+.vuldb-front .AdvanceSearchRight .cvesearchslider-box{background: #f8f8fa;padding: 15px 25px;border-radius: 5px;}
+.vuldb-front .AdvanceSearchRight .cvesearchslider-box h2{font-size: 15px;letter-spacing: 0.5px;color: #333;}
+.vuldb-front .AdvanceSearchRight ul li{padding-left: 0;padding-right: 0;}
+.vuldb-front .AdvanceSearchRight ul li span.MuiListItemText-primary{font-size: 16px;font-weight: 500;}
+/********************advance Search********************/
 
 @media only screen and (min-width:1700px){
 
