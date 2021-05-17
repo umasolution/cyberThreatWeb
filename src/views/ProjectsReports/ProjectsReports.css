@@ -9,8 +9,13 @@
 .scan-report-list .cvesearchcenter .MuiTableCell-root a{color: #027de7;text-decoration: none;}
 
 .cvesearchcenter .MuiTableCell-root.MuiTableCell-body:nth-child(3) {
-    width: 40%;
+    width: 30%;
     word-break: break-all;
+}
+
+.cvesearchcenter .MuiTableCell-root.MuiTableCell-body:nth-child(4) {
+    width: 60%;
+    
 }
 .scan-report-list .cvesearchcenter .MuiTableRow-root.MuiTableRow-hover:hover{background: #027ae2;color: #fff;}
 .scan-report-list .cvesearchcenter .MuiTableRow-root.MuiTableRow-hover:hover .MuiTableCell-root,.cvesearchcenter .MuiTableRow-root.MuiTableRow-hover:hover .MuiTypography-h5,.cvesearchcenter .MuiTableRow-root.MuiTableRow-hover:hover .MuiTypography-h6,.cvesearchcenter .MuiTableRow-root.MuiTableRow-hover:hover .MuiTableCell-root a,
@@ -130,7 +135,7 @@ width:100% !important;
 .scan-report-list .cveresult .cvesearchcenter .MuiTableRow-root.MuiTableRow-hover.Mui-selected .MuiTypography-h5{color: #263238;}
 
 .scan-report-list .cveresult .cvesearchcenter .MuiTableCell-stickyHeader{border-bottom: 1px solid #e1e4e8 !important;background: none;font-weight: 600 !important;background: #f6f8fa;}
-.scan-report-list .cveresult table tr td:last-child{width: 35%;}
+.scan-report-list .cveresult table tr td:last-child{width: 100%;}
 .scan-report-list .cveresult .scoreblock-vulnerabilities-div > div{padding: 0 0 0 5px }
 .scan-report-list .cveresult .scoreblock-vulnerabilities-div{display: flex;justify-content: end;}
 .scan-report-list .cveresult table tr td .scoreblock-vulnerabilities-div .scoreblock-inner{border: 1px solid;border-radius: 5px; }

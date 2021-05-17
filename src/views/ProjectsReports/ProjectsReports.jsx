@@ -158,7 +158,37 @@ const useStyles = makeStyles((theme) => ({
     },
     customizedButton: {
      
-    }
+    },
+    avatar:{
+      fontSize:'12px'
+    },
+    vulscore:{
+      display:'flex',
+      border: '1px solid  #e8e8f2',
+      borderRadius:'50px',
+    
+ 
+      
+    },
+    scorevalue:{
+      textAlign:'center',
+      fontSize:'14px',
+      fontWeight:'600',
+      paddingTop:'2px',
+      paddingLeft:'0px',
+      margin:'auto 5px',
+      width:'90%',
+      color:'white',
+      borderRadius:'10px'
+    },
+
+    scoreTitle:{
+      fontSize:'14px',
+      fontWeight:'600',
+      paddingTop:'2px'
+    },
+  
+  
 }));
 
 const ProjectsReports = () => {
@@ -814,15 +844,55 @@ const ProjectsReports = () => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                       {
-                          Object.entries(tabsData.results).map(([rkey, row]) => {
-                            const isItemSelected = isSelected(rkey)
-                          return (<TableRow hover onClick={event => handleClickRow('key',rkey)} key={rkey} role="checkbox" selected={isItemSelected} tabIndex={-1} >
+                          {
+                            Object.entries(tabsData.results).map(([rkey, row]) => {
+                              const isItemSelected = isSelected(rkey)
+                              return (<TableRow hover onClick={event => handleClickRow('key', rkey)} key={rkey} role="checkbox" selected={isItemSelected} tabIndex={-1} >
 
                                 { Object.keys(tabsData.columns).map((vkey) => (
-                                 <TableCell key={tabsData.columns[vkey].field} >
-                                      { tabsData.columns[vkey].field == 'vulnerability' ? (
-                                        <>
+                                  <TableCell key={tabsData.columns[vkey].field} >
+                                    { tabsData.columns[vkey].field == 'vulnerability' ? (
+                                      <>
+                                       <Grid container spacing={1}>
+                                          {Object.entries(row.table[`${tabsData.columns[vkey].field}`]).map((vulnerabilities) => (
+                                            <Grid item lg={3} md={12} xs={12} className={classes.vulscore}>
+                                              <Grid
+                                                item
+                                                xs={8}
+                                                
+                                              >
+                                                <Typography
+                                                  component="h6"
+                                                  color="textSecondary"
+                                                  align="center"
+                                                  className={classes.scoreTitle}
+                                                >
+                                                  {vulnerabilities[0]} 
+                                
+                                                </Typography>
+                                                </Grid>
+                                                <Grid
+                                                item
+                                                xs={4}
+                                                
+                                              >
+
+                                                <Box className={classes.scorevalue} bgcolor={getBackgroundColorBySeverity(vulnerabilities[0])}>
+                                              {vulnerabilities[1]?vulnerabilities[1]:'0'}                                              
+                                            </Box>
+                                            </Grid>
+                                               
+                                            
+                                             
+
+                                            </Grid>
+
+                                          ))}
+                                        </Grid>
+                                      </>
+                                    ) : ''}
+            
+                                        {/*}
                                          <Box className="scoreblock-vulnerabilities-div">
                                          {Object.entries(row.table[`${tabsData.columns[vkey].field}`]).map((vulnerabilities) => (
                                             <Box className={`scoreblock MuiGrid-grid-xs-3 ${vulnerabilities[0]}`}>
@@ -836,9 +906,8 @@ const ProjectsReports = () => {
                                             </Box>
                                             </Box>
                                            ))}
-                                          </Box>  
-                                        </>
-                                    ) : '' }
+                                         </Box>  */}
+   
                                     { tabsData.columns[vkey].field == 'project_details' ? (
                                         <>
                                          <Box className="projectdetails-div" flexWrap="wrap">
