@@ -389,6 +389,7 @@ export const VuldbLogin = (/* {   } */) => {
         setSingleRows();
         setloadingRows(true);
         let response = await Axios.get(url);
+        response.data.cve_id = value;
         setSingleRows(response.data);
         const selectedIndex = selected.indexOf(value);
         let newSelected = [];
@@ -913,9 +914,9 @@ export const VuldbLogin = (/* {   } */) => {
                             
                           ))
                         }  
-                        <TableCell key='action'>
+                        {/*<TableCell key='action'>
                            Action
-                        </TableCell>
+                        </TableCell>*/}
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -953,11 +954,11 @@ export const VuldbLogin = (/* {   } */) => {
                                 :''
                                 )
                                 )}
-                                <TableCell key='action'>
+                                {/*<TableCell key='action'>
                                   <Box flexWrap="wrap">
-                                     <Link target="_blank" to={`/CVE/${row['cve_id']}`}> <VisibilityIcon/> View full Details</Link>
+                                     <Link target="_blank" to={`/app/CVE/${row['cve_id']}`}> <VisibilityIcon/> View full Details</Link>
                                   </Box>   
-                                </TableCell>
+                                </TableCell>*/}
                             </TableRow>
                           ) }
                           )
@@ -1327,7 +1328,7 @@ export const VuldbLogin = (/* {   } */) => {
             <>
               {loadingRows ?cvesearchcenter(tabsData,12):cvesearchcenter(tabsData,12)}
               {loadingRows ?(<>  
-                <VulDrawerComponent openDrawer={openDrawer} closeDrawer={closeDrawer} singlerows = {singlerows} handleRemoveRow={handleRemoveRow} /> 
+                <VulDrawerComponent openDrawer={openDrawer} closeDrawer={closeDrawer} singlerows = {singlerows} handleRemoveRow={handleRemoveRow} />
               </>) :''}
          </>
         )
