@@ -238,7 +238,7 @@ button:focus{
 
 .vuldb-login .MuiGrid-root.cvesearchright{position: fixed;top: 0;right: 0;z-index: 9999;bottom: 0;padding: 0 !important;}
 .vuldb-login .cvesearchright .cvesearchright-inner{height: calc(100% - 0px);overflow-y: scroll;}
-.vuldb-login .cvesearchright .cvesearchright-inner button.MuiButtonBase-root{justify-content: start;margin-bottom: 20px;}
+.vuldb-login .cvesearchright .cvesearchright-inner button.MuiButtonBase-root{justify-content: start;margin-bottom: 5px;}
 .vuldb-login .cvesearchright .cvesearchright-inner > div:last-child .boxdetailhead{border:0px; }
 .vuldb-login .cvesearchright .boxdetailhead{padding-bottom: 30px;margin-bottom: 0px;border-bottom:1px solid #e6e9ef;}
 .vuldb-login .cvesearchright .boxdetailtitle{background: none;}
@@ -252,7 +252,7 @@ button:focus{
 
 .vuldb-front .MuiGrid-root.cvesearchright{position: fixed;top: 0;right: 0;z-index: 9999;bottom: 0;padding: 0 !important;}
 .vuldb-front .cvesearchright .cvesearchright-inner{height: calc(100% - 0px);overflow-y: scroll;}
-.vuldb-front .cvesearchright .cvesearchright-inner button.MuiButtonBase-root{justify-content: start;margin-bottom: 20px;}
+.vuldb-front .cvesearchright .cvesearchright-inner button.MuiButtonBase-root{justify-content: start;margin-bottom: 5px;}
 .vuldb-front .cvesearchright .cvesearchright-inner > div:last-child .boxdetailhead{border:0px; }
 .vuldb-front .cvesearchright .boxdetailhead{padding-bottom: 30px;margin-bottom: 0px;border-bottom:1px solid #e6e9ef;}
 .vuldb-front .cvesearchright .boxdetailtitle{background: none;}
@@ -266,7 +266,7 @@ button:focus{
 
 .scan-report-list .MuiGrid-root.cvesearchright{position: fixed;top: 0;right: 0;z-index: 9999;bottom: 0;padding: 0 !important;}
 .scan-report-list .cvesearchright .cvesearchright-inner{height: calc(100% - 0px);overflow-y: scroll;}
-.scan-report-list .cvesearchright .cvesearchright-inner button.MuiButtonBase-root{justify-content: start;margin-bottom: 20px;}
+.scan-report-list .cvesearchright .cvesearchright-inner button.MuiButtonBase-root{justify-content: start;margin-bottom: 5px;}
 .scan-report-list .cvesearchright .cvesearchright-inner > div:last-child .boxdetailhead{border:0px; }
 .scan-report-list .cvesearchright .boxdetailhead{padding-bottom: 30px;margin-bottom: 0px;border-bottom:1px solid #e6e9ef;}
 .scan-report-list .cvesearchright .boxdetailtitle{background: none;}
@@ -280,7 +280,7 @@ button:focus{
 
 .report-issues-tab .MuiGrid-root.report-issuelist-right{position: fixed;top: 0;right: 0;z-index: 9999;bottom: 0;padding: 0 !important;}
 .report-issues-tab .report-issuelist-right .cvesearchright-inner{height: calc(100% - 0px);overflow-y: scroll;}
-.report-issues-tab .report-issuelist-right .cvesearchright-inner button.MuiButtonBase-root{justify-content: start;margin-bottom: 20px;}
+.report-issues-tab .report-issuelist-right .cvesearchright-inner button.MuiButtonBase-root{justify-content: start;margin-bottom: 5px;}
 .report-issues-tab .report-issuelist-right .cvesearchright-inner > div:last-child .boxdetailhead{border:0px; }
 .report-issues-tab .report-issuelist-right .boxdetailhead{padding-bottom: 30px;margin-bottom: 0px;border-bottom:1px solid #e6e9ef;}
 .report-issues-tab .report-issuelist-right .boxdetailtitle{background: none;}
