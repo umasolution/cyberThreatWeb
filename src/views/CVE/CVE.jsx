@@ -83,7 +83,7 @@ const CVE = () => {
     const fetchCVEData = async (cveParams) => {
         try {
             updateLoadingData(true);
-            updateSnackbar(true, CONSTANTS.FETCHING_DATA);
+            
             let url = `/cve?cve=${cveParams}`;
             if (isAuthenticatedURL) {
                 url = `auth/cve?cve=${cveParams}`;
@@ -106,7 +106,7 @@ const CVE = () => {
             if (response.data) {
                 setCVENVDDetails(response.data);
             }
-            updateSnackbar(true, CONSTANTS.FETCHING_DATA_SUCCESS);
+            
             updateLoadingData(false);
         } catch (error) {
             console.error(error);
@@ -121,12 +121,12 @@ const CVE = () => {
             if (!cveStartDateParam || !cveEndDateParam) return;
 
             updateLoadingData(true);
-            updateSnackbar(true, CONSTANTS.FETCHING_DATA);
+            
             const url = `/cve?start_date=${moment(cveStartDateParam).format("YYYY-MM-DD")}&end_date=${moment(cveEndDateParam).format("YYYY-MM-DD")}`;
             const response = await Axios.get(url);
             if (!response.data) return;
             setCVEResultByDate(response.data);
-            updateSnackbar(true, CONSTANTS.FETCHING_DATA_SUCCESS);
+            
             updateLoadingData(false);
         } catch (error) {
             console.error(error);

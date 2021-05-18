@@ -17,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: theme.typography.fontFamily
   },
   pagetitle :{
-    backgroundImage: `url(${"https://smartcodders.com/wp-content/uploads/2019/02/7.png"})`,
     padding: "115px 0px 115px",
     position: "relative",
     backgroundRepeat: "no-repeat",

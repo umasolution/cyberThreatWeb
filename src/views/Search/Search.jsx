@@ -99,7 +99,7 @@ export const Search = (/* {   } */) => {
     const fetchFeed = async () => {
         try {
             setLoadingTabs(true);
-            updateSnackbar(true, CONSTANTS.FETCHING_DATA);
+            
             setisSearch(true);
             var url = `/search`;
             if(keyword){
@@ -130,7 +130,7 @@ export const Search = (/* {   } */) => {
             setperRow(response.data.rowlimit);
             let totalpages = Math.ceil(response.data.total/perRow);
             setTotalpages(totalpages);
-            updateSnackbar(true, CONSTANTS.FETCHING_DATA_SUCCESS);
+            
             setLoadingTabs(false);
             setisSearch(false);
         } catch (error) {

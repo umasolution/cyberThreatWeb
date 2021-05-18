@@ -21,7 +21,7 @@ const Library = () => {
   const fetchProductsReports = async () => {
     try {
       setLoading(true);
-      updateSnackbar(true, CONSTANTS.FETCHING_DATA);
+      
       const url = `/getDetails`;
       const response = await Axios.post(url, {
         product,
@@ -29,7 +29,7 @@ const Library = () => {
       });
       const res = response.data;
       setProductReportResponse(res);
-      updateSnackbar(true, CONSTANTS.FETCHING_DATA_SUCCESS);
+      
       setLoading(false);
     } catch (error) {
       console.error(error);

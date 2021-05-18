@@ -61,7 +61,7 @@ const EditLanguage = () => {
     const fetchLanguages = async () => {
         try {
             updateLoadingData(true);
-            updateSnackbar(true, CONSTANTS.FETCHING_DATA);
+            
             let url = `/admin/api/${panelType}/${panel}`;
             const response = await Axios.get(url);
             // check response exist
@@ -78,7 +78,7 @@ const EditLanguage = () => {
                 // setLanguageData(data);
             }
             console.log(response.data);
-            updateSnackbar(true, CONSTANTS.FETCHING_DATA_SUCCESS);
+            
             updateLoadingData(false);
         } catch (error) {
             console.error(error);
