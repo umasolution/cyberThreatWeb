@@ -326,7 +326,7 @@ export const VuldbLogin = (/* {   } */) => {
     const fetchFeed = async () => {
         try {
             setLoadingTabs(true);
-            updateSnackbar(true, CONSTANTS.FETCHING_DATA);
+            
             setisSearch(true);
             var url = `/vuln/list`;
             setMainUrl('/vuln/list');
@@ -338,7 +338,7 @@ export const VuldbLogin = (/* {   } */) => {
             setperRow(response.data.rowlimit);
             let totalpages = Math.ceil(response.data.total/perRow);
             setTotalpages(totalpages);
-            updateSnackbar(true, CONSTANTS.FETCHING_DATA_SUCCESS);
+            
             setLoadingTabs(false);
             setisSearch(false);
         } catch (error) {
@@ -350,13 +350,13 @@ export const VuldbLogin = (/* {   } */) => {
 
         try {
             setLoadingTabs(true);
-            updateSnackbar(true, CONSTANTS.FETCHING_DATA);
+            
             var url = `/vuln`;
             let response = await Axios.get(url);
             setFieldsData(response.data);
             /*console.log(response.data);
             return ;*/
-            updateSnackbar(true, CONSTANTS.FETCHING_DATA_SUCCESS);
+            
             setLoadingTabs(false);
         } catch (error) {
             console.error(error);

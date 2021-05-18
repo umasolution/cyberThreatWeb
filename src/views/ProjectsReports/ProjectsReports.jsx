@@ -237,7 +237,7 @@ const ProjectsReports = () => {
     const fetchProjectsList = async () => {
         try {
             setLoading(true);
-            updateSnackbar(true, CONSTANTS.FETCHING_DATA);
+            
             /*console.log(authService);
             return;*/
             const url = "/projects";
@@ -252,7 +252,7 @@ const ProjectsReports = () => {
             setperRow(response.data.rowlimit);
             let totalpages = Math.ceil(response.data.total/perRow);
             setTotalpages(totalpages);
-            updateSnackbar(true, CONSTANTS.FETCHING_DATA_SUCCESS);
+            
             setLoading(false);
         } catch (error) {
             console.error(error);

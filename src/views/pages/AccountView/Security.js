@@ -19,7 +19,8 @@ import {
 import wait from 'src/utils/wait';
 import { useDispatch } from 'react-redux';
 import { updatePassword } from './../../../actions/accountActions';
-
+import { logout } from 'src/actions/accountActions';
+import { useHistory } from 'react-router';
 
 const useStyles = makeStyles(() => ({
   root: {}
@@ -29,6 +30,7 @@ function Security({ className,security, ...rest }) {
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
+  const history = useHistory();
 
   return (
     <Formik
@@ -61,6 +63,9 @@ function Security({ className,security, ...rest }) {
           enqueueSnackbar('Password updated', {
             variant: 'success'
           });
+          await dispatch(logout());
+          history.push('/login');
+
         } catch (error) {
           setStatus({ success: false });
           setErrors({ submit: error.message });
@@ -103,7 +108,7 @@ function Security({ className,security, ...rest }) {
                     name="oldPassword"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    type="oldPassword"
+                    type="password"
                     value={values.oldPassword}
                     variant="outlined"
                   />

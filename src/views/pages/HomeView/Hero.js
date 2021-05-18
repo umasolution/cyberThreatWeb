@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
       paddingLeft:45,
     },
     boxShadow:'0px 0px 50px rgba(0,0,0,0.06)',
-    marginBottom:100,
+    marginBottom:0,
     position:'relative',
   },
   image: {
@@ -112,6 +112,14 @@ const useStyles = makeStyles((theme) => ({
      fontSize: '16px',
      color: '#484848',
      marginBottom:'15px',
+  },
+  mainContentCard:{
+    fontWeight: theme.fontfamily.regular,
+    fontFamily: '"Montserrat",sans-serif',
+    fontSize: '13px',
+    color: '#484848',
+    marginBottom:'15px',
+    padding: '0px 30px'
   },
   bannerBox:{
     '& > bannerContainer': {
@@ -301,7 +309,7 @@ function Hero({ className, ...rest }) {
                 Sign up for free
               </Button>
               </div>
-              <h5 className={classes.mainContentH5} style={{marginTop: '8px'}}>No credit card required</h5>
+              <h5 className={classes.mainContentCard} style={{marginTop: '8px'}}>No credit card required</h5>
             </Box>
           </Grid>
           <Grid
@@ -335,7 +343,7 @@ function Hero({ className, ...rest }) {
         </Grid>
       
       </Container>
-      <div className={classes.searchbarArea}> 
+      {/*<div className={classes.searchbarArea}> 
         <Container maxWidth="lg" className={classes.searchbar}>    
           <Box mt={3}
             display="flex"
@@ -357,7 +365,7 @@ function Hero({ className, ...rest }) {
           <button onClick={handleClick} className={classes.searchButton}>Search</button>
           </Box>
         </Container>
-      </div>
+      </div>*/}
       
     </div >
     </div >

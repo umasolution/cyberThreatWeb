@@ -358,7 +358,7 @@ export const Vuldb = (/* {   } */) => {
     const fetchFeed = async () => {
         try {
             setLoadingTabs(true);
-            updateSnackbar(true, CONSTANTS.FETCHING_DATA);
+            
              setisSearch(true);
             var url = `/vuln/list`;
             setMainUrl('/vuln/list');
@@ -368,9 +368,9 @@ export const Vuldb = (/* {   } */) => {
             setTabsColumns(response.data.columns);
             setTabsRows(response.data.results);
             setperRow(response.data.rowlimit);
-            let totalpages = Math.ceil(response.data.total/perRow);
+            let totalpages = Math.ceil(response.data.total/response.data.rowlimit);
             setTotalpages(totalpages);
-            updateSnackbar(true, CONSTANTS.FETCHING_DATA_SUCCESS);
+            
             setLoadingTabs(false);
             setisSearch(false);
         } catch (error) {
@@ -382,13 +382,13 @@ export const Vuldb = (/* {   } */) => {
 
         try {
             setLoadingTabs(true);
-            updateSnackbar(true, CONSTANTS.FETCHING_DATA);
+            
             var url = `/vuln`;
             let response = await Axios.get(url);
             setFieldsData(response.data);
             /*console.log(response.data);
             return ;*/
-            updateSnackbar(true, CONSTANTS.FETCHING_DATA_SUCCESS);
+            
             setLoadingTabs(false);
         } catch (error) {
             console.error(error);
@@ -410,7 +410,7 @@ export const Vuldb = (/* {   } */) => {
         if(response) {
           setTabsData(response.data);
           setPage(1);
-          let totalpages = Math.ceil(response.data.total/perRow);
+          let totalpages = Math.ceil(response.data.total/response.data.rowlimit);
           setTotalpages(totalpages);
           setperRow(response.data.rowlimit);
           setisSearch(false);
@@ -435,9 +435,9 @@ export const Vuldb = (/* {   } */) => {
         if(response) {
           setTabsData(response.data);
           setPage(1);
-          let totalpages = Math.ceil(response.data.total/perRow);
           setTotalpages(totalpages);
           setperRow(response.data.rowlimit);
+          let totalpages = Math.ceil(response.data.total/response.data.rowlimit);
           setisSearch(false);
           setIsSearchLoadingHome(false);                       
         } else { 
@@ -472,9 +472,9 @@ export const Vuldb = (/* {   } */) => {
         if(response) {
           setTabsData(response.data);
           setPage(1);
-          let totalpages = Math.ceil(response.data.total/perRow);
           setTotalpages(totalpages);
           setperRow(response.data.rowlimit);
+          let totalpages = Math.ceil(response.data.total/response.data.rowlimit);
           setisSearch(false);
           setIsSearchLoadingHome(false);                       
         } else { 
@@ -548,9 +548,9 @@ export const Vuldb = (/* {   } */) => {
         let response = await Axios.get(url);
         setTabsData(response.data);
         setPage(1);
-        let totalpages = Math.ceil(response.data.total/perRow);
         setTotalpages(totalpages);
         setperRow(response.data.rowlimit);
+        let totalpages = Math.ceil(response.data.total/response.data.rowlimit);
         setisSearch(false);
     };
     const handleChangeAdvance = async (event, value) => {
@@ -601,9 +601,9 @@ export const Vuldb = (/* {   } */) => {
         let response = await Axios.get(url);
         setTabsData(response.data);
         setPage(1);
-        let totalpages = Math.ceil(response.data.total/perRow);
         setTotalpages(totalpages);
         setperRow(response.data.rowlimit);
+        let totalpages = Math.ceil(response.data.total/response.data.rowlimit);
         setisSearch(false);
     }; 
     const [selectradio, setSelectradio] = useState([]);
@@ -627,9 +627,9 @@ export const Vuldb = (/* {   } */) => {
         let response = await Axios.get(url);
         setTabsData(response.data);
         setPage(1);
-        let totalpages = Math.ceil(response.data.total/perRow);
         setTotalpages(totalpages);
         setperRow(response.data.rowlimit);
+        let totalpages = Math.ceil(response.data.total/response.data.rowlimit);
         setisSearch(false);
     }  
 
@@ -1886,7 +1886,6 @@ export const Vuldb = (/* {   } */) => {
                         <Button value="home" onClick={() => { handleSearchType('home') }}>Home</Button>
                       </ListItemText>
                     </ListItem>
-                     <Divider orientation="vertical" flexItem />
                     <ListItem className={browseTypeClass}>
                       <ListItemText>
                         <Button value="browse" onClick={() => { handleSearchType('browse') }} >Browse</Button>
@@ -2132,9 +2131,8 @@ export const Vuldb = (/* {   } */) => {
                         </Grid>
                     </Grid>
                     ):(<><Box
-                        display="flex"
                         flexDirection="column"
-                        className="cvesearchslider"
+                        className="browse-search"
                         borderRadius={16}
                       >
                       <List>

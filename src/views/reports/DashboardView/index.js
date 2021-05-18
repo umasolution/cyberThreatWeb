@@ -85,7 +85,7 @@ function DashboardView() {
     const fetchDashboardDetails = async () => {
       try {
         setLoading(true);
-        updateSnackbar(true, CONSTANTS.FETCHING_DATA);
+        
         /*const url = `/dashboard/${authService.getUserName()}`;*/
         const url = `/dashboard`;
         const response = await Axios.get(url);
@@ -112,7 +112,7 @@ function DashboardView() {
             setDashboardData(response.data.dependancies.user);
           }
         }
-        updateSnackbar(true, CONSTANTS.FETCHING_DATA_SUCCESS);
+        
         setLoading(false);
       } catch (error) {
         console.error(error);

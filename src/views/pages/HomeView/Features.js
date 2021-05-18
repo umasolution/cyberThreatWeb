@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.default,
     paddingTop: 20,
-    paddingBottom: 20
+    paddingBottom: 40
   },
   avatar: {
     backgroundColor: theme.palette.secondary.main,
@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   featureBox: {
     height:'100%',
     boxShadow:'4px 0px 67px rgba(46,57,124,0.07)',
-    padding:'26px',
+    padding:'10px 15px;',
     [theme.breakpoints.down('xs')]: {
       height:'auto',
       marginBottom:'25px'

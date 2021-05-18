@@ -53,12 +53,12 @@ function AccountView() {
     const fetchUserProfile = async () => {
       try {
         setLoading(true);
-        updateSnackbar(true, CONSTANTS.FETCHING_DATA);
+        
         const url = `/getProfile`;
         let response = await Axios.get(url);        
         setUserProfileData(response.data);       
         
-        updateSnackbar(true, CONSTANTS.FETCHING_DATA_SUCCESS);
+        
         setLoading(false);
       } catch (error) {
         console.error(error);
