@@ -51,7 +51,7 @@ export const Feed = (/* {   } */) => {
     const fetchFeed = async () => {
         try {
             setLoadingTabs(true);
-            updateSnackbar(true, CONSTANTS.FETCHING_DATA);
+            
             const url = "/vuln";
             let response = await Axios.get(url);
             response = response.data['report type'];
@@ -60,7 +60,7 @@ export const Feed = (/* {   } */) => {
             const reportTypes = response.map(d => d['report type'])
             setReportTypes(reportTypes);
             setTabsName([feedType]);
-            updateSnackbar(true, CONSTANTS.FETCHING_DATA_SUCCESS);
+            
             setLoadingTabs(false);
         } catch (error) {
             console.error(error);

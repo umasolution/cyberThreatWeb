@@ -37,7 +37,7 @@ const Language = () => {
     const fetchLanguages = async () => {
         try {
             updateLoadingData(true);
-            updateSnackbar(true, CONSTANTS.FETCHING_DATA);
+            
             const url = `/admin/api/${panelType}`;
             const response = await Axios.get(url);
             // check response exist
@@ -47,7 +47,7 @@ const Language = () => {
                 return;
             }
             setLanguages(response.data[panelType]);
-            updateSnackbar(true, CONSTANTS.FETCHING_DATA_SUCCESS);
+            
             updateLoadingData(false);
         } catch (error) {
             console.error(error);

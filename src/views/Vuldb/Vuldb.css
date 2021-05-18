@@ -1,7 +1,7 @@
 
 
 .vuldb-front .cvesearchslider {
-    width: 300px;
+	width: 300px;
 }
 .vuldb-front .topSearch.MuiContainer-maxWidthLg{max-width: 1400px;}
 
@@ -74,12 +74,12 @@
 .vuldb-front .boxtitlecontent.explo-list .MuiExpansionPanelSummary-content h2{font-size: 17px;font-weight: 600;}
 .vuldb-front .boxtitlecontent.explo-list .MuiExpansionPanelDetails-root .MuiTypography-root a{padding-bottom: 10px;word-break: break-all;}
 .vuldb-front .cveresult .Mui-selected {
-    background-color: #027ae2;
-    color: #fff;
+	background-color: #027ae2;
+	color: #fff;
 }
 .vuldb-front .cvesearchcenter .MuiTypography-h6{font-size: 13px;}
 .vuldb-front .cvesearchcenter .MuiTableRow-root {
-    cursor: pointer;
+	cursor: pointer;
 }
 .vuldb-front .cveresult .MuiTableContainer-root{overflow: visible;}
 .vuldb-front .cveresult .Mui-selected,.cveresult tr.Mui-selected,.cveresult tr.Mui-selected td:last-child{position: relative;}
@@ -101,26 +101,26 @@ width:100% !important;
 .vuldb-front ul li .MuiChip-deletable{background: #556177;border-radius: 5px; }
 
 .vuldb-front .small-table .MuiTableCell-body, .vuldb-front .big-table .MuiTableCell-body { 
-    white-space: pre-line; 
-    font-size: 15px !important;
+	white-space: pre-line; 
+	font-size: 15px !important;
     font-weight: 600 !important;
 } 
 
 .vuldb-front table { table-layout: fixed;}
 
 .vuldb-front table.small-table tr th:nth-child(n+4) {
-    display: none;
+	display: none;
 }
 .vuldb-front table.small-table tr td:nth-child(n+4) {
-    display: none;
+	display: none;
 }
 .vuldb-front table.small-table tr td:nth-last-child(-n+1) {
-    display: table-cell;
+	display: table-cell;
 }
 
 
 .vuldb-front table.small-table th:nth-last-child(-n+1) {
-    display: block !important;
+	display: block !important;
 }
 
 .vuldb-front .cveresult .b-scoreblock-severity-div {
@@ -230,6 +230,19 @@ width:100% !important;
 .vuldb-front .AdvanceSearchRight .cvesearchslider-box h2{font-size: 15px;letter-spacing: 0.5px;color: #333;}
 .vuldb-front .AdvanceSearchRight ul li{padding-left: 0;padding-right: 0;}
 .vuldb-front .AdvanceSearchRight ul li span.MuiListItemText-primary{font-size: 16px;font-weight: 500;}
+.searchBoxTop ul{margin-bottom: 15px;}
+.searchBoxTop ul li{padding: 0;}
+.searchBoxTop ul li button{padding: 10px 35px;position: relative;}
+.searchBoxTop ul li button:hover{background: none;}
+.searchBoxTop ul li button:after{position: absolute;content: "";background: #b2b2d5;width: 2px;top: 0;bottom: 0;right: 0px; margin: auto;height: 25%;}
+.searchBoxTop ul li:last-child button:after{display: none;}
+.searchBoxTop ul li button span.MuiButton-label{color: #333;font-weight: 600;font-size: 15px;}
+.searchBoxTop ul li:hover button span.MuiButton-label,.searchBoxTop ul li.active button span.MuiButton-label{color: rgb(255, 4, 118);}
+
+
+
+.browse-search ul li.MuiListItem-root{padding: 0;display: inherit;}
+.vuldb-front .browse-search .MuiInput-formControl input.MuiInputBase-input{border: 1px solid #e8e8f2;padding: 8px 15px;font-size: 14px;}
 /********************advance Search********************/
 
 @media only screen and (min-width:1700px){

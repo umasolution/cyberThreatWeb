@@ -64,7 +64,7 @@ const ProductsReports = () => {
   const fetchProductsReports = async () => {
     try {
       setLoading(true);
-      updateSnackbar(true, CONSTANTS.FETCHING_DATA);
+      
       const url = `/report/reportname`;
       /*const url = `/report/project/reportname`;*/
       const response = await Axios.post(url, {
@@ -82,7 +82,7 @@ const ProductsReports = () => {
         setIsDocker(true);
       }
       setProductReportResponse(res);
-      updateSnackbar(true, CONSTANTS.FETCHING_DATA_SUCCESS);
+      
       setLoading(false);
     } catch (error) {
       console.error(error);
@@ -114,13 +114,7 @@ const ProductsReports = () => {
           </Tabs>
         </AppBar>
         <TabPanel value={tabValue} index={0}>
-          <DockerSummaries
-            reportType={reportType}
-            reportName={reportName}
-            summary={productReportResponse.images}
-            headerDate={productReportResponse.header.Date}
-            projectName={productReportResponse.header.Project}
-          />
+          
         </TabPanel>
         <TabPanel value={tabValue} index={1}>
           <DockerIssues reportType={reportType} reportName={reportName} issues={productReportResponse.images} />
@@ -144,8 +138,8 @@ const ProductsReports = () => {
           <Tabs value={tabValue} onChange={handleChange} aria-label="simple tabs example">
             {productReportResponse.summary ? <Tab  className="summary-tab" label="Summary" /> : ''}
             <Tab className="issue-tab" label="Issues" />
-            {!isDocker ? <Tab className="inventory-tab" label="Inventory" />  : ''}
-            {((reportType === 'platform' || reportType === 'system' ) && !isDocker) ? <Tab className="remediation-tab" label="Remediation" /> : ''}
+            <Tab className="inventory-tab" label="Inventory" />
+            {((reportType === 'platform' || reportType === 'system' )) ? <Tab className="remediation-tab" label="Remediation" /> : ''}
           </Tabs>
         </AppBar>
         <TabPanel value={tabValue} index={0}>
@@ -158,9 +152,7 @@ const ProductsReports = () => {
           ) : ''}
         </TabPanel>
         <TabPanel value={tabValue} index={1}>
-          {!isDocker
-            ? <Issues reportType={reportType} reportName={reportName} issues={productReportResponse.Issues} counter={productReportResponse.summary.counter} historydata={productReportResponse.summary.history} projectId={projectId}/>
-            : <DockerIssues reportType={reportType} reportName={reportName} issues={productReportResponse.images} />}
+          <Issues reportType={reportType} reportName={reportName} issues={productReportResponse.Issues} counter={productReportResponse.summary.counter} historydata={productReportResponse.summary.history} projectId={projectId}/>
 
         </TabPanel>
         <TabPanel value={tabValue} index={2}>
@@ -176,15 +168,7 @@ const ProductsReports = () => {
   const getTabs = () => {
     return (
       <div className={classes.root}>
-
-        {
-          isDocker ?
-            getDockerTabs()
-            :
-            getNonDockerTabs()
-        }
-
-
+        {getNonDockerTabs()}
       </div>
     );
   }
