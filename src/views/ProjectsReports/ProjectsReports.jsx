@@ -162,7 +162,7 @@ const useStyles = makeStyles((theme) => ({
     },
     vulscore:{
       display:'flex',
-      border: '0.5px solid  #989898',  
+      border: '0.5px solid #6C7B8B',  
       borderRadius:'8px',
       width:'100%',
       padding:'10px',
@@ -188,7 +188,7 @@ const useStyles = makeStyles((theme) => ({
     paperSmall : {
       marginBottom : '5px',
       borderRadius : '5px',
-      borderColor : '#989898',
+      borderColor : ' #989898',
       borderStyle : 'solid',
       borderWidth : '0.5px',
      
@@ -196,46 +196,50 @@ const useStyles = makeStyles((theme) => ({
 
     row: {
       display: 'inline-flex',
-      width: '100%'
+      borderRadius : '5px',
+      border:'none',
+     
+      
+    
   },
   blueBox: {
-      backgroundColor:'#696969',
+      backgroundColor:'#6C7B8B',
       width: '100%',
       textAlign: 'center',
       fontSize: '12px',
       fontWeight: '600',
       color: 'white',
-      padding : '3px'
+      padding : '3px',
+      zIndex:'999',
+      borderRadius : '5px 0px 0px 5px'
   },
   whiteBox: {
-      backgroundColor: theme.palette.common.white,
-      width: '100%',
-    
-      textAlign: 'center',
-      color: 'white',
-      padding : '3px'
+    backgroundColor: '#009ACD',
+    width: '100%',
+    textAlign: 'center',
+    color: 'white',
+    padding: '3px',
+   
+    borderTop: '0.5px solid #009ACD',
+    borderRight: '0.5px solid  #009ACD',
+    borderBottom: '0.5px solid #009ACD`',
+    borderLeft: '0.5px solid #6C7B8B',
+    borderRadius: '0px 5px 5px 0px'
 
   },
   boxContent: {
 
       color : theme.palette.common.white,
-      fontWeight: '600'
+      fontSize:'12px',
+      fontWeight: '500'
   },
   nameBoxContent:{
-  
-      fontSize: '16px',
+      fontSize: '14px',
       fontWeight: '600',
       color:'black',
       margin:'5px auto 10px auto',
-    
-      width:'100%'
-    
-      
-
+      width:'100%',
   }
-  
-  
-  
 }));
 
 const ProjectsReports = () => {
@@ -910,7 +914,7 @@ const ProjectsReports = () => {
                                               >
                                                 <Typography
                                                   component="h6"
-                                                  color="textSecondary"
+                                                  color="#6C7B8B"
                                                   align="center"
                                                   className={classes.scoreTitle}
                                                 >
@@ -950,45 +954,36 @@ const ProjectsReports = () => {
                                          </Box>  */}
    
                                     { tabsData.columns[vkey].field == 'project_details' ? (
-                                        <>
-                                        <Box className="projectdetails-div" flexWrap="wrap">
+                                      <>
+
                                         {Object.entries(row.table[`${tabsData.columns[vkey].field}`]).map((projectdetails) => (
-                                             (projectdetails[0] == 'Name')?(<>
-                                            
-                                             
-                                              <div className={classes.row}>
-                                                
-                                                
-                                                  <Typography className={classes.nameBoxContent} align="center" variant="caption" >
-                                                    {projectdetails[1]}
-                                                  </Typography>
-                                               
-                                                
-                                              </div>
-                                            </>):''
-                                          
-                                           ))}
-                                          {Object.entries(row.table[`${tabsData.columns[vkey].field}`]).map((projectdetails) => (
-                                             (projectdetails[0] != 'Name')?(<>
-                                            <Paper elevation={4} className={classes.paperSmall} >
-                                             
+                                          (projectdetails[0] == 'Name') ? (<>
+                                            <div style={{ margin: "10px 0px" }}>
+                                              <Typography className={classes.nameBoxContent} align="center" variant="caption" >
+                                                {projectdetails[1]}
+                                              </Typography>
+                                            </div>
+                                          </>) : ''
+                                        ))}
+                                        {Object.entries(row.table[`${tabsData.columns[vkey].field}`]).map((projectdetails) => (
+                                          (projectdetails[0] != 'Name') ? (<>
+
+                                            <Grid container justify="flex-start" spacing={2} style={{margin:'3px'}}>
                                               <div className={classes.row}>
                                                 <div className={classes.blueBox} >
                                                   <Typography className={classes.boxContent} align="center" variant="caption" >
                                                     {projectdetails[0]}
                                                   </Typography>
                                                 </div>
-                                                <div className={classes.whiteBox} style={{
-                                                 backgroundColor : tabsData.colors[projectdetails[0]]}}>
+                                                <div className={classes.whiteBox}>
                                                   <Typography className={classes.boxContent} align="center" variant="caption" >
-                                                    <div >{projectdetails[1]}</div>
+                                                    {projectdetails[1]}
                                                   </Typography>
                                                 </div>
-                                                
                                               </div>
-                                            </Paper></>):''
-                                          
-                                           ))}
+                                            </Grid>
+                                          </>) : ''
+                                        ))}
                                           {/*Object.entries(row.table[`${tabsData.columns[vkey].field}`]).map((projectdetails) => (
                                             <Box className={projectdetails[0]}>
                                               {!isEmpty(tabsData.colors[projectdetails[0]])?(projectdetails[0]!='Name'?<Tooltip title={projectdetails[0]}><Chip
@@ -1003,34 +998,40 @@ const ProjectsReports = () => {
                                                   }
                                             </Box>
                                                 ))*/}
-                                          </Box>  
+                                         
                                         </>
                                     ) : '' }
                                     { tabsData.columns[vkey].field == 'report_details' ? (
                                         <>
-                                         <Grid container spacing={1}>
-                                         {Object.entries(row.table[`${tabsData.columns[vkey].field}`]).map((reportdetails) => (
-                                            <Grid item>
-                                            <Paper elevation={4} className={classes.paperSmall} >
-                                            <div className={classes.row}>
-                                              <div className={classes.blueBox} >
-                                                <Typography className={classes.boxContent} align="center" variant="caption" >
-                                                  {reportdetails[0]}
-                                                </Typography>
-                                              </div>
-                                              <div className={classes.whiteBox} style={{
-                                              backgroundColor : tabsData.colors[reportdetails[0]]}}>
-                                                <Typography className={classes.boxContent} align="center" variant="caption" >
-                                                  <div style={{color: reportdetails[0] == 'Type' ? '#000' : '#fff' }} >{reportdetails[1]}</div>
-                                                </Typography>
-                                              </div>
-
+                                          {Object.entries(row.table[`${tabsData.columns[vkey].field}`]).map((reportdetails) => (
+                                          (reportdetails[0] == 'Scanner') ? (<>
+                                            <div style={{ margin: "10px 0px" }}>
+                                              <Typography className={classes.nameBoxContent} align="center" variant="caption" >
+                                                {reportdetails[1]}
+                                              </Typography>
                                             </div>
-                                            </Paper>
-                                            </Grid>
+                                          </>) : ''
+                                        ))}
+                                        {Object.entries(row.table[`${tabsData.columns[vkey].field}`]).map((reportdetails) => (
+                                          (reportdetails[0] != 'Scanner') ? (<>
 
-                                            ))}
+                                            <Grid container justify="flex-start" spacing={2} style={{margin:'3px'}}>
+                                              <div className={classes.row}>
+                                                <div className={classes.blueBox} >
+                                                  <Typography className={classes.boxContent} align="center" variant="caption" >
+                                                    {reportdetails[0]}
+                                                  </Typography>
+                                                </div>
+                                                <div className={classes.whiteBox} >
+                                                  <Typography className={classes.boxContent} align="center" variant="caption">
+                                                    {reportdetails[1]}s
+                                                  </Typography>
+                                                </div>
+                                              </div>
                                             </Grid>
+                                          </>) : ''
+                                        ))}
+                                     
                                         
                                           {/**   <Box >
                                               {!isEmpty(tabsData.colors[reportdetails[0]])?<Tooltip title={reportdetails[0]}><Chip
@@ -1052,23 +1053,18 @@ const ProjectsReports = () => {
                                          {Object.entries(row.table[`${tabsData.columns[vkey].field}`]).map((target_details) => (
                                           Object.entries(target_details[1]).map((targetdata) => (
                                             <Grid item>
-
-                                            <Paper elevation={4} className={classes.paperSmall} >
                                             <div className={classes.row}>
                                               <div className={classes.blueBox} >
                                                 <Typography className={classes.boxContent} align="center" variant="caption" >
                                                   {targetdata[0]}
                                                 </Typography>
                                               </div>
-                                              <div className={classes.whiteBox} style={{
-                                              backgroundColor : tabsData.colors[targetdata[0]]}}>
+                                              <div className={classes.whiteBox} >
                                                 <Typography className={classes.boxContent} align="center" variant="caption" >
-                                                  <div style={{color: targetdata[1] == 'Local' ? '#000' : '#fff' }} >{targetdata[1]}</div>
+                                                  {targetdata[1]}
                                                 </Typography>
                                               </div>
-
-                                            </div>
-                                            </Paper>
+                                            </div>                                       
                                             </Grid>
                                              ))
                                              ))}
