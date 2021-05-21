@@ -154,20 +154,21 @@ function ProfileDetails({ user, className, ...rest }) {
                     src={image.preview}
                  />
                 {/*<img src={image.preview} alt="dummy" width="300" height="300" />*/}
-                <Button className={classes.uploadbtn} onClick={handleUpload} variant="contained" color="primary" component="span">Upload</Button>
-                
               </>) : (
                 <>
                   <Avatar
                     className={classes.avatar}
-
                     src={avatar}
                   />
                 </>
               )}
-            
-            
-          </div>
+            </div>
+            <div className="upload-imag-btn">   
+            {image.preview ? (<>
+                <Button className={classes.uploadbtn} onClick={handleUpload} variant="contained" color="primary" component="span">Upload</Button>
+                
+              </>) :''}
+            </div>
           </label>
             <input
               type="file"

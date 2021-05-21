@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink ,useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {
@@ -31,6 +31,7 @@ import MenuList from '@material-ui/core/MenuList';
 import { withStyles } from '@material-ui/core/styles';
 import ListItemText from '@material-ui/core/ListItemText';
 import MenuIcon from '@material-ui/icons/Menu';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -125,6 +126,7 @@ function TopBar({ className, ...rest }) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [menuState, setMenuState] = useState({ anchorEl: null, open: false, });
   const anchorRef = React.useRef(null);
+  const history = useHistory();
 
   const handleClick = event => {
     // setMenuState({ open: true, anchorEl: event.currentTarget });
@@ -143,6 +145,11 @@ function TopBar({ className, ...rest }) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  const handleBookDemo = () => {
+    history.push('/book-a-demo');
+  };
+  
 
 
   return (
@@ -169,15 +176,6 @@ function TopBar({ className, ...rest }) {
       >
         Vulnerabilities DB
       </Link>
-      <Link className={classes.link}
-        color="textSecondary"
-        component={RouterLink}
-        to="/about-us"
-        underline="none"
-        variant="body2"
-      >
-        About Us
-      </Link>
       <Link
         aria-controls="customized-menu"
         aria-haspopup="true"
@@ -190,6 +188,15 @@ function TopBar({ className, ...rest }) {
         variant="body2"
       >
         Products
+      </Link>
+      <Link className={classes.link}
+        color="textSecondary"
+        component={RouterLink}
+        to="/about-us"
+        underline="none"
+        variant="body2"
+      >
+        About Us
       </Link>
       <Link
         className={classes.link}
@@ -212,9 +219,8 @@ function TopBar({ className, ...rest }) {
             fontSize:'14px',
             fontWeight:'600',
             letterSpacing:'1px',
-            
-        }} className={classes.priceBTN} variant="contained" color="secondary">
-          Pricing
+        }} onClick={handleBookDemo} className={classes.priceBTN} variant="contained" color="secondary">
+          Book a demo
         </Button>
       </ScrollTo>  
         </Hidden>

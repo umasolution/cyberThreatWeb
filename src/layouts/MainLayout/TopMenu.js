@@ -141,7 +141,7 @@ function TopMenu({ className, ...rest }) {
               Vulnerabilities DB
             </Link>
                   </ListItem>
-                  <ListItem className={classes.listItem}>
+              <ListItem className={classes.listItem}>
                     <Link
               aria-controls="customized-menu"
               aria-haspopup="true"
@@ -180,17 +180,16 @@ function TopMenu({ className, ...rest }) {
               </Link>
               </ListItem>
               <ListItem className={classes.listItem}>
-              <ScrollTo smooth selector="#PricingView">
               <Link
                 className={classes.link}
                 color="textSecondary"
                 underline="none"
+                to="/book-a-demo"
                 variant="body2"
                 style={{ cursor: 'pointer' }}
               >
-                Pricing
-            </Link>
-            </ScrollTo>
+                Book a demo
+              </Link>
               </ListItem>
             </List>
     </div>
