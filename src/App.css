@@ -93,6 +93,7 @@ img{
   max-width:475px;
   width:100%;
   float: right;
+  text-align: initial;
 }
 .bannerBox label + .MuiInput-formControl{
   margin-top:0;

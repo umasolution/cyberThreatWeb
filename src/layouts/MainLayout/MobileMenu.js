@@ -94,6 +94,9 @@ function MobileMenu({ className, ...rest }) {
     }
   };
 
+  const handleBookDemo = () => {
+    history.push('/book-a-demo');
+  };
 
   const handleClose = (event) => {
     setMenuState(prevState => {
@@ -147,17 +150,15 @@ function MobileMenu({ className, ...rest }) {
       >
         Sign In
       </Link>
-      <ScrollTo smooth selector="#PricingView">
         <Button style={{
             borderRadius: 35,
             marginLeft : 10,
             backgroundColor: "#ff0476",
             padding: "5px 30px",
             
-        }} className={classes.priceBTN} variant="contained" color="secondary">
+        }} onClick={handleBookDemo} className={classes.priceBTN} variant="contained" color="secondary">
           Pricing
         </Button>
-      </ScrollTo>
     </span>
   );
 }

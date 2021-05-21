@@ -17,6 +17,9 @@ import {
 import moment from 'moment';
 import CVEInput from './../../CVE/CVEInput/CVEInput';
 import Icon from '@material-ui/core/Icon';
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from 'react-responsive-carousel';
+
 
 
 
@@ -24,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.light,
     paddingTop: 5,
-    paddingBottom: 140,
+    paddingBottom: 0,
     [theme.breakpoints.down('xs')]: {
       padding:30,
     },
@@ -48,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
       height: 'auto',
       //transform: 'rotateY(-35deg) rotateX(15deg)',
       backfaceVisibility: 'hidden',
+      width:'auto !important'
       //boxShadow: theme.shadows[16]
     }
   },
@@ -261,8 +265,16 @@ function Hero({ className, ...rest }) {
   }
 
   const gotoRegister = () => {
-    history.replace('/register')
+    history.replace('/book-a-demo')
   }
+
+   const settings = {
+      autoPlay: true,
+      fade: true,
+      swipeable: true,
+      showStatus: false,
+      infiniteLoop:true,
+    };
 
 
   return (
@@ -272,76 +284,150 @@ function Hero({ className, ...rest }) {
       {...rest}
     >
       <Container maxWidth={false} className="bannerContainer">
-        <Grid
-          container
-          spacing={0}
-          className={classes.container}
-        >
+      <Carousel {...settings}>
+        <div>
           <Grid
-            item
-            xs={12}
-            md={5}
+            container
+            spacing={0}
+            className={classes.container}
           >
-            <Box
-              display="flex"
-              flexDirection="column"
-              justifyContent="center"
-              height="100%"
-              className="bannerContent"
+            <Grid
+              item
+              xs={12}
+              md={5}
             >
-              <div className={classes.mainContent}>
-                <h3 className={classes.mainContentH3}>Continuous Integration.</h3>
-                <h3 className={classes.mainContentH3}>Continuous Development.</h3>
-                <h3 className={classes.mainContentH3}>Continuous Confidence.</h3>
-              </div>
-              <div className="mainContentSub">
-                <h5 className={classes.mainContentH5}>Confidently scan for vulnerablities in your source code,</h5>
-                <h5 className={classes.mainContentH5}>container image, virtual machine or physical servers.</h5>
-              </div>
-              <div className={classes.mainBannerBtn}><Button
-                color="secondary"
-                size="large"
-                type="button"
-                variant="contained"
-                onClick={gotoRegister}
-                style={{marginTop: '8px'}}
+              <Box
+                display="flex"
+                flexDirection="column"
+                justifyContent="center"
+                height="100%"
+                className="bannerContent"
               >
-                Sign up for free
-              </Button>
-              </div>
-              <h5 className={classes.mainContentCard} style={{marginTop: '8px'}}>No credit card required</h5>
-            </Box>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            md={7}
-          >
-            <Box position="relative">
-              <div className={classes.image}>
-                <img
-                  alt="Presentation"
-                  src="/static/home/hero_banner.png"
-                />
-
-              </div>
-            </Box>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-          >
-            <Box
-              display="flex"
-              flexDirection="column"
-              justifyContent="center"
-              height="100%"
+                <div className={classes.mainContent}>
+                  <h3 className={classes.mainContentH3}>Continuous Integration.</h3>
+                  <h3 className={classes.mainContentH3}>Continuous Development.</h3>
+                  <h3 className={classes.mainContentH3}>Continuous Confidence.</h3>
+                </div>
+                <div className="mainContentSub">
+                  <h5 className={classes.mainContentH5}>Confidently scan for vulnerablities in your source code,</h5>
+                  <h5 className={classes.mainContentH5}>container image, virtual machine or physical servers.</h5>
+                </div>
+                <div className={classes.mainBannerBtn}><Button
+                  color="secondary"
+                  size="large"
+                  type="button"
+                  variant="contained"
+                  onClick={gotoRegister}
+                  style={{marginTop: '8px'}}
+                >
+                  Sign up for free
+                </Button>
+                </div>
+                <h5 className={classes.mainContentCard} style={{marginTop: '8px'}}>No credit card required</h5>
+              </Box>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              md={7}
             >
-          
-          </Box>
+              <Box position="relative">
+                <div className={classes.image}>
+                  <img
+                    alt="Presentation"
+                    src="/static/home/hero_banner.png"
+                  />
+
+                </div>
+              </Box>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+            >
+              <Box
+                display="flex"
+                flexDirection="column"
+                justifyContent="center"
+                height="100%"
+              >
+            
+            </Box>
+            </Grid>
           </Grid>
-        </Grid>
-      
+        </div>
+        <div>
+          <Grid
+            container
+            spacing={0}
+            className={classes.container}
+          >
+            <Grid
+              item
+              xs={12}
+              md={5}
+            >
+              <Box
+                display="flex"
+                flexDirection="column"
+                justifyContent="center"
+                height="100%"
+                className="bannerContent"
+              >
+                <div className={classes.mainContent}>
+                  <h3 className={classes.mainContentH3}>Continuous Integration.</h3>
+                  <h3 className={classes.mainContentH3}>Continuous Development.</h3>
+                  <h3 className={classes.mainContentH3}>Continuous Confidence.</h3>
+                </div>
+                <div className="mainContentSub">
+                  <h5 className={classes.mainContentH5}>Confidently scan for vulnerablities in your source code,</h5>
+                  <h5 className={classes.mainContentH5}>container image, virtual machine or physical servers.</h5>
+                </div>
+                <div className={classes.mainBannerBtn}><Button
+                  color="secondary"
+                  size="large"
+                  type="button"
+                  variant="contained"
+                  onClick={gotoRegister}
+                  style={{marginTop: '8px'}}
+                >
+                  Sign up for free
+                </Button>
+                </div>
+                <h5 className={classes.mainContentCard} style={{marginTop: '8px'}}>No credit card required</h5>
+              </Box>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              md={7}
+            >
+              <Box position="relative">
+                <div className={classes.image}>
+                  <img
+                    alt="Presentation"
+                    src="/static/home/hero_banner.png"
+                  />
+
+                </div>
+              </Box>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+            >
+              <Box
+                display="flex"
+                flexDirection="column"
+                justifyContent="center"
+                height="100%"
+              >
+            
+            </Box>
+            </Grid>
+          </Grid>
+        </div>
+      </Carousel>
       </Container>
       {/*<div className={classes.searchbarArea}> 
         <Container maxWidth="lg" className={classes.searchbar}>    
