@@ -90,7 +90,7 @@ const routesConfig = [
       {
         exact: true,
         path: '/app/management/Alerts',
-        component: lazy(() => import('src/views/management/Alerts/Alerts'))
+        component: lazy(() => import('src/views/management/Alerts/AlertsResponse'))
       },
       {
         exact: true,

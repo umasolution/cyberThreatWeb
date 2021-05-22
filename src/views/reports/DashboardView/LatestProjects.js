@@ -70,6 +70,13 @@ const theme = createMuiTheme({
 
 function LatestProjects({ className, project_details,onClickRow, ...rest }) {
   const classes = useStyles();
+  const [selectedRow,setSelectedRow] =useState(null);
+  const handleOnRowClick = (row) => {
+    console.log(row);
+    onClickRow('key',row[`vulnerability`].split('/')[0]);
+    setSelectedRow(row.tableData.id);
+
+  };
 
   return (
     <Card
@@ -84,7 +91,7 @@ function LatestProjects({ className, project_details,onClickRow, ...rest }) {
             data={project_details.data}
             style={{ width: '100%' }}
             className="secondary"
-            onRowClick = {(event,row) => {console.log(row);onClickRow('key',row[`vulnerability`].split('/')[0])}}
+            onRowClick = {(event,row)=>{handleOnRowClick(row)}}
             options={{
               pageSize: 10,  
               toolbarStyle: {
@@ -103,11 +110,11 @@ function LatestProjects({ className, project_details,onClickRow, ...rest }) {
                 fontWeight: 600,
                 borderBottom: '1px solid rgba(224, 224, 224, 1)'
               },
-              rowStyle: x => {
-                if (x.tableData.id % 2 === 0) {
-                    /*return {backgroundColor: "#f9f9fc"}*/
-                }
-            }
+              rowStyle: x => ({
+                backgroundColor:(selectedRow === x.tableData.id)?'#027de7':'white',
+                color:(selectedRow === x.tableData.id)?'white':'black'
+               
+            })
             }}
           />
         </ThemeProvider>
