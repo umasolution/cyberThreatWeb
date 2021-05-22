@@ -2,7 +2,7 @@ import { Container, Grid, LinearProgress, makeStyles, TextField,Typography,Box,
 ListItem,ListItemIcon,ListItemText,List,ExpansionPanel,ExpansionPanelSummary,ExpansionPanelDetails,
 Slider,
 Paper,Table,TableBody,TableCell,TableContainer,TableHead,TablePagination,TableRow,
-Card,CardActionArea,CardActions,CardContent,CardMedia,Radio,RadioGroup,FormLabel,Chip,Icon,CardHeader,Collapse,Button
+Card,CardActionArea,CardActions,CardContent,CardMedia,Radio,RadioGroup,FormLabel,Chip,Icon,CardHeader,Collapse,Button,ListItemSecondaryAction
 } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -42,6 +42,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Divider from '@material-ui/core/Divider';
 import clsx from 'clsx';
 import { getBackgroundColorBySeverity, getFontColorBySeverity } from '../../Util/Util';
+import { capitalCase } from 'change-case';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -209,6 +210,8 @@ export const Vuldb = (/* {   } */) => {
     
     const [fieldsData, setFieldsData] = useState();
 
+    const [browseData, setBrowseData] = useState();
+
     const aurl = new URL(Axios.defaults.baseURL);
 
     const apiparams = new URLSearchParams(aurl.search);
@@ -358,8 +361,7 @@ export const Vuldb = (/* {   } */) => {
     const fetchFeed = async () => {
         try {
             setLoadingTabs(true);
-            
-             setisSearch(true);
+            setisSearch(true);
             var url = `/vuln/list`;
             setMainUrl('/vuln/list');
             setApiUrl(apiparams);
@@ -382,13 +384,9 @@ export const Vuldb = (/* {   } */) => {
 
         try {
             setLoadingTabs(true);
-            
-            var url = `/vuln`;
+            var url = `/dash/browse`;
             let response = await Axios.get(url);
-            setFieldsData(response.data);
-            /*console.log(response.data);
-            return ;*/
-            
+            setBrowseData(response.data.data);
             setLoadingTabs(false);
         } catch (error) {
             console.error(error);
@@ -403,6 +401,9 @@ export const Vuldb = (/* {   } */) => {
         setSingleRows();
         setisSearch(true);
         setNoResult(true);
+        setSearchType('home');
+        SetBrowseTypeClass();
+        SetHomeTypeClass('active');
         apiurl.delete('offset');
         apiurl.delete('limit');        
         var url = `${mainurl}?${apiurl.toString()}`;
@@ -427,17 +428,24 @@ export const Vuldb = (/* {   } */) => {
         setSingleRows();
         setisSearch(true);
         setNoResult(true);
+        apiurl.delete('offset');
+        apiurl.delete('limit'); 
+        apiurl.delete('type');
+        apiurl.delete('language'); 
+        apiurl.delete('product'); 
+        apiurl.delete('severity');
+        apiurl.delete('accessvector');
         apiurl.delete('productname');
         apiurl.delete('offset');
-        apiurl.delete('limit');        
+        apiurl.delete('limit');
         var url = `${mainurl}?${apiurl.toString()}`;
         let response = await Axios.get(url);
         if(response) {
           setTabsData(response.data);
-          setPage(1);
-          setTotalpages(totalpages);
+          setPage(1);          
           setperRow(response.data.rowlimit);
           let totalpages = Math.ceil(response.data.total/response.data.rowlimit);
+          setTotalpages(totalpages);
           setisSearch(false);
           setIsSearchLoadingHome(false);                       
         } else { 
@@ -471,16 +479,57 @@ export const Vuldb = (/* {   } */) => {
         let response = await Axios.get(url);
         if(response) {
           setTabsData(response.data);
-          setPage(1);
-          setTotalpages(totalpages);
+          setPage(1);          
           setperRow(response.data.rowlimit);
           let totalpages = Math.ceil(response.data.total/response.data.rowlimit);
+          setTotalpages(totalpages);
           setisSearch(false);
           setIsSearchLoadingHome(false);                       
         } else { 
            setEmptyData(true);
            setIsSearchLoadingHome(false);  
         }
+    }
+
+    const handleShowMore = async (event, value) => {  
+        setloadingRows(false);  
+        setIsSearchLoadingHome(true); 
+        setSingleRows();  
+        setisSearch(true);  
+        setNoResult(true);  
+        apiurl.delete('offset');  
+        apiurl.delete('limit');   
+        apiurl.delete('type');  
+        apiurl.delete('language');  
+        apiurl.delete('product');   
+        apiurl.delete('severity');  
+        apiurl.delete('accessvector');  
+        apiurl.delete('productname'); 
+        apiurl.delete('offset');  
+        apiurl.delete('limit'); 
+        apiurl.delete('keyword'); 
+        
+        if(value=='0'){
+          apiurl.set('type', 'vendor');  
+        } else if(value=='1') {
+          apiurl.set('type', 'product');  
+        } else if(value=='2') {
+          apiurl.set('type', 'vulnerabilities');  
+        }
+        var url = `/scan/browse?${apiurl.toString()}`;  
+        let response = await Axios.get(url);  
+        if(response) {  
+          setTabsData(response.data); 
+          setPage(1);           
+          setperRow(response.data.rowlimit);  
+          let totalpages = Math.ceil(response.data.total/response.data.rowlimit); 
+          setTotalpages(totalpages);  
+          setisSearch(false); 
+          setIsSearchLoadingHome(false);                        
+        } else {  
+           setEmptyData(true);  
+           setIsSearchLoadingHome(false);   
+        } 
     }
 
     const handleChangePage = async (event, value) => {
@@ -555,13 +604,8 @@ export const Vuldb = (/* {   } */) => {
     };
     const handleChangeAdvance = async (event, value) => {
       const checked = event.target.checked;
-      console.log(checked);
       const checkedValue = event.target.value;
-      console.log(checkedValue);
       const checkedName = event.target.name;
-      console.log(checkedName);
-
-
     } 
     const [selectvector, setSelectvector] = useState([]);
     const handleChangeRemote = async (event, value) => {
@@ -2177,6 +2221,71 @@ export const Vuldb = (/* {   } */) => {
           </>
        )   
     }
+    const getBrowseTab = (browseDa) => {
+      return (
+            <>
+            <Container maxWidth="xl" className="browse-wizard">
+              <Box >
+                <Grid container spacing={3}>  
+                {Object.entries(browseDa).map(([key, value],index) => (
+                      <>
+                      <Grid
+                      item
+                      xs={12}
+                      md={4}
+                      display="flex"
+                      justifyContent="center"
+                      className="browse-wizard-box"
+                    >
+                      <Card>
+                        <CardHeader
+                            title={value.header}
+                         />
+                        <CardContent>
+                          <Typography variant="h6">{value.title}</Typography>
+                           <List>
+                           {Object.entries(value.data).map(([bkey, row]) => (
+                                  <Grid container className="browse-list">
+                                    {Object.entries(value.column).map(([browseColumnskey, browseColumns]) => (
+                                      browseColumns=='name' || browseColumns=='product' || browseColumns=='vendor'?(
+                                      <Grid
+                                          item
+                                          xs={12}
+                                          md={6}
+
+                                      >
+                                      {capitalCase(row[`${browseColumns}`])}
+                                      </Grid>):''
+                                    ))}
+                                    {Object.entries(value.column).map(([browseColumnskey, browseColumns]) => (
+                                      browseColumns!='name' && browseColumns!='product' && browseColumns!='vendor'?(
+                                      <Grid
+                                          item
+                                          xs={12}
+                                          md={6}
+                                      >
+                                      {row[`${browseColumns}`]}
+                                      </Grid>):''
+                                    ))}
+                                  </Grid>
+                              ))}
+                          </List> 
+                        </CardContent>
+                        <CardActions>
+                          <Button onClick={event => handleShowMore(event,index)} size="small">Show More</Button>
+                        </CardActions>
+                      </Card>
+                    </Grid>
+                      </>
+                    ))}    
+                  
+
+                </Grid>
+            </Box>
+          </Container>
+          </>
+       )   
+    }
 
     return (
         <Page
@@ -2187,6 +2296,7 @@ export const Vuldb = (/* {   } */) => {
 
                 {loadingTabs ? getLoader() : null}
                 {getSearchBox(chipData)}
+                {!isEmpty(browseData) && searchtype=='browse'?getBrowseTab(browseData):''}
                 
                 <Container maxWidth className="cveresult">
                   <Grid

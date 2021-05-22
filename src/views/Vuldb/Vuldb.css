@@ -1,7 +1,7 @@
 
 
 .vuldb-front .cvesearchslider {
-	width: 300px;
+    width: 300px;
 }
 .vuldb-front .topSearch.MuiContainer-maxWidthLg{max-width: 1400px;}
 
@@ -74,12 +74,12 @@
 .vuldb-front .boxtitlecontent.explo-list .MuiExpansionPanelSummary-content h2{font-size: 17px;font-weight: 600;}
 .vuldb-front .boxtitlecontent.explo-list .MuiExpansionPanelDetails-root .MuiTypography-root a{padding-bottom: 10px;word-break: break-all;}
 .vuldb-front .cveresult .Mui-selected {
-	background-color: #027ae2;
-	color: #fff;
+    background-color: #027ae2;
+    color: #fff;
 }
 .vuldb-front .cvesearchcenter .MuiTypography-h6{font-size: 13px;}
 .vuldb-front .cvesearchcenter .MuiTableRow-root {
-	cursor: pointer;
+    cursor: pointer;
 }
 .vuldb-front .cveresult .MuiTableContainer-root{overflow: visible;}
 .vuldb-front .cveresult .Mui-selected,.cveresult tr.Mui-selected,.cveresult tr.Mui-selected td:last-child{position: relative;}
@@ -101,26 +101,26 @@ width:100% !important;
 .vuldb-front ul li .MuiChip-deletable{background: #556177;border-radius: 5px; }
 
 .vuldb-front .small-table .MuiTableCell-body, .vuldb-front .big-table .MuiTableCell-body { 
-	white-space: pre-line; 
-	font-size: 15px !important;
+    white-space: pre-line; 
+    font-size: 15px !important;
     font-weight: 600 !important;
 } 
 
 .vuldb-front table { table-layout: fixed;}
 
 .vuldb-front table.small-table tr th:nth-child(n+4) {
-	display: none;
+    display: none;
 }
 .vuldb-front table.small-table tr td:nth-child(n+4) {
-	display: none;
+    display: none;
 }
 .vuldb-front table.small-table tr td:nth-last-child(-n+1) {
-	display: table-cell;
+    display: table-cell;
 }
 
 
 .vuldb-front table.small-table th:nth-last-child(-n+1) {
-	display: block !important;
+    display: block !important;
 }
 
 .vuldb-front .cveresult .b-scoreblock-severity-div {
@@ -243,6 +243,20 @@ width:100% !important;
 
 .browse-search ul li.MuiListItem-root{padding: 0;display: inherit;}
 .vuldb-front .browse-search .MuiInput-formControl input.MuiInputBase-input{border: 1px solid #e8e8f2;padding: 8px 15px;font-size: 14px;}
+
+
+.browse-wizard{margin-bottom: 50px;}
+.browse-wizard .browse-wizard-box > .MuiCard-root{border: 1px solid #ededef;padding: 5px;border-radius: 8px;height: 100%;}
+.browse-wizard .browse-wizard-box .MuiCardHeader-root{border:1px solid #ededef;background: #fafafc;border-radius: 8px;border-left:3px solid #0c79d8; }
+.browse-wizard .browse-wizard-box .MuiCardHeader-root .MuiCardHeader-title{font-weight: 700; font-size: 18px;}
+
+.browse-wizard .browse-wizard-box .MuiCardContent-root{height: calc(100% - 110px);padding: 22px;}
+.browse-wizard .browse-wizard-box h6{font-weight: 700;color: #263238;margin-bottom: 5px;}
+.browse-wizard .browse-wizard-box ul.MuiList-root .browse-list{padding: 12px 0; font-family: "Montserrat",sans-serif !important;}
+.browse-wizard .browse-wizard-box ul.MuiList-root .browse-list > div{font-size: 14px; font-weight: 600;}
+.browse-wizard .browse-wizard-box ul.MuiList-root .browse-list > div:last-child{text-align: right;color: #017be0;}
+.browse-wizard .browse-wizard-box .MuiCardActions-root{justify-content: center;padding: 10px 10px 5px 10px;border-top: 1px solid #ededef;margin-left: -5px; margin-right: -5px;}
+.browse-wizard .browse-wizard-box .MuiCardActions-root button{font-weight: 700;font-size: 18px;color: #017be0;letter-spacing: 0.5px;    text-transform: none;} 
 /********************advance Search********************/
 
 @media only screen and (min-width:1700px){

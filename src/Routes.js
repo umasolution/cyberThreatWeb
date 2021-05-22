@@ -14,6 +14,7 @@ import DocsLayout from 'src/layouts/DocsLayout';
 import MainLayout from 'src/layouts/MainLayout';
 import HomeView from 'src/views/pages/HomeView';
 import AboutView from 'src/views/pages/AboutView';
+import BookaDemoView from 'src/views/pages/BookaDemoView';
 import LoadingScreen from 'src/components/LoadingScreen';
 import AuthGuard from 'src/components/AuthGuard';
 import GuestGuard from 'src/components/GuestGuard';
@@ -47,6 +48,7 @@ const routesConfig = [
     path: '/register',
     component: lazy(() => import('src/views/auth/RegisterView'))
   },
+  ,
   {
     path: '/app',
     guard: AuthGuard,
@@ -278,6 +280,11 @@ const routesConfig = [
         exact: true,
         path: '/about-us',
         component: AboutView
+      },
+      {
+        exact: true,
+        path: '/book-a-demo',
+        component: BookaDemoView
       }/*,
       {
         exact: true,

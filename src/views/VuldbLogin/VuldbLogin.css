@@ -168,6 +168,142 @@ width:100% !important;
     margin-top: 0px;
 }
 
+.vuldb-login .cveresult .b-scoreblock-severity-div {
+    display: flex;
+    justify-content: end;
+}
+.vuldb-login .cveresult .b-scoreblock-severity-div > div {
+    padding: 0 0 0 5px;
+}
+.vuldb-login .b-scoreblock-severity-div div {
+    margin: 0px !important;
+}
+.vuldb-login .b-scoreblock-severity-div .scoreblock,.vuldb-login .b-scoreblock-severity-div .scoreblock {
+    float: left;
+    margin: 0 0px;
+}
+
+.vuldb-login .cveresult table tr td .b-scoreblock-severity-div .HIGH .b-scoreblock-inner {
+    border-color: red;
+}
+
+.vuldb-login .cveresult table tr td .b-scoreblock-severity-div .b-scoreblock-inner {
+    border: 1px solid;
+    border-radius: 5px;
+}
+
+.vuldb-login .b-scoreblock-severity-div .HIGH .b-scoreblock-inner {
+    border-color: red;
+}
+
+.vuldb-login .b-scoreblock-severity-div div {
+    margin: 0px !important;
+}
+.vuldb-login .cveresult table tr td .b-scoreblock-severity-div .b-scoreblock-inner > div {
+    min-height: 22px;
+    font-size: 12px;
+    padding: 3px 5px;
+    border: 0;
+}
+
+.vuldb-login .b-scoreblock-inner > div {
+    display: block;
+    vertical-align: middle;
+    padding: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+}
+.vuldb-login .b-scorevalue {
+    color: #fff;
+    border-radius: 0px 3px 3px 0px;
+    border-right: 1px solid #d0d8e5;
+    border-bottom: 1px solid #d0d8e5;
+    border-top: 1px solid #d0d8e5;
+}
+
+.vuldb-login .cveresult table tr td {
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    padding: 5px 20px !important;
+    border-bottom: 1px solid #e1e4e8 !important;
+}
+
+.vuldb-login .cvesearchright .view-more-btn {
+    width: 100%;
+    font-size: 17px;
+    color: #333;
+    font-weight: 600;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.vuldb-login .cvesearchright .view-more-btn a {
+    background: #185d98;
+    text-decoration: none;
+    display: inline-block;
+    padding: 12px 20px;
+    color: #fff;
+    border: 2px solid #185d98;
+    line-height: 1;
+    font-family: "Montserrat",sans-serif !important;
+}
+
+.vuldb-login .cvesearchright .view-more-btn {
+    text-align: center;
+    margin-top: 0px;
+}
+
+
+/********************advance Search********************/
+.advanceboxnew > .MuiPaper-root{padding: 15px;}
+.advanceboxnew > div.MuiCard-root > .MuiCardHeader-root{border: 1px solid #e8e8f2; border-left: 4px solid rgb(2 125 231); padding: 8px 15px;border-radius: 5px;}
+.AdvanceSearchLeft .MuiFormGroup-root[role="radiogroup"]{flex-direction: inherit;}
+.AdvanceSearchLeft .MuiFormControlLabel-root{width: 25%;margin: 0;}
+.AdvanceSearchLeft .MuiFormControlLabel-root span.MuiFormControlLabel-label{font-size: 14px;font-weight: 500;}
+.AdvanceSearchLeft .MuiFormControlLabel-root span.MuiRadio-root{padding-left: 0;}
+.AdvanceSearchLeft .input-wrap{display: -webkit-box;display: -ms-flexbox;display: flex;-ms-flex-wrap: wrap;flex-wrap: wrap;margin-top: 15px;margin-bottom: 15px}
+.AdvanceSearchLeft .input-wrap h2{width: 20%;font-size: 16px;align-self: center;color: #333;}
+.AdvanceSearchLeft .input-box.keyword-box{width: 100%;margin-top: 10px;}
+.AdvanceSearchLeft .input-wrap .input-box{width: 80%;} 
+.AdvanceSearchLeft .input-box label.MuiInputLabel-formControl{font-size: 14px;top: 8px;left: 15px;font-weight: 500;}
+.AdvanceSearchLeft .input-box label.MuiInputLabel-root.Mui-focused,.AdvanceSearchLeft .input-wrap .input-box label.MuiInputLabel-root.MuiFormLabel-filled{top: -8px;}
+.AdvanceSearchLeft .input-box .MuiInput-formControl input{border: 1px solid #e8e8f2; padding: 8px 15px; font-size: 14px;}
+
+.vuldb-login .AdvanceSearchRight .cvesearchslider{margin-left: 8px;}
+.vuldb-login .AdvanceSearchRight .cvesearchslider-box{background: #f8f8fa;padding: 15px 25px;border-radius: 5px;}
+.vuldb-login .AdvanceSearchRight .cvesearchslider-box h2{font-size: 15px;letter-spacing: 0.5px;color: #333;}
+.vuldb-login .AdvanceSearchRight ul li{padding-left: 0;padding-right: 0;}
+.vuldb-login .AdvanceSearchRight ul li span.MuiListItemText-primary{font-size: 16px;font-weight: 500;}
+.searchBoxTop ul{margin-bottom: 15px;}
+.searchBoxTop ul li{padding: 0;}
+.searchBoxTop ul li button{padding: 10px 35px;position: relative;}
+.searchBoxTop ul li button:hover{background: none;}
+.searchBoxTop ul li button:after{position: absolute;content: "";background: #b2b2d5;width: 2px;top: 0;bottom: 0;right: 0px; margin: auto;height: 25%;}
+.searchBoxTop ul li:last-child button:after{display: none;}
+.searchBoxTop ul li button span.MuiButton-label{color: #333;font-weight: 600;font-size: 15px;}
+.searchBoxTop ul li:hover button span.MuiButton-label,.searchBoxTop ul li.active button span.MuiButton-label{color: rgb(255, 4, 118);}
+
+
+
+.browse-search ul li.MuiListItem-root{padding: 0;display: inherit;}
+.vuldb-login .browse-search .MuiInput-formControl input.MuiInputBase-input{border: 1px solid #e8e8f2;padding: 8px 15px;font-size: 14px;}
+
+
+.browse-wizard{margin-bottom: 50px;}
+.browse-wizard .browse-wizard-box > .MuiCard-root{border: 1px solid #ededef;padding: 5px;border-radius: 8px;height: 100%;}
+.browse-wizard .browse-wizard-box .MuiCardHeader-root{border:1px solid #ededef;background: #fafafc;border-radius: 8px;border-left:3px solid #0c79d8; }
+.browse-wizard .browse-wizard-box .MuiCardHeader-root .MuiCardHeader-title{font-weight: 700; font-size: 18px;}
+
+.browse-wizard .browse-wizard-box .MuiCardContent-root{height: calc(100% - 110px);padding: 22px;}
+.browse-wizard .browse-wizard-box h6{font-weight: 700;color: #263238;margin-bottom: 5px;}
+.browse-wizard .browse-wizard-box ul.MuiList-root .browse-list{padding: 12px 0; font-family: "Montserrat",sans-serif !important;}
+.browse-wizard .browse-wizard-box ul.MuiList-root .browse-list > div{font-size: 14px; font-weight: 600;}
+.browse-wizard .browse-wizard-box ul.MuiList-root .browse-list > div:last-child{text-align: right;color: #017be0;}
+.browse-wizard .browse-wizard-box .MuiCardActions-root{justify-content: center;padding: 10px 10px 5px 10px;border-top: 1px solid #ededef;margin-left: -5px; margin-right: -5px;}
+.browse-wizard .browse-wizard-box .MuiCardActions-root button{font-weight: 700;font-size: 18px;color: #017be0;letter-spacing: 0.5px;    text-transform: none;} 
+/********************advance Search********************/
+
 @media only screen and (min-width:1700px){
 
 .vuldb-login .cvesearchcenter .MuiTableCell-root{padding: 0px 10px;}
