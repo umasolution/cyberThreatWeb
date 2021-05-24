@@ -294,9 +294,20 @@ button:focus{
 .report-issues-tab .cvesearchright-inner > div{background: none !important;}
 
 
+.features-box-row{padding-top: 40px;padding-bottom: 70px;background: #f9f9f9;}
+.future-box .MuiBox-root{text-align: center;}
+.future-box .MuiBox-root > img{height: 230px;object-fit: contain;display: inline-block;}
 
 
+.third-featureBox-row {padding-top: 25px;padding-bottom: 25px;}
+.third-featureBox > h2.MuiTypography-h2{font-weight: 600;color: #000;}
+.third-featureBox-2 .gridBox-Container .gridBox h4:before{display: none !important;}
+.third-featureBox-2 .gridBox-Container .gridBox > .MuiBox-root{text-align: center;    padding: 30px;}
+.third-featureBox-2 .gridBox-Container .gridBox:first-child > .MuiBox-root{border-top:5px solid #ff9100; }
+.third-featureBox-2 .gridBox-Container .gridBox:nth-child(2) > .MuiBox-root{border-top:5px solid #c9e528; }
+.third-featureBox-2 .gridBox-Container .gridBox:nth-child(3) > .MuiBox-root{border-top:5px solid #23b2cd; }
 
+.third-featureBox-2 .gridBox-Container .gridBox h4.MuiTypography-colorTextPrimary{font-weight: 500;line-height: 1.5;}
 
 @media only screen and (max-width: 767px) {
 

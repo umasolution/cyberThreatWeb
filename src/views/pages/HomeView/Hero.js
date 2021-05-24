@@ -45,13 +45,13 @@ const useStyles = makeStyles((theme) => ({
     //perspectiveOrigin: 'left center',
     //transformStyle: 'preserve-3d',
     //perspective: 1500,
-    textAlign:'right',
+    textAlign:'left',
     '& > img': {
-      maxWidth: '100%',
+      maxWidth: '800px',
       height: 'auto',
       //transform: 'rotateY(-35deg) rotateX(15deg)',
       backfaceVisibility: 'hidden',
-      width:'auto !important'
+      width:'100% !important'
       //boxShadow: theme.shadows[16]
     }
   },
@@ -94,6 +94,7 @@ const useStyles = makeStyles((theme) => ({
   },
   mainBannerBtn : {
     marginTop:'30px',
+    textAlign:'center',
     '& > Button': {
       backgroundColor:'#027de7',
       border:'none',
@@ -111,7 +112,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   mainContentH5: {
-     fontWeight: theme.fontfamily.regular,
+     fontWeight: '500',
      fontFamily: '"Montserrat",sans-serif',
      fontSize: '16px',
      color: '#484848',
@@ -274,6 +275,8 @@ function Hero({ className, ...rest }) {
       swipeable: true,
       showStatus: false,
       infiniteLoop:true,
+      showArrows : false,
+      showThumbs:false
     };
 
 
@@ -283,7 +286,7 @@ function Hero({ className, ...rest }) {
       className={clsx(classes.root, className)}
       {...rest}
     >
-      <Container maxWidth={false} className="bannerContainer">
+      <Container maxWidth="xl" className="bannerContainer">
       <Carousel {...settings}>
         <div>
           <Grid
@@ -309,8 +312,8 @@ function Hero({ className, ...rest }) {
                   <h3 className={classes.mainContentH3}>Continuous Confidence.</h3>
                 </div>
                 <div className="mainContentSub">
-                  <h5 className={classes.mainContentH5}>Confidently scan for vulnerablities in your source code,</h5>
-                  <h5 className={classes.mainContentH5}>container image, virtual machine or physical servers.</h5>
+                  <h5 className={classes.mainContentH5}>Confidently scan for vulnerablities in your Source Code, Containers, Virtual Machines, Cloud Instances or Physical Servers.</h5>
+                  <h5 className={classes.mainContentH5}>Build confidently with Open Source! Niah is your partner in taking DevOps to DevSecOps</h5>
                 </div>
                 <div className={classes.mainBannerBtn}><Button
                   color="secondary"
@@ -320,10 +323,9 @@ function Hero({ className, ...rest }) {
                   onClick={gotoRegister}
                   style={{marginTop: '8px'}}
                 >
-                  Sign up for free
+                  Book a demo
                 </Button>
                 </div>
-                <h5 className={classes.mainContentCard} style={{marginTop: '8px'}}>No credit card required</h5>
               </Box>
             </Grid>
             <Grid
@@ -335,7 +337,7 @@ function Hero({ className, ...rest }) {
                 <div className={classes.image}>
                   <img
                     alt="Presentation"
-                    src="/static/home/hero_banner.png"
+                    src="/static/home/first_slider.jpg"
                   />
 
                 </div>
@@ -375,13 +377,13 @@ function Hero({ className, ...rest }) {
                 className="bannerContent"
               >
                 <div className={classes.mainContent}>
-                  <h3 className={classes.mainContentH3}>Continuous Integration.</h3>
-                  <h3 className={classes.mainContentH3}>Continuous Development.</h3>
-                  <h3 className={classes.mainContentH3}>Continuous Confidence.</h3>
+                  <h3 className={classes.mainContentH3}>DevOps to DevSecOps.</h3>
+                  <h3 className={classes.mainContentH3}>Build Secure Applications.</h3>
+                  <h3 className={classes.mainContentH3}></h3>
                 </div>
                 <div className="mainContentSub">
-                  <h5 className={classes.mainContentH5}>Confidently scan for vulnerablities in your source code,</h5>
-                  <h5 className={classes.mainContentH5}>container image, virtual machine or physical servers.</h5>
+                  <h5 className={classes.mainContentH5}>Integrate Security at every stage of your DevOps process. Find vulnerabilities right in your IDE or your build process. Niah Security's integrates seamlessly with your favorite development and build tools.</h5>
+                  
                 </div>
                 <div className={classes.mainBannerBtn}><Button
                   color="secondary"
@@ -391,10 +393,9 @@ function Hero({ className, ...rest }) {
                   onClick={gotoRegister}
                   style={{marginTop: '8px'}}
                 >
-                  Sign up for free
+                  Book a demo
                 </Button>
                 </div>
-                <h5 className={classes.mainContentCard} style={{marginTop: '8px'}}>No credit card required</h5>
               </Box>
             </Grid>
             <Grid
@@ -406,7 +407,7 @@ function Hero({ className, ...rest }) {
                 <div className={classes.image}>
                   <img
                     alt="Presentation"
-                    src="/static/home/hero_banner.png"
+                    src="/static/home/second_slider.jpg"
                   />
 
                 </div>

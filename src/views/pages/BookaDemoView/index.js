@@ -70,7 +70,7 @@ function BookaDemoView() {
               align="center"
               className={classes.pagetitleH1}
             >
-           Contact Us
+           Book a demo
            </Typography>
        </Container> 
       </Container>
@@ -81,8 +81,9 @@ function BookaDemoView() {
           item
           xs={12}
           md={6}
+          style={{ margin: 'auto' }}
           display="flex"
-              justifyContent="center"
+          justifyContent="center"
         >
 
     <Formik
@@ -129,7 +130,7 @@ function BookaDemoView() {
         values
       }) => (
         <Card>
-          <CardHeader title="Book a Demo" />
+          <CardHeader title="Book a demo" />
           <Divider />
           <CardContent>
             {isAlertVisible && (
