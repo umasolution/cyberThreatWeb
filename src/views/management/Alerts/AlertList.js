@@ -15,7 +15,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import './AlertList.css';
 import PopoverContent from './PopoverContent';
-import { Markunread } from '@material-ui/icons';
+
+import DraftsIcon from '@material-ui/icons/Drafts';
 
 const useStyles = makeStyles((theme) => ({
     grid:{
@@ -124,23 +125,21 @@ const AlertList = ({ alertList,changeAlertmsgStatus,changeMsgReadtoUnread,delete
                                            New Alert found for {alerts.alert_name}
                                         </Typography>
                                         </Grid>
-                                        <Grid item xs={3}>
-                                            <Grid container justify="flex-end">
-                                                <div onClick={(e)=>onHandleClick(e,alerts,index)}>
-                                        <Tooltip title={alerts.status==="read"?"Mark as read":"Mark as unread"}>
-                                  
-                                        <MarkunreadIcon className={classes.icon} color="disabled" />
-                                        </Tooltip>
-                                        </div>
-                                    
-                                        <PopoverContent />
-                                        <Tooltip title="Delete">
-                                        <DeleteIcon className={classes.icon} color="disabled" onClick={(e) => onDeleteAlert(e,alerts,index)} />
-                                        </Tooltip>
-                                        </Grid>
+                                            <Grid item xs={3}>
+                                                <Grid container justify="flex-end">
+                                                    {alerts.status === "read" ? <Tooltip title="Mark as read">
+                                                        <MarkunreadIcon className={classes.icon} color="disabled" onClick={(e) => onHandleClick(e, alerts, index)} />
+                                                    </Tooltip> : <Tooltip title="Mark as unread">
+                                                        <DraftsIcon className={classes.icon} color="disabled" onClick={(e) => onHandleClick(e, alerts, index)} />
+                                                    </Tooltip>}
+                                                    <PopoverContent />
+                                                    <Tooltip title="Delete">
+                                                        <DeleteIcon className={classes.icon} color="disabled" onClick={(e) => onDeleteAlert(e, alerts, index)} />
+                                                    </Tooltip>
+                                                </Grid>
+                                            </Grid>
                                         </Grid>
                                     </Grid>
-                                </Grid>
                             </AccordionSummary>
                             <AccordionDetails style={{justifyContent:'center'}}>
                                  {/*}  {(alerts.messages).map((msg) => {

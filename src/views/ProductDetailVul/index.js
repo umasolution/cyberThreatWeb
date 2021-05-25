@@ -173,13 +173,13 @@ const ProductDetailVul = () => {
 
 
     const fetchProductVulnerabilities = async () => {
-        
+        setLoading(true);
         try {
-            setLoading(true);
+           
         const url = `/details/product`;
         // Below Data is hard coded as this is the only combination which has data. TODO
         //const response = await Axios.post(url, { type: "application", application: "tomcat", product: "tomcat" });
-        const response = await Axios.post(url, { /*type: location.state.selData*/type:"application", 
+        const response = await Axios.post(url, { type: location.state.selData, 
                                                 application: location.state.name.split('@')[1], 
                                                 product: location.state.name.split('@')[0] });
         
@@ -187,12 +187,14 @@ const ProductDetailVul = () => {
         setProduct(response.data);
 
         setTableData({ columns: response.data.db.columns, data: response.data.db.results });
-        setLoading(false);
+        
         }
         catch(error)
         {
             console.log(error);
+           
         }
+        setLoading(false);
 
        
     }
