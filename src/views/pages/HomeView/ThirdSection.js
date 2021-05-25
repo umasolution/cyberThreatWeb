@@ -40,6 +40,9 @@ const useStyles = makeStyles((theme) => ({
     fontSize:14,
     marginBottom:50,
   },
+  subText:{
+    marginTop:10,
+  },
   featureBox: {
     height:'100%',
     boxShadow:'4px 0px 67px rgba(46,57,124,0.07)',
@@ -49,9 +52,9 @@ const useStyles = makeStyles((theme) => ({
       marginBottom:'25px'
     },
     '&:hover' : {
-      transform: 'translateY(-20px)',
-      boxShadow:'0 1.5rem 2.5rem rgb(22 28 45 / 10%), 0 0.3rem 0.5rem -0.5rem rgb(22 28 45 / 5%)'
+      transform: 'translateY(-20px)'
     }
+
   },
   gridBox: {
     padding:'0 8px !important',
@@ -59,16 +62,31 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function Features({ className, ...rest }) {
+function ThirdSection({ className, ...rest }) {
   const classes = useStyles();
 
   return (
     <div
       className={clsx(classes.root, className)}
-      className="features-box-row"
+      className="third-featureBox-row"
       {...rest}
     > 
-      {/*<Container maxWidth="md">       
+      <Container maxWidth="md" className="third-featureBox">       
+        <Typography
+            align="center"
+            color="textSecondary"
+            variant="h2"
+          >
+            Niah Security Vulnerability Database
+          </Typography>
+         <Typography
+            align="center"
+            color="textSecondary"
+            variant="h5"
+            className={classes.subText}
+          >
+           Threat Intelligence that helps secure your Code, Applications and Operating Systems
+          </Typography> 
         <Box mt={3}>
           <Typography
             align="center"
@@ -76,30 +94,28 @@ function Features({ className, ...rest }) {
             color="textSecondary"
             className={classes.welcomText}
           >
-            Welcome to the first platform created for freelancers and agencies
-            for showcasing and finding the best clinets in the market.
-            30% of our income goes into Whale Charity
+            Niah Security's Vulnerability database is much larger than any publicly available vulnerability database. 
           </Typography>
         </Box>
-      </Container>*/}
-      <Container maxWidth="lg">
+      </Container>
+      <Container maxWidth="lg" className="third-featureBox-2">
         <Box mt={2} >
           <Grid
             container
             spacing={1}
-            className="gridBox-Container future-box"
+            className="gridBox-Container"
           >
             <Grid
               item
               xs={12}
-              md={3}
+              md={4}
               className="gridBox"
             >
               <Box className={classes.featureBox} borderRadius={16} boxShadow={3} p={2} m={1} minHeight={250}>
                 <img
                   alt="Features"
                   className={classes.featureImage}
-                    src="/static/ic_1.jpg"
+                    src="/static/android-icon-36x36.png"
                   />
                 <Box>
                   <Typography
@@ -108,7 +124,7 @@ function Features({ className, ...rest }) {
                     color="textPrimary"
                     className={classes.mainH4}
                   >
-                    Develop using open source...with confidence
+                    Niah Security's Vulnerability database is much larger than any publicly available vulnerability database. 
                   </Typography>
                   
                 </Box>
@@ -117,14 +133,14 @@ function Features({ className, ...rest }) {
             <Grid
               item
               xs={12}
-              md={3}
+              md={4}
               className="gridBox"
             >
               <Box className={classes.featureBox} borderRadius={16} boxShadow={3} p={2} m={1} minHeight={250}>
-               <img
+                <img
                   alt="Features"
                   className={classes.featureImage}
-                    src="/static/ic_2.jpg"
+                    src="/static/android-icon-36x36.png"
                   />
                 <Box>
                   <Typography
@@ -133,7 +149,7 @@ function Features({ className, ...rest }) {
                     color="textPrimary"
                     className={classes.mainH4}
                   >
-                    Use public container images...with confidence.
+                    Curated data sourced from public sources, internal research and direct souring from security researchers
                   </Typography>
                   
                 </Box>
@@ -142,14 +158,14 @@ function Features({ className, ...rest }) {
             <Grid
               item
               xs={12}
-              md={3}
+              md={4}
               className="gridBox"
             >
               <Box className={classes.featureBox} borderRadius={16} boxShadow={3} p={2} m={1} minHeight={250}>
-                <img
+              <img
                   alt="Features"
                   className={classes.featureImage}
-                    src="/static/ic_3.jpg"
+                    src="/static/android-icon-36x36.png"
                   />
                 <Box>
                   <Typography
@@ -158,32 +174,7 @@ function Features({ className, ...rest }) {
                     color="textPrimary"
                     className={classes.mainH4}
                   >
-                   Scan your containers...with confidence
-                  </Typography>
-                  
-                </Box>
-              </Box>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              md={3}
-              className="gridBox"
-            >
-              <Box className={classes.featureBox} borderRadius={16} boxShadow={3} p={2} m={1} minHeight={250}>
-                <img
-                  alt="Features"
-                  className={classes.featureImage}
-                    src="/static/ic_4.jpg"
-                  />
-                <Box>
-                  <Typography
-                    variant="h4"
-                    gutterBottom
-                    color="textPrimary"
-                    className={classes.mainH4}
-                  >
-                   Don't stop at scanning your code and containers. Scan your Virtual Machines and Servers...with confidence.
+                   Manual Quality Checks on the data to not leave your security to bots
                   </Typography>
                   
                 </Box>
@@ -196,8 +187,8 @@ function Features({ className, ...rest }) {
   );
 }
 
-Features.propTypes = {
+ThirdSection.propTypes = {
   className: PropTypes.string
 };
 
-export default Features;
+export default ThirdSection;

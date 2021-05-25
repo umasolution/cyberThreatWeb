@@ -5,10 +5,13 @@ import Hero from './Hero';
 import Features from './Features';
 import Testimonials from './Testimonials';
 import LeftRightImage from './LeftRightImage';
+import ThirdSection from './ThirdSection';
 import CTA from './CTA';
 import FAQS from './FAQS';
 import SearchBar from './SearchBar';
 import PricingView from './../PricingView';
+import FadeIn from 'react-fade-in';
+
 
 const useStyles = makeStyles(() => ({
   root: {}
@@ -22,11 +25,14 @@ function HomeView() {
       className={classes.root}
       title="Home"
     >
-      <Hero />
-      <Features />
-      {/*<LeftRightImage />
-      <PricingView />*/}
-      <CTA />
+      <FadeIn>
+        <Hero />
+        <Features />
+        <ThirdSection />
+        {/*<LeftRightImage />*/}
+        {/*<PricingView />*/}
+        <CTA />
+      </FadeIn>
     </Page>
   );
 }

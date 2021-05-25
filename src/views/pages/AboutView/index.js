@@ -67,7 +67,8 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 14
   },
   innerboxtext : {
-    
+    padding: '10px',
+    fontSize: '1.2rem'
   },
   iconbox :{
     position: 'relative',
@@ -130,36 +131,33 @@ function AboutView() {
           >
           <Grid
               item
-              md={6}
+              md={12}
               xs={12}
               
               className={classes.servicesblockfour}
             >
             <div className={classes.innerbox}>
               <div className={classes.iconbox}>
-                  <Icon className="fas fa-chess" />
+                  
               </div>
-            <h3 className={classes.innerboxH3}>OUR MISSION</h3>
             <div className={classes.innerboxtext}>
-              Software Development Services by providing honest, reliable and the most competitive web solutions to clients all over the world. SmartCodders Technologies aims to go that extra mile, wherever possible, and always strive for excellence to benefit its clients. 
+              With a mission to solve security problems for developers and enterprises, Niah Security is building free tools and commercial products to ensure code is developed with security built into the process as left as it can be. 
+            </div>
+            <div className={classes.innerboxtext}>
+              Niah Security helps you embrace Open Source securely, confidently and fast. Niah Security's solutions identify Vulnerabilities and License risks. Our commercial tools allow you to even fix the vulnerabilities found during the process.
+            </div>
+            <div className={classes.innerboxtext}>
+              Niah Security is run by a team that brings decades of experience in security research, vulnerability management, vulnerability research and penetration testing.
+            </div>
+            <div className={classes.innerboxtext}>
+              Please reach out to us for any queries, demos, questions at 
+            </div>
+            <div className={classes.innerboxtext}>
+              info@niahsecurity.io
             </div>
         </div>
             </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-            <div className={classes.innerbox}>
-            <div className={classes.iconbox}>
-                <Icon className="fas fa-chess" />
-            </div>
-            <h3 className={classes.innerboxH3}>OUR MISSION</h3>
-            <div className={classes.innerboxtext}>
-              Software Development Services by providing honest, reliable and the most competitive web solutions to clients all over the world. SmartCodders Technologies aims to go that extra mile, wherever possible, and always strive for excellence to benefit its clients. 
-            </div>
-        </div>
-            </Grid>
+            
         </Grid>  
           </Container>
       </Container>
