@@ -29,6 +29,7 @@ const AlertsResponse = () =>{
     const classes = useStyles();
     const [alertsList,setAlertsList]=useState("");
     const [isLoadingData,setLoadingData]=useState('true');
+  
 
     const getAlertList = async () =>{
         const url =`/alerts/lists`;
@@ -47,11 +48,75 @@ const AlertsResponse = () =>{
         }
         return null;
       }
-    
+
+    const changeMsgStatus = async (alerts, index) => {
+        try {
+            const url = `/status/delalert`;
+            const response = await Axios.post(url, {
+                "alert_type": alerts.alert_type,
+                "alert_name": alerts.alert_name,
+                "alert_mode": alerts.alert_mode
+            });
+            const tempAlertsList = alertsList.map((tempalerts, alertsIndex) => {
+
+                return alertsIndex === index ? { ...tempalerts, status: 'read' } : tempalerts
+
+            });
+            setAlertsList(tempAlertsList);
+            console.log(tempAlertsList);
+
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const changeReadtoUnread =async (alerts,index) => {
+
+        try {
+            const url = `/status/setalert`;
+            const response = await Axios.post(url, {
+                "alert_type": alerts.alert_type,
+                "alert_name": alerts.alert_name,
+                "alert_mode": alerts.alert_mode
+            });
+
+            const tempAlertsList = alertsList.map((tempalerts, alertsIndex) => {
+
+                return alertsIndex === index ? { ...tempalerts, status: 'unread' } : tempalerts
+
+            });
+            setAlertsList(tempAlertsList);
+            console.log(tempAlertsList);
+        } catch (error) {
+            console.log(error);
+        }
+
+    };
+
+    const deleteAlert = async(alerts,index) => {
+        try {
+            const url = `/delalert`;
+            const response = await Axios.post(url, {
+                "alert_type": alerts.alert_type,
+                "alert_name": alerts.alert_name,
+                "alert_mode": alerts.alert_mode
+            });
+            const tempAlertsList = alertsList.filter((tempalerts,alertsindex) => alertsindex !== index);
+            setAlertsList(tempAlertsList);
+        }
+        catch (error) {
+            console.log(error);
+        }
+
+
+    };
+
 
     useEffect(()=>{
         getAlertList();
     },[]);
+
+   
 
     const headerColumns=[
         "Alert Title",
@@ -69,7 +134,7 @@ const AlertsResponse = () =>{
                 <AlertTableHeader columns= {headerColumns} /> 
                 </Grid>
                 <Grid item xs={12}>
-                <AlertList alertList={alertsList} />
+                <AlertList alertList={alertsList} changeAlertmsgStatus ={changeMsgStatus} changeMsgReadtoUnread={changeReadtoUnread} deleteAlert={deleteAlert} />
                 </Grid>   
                 </Grid> :<FirstTimeUserMsg />}    
                 </Container>              

@@ -24,17 +24,17 @@ const AlertTableHeader = ({columns}) => {
         <Card className = {classes.card}>
         <Grid className= {classes.grid} container spacing={3}>
             <Grid item xs={2}>
-            <Typography variant="h5" component="h4">
+            <Typography style={{marginLeft:'15px'}} variant="h5" component="h4">
             {columns[0]}
             </Typography>
             </Grid>
             <Grid item xs={2}>
-            <Typography variant="h5" component="h4">
+            <Typography   variant="h5" component="h4">
             {columns[1]}
             </Typography>
             </Grid>
             <Grid item xs={7}>
-            <Typography variant="h5" component="h4">
+            <Typography  variant="h5" component="h4">
             {columns[2]}
             </Typography>
             </Grid>

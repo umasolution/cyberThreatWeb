@@ -176,10 +176,10 @@ const ProductDetailVul = () => {
         setLoading(true);
         const url = `/details/product`;
         // Below Data is hard coded as this is the only combination which has data. TODO
-        const response = await Axios.post(url, { type: "application", application: "tomcat", product: "tomcat" });
-        /*const response = await Axios.post(url, { type: "language", 
+        //const response = await Axios.post(url, { type: "application", application: "tomcat", product: "tomcat" });
+        const response = await Axios.post(url, { type: "application", 
                                                 application: location.state.name.split('@')[1], 
-                                                product: location.state.name.split('@')[1] });**/
+                                                product: location.state.name.split('@')[0] });
         
 
         setProduct(response.data);
