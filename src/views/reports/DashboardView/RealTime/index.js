@@ -37,7 +37,7 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function RealTime({ className, lib_details,headtitle, ...rest }) {
+function RealTime({ className, lib_details,headtitle, selData,...rest }) {
   const classes = useStyles();
   const isMountedRef = useIsMountedRef();
   const history = useHistory();
@@ -88,7 +88,7 @@ function RealTime({ className, lib_details,headtitle, ...rest }) {
           <TableCell style={{width: '50%'}}><Typography color="inherit"
             className="secondary"
           >
-             <Link className = {classes.link} onClick={()=>onProductClick(searchedLibDetails[index])} >{searchedLibDetails[index].name}</Link>
+             <Link className = {classes.link} onClick={()=>onProductClick(searchedLibDetails[index],selData)} >{searchedLibDetails[index].name}</Link>
           </Typography></TableCell>
           <TableCell style={{width: '10%'}}><Typography color="inherit"
             className="secondary"
@@ -106,9 +106,10 @@ function RealTime({ className, lib_details,headtitle, ...rest }) {
     setSearchInput(event.target.value);
   }
 
-  const onProductClick = (product) => {
-    history.push( '/app/dashboard/productDetailVul',
-                  product);
+  const onProductClick = (product,selData) => {
+   /* history.push( '/app/dashboard/productDetailVul',
+                  product,selData);*/
+      history.push({pathname:"/app/dashboard/productDetailVul",state: {name: product.name, selData: selData}}) ;           
   }
 
   return (

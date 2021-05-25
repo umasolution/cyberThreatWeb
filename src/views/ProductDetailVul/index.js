@@ -173,11 +173,13 @@ const ProductDetailVul = () => {
 
 
     const fetchProductVulnerabilities = async () => {
-        setLoading(true);
+        
+        try {
+            setLoading(true);
         const url = `/details/product`;
         // Below Data is hard coded as this is the only combination which has data. TODO
         //const response = await Axios.post(url, { type: "application", application: "tomcat", product: "tomcat" });
-        const response = await Axios.post(url, { type: "application", 
+        const response = await Axios.post(url, { /*type: location.state.selData*/type:"application", 
                                                 application: location.state.name.split('@')[1], 
                                                 product: location.state.name.split('@')[0] });
         
@@ -185,8 +187,14 @@ const ProductDetailVul = () => {
         setProduct(response.data);
 
         setTableData({ columns: response.data.db.columns, data: response.data.db.results });
-
         setLoading(false);
+        }
+        catch(error)
+        {
+            console.log(error);
+        }
+
+       
     }
 
     const convertFirstLetterToCaps = (word) => {
@@ -248,7 +256,7 @@ const ProductDetailVul = () => {
                     <Card className={classes.card}>
                         <CardContent>
                             <Typography gutterBottom variant="h5" component="h2">
-                                Showing vulnerabilities in  {convertFirstLetterToCaps(location.state.name.split('@')[1])}
+                                Showing vulnerabilities in  {convertFirstLetterToCaps((location.state.name).split('@')[1])}
                             </Typography>
 
                         </CardContent>
