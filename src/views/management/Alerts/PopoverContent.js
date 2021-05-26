@@ -46,7 +46,7 @@ const PopoverContent =() =>{
 
         <div>
             <Tooltip title="Settings">
-                <CreateIcon className={classes.icon} color="disabled" onClick ={handleClick} />
+                <CreateIcon fontSize="small" className={classes.icon} color="disabled" onClick ={handleClick} />
             </Tooltip>
             <Popover
                 

@@ -214,7 +214,7 @@ const useStyles = makeStyles((theme) => ({
       borderRadius : '5px 0px 0px 5px'
   },
   whiteBox: {
-    backgroundColor: '#009ACD',
+    backgroundColor: '#009acd',
     width: '100%',
     textAlign: 'center',
     color: 'white',
@@ -230,14 +230,14 @@ const useStyles = makeStyles((theme) => ({
   boxContent: {
 
       color : theme.palette.common.white,
-      fontSize:'12px',
+      fontSize:'10px',
       fontWeight: '500'
   },
   nameBoxContent:{
       fontSize: '14px',
       fontWeight: '600',
       color:'black',
-      margin:'5px auto 10px auto',
+      margin:'5px auto 3px auto',
       width:'100%',
   }
 }));
@@ -958,11 +958,11 @@ const ProjectsReports = () => {
 
                                         {Object.entries(row.table[`${tabsData.columns[vkey].field}`]).map((projectdetails) => (
                                           (projectdetails[0] == 'Name') ? (<>
-                                            <div style={{ margin: "10px 0px" }}>
+                                            
                                               <Typography className={classes.nameBoxContent} align="center" variant="caption" >
                                                 {projectdetails[1]}
                                               </Typography>
-                                            </div>
+                                           
                                           </>) : ''
                                         ))}
                                         {Object.entries(row.table[`${tabsData.columns[vkey].field}`]).map((projectdetails) => (
@@ -1005,11 +1005,11 @@ const ProjectsReports = () => {
                                         <>
                                           {Object.entries(row.table[`${tabsData.columns[vkey].field}`]).map((reportdetails) => (
                                           (reportdetails[0] == 'Scanner') ? (<>
-                                            <div style={{ margin: "10px 0px" }}>
+                                           
                                               <Typography className={classes.nameBoxContent} align="center" variant="caption" >
                                                 {reportdetails[1]}
                                               </Typography>
-                                            </div>
+                                          
                                           </>) : ''
                                         ))}
                                         {Object.entries(row.table[`${tabsData.columns[vkey].field}`]).map((reportdetails) => (
@@ -1048,10 +1048,56 @@ const ProjectsReports = () => {
                                     ) : '' }
                                     { tabsData.columns[vkey].field == 'target_details' ? (
                                         <>
-                                        <Grid container spacing={1}>
+                                       
+                                       {Object.entries(row.table[`${tabsData.columns[vkey].field}`]).map((target_details) => (
+                                        Object.entries(target_details[1]).map((targetdata) => (
+                                          (targetdata[0] =="System Name" || targetdata[0] == "Scan Project" )?(<>
+                                          
+                                          <Typography className={classes.nameBoxContent} align="center" variant="caption" >
+                                                {targetdata[1]}
+                                              </Typography>
+                                            
+                                            </>
+
+                                          ):''
+                                        ))
+                                        ))}
+                                       
+                                       <Grid container justify="flex-start" spacing={1} >
+                                        {Object.entries(row.table[`${tabsData.columns[vkey].field}`]).map((target_details) => (
+                                         Object.entries(target_details[1]).map((targetdata) => (
+                                          (targetdata[0] !="System Name" &&  targetdata[0] != "Scan Project")?(<>
+                                         
+                                            <Grid item>
+                                           <div className={classes.row}>
+                                             <div className={classes.blueBox} >
+                                               <Typography className={classes.boxContent} align="center" variant="caption" >
+                                                 {targetdata[0]}
+                                               </Typography>
+                                             </div>
+                                             <div className={classes.whiteBox} >
+                                               <Typography className={classes.boxContent} align="center" variant="caption" >
+                                                 {targetdata[1]}
+                                               </Typography>
+                                             </div>
+                                           </div>  
+                                           </Grid>                                     
+                                          
+                                           </>):''
+                                            ))
+                                         ))} 
+                                          </Grid>
+                                         
+
+                                          
+                                          
+                                          
+                                          
+                                          {/*} <Grid container spacing={1}>
                                         
                                          {Object.entries(row.table[`${tabsData.columns[vkey].field}`]).map((target_details) => (
                                           Object.entries(target_details[1]).map((targetdata) => (
+                                            
                                             <Grid item>
                                             <div className={classes.row}>
                                               <div className={classes.blueBox} >
@@ -1067,9 +1113,9 @@ const ProjectsReports = () => {
                                             </div>                                       
                                             </Grid>
                                              ))
-                                             ))}
+                                          ))} 
 
-                                            </Grid>
+                                            </Grid>*/}
                                             
                                            {/*  <Box className="target_details-div"  display="flex" flexWrap="wrap">
                                             <Box >

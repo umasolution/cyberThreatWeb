@@ -40,12 +40,12 @@ const useStyles = makeStyles((theme) => ({
         fontWeight:'300',
         width:'100%',
         marginTop: '10px',
-        marginLeft:'10px',      
+        marginLeft:'20px',      
     },
     
     readMail :{
         marginTop: '10px',
-        marginLeft:'10px',         
+        marginLeft:'20px',         
         fontWeight:'500',
         width:'100%',
         color:'black'
@@ -108,34 +108,41 @@ const AlertList = ({ alertList,changeAlertmsgStatus,changeMsgReadtoUnread,delete
                         <Accordion key={index}  className={classes.accordion} onClick={(e)=>onHandleChange(alerts,index)}>
                             <AccordionSummary  className={(alerts.status === "read")?classes.readMailbgr:classes.unreadMailbgr} expandIcon={<ExpandMoreIcon />} >
                                 <Grid item justify="center" xs={2}>
-                                    <Typography  variant="h6" component="h4"  className={alerts.status === "read"?classes.readMail:classes.unreadMail} > 
+                                    <Typography  style={{wordWrap:"break-word"}} variant="body1" component="h4"  className={alerts.status === "read"?classes.readMail:classes.unreadMail} > 
                                         {alerts.alert_name}
                                     </Typography>
                                 </Grid>
                                 <Grid item alignItems="center" xs={2}>
-                                    <Typography   variant="h6" component="h4" className={alerts.status === "read" ?classes.readMail:classes.unreadMail}>
+                                    <Typography   variant="body1" component="h4" className={alerts.status === "read" ?classes.readMail:classes.unreadMail}>
                                         {alerts.alert_type}
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={7}>
                                     <Grid container>
                                         <Grid item  xs={9}>
-                                        <Typography variant="h6" className={alerts.status === "read" ?classes.readMail:classes.unreadMail}>
+                                        <Typography variant="body1" className={alerts.status === "read" ?classes.readMail:classes.unreadMail}>
                                            {/*{alerts.message}*/}
                                            New Alert found for {alerts.alert_name}
                                         </Typography>
                                         </Grid>
                                             <Grid item xs={3}>
                                                 <Grid container justify="flex-end">
+                                                    <Grid item xs={4}>
                                                     {alerts.status === "read" ? <Tooltip title="Mark as read">
-                                                        <MarkunreadIcon className={classes.icon} color="disabled" onClick={(e) => onHandleClick(e, alerts, index)} />
+                                                        <MarkunreadIcon fontSize="small" className={classes.icon} color="disabled" onClick={(e) => onHandleClick(e, alerts, index)} />
                                                     </Tooltip> : <Tooltip title="Mark as unread">
-                                                        <DraftsIcon className={classes.icon} color="disabled" onClick={(e) => onHandleClick(e, alerts, index)} />
+                                                        <DraftsIcon fontSize="small" className={classes.icon} color="disabled" onClick={(e) => onHandleClick(e, alerts, index)} />
                                                     </Tooltip>}
+                                                    </Grid>
+                                                    <Grid item xs={4}>
                                                     <PopoverContent />
+                                                    </Grid>
+                                                    
+                                                    <Grid item xs={4}>
                                                     <Tooltip title="Delete">
-                                                        <DeleteIcon className={classes.icon} color="disabled" onClick={(e) => onDeleteAlert(e, alerts, index)} />
+                                                        <DeleteIcon fontSize="small" className={classes.icon} color="disabled" onClick={(e) => onDeleteAlert(e, alerts, index)} />
                                                     </Tooltip>
+                                                    </Grid>
                                                 </Grid>
                                             </Grid>
                                         </Grid>

@@ -8,6 +8,7 @@ import {
     Box, List, ExpansionPanel,
     ExpansionPanelSummary, ExpansionPanelDetails, 
     ListItem, ListItemIcon, ListItemText,
+    Tooltip
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
@@ -16,9 +17,13 @@ import ShowMoreText from "react-show-more-text";
 import ReactSpeedometer from "react-d3-speedometer"
 import SendIcon from '@material-ui/icons/Send';
 import IconButton from '@material-ui/core/IconButton';
+import AddAlertIcon from '@material-ui/icons/AddAlert';
+import NotificationsOffIcon from '@material-ui/icons/NotificationsOff';
+import {delAlert,setAlert} from '../management/Alerts/AlertFunctions';
 import moment from 'moment';
-
+import Axios from 'axios';
 import './VulDrawerComponent.css';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -33,6 +38,11 @@ const useStyles = makeStyles((theme) => ({
         bottom: 0,
         zIndex: '100',
         backgroundColor: '#f4f7f9'
+    },
+    alertIcon : {
+        marginLeft: '10px',
+        color: '#3949ab' 
+
     }
 
 }));
@@ -44,6 +54,31 @@ const VulDrawerComponent =({openDrawer,singlerows,handleRemoveRow,closeDrawer}) 
     const [expand, setExpand] = useState(false);
     const defaultDrawerWidth = 400;
     const [drawerWidth, setDrawerWidth] = useState(defaultDrawerWidth);
+    const [alertsOn,setAlertsOn] = useState(false);
+  
+   
+
+    useEffect(()=>{
+        if(singlerows)
+       alertStatus(singlerows.cve_id);
+
+    },[singlerows]);
+
+    const alertStatus =  async (productName) => {
+     
+        const url =`/alerts/lists`;
+        const response = await Axios.get(url);
+        if(!response.data){
+            return;
+        }
+       const alertList = response.data;
+       
+      const temp=alertList.filter((row) => row.alert_name === productName);
+      if(temp.length>0)
+      setAlertsOn(true);
+       
+    };
+
     
 
     const toggleDrawer = (anchor, open) => (event) => {
@@ -107,10 +142,19 @@ const VulDrawerComponent =({openDrawer,singlerows,handleRemoveRow,closeDrawer}) 
                                         <HighlightOffIcon onClick={handleClose} />
                                     </IconButton>
                                     <Box className="boxdetailhead">
-                                        <Box className="boxdetailtitle">
+                                        <Box className="boxdetailtitle" style={{display:"inline-flex"}}>
                                             <Typography gutterBottom variant="h5" component="h2">
                                                 Severity Scores
-                  </Typography>
+                                            </Typography>
+                                    <div>
+                                       
+                                        {alertsOn ? <Tooltip title="Remove Alert">
+                                            <NotificationsOffIcon className={classes.alertIcon} onClick={() => { delAlert(singlerows.cve_id,"cve_id"); setAlertsOn(false); }} />
+                                        </Tooltip> : <Tooltip title="Set Alert">
+                                            <AddAlertIcon className={classes.alertIcon} onClick={() => { setAlert(singlerows.cve_id,"cve_id"); setAlertsOn(true); }} />
+                                        </Tooltip>
+                                        }
+                                    </div>
                                         </Box>
                                         <Box className="boxtitlecontent">
                                             {singlerows.severity ? (

@@ -12,6 +12,7 @@ import {
     Paper,
     Link,
     LinearProgress,
+    Tooltip,
     Box, List, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, ListItem, ListItemIcon, ListItemText
 
 } from '@material-ui/core';
@@ -41,6 +42,9 @@ import DisplayDetail from './DisplayDetail';
 import CweTreeMap from './CweTreeMap';
 import ErrorDisplay from './ErrorDisplay';
 import VulDrawerComponent from './VulDrawerComponent';
+import AddAlertIcon from '@material-ui/icons/AddAlert';
+import NotificationsOffIcon from '@material-ui/icons/NotificationsOff';
+import {setAlert,delAlert} from '../../views/management/Alerts/AlertFunctions';
 
 
 
@@ -131,6 +135,11 @@ const useStyles = makeStyles((theme) => ({
         bottom: 0,
         zIndex: '100',
         backgroundColor: '#f4f7f9'
+    },
+    alertIcon : {
+        marginLeft: '10px',
+        color: '#3949ab' 
+
     }
 
 }));
@@ -143,6 +152,7 @@ const ProductDetailVul = () => {
 
     const [product, setProduct] = useState();
     const [loading, setLoading] = useState(false);
+    const [alertsOn,setAlertsOn] = useState(false);
 
     // This is hardcoded for now but it will be primed from the response once available.
     const lineChartData = getLineChartData();
@@ -169,7 +179,24 @@ const ProductDetailVul = () => {
     useEffect(() => {
         // API call
         fetchProductVulnerabilities();
+        setAlertStatus(location.state.name);
+       
     }, []);
+
+    const setAlertStatus = async (productName) => {
+        const url =`/alerts/lists`;
+        const response = await Axios.get(url);
+        if(!response.data){
+            return;
+        }
+       const alertList = response.data;
+       
+       alertList.map((alerts) => {   
+           if(alerts.alert_name === productName)
+           setAlertsOn(true);
+       })
+       
+    }
 
 
     const fetchProductVulnerabilities = async () => {
@@ -179,7 +206,7 @@ const ProductDetailVul = () => {
         const url = `/details/product`;
         // Below Data is hard coded as this is the only combination which has data. TODO
         //const response = await Axios.post(url, { type: "application", application: "tomcat", product: "tomcat" });
-        const response = await Axios.post(url, { type: location.state.selData, 
+        const response = await Axios.post(url, { /*type: location.state.selData*/type: "application", 
                                                 application: location.state.name.split('@')[1], 
                                                 product: location.state.name.split('@')[0] });
         
@@ -246,6 +273,8 @@ const ProductDetailVul = () => {
         setOpenDrawer(false);
     };
 
+    
+
     const getBody = () => {
         return (
             <>
@@ -256,11 +285,19 @@ const ProductDetailVul = () => {
                 >
 
                     <Card className={classes.card}>
-                        <CardContent>
+                        <CardContent style={{display:"inline-flex"}}>
                             <Typography gutterBottom variant="h5" component="h2">
                                 Showing vulnerabilities in  {convertFirstLetterToCaps((location.state.name).split('@')[1])}
                             </Typography>
-
+                            <div>
+                            {alertsOn?<Tooltip title="Remove Alert">
+                                <NotificationsOffIcon className={classes.alertIcon} onClick={() => {delAlert(location.state.name,"product");setAlertsOn(false);}}/>
+                            </Tooltip>:<Tooltip title="Set Alert">
+                                <AddAlertIcon className={classes.alertIcon} onClick={() => {setAlert(location.state.name,"product");setAlertsOn(true);}}/>
+                            </Tooltip>
+                           }
+                           </div>
+                           
                         </CardContent>
                     </Card>
 
