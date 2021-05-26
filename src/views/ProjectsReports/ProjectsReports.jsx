@@ -1005,10 +1005,11 @@ const ProjectsReports = () => {
                                         <>
                                           {Object.entries(row.table[`${tabsData.columns[vkey].field}`]).map((reportdetails) => (
                                           (reportdetails[0] == 'Scanner') ? (<>
-                                           
+                                              
                                               <Typography className={classes.nameBoxContent} align="center" variant="caption" >
                                                 {reportdetails[1]}
                                               </Typography>
+                                            
                                           
                                           </>) : ''
                                         ))}
@@ -1052,10 +1053,11 @@ const ProjectsReports = () => {
                                        {Object.entries(row.table[`${tabsData.columns[vkey].field}`]).map((target_details) => (
                                         Object.entries(target_details[1]).map((targetdata) => (
                                           (targetdata[0] =="System Name" || targetdata[0] == "Scan Project" )?(<>
-                                          
+                                          <div style={{marginTop:'3px',marginBottom:'2px'}} >
                                           <Typography className={classes.nameBoxContent} align="center" variant="caption" >
                                                 {targetdata[1]}
                                               </Typography>
+                                              </div>
                                             
                                             </>
 

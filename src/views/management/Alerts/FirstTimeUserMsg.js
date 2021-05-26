@@ -8,10 +8,25 @@ import {Card,
 
 const useStyles = makeStyles(theme => ({
     box: {
-        display: 'flex',
+        
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop:'4%'
+      
+        
+    },
+    card:{
+        height:'150px',
+        width:'100%',
+        margin:'50px auto',
+        alignItems:'center',
+        
+        borderRadius: '5px'
+    },
+    textColor:{
+        color:"#3579DC"
     }
+   
 
 }));
 
@@ -21,17 +36,22 @@ const FirstTimeUserMsg = ( ) => {
     const classes= useStyles();
 
     return(
-        <Card>
-        <CardContent className="chart-data">
+            <Card className={classes.card}>  
             <Box className={classes.box}>
 
-                <Typography gutterBottom variant="h5" component="h2">
-                You dont have any alerts set.<br/>		
-                Search for a CVE in the Vulnerabilities DB section 		
-                </Typography>
+                <Typography align="center" variant="body1" component="p" gutterBottom style={{margin:'10px',fontSize:'14px',fontWeight:'500'}}>
+                You dont have any alerts set.
+                </Typography>	
+               	
+                <Typography  align="center" variant="h5" className={classes.textColor}>
+                Search for a CVE in the Vulnerabilities DB section 
+                </Typography>	
+                
+            
             </Box>
-        </CardContent>
-    </Card>
+            
+            </Card>
+        
     )
 };
 

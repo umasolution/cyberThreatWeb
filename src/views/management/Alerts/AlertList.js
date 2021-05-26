@@ -32,19 +32,21 @@ const useStyles = makeStyles((theme) => ({
     
         /*padding:'10px',
         marginLeft:'11px'*/
-        width:'100%'
+        width:'100%',
+        
+      
     },
     unreadMail:{
         backgroundColor:theme.palette.grey[100],
         color:"grey",
         fontWeight:'300',
         width:'100%',
-        marginTop: '10px',
+        marginTop: '12px',
         marginLeft:'20px',      
     },
     
     readMail :{
-        marginTop: '10px',
+        marginTop: '12px',
         marginLeft:'20px',         
         fontWeight:'500',
         width:'100%',
@@ -53,9 +55,11 @@ const useStyles = makeStyles((theme) => ({
     },
     unreadMailbgr:{
         backgroundColor:theme.palette.grey[100],
+     
     },
     readMailbgr : {
         backgroundColor:'white',
+      
     }
 }));
 
@@ -126,19 +130,19 @@ const AlertList = ({ alertList,changeAlertmsgStatus,changeMsgReadtoUnread,delete
                                         </Typography>
                                         </Grid>
                                             <Grid item xs={3}>
-                                                <Grid container justify="flex-end">
-                                                    <Grid item xs={4}>
+                                                <Grid container justify="flex-end" spacing={1} style={{margin:'3px'}}>
+                                                    <Grid item xs={4} lg={2}>
                                                     {alerts.status === "read" ? <Tooltip title="Mark as read">
                                                         <MarkunreadIcon fontSize="small" className={classes.icon} color="disabled" onClick={(e) => onHandleClick(e, alerts, index)} />
                                                     </Tooltip> : <Tooltip title="Mark as unread">
                                                         <DraftsIcon fontSize="small" className={classes.icon} color="disabled" onClick={(e) => onHandleClick(e, alerts, index)} />
                                                     </Tooltip>}
                                                     </Grid>
-                                                    <Grid item xs={4}>
+                                                    <Grid item xs={4} lg={2}>
                                                     <PopoverContent />
                                                     </Grid>
                                                     
-                                                    <Grid item xs={4}>
+                                                    <Grid item xs={4} lg={2}>
                                                     <Tooltip title="Delete">
                                                         <DeleteIcon fontSize="small" className={classes.icon} color="disabled" onClick={(e) => onDeleteAlert(e, alerts, index)} />
                                                     </Tooltip>
