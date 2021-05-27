@@ -264,6 +264,7 @@ export const VuldbLogin = (/* {   } */) => {
 
     const [browseTypeClass, SetBrowseTypeClass] = React.useState();
 
+    const [browseTab, SetBrowseTab] = React.useState(false);
 
     const [openDrawer,setOpenDrawer] = useState(false);
 
@@ -356,6 +357,7 @@ export const VuldbLogin = (/* {   } */) => {
     const handleSearchType = (value) => {
         setSearchType(value);
         if(value=='browse'){
+          SetBrowseTab(false);
           callApi_browse();
           SetHomeTypeClass();
           SetBrowseTypeClass('active');
@@ -517,7 +519,8 @@ export const VuldbLogin = (/* {   } */) => {
         } 
     }
 
-    const handleShowMore = async (event, value) => {  
+    const handleShowMore = async (event, value) => { 
+        SetBrowseTab(true); 
         setloadingRows(false);  
         setIsSearchLoadingHome(true); 
         setSingleRows();  
@@ -1946,7 +1949,7 @@ export const VuldbLogin = (/* {   } */) => {
     const getBrowseTab = (browseDa) => {
       return (
             <>
-            <Container maxWidth="xl" className="browse-wizard">
+            <Container maxWidth className="browse-wizard">
               <Box  >
                 <Grid container spacing={3}>  
                 {Object.entries(browseDa).map(([key, value],index) => (
@@ -2017,17 +2020,29 @@ export const VuldbLogin = (/* {   } */) => {
             <Grid style={{ width: '100%' }} container spacing={1} className="vuldb-login">
                 {loadingTabs ? getLoader() : null}
                 {getSearchBox(chipData)}
-                {!isEmpty(browseData) && searchtype=='browse'?getBrowseTab(browseData):''}
+                {browseTab == false && searchtype=='browse'?getBrowseTab(browseData):''}
+                {browseTab == true && searchtype=='browse' ?(
                 <Container maxWidth className="cveresult">
-                  
-                   <Grid
+                  <Grid
                         container
                         spacing={3}
                         className={classes.container}
-                      >   
+                      >
+                      
                       { noresult ? getTabsData() : (tabsData.total > 0 ? getTabsData(): getTabsData())}
                   </Grid>
-                </Container>
+                </Container>):''}
+                {searchtype=='home' ?(
+                <Container maxWidth className="cveresult">
+                  <Grid
+                        container
+                        spacing={3}
+                        className={classes.container}
+                      >
+                      
+                      { noresult ? getTabsData() : (tabsData.total > 0 ? getTabsData(): getTabsData())}
+                  </Grid>
+                </Container>):''}
                 <MySnackbar closeSnackbar={() => updateSnackbar(false, '')} snackbarMessage={snackbarMessage} snackbarOpen={snackbarOpen} />
             </Grid>
         </Container>
