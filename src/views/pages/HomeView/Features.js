@@ -183,7 +183,7 @@ function Features({ className, ...rest }) {
                     color="textPrimary"
                     className={classes.mainH4}
                   >
-                   Don't stop at scanning your code and containers. Scan your Virtual Machines and Servers...with confidence.
+                   Scan your Virtual Machines and Servers...with confidence.
                   </Typography>
                   
                 </Box>

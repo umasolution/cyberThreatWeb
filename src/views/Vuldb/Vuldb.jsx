@@ -231,9 +231,13 @@ export const Vuldb = (/* {   } */) => {
     const [expanded, setExpanded] = React.useState(false);
 
     const [searchlanguage, SetSearchLanguage] = React.useState();
+
     const [searchproduct, SetSearchProduct] = React.useState();
+
     const [searchplatform, SetSearchPlatform] = React.useState();
+
     const [searchplugin, SetSearchPlugin] = React.useState();
+
     const [searchvendor, SetSearchVendor] = React.useState();
 
     const [searchseverity, SetSearchSeverity] = React.useState();
@@ -251,6 +255,8 @@ export const Vuldb = (/* {   } */) => {
     const [homeTypeClass, SetHomeTypeClass] = React.useState('active');
 
     const [browseTypeClass, SetBrowseTypeClass] = React.useState();
+
+    const [browseTab, SetBrowseTab] = React.useState(false);
     
 
     const handleSearchLanguage = (e) => {
@@ -331,6 +337,7 @@ export const Vuldb = (/* {   } */) => {
     const handleSearchType = (value) => {
         setSearchType(value);
         if(value=='browse'){
+          SetBrowseTab(false);
           callApi_browse();
           SetHomeTypeClass();
           SetBrowseTypeClass('active');
@@ -491,7 +498,8 @@ export const Vuldb = (/* {   } */) => {
         }
     }
 
-    const handleShowMore = async (event, value) => {  
+    const handleShowMore = async (event, value) => {
+        SetBrowseTab(true);  
         setloadingRows(false);  
         setIsSearchLoadingHome(true); 
         setSingleRows();  
@@ -2224,7 +2232,7 @@ export const Vuldb = (/* {   } */) => {
     const getBrowseTab = (browseDa) => {
       return (
             <>
-            <Container maxWidth="xl" className="browse-wizard">
+            <Container maxWidth className="browse-wizard">
               <Box >
                 <Grid container spacing={3}>  
                 {Object.entries(browseDa).map(([key, value],index) => (
@@ -2296,8 +2304,9 @@ export const Vuldb = (/* {   } */) => {
 
                 {loadingTabs ? getLoader() : null}
                 {getSearchBox(chipData)}
-                {!isEmpty(browseData) && searchtype=='browse'?getBrowseTab(browseData):''}
-                
+                {browseTab == false && searchtype=='browse'?getBrowseTab(browseData):''}
+                {console.log(browseTab)}
+                {browseTab == true && searchtype=='browse' ?(
                 <Container maxWidth className="cveresult">
                   <Grid
                         container
@@ -2307,7 +2316,18 @@ export const Vuldb = (/* {   } */) => {
                       
                       { noresult ? getTabsData() : (tabsData.total > 0 ? getTabsData(): getTabsData())}
                   </Grid>
-                </Container>
+                </Container>):''}
+                {searchtype=='home' ?(
+                <Container maxWidth className="cveresult">
+                  <Grid
+                        container
+                        spacing={3}
+                        className={classes.container}
+                      >
+                      
+                      { noresult ? getTabsData() : (tabsData.total > 0 ? getTabsData(): getTabsData())}
+                  </Grid>
+                </Container>):''}
                 <MySnackbar closeSnackbar={() => updateSnackbar(false, '')} snackbarMessage={snackbarMessage} snackbarOpen={snackbarOpen} />
             </Grid>
         </Container>
