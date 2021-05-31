@@ -102,6 +102,9 @@ const useStyles = makeStyles((theme) => ({
       marginLeft:'4px',
       marginTop:'10px',
       textDecoration:'none'
+  },
+  linkText:{
+      textDecoration:'none'
   }
 }));
 
@@ -164,7 +167,7 @@ export default function MinivariantNavBar() {
         </div>
         <Divider />
         <List>
-            <Link to='/app/reports/dashboard'>
+            <Link to='/app/reports/dashboard' className={classes.linkText}>
             <ListItem button >
                 <ListItemIcon className={classes.icon}><HomeIcon/></ListItemIcon>
                 <ListItemText>
@@ -172,7 +175,7 @@ export default function MinivariantNavBar() {
                 </ListItemText>
             </ListItem>
             </Link>
-            <Link to='/app/vulDB'>
+            <Link to='/app/vulDB' className={classes.linkText}>
             <ListItem button >
                 <ListItemIcon className={classes.icon}><UsersIcon/></ListItemIcon>
                 <ListItemText>
@@ -180,7 +183,7 @@ export default function MinivariantNavBar() {
                 </ListItemText>
             </ListItem>
             </Link>
-            <Link to='/app/management/ProjectsReports/language'>
+            <Link to='/app/management/ProjectsReports/language' className={classes.linkText}>
             <ListItem button >
                 <ListItemIcon className={classes.icon}><UsersIcon/></ListItemIcon>
                 <ListItemText>
@@ -188,7 +191,7 @@ export default function MinivariantNavBar() {
                 </ListItemText>
             </ListItem>
             </Link>
-            <Link to='/app/management/Alerts'>
+            <Link to='/app/management/Alerts' className={classes.linkText}>
             <ListItem button >
                 <ListItemIcon className={classes.icon}><NotificationsIcon/></ListItemIcon>
                 <ListItemText>
