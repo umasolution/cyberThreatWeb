@@ -1,0 +1,13 @@
+.dashboardsearch{margin-left: 50px;}
+.MuiFormControl-root.searchbtn{ width: 320px !important;}
+.dashboardsearch .MuiInput-formControl {border: 1px solid #c5c5c5;border-radius: 50px;display: inline-block;height: 40px;}
+.dashboardsearch .MuiInput-formControl:before,.dashboardsearch .MuiInput-formControl:after{display: none;}
+.dashboardsearch .MuiInput-formControl .MuiInputAdornment-positionStart{height: 40px;max-height: inherit;max-width: 100%;
+    position: relative;display: inline-block;position: absolute;right: 20px; top: 0;bottom: 0;margin: auto; width: 30px;height: 32px;}
+ .dashboardsearch .MuiSvgIcon-root{ color: #c5c5c5 !important;font-size: 32px;}
+.dashboardsearch .MuiInputBase-input{height: 100%;box-sizing: border-box;padding: 5px 50px 5px 20px;}
+
+
+.dashboardsearch .MuiInputBase-input::-webkit-input-placeholder {color: #a8a8a8;}
+.dashboardsearch .MuiInputBase-input:-ms-input-placeholder {color: #a8a8a8;}
+.dashboardsearch .MuiInputBase-input::placeholder {color: #a8a8a8;}

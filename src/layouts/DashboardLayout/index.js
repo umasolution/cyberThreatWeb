@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core';
 import NavBar from './NavBar';
 import TopBar from './TopBar';
+import MinivariantNavBar from './MinivariantNavBar';
 import "./index.css";
 
 const useStyles = makeStyles((theme) => ({
@@ -18,9 +19,9 @@ const useStyles = makeStyles((theme) => ({
     flex: '1 1 auto',
     overflow: 'hidden',
     paddingTop: 64,
-    [theme.breakpoints.up('lg')]: {
+   /* [theme.breakpoints.up('lg')]: {
       paddingLeft: 256
-    }
+    }*/
   },
   contentContainer: {
     display: 'flex',
@@ -40,13 +41,15 @@ function DashboardLayout({ children }) {
 
   return (
     <div className={classes.root}>
-      <TopBar onMobileNavOpen={() => setMobileNavOpen(true)} />
+     {/*<TopBar onMobileNavOpen={() => setMobileNavOpen(true)} /> 
       <div className="user-nav">
         <NavBar
           onMobileClose={() => setMobileNavOpen(false)}
           openMobile={isMobileNavOpen}
         />
-      </div>
+        
+      </div>*/}
+      <MinivariantNavBar />
       <div className={classes.wrapper} style={{ backgroundColor: '#f1f1f1' }}>
         <div className={classes.contentContainer}>
           <div className={classes.content}>
