@@ -21,6 +21,7 @@ import {
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import wait from 'src/utils/wait';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -108,8 +109,7 @@ function BookaDemoView() {
         setSubmitting
       }) => {
         try {
-          // Make API request
-          await wait(1000);
+          await axios.post('/contact-us', { ...values });
           resetForm();
           setStatus({ success: true });
           setSubmitting(false);

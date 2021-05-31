@@ -276,7 +276,8 @@ function Hero({ className, ...rest }) {
       showStatus: false,
       infiniteLoop:true,
       showArrows : false,
-      showThumbs:false
+      showThumbs:false,
+      interval:8000
     };
 
 
