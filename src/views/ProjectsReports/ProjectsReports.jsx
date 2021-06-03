@@ -1,5 +1,5 @@
 import {
-    Box, Container, Grid,List, LinearProgress, makeStyles, Typography, ExpansionPanel, ExpansionPanelSummary,
+    Box,Backdrop, Container, Grid,List, LinearProgress, makeStyles, Typography, ExpansionPanel, ExpansionPanelSummary,
     ListItem, ListItemIcon, ListItemText, ExpansionPanelDetails, Divider, Paper,Table,TableBody,TableCell,TableContainer,TableHead,TablePagination,TableRow,TextField,Chip,Tooltip,Text,CircularProgress
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -41,6 +41,8 @@ import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import { BorderColor } from '@material-ui/icons';
+import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
+import { boolean } from 'yup';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -239,7 +241,17 @@ const useStyles = makeStyles((theme) => ({
       color:'black',
       margin:'5px auto 3px auto',
       width:'100%',
-  }
+  },
+  closeIcon:
+  {
+      marginBottom:'15px',
+      marginTop:'2px',
+      cursor:'pointer'
+  },
+  backdrop: {
+    zIndex: 9999,
+    color: '#rgba(0, 0, 0, 0.1)',
+  },
 }));
 
 const ProjectsReports = () => {
@@ -1177,9 +1189,8 @@ const ProjectsReports = () => {
                           flexDirection="column"
                           justifyContent="center"
                           borderRadius={16}>
-                          <IconButton className={classes.customizedButton}>
-                            <HighlightOffIcon  onClick={handleRemoveRow}/>
-                          </IconButton>
+                             < CloseOutlinedIcon fontSize="small" className={classes.closeIcon} color="disabled" onClick={handleRemoveRow} />
+                         
                           <Box className="boxdetailhead">
                               {singlerows.scan_insights ? (
                                 <> 
@@ -1753,12 +1764,17 @@ const ProjectsReports = () => {
           
           title="My Scans"
         >
+         
         <Container className={classes.root} maxWidth>
+ 
+        
+      
             <Grid
               container
               spacing={1}
               className="scan-report-list"
             >
+             
                 <Box
                   display="flex"
                   flexDirection="column"
@@ -1766,9 +1782,10 @@ const ProjectsReports = () => {
                   height="100%"
                   style={{ marginTop: '25px', width: '100%' }}
                 >
+                   <Backdrop open={singlerows} className={classes.backdrop}>
                     {loading ? getLoader() : null}
                     <MySnackbar closeSnackbar={() => updateSnackbar(false, '')} snackbarMessage={snackbarMessage} snackbarOpen={snackbarOpen} />
-
+                    </Backdrop>  
                 </Box>
                 {getSearchBox(chipData)}
                 <Container maxWidth className="cveresult">                  
@@ -1780,8 +1797,12 @@ const ProjectsReports = () => {
                       { noresult ? getTabsData() : (tabsData.total > 0 ? getTabsData(): cvenoresult())}
                   </Grid>
                 </Container>
+               
             </Grid>
+         
         </Container>
+       
+      
         </Page>
     );
 };

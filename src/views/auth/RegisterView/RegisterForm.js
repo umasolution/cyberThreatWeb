@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { useDispatch } from 'react-redux';
 import clsx from 'clsx';
 import * as Yup from 'yup';
@@ -12,7 +12,7 @@ import {
   TextField,
   Typography,
   Link,
-  makeStyles
+  makeStyles,FormControlLabel,Switch,Fade
 } from '@material-ui/core';
 import { register } from 'src/actions/accountActions';
 
@@ -24,6 +24,11 @@ const useStyles = makeStyles(() => ({
 function RegisterForm({ className, onSubmitSuccess, ...rest }) {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const [checked, setChecked] = useState(false);
+
+  const handleCodeChange = () => {
+    setChecked((prev) => !prev);
+  };
 
   return (
     <Formik
@@ -32,14 +37,16 @@ function RegisterForm({ className, onSubmitSuccess, ...rest }) {
         lastName: '',
         email: '',
         password: '',
-        policy: false
+        policy: false,
+        corpCode:''
       }}
       validationSchema={Yup.object().shape({
         firstName: Yup.string().max(255).required('First name is required'),
         lastName: Yup.string().max(255).required('Last name is required'),
         email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
         password: Yup.string().min(7).max(255).required('Password is required'),
-        policy: Yup.boolean().oneOf([true], 'This field must be checked')
+        policy: Yup.boolean().oneOf([true], 'This field must be checked'),
+        corpCode: Yup.string().min(7).max(255).required('Code is required')
       })}
       onSubmit={async (values, {
         setErrors,
@@ -128,6 +135,31 @@ function RegisterForm({ className, onSubmitSuccess, ...rest }) {
             value={values.password}
             variant="outlined"
           />
+          <Box display="flex">
+          <FormControlLabel
+            control={<Switch checked={checked} onChange={handleCodeChange} />}
+            label="Already have a code?"
+          />
+           <div>
+          <Fade in={checked}>
+          <TextField
+            error={Boolean(touched.firstName && errors.firstName)}
+            fullWidth
+            helperText={touched.firstName && errors.firstName}
+            label="Corporate Code"
+            margin="normal"
+            name="corpCode"
+            className={classes.input}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            type="firstName"
+            value={values.corpCode}
+            variant="outlined"
+          />
+          
+        </Fade>
+      </div>
+      </Box>
           <Box
             alignItems="center"
             display="flex"

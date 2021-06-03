@@ -92,9 +92,10 @@ const useStyles = makeStyles((theme) => ({
   icon:{
       color:'#fff',
       margin:'10px',
-      [theme.breakpoints.down('md')]: {
+      [theme.breakpoints.down('sm')]: {
         margin:'3px',
-      }
+      },
+      
   },
   navText:{
       color:'#fff',

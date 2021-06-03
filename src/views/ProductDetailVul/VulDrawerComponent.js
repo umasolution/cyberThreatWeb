@@ -1,5 +1,5 @@
 import React,{ useEffect, useState, useCallback } from 'react';
-
+import {Link} from 'react-router-dom';
 import {
     makeStyles,
     Grid,
@@ -8,10 +8,13 @@ import {
     Box, List, ExpansionPanel,
     ExpansionPanelSummary, ExpansionPanelDetails, 
     ListItem, ListItemIcon, ListItemText,
-    Tooltip
+    Tooltip,
+    Button,
+   
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
 import Skeleton from '@material-ui/lab/Skeleton';
 import ShowMoreText from "react-show-more-text";
 import ReactSpeedometer from "react-d3-speedometer"
@@ -23,6 +26,9 @@ import {delAlert,setAlert} from '../management/Alerts/AlertFunctions';
 import moment from 'moment';
 import Axios from 'axios';
 import './VulDrawerComponent.css';
+
+
+
 
 
 
@@ -43,8 +49,32 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: '10px',
         color: '#3949ab' 
 
+    },
+    closeIcon:
+    {
+        marginBottom:'15px',
+        marginTop:'2px',
+        cursor:'pointer'
+    },
+    linkText:{
+        textDecoration:'none'
+    },
+    buttonLabel:{
+        textAlign:'center',
+        width:'90%',
+        color:'white',
+        marginLeft:'5%',
+        backgroundColor:'#3579DC',
+        '&:hover': {
+            backgroundColor: '#0069d9',
+            borderColor: '#0062cc',
+            boxShadow: 'none',
+          }
+    },
+    severityScores:
+    {
+        color:'black',fontSize:'14px',fontWeight:'600'
     }
-
 }));
 
 const VulDrawerComponent =({openDrawer,singlerows,handleRemoveRow,closeDrawer}) => {
@@ -52,7 +82,7 @@ const VulDrawerComponent =({openDrawer,singlerows,handleRemoveRow,closeDrawer}) 
     const classes= useStyles();
 
     const [expand, setExpand] = useState(false);
-    const defaultDrawerWidth = 400;
+    const defaultDrawerWidth = 600;
     const [drawerWidth, setDrawerWidth] = useState(defaultDrawerWidth);
     const [alertsOn,setAlertsOn] = useState(false);
   
@@ -138,14 +168,22 @@ const VulDrawerComponent =({openDrawer,singlerows,handleRemoveRow,closeDrawer}) 
                                     flexDirection="column"
                                     justifyContent="center"
                                     borderRadius={16}>
-                                    <IconButton className={classes.customizedButton}>
-                                        <HighlightOffIcon onClick={handleClose} />
-                                    </IconButton>
+                                     <Box display="flex" style={{marginBottom:'5px'}}>
+                                        < CloseOutlinedIcon fontSize="small" className={classes.closeIcon} color="disabled" onClick={handleClose} />
+                                        <Typography style={{marginLeft:'15px'}} variant="h4" component="h2">
+                                                {singlerows.cve_id}
+                                            </Typography>
+                                           </Box>
+                                            
                                     <Box className="boxdetailhead">
+                                    
                                         <Box className="boxdetailtitle" style={{display:"inline-flex"}}>
+                                       
+                                            
                                             <Typography gutterBottom variant="h5" component="h2">
                                                 Severity Scores
                                             </Typography>
+                                            
                                     <div>
                                        
                                         {alertsOn ? <Tooltip title="Remove Alert">
@@ -156,30 +194,35 @@ const VulDrawerComponent =({openDrawer,singlerows,handleRemoveRow,closeDrawer}) 
                                         }
                                     </div>
                                         </Box>
-                                        <Box className="boxtitlecontent">
-                                            {singlerows.severity ? (
-                                                <> <Typography variant="body2" color="textSecondary" component="div" className="scoreblock-div">
+                                <Box className="boxtitlecontent">
+                                    {singlerows.severity && singlerows.snapshot? (
+                                        <> <Typography style={{marginBottom:'10px'}} variant="body2" color="textSecondary" component="div" className="scoreblock-div">
 
-                                                    {Object.entries(singlerows.severity).map((severity) => (
-                                                        <>
-                                                            <Box className="scoreblock MuiGrid-grid-md-6">
-                                                                <Box className="scoreblock-inner">
-                                                                    <Box className="scoretitle">
-                                                                        {severity[0]}
-                                                                    </Box>
-                                                                    <Box className="scorevalue">
-                                                                        {severity[1]}
-                                                                    </Box>
-                                                                </Box>
+                                            {Object.entries(singlerows.severity).map((severity) => (
+                                                <>
+                                                    <Box className="scoreblock MuiGrid-grid-md-6">
+                                                        <Box className="scoreblock-inner">
+                                                            <Box className="scoretitle">
+                                                                {severity[0]}
                                                             </Box>
-                                                        </>
-                                                    ))}
-
-                                                </Typography>
+                                                            <Box className="scorevalue">
+                                                                {severity[1]}
+                                                            </Box>
+                                                        </Box>
+                                                    </Box>
                                                 </>
-                                            ) : ''}
+                                            ))}
 
-                                            {singlerows.niah_meter ? (
+                                        </Typography>
+                                        <Box display="flex" >
+                                            <Typography variant="body1" className={classes.severityScores}>CWEID :</Typography>
+                                            <Typography variant="body1" style={{marginLeft:'5px'}} className={classes.severityScores}>{singlerows.snapshot.CWEID}</Typography>
+                                        </Box>
+                                        </>
+                                    ) : ''}
+                                </Box>
+
+                                         {/*   {singlerows.niah_meter ? (
                                                 <>
                                                     <Grid
                                                         className="meter"
@@ -221,8 +264,8 @@ const VulDrawerComponent =({openDrawer,singlerows,handleRemoveRow,closeDrawer}) 
                                                         </Grid>
                                                     </Grid>
                                                 </>
-                                            ) : ''}
-                                        </Box>
+                                         ) : ''}*/}
+                                        
                                     </Box>
                                 </Box>
                                 {singlerows.NIAH_Insights ? (
@@ -299,12 +342,10 @@ const VulDrawerComponent =({openDrawer,singlerows,handleRemoveRow,closeDrawer}) 
                                                                             ) : <ListItem>
                                                                                 <ListItemText>
                                                                                     {snapshot[0] == "publishedDate" ? (<>
+                                                                                    
                                                                                         <Box className="snapshot-title">Published Date: </Box>
-                                                                                        <Box className="snapshot-content">{moment(snapshot[1]).format('MMM DD, YYYY')}</Box></>) :
-                                                                                        (<>
-                                                                                            <Box className="snapshot-title">{snapshot[0]} : </Box>
-                                                                                            <Box className="snapshot-content">{snapshot[1]}</Box>
-                                                                                        </>)}
+                                                                                        <Box className="snapshot-content">{moment(snapshot[1]).format('MMM DD, YYYY')}</Box></>) :''
+                                                                                        }
                                                                                 </ListItemText>
                                                                             </ListItem>}
                                                                         </>) : ''}
@@ -315,6 +356,13 @@ const VulDrawerComponent =({openDrawer,singlerows,handleRemoveRow,closeDrawer}) 
                                                 </Box>
                                             </Box>
                                         </Box>
+                                        <Box>
+                                <Link className={classes.linkText} to={`/app/CVE/${singlerows.cve_id}`}>
+                                <Button className={classes.buttonLabel}  variant="contained" >
+                                   VIEW FULL DETAILS
+                                </Button>
+                                </Link>
+                                </Box>
 
                                     </>
                                 )
