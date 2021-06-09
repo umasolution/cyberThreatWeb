@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -15,6 +15,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import {Collapse} from '@material-ui/core'
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import { Link } from 'react-router-dom';
@@ -22,6 +23,8 @@ import { Home as HomeIcon, Users as UsersIcon} from 'react-feather';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import TopBar from '../TopBar';
 import TopBarContents from './TopBarContents';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
 
 
 const drawerWidth = 256;
@@ -106,13 +109,25 @@ const useStyles = makeStyles((theme) => ({
   },
   linkText:{
       textDecoration:'none'
+  },
+  nested: {
+    paddingLeft: theme.spacing(9),
+  },
+  dashboardIcon:{
+    color:'#fff'
+  },
+  dashboardText:{
+    color:'#fff',
+      fontSize:'14px',
+      marginLeft:'4px',
   }
 }));
 
 export default function MinivariantNavBar() {
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [dashboardOpen,setDashboardOpen] =useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -120,6 +135,10 @@ export default function MinivariantNavBar() {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const handleDashboardClick = () => {
+    setDashboardOpen(!dashboardOpen);
   };
 
   return (
@@ -168,14 +187,43 @@ export default function MinivariantNavBar() {
         </div>
         <Divider />
         <List>
-            <Link to='/app/reports/dashboard' className={classes.linkText}>
+        
+        <ListItem button onClick={handleDashboardClick}>
+        <ListItemIcon className={classes.icon}><HomeIcon/></ListItemIcon>
+        <ListItemText> <Typography variant="h4" gutterBottom  className={classes.navText}>Dashboard</Typography></ListItemText>
+        {dashboardOpen ? <ExpandLess className={classes.dashboardIcon}/> : <ExpandMore className={classes.dashboardIcon}/>}
+      </ListItem>
+      <Collapse in={dashboardOpen} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding>
+          <ListItem button className={classes.nested}>
+          <Link to='/app/reports/dashboard' className={classes.linkText}>
+            <ListItemText ><Typography variant="h6" gutterBottom  className={classes.dashboardText}>Dependancies</Typography></ListItemText>
+            </Link>
+          </ListItem>
+        </List>
+        <List component="div" disablePadding>
+          <ListItem button className={classes.nested}>
+          <Link to='/app/reports/dashboard?type=application' className={classes.linkText}>
+          <ListItemText ><Typography variant="h6" gutterBottom  className={classes.dashboardText}>Application</Typography></ListItemText>
+            </Link>
+          </ListItem>
+        </List>
+        <List component="div" disablePadding>
+          <ListItem button className={classes.nested}>
+          <Link to='/app/reports/dashboard?type=system' className={classes.linkText}>
+            <ListItemText ><Typography variant="h6" gutterBottom  className={classes.dashboardText}>System</Typography></ListItemText>
+            </Link>
+          </ListItem>
+        </List>
+      </Collapse>
+           {/*} <Link to='/app/reports/dashboard' className={classes.linkText}>
             <ListItem button >
                 <ListItemIcon className={classes.icon}><HomeIcon/></ListItemIcon>
                 <ListItemText>
                     <Typography variant="h4" gutterBottom  className={classes.navText}>Dashboard</Typography>
                 </ListItemText>
             </ListItem>
-            </Link>
+      </Link> */}
             <Link to='/app/vulDB' className={classes.linkText}>
             <ListItem button >
                 <ListItemIcon className={classes.icon}><UsersIcon/></ListItemIcon>

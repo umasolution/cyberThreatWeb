@@ -6,7 +6,7 @@ import { Box, Card, CardHeader, ListItem, ListItemText, makeStyles, TextField, T
   TableSortLabel,Divider } from '@material-ui/core';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { List as VirtualizedList } from 'react-virtualized';
 import { useHistory } from 'react-router';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
@@ -28,6 +28,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+
+
 function getRandomInt(min, max) {
   // eslint-disable-next-line no-param-reassign
   min = Math.ceil(min);
@@ -38,11 +40,13 @@ function getRandomInt(min, max) {
 }
 
 function RealTime({ className, lib_details,headtitle, selData,...rest }) {
+
+
   const classes = useStyles();
   const isMountedRef = useIsMountedRef();
   const history = useHistory();
 
-  const originalLibDetails = useRef(lib_details);
+  let originalLibDetails = useRef(lib_details);
 
   const [searchedLibDetails, setSearchedLibDetails] = useState(Copy(lib_details));
   const [searchInput, setSearchInput] = useState();
@@ -56,6 +60,12 @@ function RealTime({ className, lib_details,headtitle, selData,...rest }) {
   const handleSearchClose = () => {
     setOpenSearch(false);
   };
+
+  useEffect(()=>{
+    originalLibDetails = lib_details;
+    setSearchedLibDetails(lib_details);
+
+  },[lib_details]);
 
 
   const pages = [
