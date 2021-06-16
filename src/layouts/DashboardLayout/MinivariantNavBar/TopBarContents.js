@@ -80,7 +80,7 @@ const TopBarContents =() => {
     
     return (
         < Grid container className={classes.root}>
-        <Link to="/"  >
+        <Link to="/"  style={{padding:"7px"}} >
             <Logo  />
         </Link>
         <Hidden mdDown>

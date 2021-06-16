@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
       
     },
     unreadMail:{
-        backgroundColor:theme.palette.grey[100],
+      
         color:"grey",
         fontWeight:'300',
         width:'100%',
@@ -53,14 +53,14 @@ const useStyles = makeStyles((theme) => ({
         color:'black'
 
     },
-    unreadMailbgr:{
+   /* unreadMailbgr:{
         backgroundColor:theme.palette.grey[100],
      
     },
     readMailbgr : {
         backgroundColor:'white',
       
-    }
+    }*/
 }));
 
 const AlertList = ({ alertList,changeAlertmsgStatus,changeMsgReadtoUnread,deleteAlert}) => {
@@ -110,7 +110,7 @@ const AlertList = ({ alertList,changeAlertmsgStatus,changeMsgReadtoUnread,delete
                       
                         
                         <Accordion key={index}  className={classes.accordion} onClick={(e)=>onHandleChange(alerts,index)}>
-                            <AccordionSummary  className={(alerts.status === "read")?classes.readMailbgr:classes.unreadMailbgr} expandIcon={<ExpandMoreIcon />} >
+                            <AccordionSummary  expandIcon={<ExpandMoreIcon />} >
                                 <Grid item justify="center" xs={2}>
                                     <Typography  style={{wordWrap:"break-word"}} variant="body1" component="h4"  className={alerts.status === "read"?classes.readMail:classes.unreadMail} > 
                                         {alerts.alert_name}
@@ -153,7 +153,9 @@ const AlertList = ({ alertList,changeAlertmsgStatus,changeMsgReadtoUnread,delete
                                     </Grid>
                             </AccordionSummary>
                             <AccordionDetails style={{justifyContent:'center'}}>
-                                 {/*}  {(alerts.messages).map((msg) => {
+                               
+                   
+                                  {alerts.messages?(alerts.messages).map((msg) => {
                                                 return(
                                                     <div>
                                                     <Typography variant="h6" component="h4" align="justify" >
@@ -162,10 +164,8 @@ const AlertList = ({ alertList,changeAlertmsgStatus,changeMsgReadtoUnread,delete
                                                     <hr/>
                                                     </div>
                                                 )
-                                            })}*/}
-                            <Typography variant="h6" component="h4" align="justify" >
-                                    New Alert found for {alerts.alert_name}
-                            </Typography>
+                                            }):"" }
+                           
                                          
                                        
                             </AccordionDetails>

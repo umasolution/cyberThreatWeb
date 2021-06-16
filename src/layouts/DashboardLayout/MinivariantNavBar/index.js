@@ -9,7 +9,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
@@ -25,6 +25,16 @@ import TopBar from '../TopBar';
 import TopBarContents from './TopBarContents';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import NfcIcon from '@material-ui/icons/Nfc';
+import WebAssetIcon from '@material-ui/icons/WebAsset';
+import { ReactComponent as AlertIcon} from '../icons/alert.svg';
+import {ReactComponent as DashboardIcon} from '../icons/dashboard.svg';
+import {ReactComponent as ScanIcon} from '../icons/scan.svg';
+import {ReactComponent as VulnerabilityIcon} from '../icons/vulnerability.svg';
+import { SvgIcon } from '@material-ui/core';
+
 
 
 const drawerWidth = 256;
@@ -34,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
   },
   appBar: {
-    zIndex: theme.zIndex.drawer + 1,
+    //zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -93,7 +103,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3),
   },
   icon:{
-      color:'#fff',
+      color:"#fff",
       margin:'10px',
       [theme.breakpoints.down('sm')]: {
         margin:'3px',
@@ -120,6 +130,10 @@ const useStyles = makeStyles((theme) => ({
     color:'#fff',
       fontSize:'14px',
       marginLeft:'4px',
+  },
+  svgIcon :{
+    stroke:'black',
+    fill:'white'
   }
 }));
 
@@ -129,14 +143,11 @@ export default function MinivariantNavBar() {
   const [open, setOpen] = useState(false);
   const [dashboardOpen,setDashboardOpen] =useState(false);
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
+  const handleDrawer = () => {
+    setOpen(!open);
   };
 
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
+ 
   const handleDashboardClick = () => {
     setDashboardOpen(!dashboardOpen);
   };
@@ -150,18 +161,20 @@ export default function MinivariantNavBar() {
           [classes.appBarShift]: open,
         })}
       >
-        <Toolbar style={{backgroundColor:'white'}}>
+        <Toolbar  style={{backgroundColor:'white'}}>
+         
           <IconButton
             color="black"
             aria-label="open drawer"
-            onClick={handleDrawerOpen}
+         
             edge="start"
             className={clsx(classes.menuButton, {
               [classes.hide]: open,
             })}
           >
-            <MenuIcon />
+           < DoubleArrowIcon />
           </IconButton>
+       
           <TopBarContents />
          
      
@@ -180,40 +193,47 @@ export default function MinivariantNavBar() {
           }),
         }}
       >
-        <div className={classes.toolbar} style={{backgroundColor:'white'}}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+        <div className={classes.toolbar}>
+          <IconButton style={{color:"white"}} onClick={handleDrawer}>
+            {open  ? <ChevronLeftIcon /> :  < DoubleArrowIcon style={{margin:"auto"}}/>}
           </IconButton>
         </div>
         <Divider />
         <List>
         
         <ListItem button onClick={handleDashboardClick}>
-        <ListItemIcon className={classes.icon}><HomeIcon/></ListItemIcon>
+       <ListItemIcon className={classes.icon}><SvgIcon component={DashboardIcon} viewBox="0 0 600 476.6" fontSize="large" style={{fill:"white",stroke:"black"}} /></ListItemIcon>
+                
         <ListItemText> <Typography variant="h4" gutterBottom  className={classes.navText}>Dashboard</Typography></ListItemText>
         {dashboardOpen ? <ExpandLess className={classes.dashboardIcon}/> : <ExpandMore className={classes.dashboardIcon}/>}
       </ListItem>
       <Collapse in={dashboardOpen} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <Link to='/app/reports/dashboard' className={classes.linkText}>
+                <ListItem button >
+                  <ListItemIcon  className={classes.icon} style={{marginLeft:"13px"}}> <AssignmentIcon fontSize="small" /> </ListItemIcon>
+                  <ListItemText ><Typography variant="h6" gutterBottom className={classes.dashboardText}>Dependencies</Typography></ListItemText>
+                </ListItem>
+              </Link>
+            </List>
+            <List component="div" disablePadding>
+              <Link to='/app/reports/dashboard?type=application' className={classes.linkText}>
+                <ListItem button >
+
+                  <ListItemIcon  className={classes.icon}  style={{marginLeft:"13px"}}> <NfcIcon fontSize="small" /> </ListItemIcon>
+                  <ListItemText ><Typography variant="h6" gutterBottom className={classes.dashboardText}>Application</Typography></ListItemText>
+
+                </ListItem>
+              </Link>
+            </List>
         <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
-          <Link to='/app/reports/dashboard' className={classes.linkText}>
-            <ListItemText ><Typography variant="h6" gutterBottom  className={classes.dashboardText}>Dependancies</Typography></ListItemText>
-            </Link>
-          </ListItem>
-        </List>
-        <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
-          <Link to='/app/reports/dashboard?type=application' className={classes.linkText}>
-          <ListItemText ><Typography variant="h6" gutterBottom  className={classes.dashboardText}>Application</Typography></ListItemText>
-            </Link>
-          </ListItem>
-        </List>
-        <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
-          <Link to='/app/reports/dashboard?type=system' className={classes.linkText}>
+        <Link to='/app/reports/dashboard?type=system' className={classes.linkText}>
+          <ListItem button>
+          <ListItemIcon className={classes.icon}  style={{marginLeft:"13px"}}> < WebAssetIcon fontSize="small"/> </ListItemIcon>
             <ListItemText ><Typography variant="h6" gutterBottom  className={classes.dashboardText}>System</Typography></ListItemText>
-            </Link>
+            
           </ListItem>
+          </Link>
         </List>
       </Collapse>
            {/*} <Link to='/app/reports/dashboard' className={classes.linkText}>
@@ -226,7 +246,8 @@ export default function MinivariantNavBar() {
       </Link> */}
             <Link to='/app/vulDB' className={classes.linkText}>
             <ListItem button >
-                <ListItemIcon className={classes.icon}><UsersIcon/></ListItemIcon>
+            <ListItemIcon className={classes.icon}><SvgIcon component={VulnerabilityIcon} viewBox="0 0 600 476.6" fontSize="large" className={classes.svgIcon} /></ListItemIcon>
+                
                 <ListItemText>
                     <Typography variant="h4" gutterBottom  className={classes.navText}>Vulnerabilities DB</Typography>
                 </ListItemText>
@@ -234,7 +255,7 @@ export default function MinivariantNavBar() {
             </Link>
             <Link to='/app/management/ProjectsReports/language' className={classes.linkText}>
             <ListItem button >
-                <ListItemIcon className={classes.icon}><UsersIcon/></ListItemIcon>
+            <ListItemIcon className={classes.icon}><SvgIcon component={ScanIcon} viewBox="0 0 600 476.6" fontSize="large" className={classes.svgIcon}/></ListItemIcon>
                 <ListItemText>
                     <Typography variant="h4" gutterBottom  className={classes.navText}>My Scans</Typography>
                 </ListItemText>
@@ -242,7 +263,7 @@ export default function MinivariantNavBar() {
             </Link>
             <Link to='/app/management/Alerts' className={classes.linkText}>
             <ListItem button >
-                <ListItemIcon className={classes.icon}><NotificationsIcon/></ListItemIcon>
+                <ListItemIcon className={classes.icon}><SvgIcon component={AlertIcon} viewBox="0 0 600 476.6" fontSize="large" className={classes.svgIcon}/></ListItemIcon>
                 <ListItemText>
                     <Typography variant="h4" gutterBottom  className={classes.navText}>Alerts</Typography>
                 </ListItemText>
