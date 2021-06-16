@@ -15,6 +15,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import './AlertList.css';
 import PopoverContent from './PopoverContent';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 
 import DraftsIcon from '@material-ui/icons/Drafts';
 
@@ -67,8 +69,18 @@ const AlertList = ({ alertList,changeAlertmsgStatus,changeMsgReadtoUnread,delete
 
     const classes = useStyles();
     const [mailStatus,setMailStatus]=useState("");
+    const [openId,setOpenId] = useState(-1);
   
-   
+   const changeSetOpenId = (index) => {
+       if(openId=== index)
+       {
+           setOpenId(-1);
+        }
+        else
+        {
+           setOpenId(index);
+        }
+   }
 
     const onHandleChange=(alerts,index) => {
         if (alerts.status === "read")
@@ -109,12 +121,13 @@ const AlertList = ({ alertList,changeAlertmsgStatus,changeMsgReadtoUnread,delete
                         <>
                       
                         
-                        <Accordion key={index}  className={classes.accordion} onClick={(e)=>onHandleChange(alerts,index)}>
-                            <AccordionSummary  expandIcon={<ExpandMoreIcon />} >
+                        <Accordion key={index}  className={classes.accordion} onClick={(e)=>onHandleChange(alerts,index)}  expanded={index === openId} onChange={() => { changeSetOpenId(index) }}>
+                            <AccordionSummary  >
                                 <Grid item justify="center" xs={2}>
                                     <Typography  style={{wordWrap:"break-word"}} variant="body1" component="h4"  className={alerts.status === "read"?classes.readMail:classes.unreadMail} > 
                                         {alerts.alert_name}
                                     </Typography>
+                                       
                                 </Grid>
                                 <Grid item alignItems="center" xs={2}>
                                     <Typography   variant="body1" component="h4" className={alerts.status === "read" ?classes.readMail:classes.unreadMail}>
@@ -128,27 +141,36 @@ const AlertList = ({ alertList,changeAlertmsgStatus,changeMsgReadtoUnread,delete
                                            {/*{alerts.message}*/}
                                            New Alert found for {alerts.alert_name}
                                         </Typography>
-                                        </Grid>
+                                            </Grid>
                                             <Grid item xs={3}>
-                                                <Grid container justify="flex-end" spacing={1} style={{margin:'3px'}}>
+                                                <Grid container justify="flex-end" spacing={1} style={{ margin: '3px' }}>
                                                     <Grid item xs={4} lg={2}>
-                                                    {alerts.status === "read" ? <Tooltip title="Mark as read">
-                                                        <MarkunreadIcon fontSize="small" className={classes.icon} color="disabled" onClick={(e) => onHandleClick(e, alerts, index)} />
-                                                    </Tooltip> : <Tooltip title="Mark as unread">
-                                                        <DraftsIcon fontSize="small" className={classes.icon} color="disabled" onClick={(e) => onHandleClick(e, alerts, index)} />
-                                                    </Tooltip>}
+                                                        {alerts.status === "read" ? <Tooltip title="Mark as read">
+                                                            <MarkunreadIcon fontSize="small" className={classes.icon} color="disabled" onClick={(e) => onHandleClick(e, alerts, index)} />
+                                                        </Tooltip> : <Tooltip title="Mark as unread">
+                                                            <DraftsIcon fontSize="small" className={classes.icon} color="disabled" onClick={(e) => onHandleClick(e, alerts, index)} />
+                                                        </Tooltip>}
                                                     </Grid>
                                                     <Grid item xs={4} lg={2}>
-                                                    <PopoverContent />
+                                                        <PopoverContent />
                                                     </Grid>
-                                                    
+
                                                     <Grid item xs={4} lg={2}>
-                                                    <Tooltip title="Delete">
-                                                        <DeleteIcon fontSize="small" className={classes.icon} color="disabled" onClick={(e) => onDeleteAlert(e, alerts, index)} />
-                                                    </Tooltip>
+                                                        <Tooltip title="Delete">
+                                                            <DeleteIcon fontSize="small" className={classes.icon} color="disabled" onClick={(e) => onDeleteAlert(e, alerts, index)} />
+                                                        </Tooltip>
                                                     </Grid>
                                                 </Grid>
                                             </Grid>
+
+                                        </Grid>
+                                    </Grid>
+
+                                    <Grid item xs={1}  >
+                                        <Grid justify="space-around" alignItems= "center">
+                                    <IconButton aria-label="expand row" size="small" onClick={() => changeSetOpenId(index)}>
+                                            {openId===index ? <KeyboardArrowUpIcon  style= {{marginTop:"10px",marginLeft:"5px"}}/> : <KeyboardArrowDownIcon  style= {{marginTop:"10px",marginLeft:"5px"}}/>}
+                                        </IconButton>
                                         </Grid>
                                     </Grid>
                             </AccordionSummary>
