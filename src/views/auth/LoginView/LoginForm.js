@@ -1,4 +1,5 @@
 import React from 'react';
+import {useHistory} from 'react-router';
 import { useDispatch } from 'react-redux';
 import clsx from 'clsx';
 import * as Yup from 'yup';
@@ -10,7 +11,8 @@ import {
   TextField,
   FormHelperText,
   makeStyles,
-  Grid
+  Grid,
+  Link
 } from '@material-ui/core';
 import { login } from 'src/actions/accountActions';
 import FacebookIcon from '@material-ui/icons/Facebook';
@@ -20,9 +22,21 @@ const useStyles = makeStyles(() => ({
   root: {}
 }));
 
+
 function LoginForm({ className, onSubmitSuccess, ...rest }) {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const history=useHistory();
+
+  const clientId= "Iv1.7e5a6deb9eb3dea8";
+  const clientSecret=" client secret:94fb4a262cd0254308f63995cea086ca5f09a382";
+  const redirectUri="http://localhost:3001/app/reports/dashboard";
+
+  /*const gitHubLogin = () => {
+    history.push('http://www.googl.com');
+    //https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}
+  }
+  */
 
   return (
     <Formik
@@ -130,6 +144,7 @@ function LoginForm({ className, onSubmitSuccess, ...rest }) {
 
               </Grid>
               <Grid container item xs={6}>
+                <a href="https://github.com/login/oauth/authorize?client_id=Iv1.7e5a6deb9eb3dea8">
                 <Button
                   variant="contained"
                   color="black"
@@ -137,9 +152,11 @@ function LoginForm({ className, onSubmitSuccess, ...rest }) {
                   style={{width:'100%'}}
                   className={classes.button}
                   startIcon={<GitHubIcon />}
+              
                 >
                   GitHub
                 </Button>
+                </a>
               </Grid>
               
             </Grid>

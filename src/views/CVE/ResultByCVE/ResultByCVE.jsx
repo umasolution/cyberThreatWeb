@@ -337,7 +337,7 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                               aria-controls="panel1a-content"
                               id="panel1a-header"
                             >
-                            <Typography variant="h3" component="h2">
+                            <Typography variant="h5" component="h5" style={{marginBottom:"5px"}}>
                                 {cveNVDDetails.Exploits[cKey].Advisory}
                             </Typography>
                             </ExpansionPanelSummary>
@@ -373,7 +373,8 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                       toolbarStyle: {
                         fontSize: 19,
                         fontFamily: '"Montserrat",sans-serif !important',
-                        fontWeight: 600
+                        fontWeight: 600,
+                  
                       },
                       cellStyle: {
                         fontSize: 19,
@@ -385,7 +386,8 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                         fontFamily: '"Montserrat",sans-serif !important',
                         color: '#546e7a',
                         fontWeight: 600,
-                        borderBottom: '1px solid rgba(224, 224, 224, 1)'
+                        borderBottom: '1px solid rgba(224, 224, 224, 1)',
+                        marginBottom:'5px'
                       },
                       rowStyle: x => {
                         if (x.tableData.id % 2 === 0) {
@@ -446,60 +448,60 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                 className="cve-detail-main"
                 >
                     <Grid item xs={12}
-                    className="datepub-block mb-5"
+                        className="datepub-block mb-5"
                     >
-                        <Grid container spacing={1} 
-                        className="box-shadow"  
+                        <Grid container spacing={1}
+                            className="box-shadow"
                         >
-                            <Grid item xs={4}
-                            className="pubdate-title"   
+                            <Grid item xs={12}
+                                className="pubdate-title"
                             >
                                 <Typography variant="h1" component="h2">
                                     {cve}
                                 </Typography>
                                 {cveNVDDetails.pub_date ? (
-                                <>  
-                                <Typography
-                                    variant="caption"
-                                    color="textSecondary"
-                                    className="pub_date"
-                                  >
-                                    Date Published : {moment(cveNVDDetails.pub_date).fromNow()}
-                                  </Typography>
-                                </>
-                            )
-                                : ''}
-                                
+                                    <>
+                                        <Typography
+                                            variant="caption"
+                                            color="textSecondary"
+                                            className="pub_date"
+                                        >
+                                            Date Published : {moment(cveNVDDetails.pub_date).fromNow()}
+                                        </Typography>
+                                    </>
+                                )
+                                    : ''}
+
                             </Grid>
-                            <Grid item xs={5}
-                            className="pubdate-button"
+                            <Grid item xs={12}
+                                className="pubdate-button"
                             >
                                 {cveNVDDetails.CVSS30.attackVector ? (
-                                <>  
-                                <Typography
-                                    variant="h5"
-                                    color="textSecondary"
-                                    className="acce-vact"
-                                  >
-                                    AccessVector
+                                    <>
+                                        <Typography
+                                            variant="h5"
+                                            color="textSecondary"
+                                            className="acce-vact"
+                                        >
+                                            AccessVector
                                   </Typography>
-                                <Typography
-                                    variant="h5"
-                                    color="textSecondary"
-                                    className={classes.attackVector}
-                                  >
-                                    {cveNVDDetails.CVSS30.attackVector}
-                                  </Typography>
-                                </>
-                            )
-                                : ''}
-                            </Grid>
-
-                            <Grid item xs={3}>
-                                
+                                        <Typography
+                                            variant="h5"
+                                            color="textSecondary"
+                                            className={classes.attackVector}
+                                        >
+                                            {cveNVDDetails.CVSS30.attackVector}
+                                        </Typography>
+                                    </>
+                                )
+                                    : ''}
                             </Grid>
                         </Grid>
+                      
+
+
                     </Grid>
+                
                     <Grid item xs={12}
                     className="mb-5"
                     >

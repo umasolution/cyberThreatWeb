@@ -34,6 +34,7 @@ import {ReactComponent as DashboardIcon} from '../icons/dashboard.svg';
 import {ReactComponent as ScanIcon} from '../icons/scan.svg';
 import {ReactComponent as VulnerabilityIcon} from '../icons/vulnerability.svg';
 import { SvgIcon } from '@material-ui/core';
+import DashboardSVG from '../icons/dashboardSVG';
 
 
 
@@ -202,7 +203,9 @@ export default function MinivariantNavBar() {
         <List>
         
         <ListItem button onClick={handleDashboardClick}>
-       <ListItemIcon className={classes.icon}><SvgIcon component={DashboardIcon} viewBox="0 0 600 476.6" fontSize="large" style={{fill:"white",stroke:"black"}} /></ListItemIcon>
+       <ListItemIcon className={classes.icon}>
+         <SvgIcon component={DashboardIcon} viewBox="0 0 600 476.6" fontSize="large" className={classes.svgIcon} />
+        </ListItemIcon>
                 
         <ListItemText> <Typography variant="h4" gutterBottom  className={classes.navText}>Dashboard</Typography></ListItemText>
         {dashboardOpen ? <ExpandLess className={classes.dashboardIcon}/> : <ExpandMore className={classes.dashboardIcon}/>}

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="565" height="312" viewBox="0 0 565 312">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #f69e08;
+      }
+
+      .cls-2, .cls-5 {
+        fill: #e90076;
+      }
+
+      .cls-2, .cls-3 {
+        fill-rule: evenodd;
+      }
+
+      .cls-3 {
+        fill: #11e7cb;
+      }
+
+      .cls-4 {
+        fill: #0f81e1;
+      }
+
+      .cls-6 {
+        font-size: 157.167px;
+        fill: #757575;
+        font-family: "Glaser Stencil D";
+      }
+    </style>
+  </defs>
+  <rect id="Rounded_Rectangle_1_copy_2" data-name="Rounded Rectangle 1 copy 2" class="cls-1" x="28.5" y="176.531" width="85.625" height="47.375" rx="10" ry="10"/>
+  <path id="Rounded_Rectangle_1_copy_3" data-name="Rounded Rectangle 1 copy 3" class="cls-2" d="M39.6,104.828H65.3a10.1,10.1,0,0,1,10.1,10.154l-0.224,65.047a10.189,10.189,0,0,1-10.175,10.154H39.31a10.1,10.1,0,0,1-10.1-10.154l0.224-65.047A10.189,10.189,0,0,1,39.6,104.828Z"/>
+  <path id="Rounded_Rectangle_1_copy_5" data-name="Rounded Rectangle 1 copy 5" class="cls-3" d="M153.107,115.2v25.7c0,5.6-4.835,10.124-10.8,10.105l-69.183-.224c-5.964-.02-10.8-4.575-10.8-10.175V114.9c0-5.6,4.835-10.124,10.8-10.1l69.183,0.224C148.272,105.042,153.107,109.6,153.107,115.2Z"/>
+  <rect id="Rounded_Rectangle_1" data-name="Rounded Rectangle 1" class="cls-4" x="107.781" y="137.656" width="45.344" height="86.25" rx="10" ry="10"/>
+  <rect id="Rounded_Rectangle_1_copy_4" data-name="Rounded Rectangle 1 copy 4" class="cls-1" x="84.5" y="176.531" width="35.625" height="47.375" rx="10" ry="10"/>
+  <rect class="cls-5" x="286" y="88" width="23" height="19"/>
+  <text id="NIAH" class="cls-6" x="157.5" y="218">NIAH</text>
+</svg>

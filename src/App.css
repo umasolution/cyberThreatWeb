@@ -294,7 +294,7 @@ button:focus{
 .report-issues-tab .cvesearchright-inner > div{background: none !important;}
 
 
-.features-box-row{padding-top: 40px;padding-bottom: 70px;background: #f9f9f9;}
+.features-box-row{padding-top: 70px;padding-bottom: 70px;background: #f9f9f9;}
 .future-box .MuiBox-root{text-align: center;}
 .future-box .MuiBox-root > img{height: 230px;object-fit: contain;display: inline-block;}
 

@@ -1,6 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import {ReactComponent as OpenSource} from './images/openSource.svg';
+import {ReactComponent as ScanContainers} from './images/scanContainers.svg';
+import {ReactComponent as PublicContainer} from './images/2nd.svg';
+import {ReactComponent as VirtualMachines} from './images/4th.svg';
+
+
 import {
   Avatar,
   Button,
@@ -96,11 +102,12 @@ function Features({ className, ...rest }) {
               className="gridBox"
             >
               <Box className={classes.featureBox} borderRadius={16} boxShadow={3} p={2} m={1} minHeight={250}>
-                <img
+                <OpenSource width="100%" height="65%" />
+               {/* <img
                   alt="Features"
                   className={classes.featureImage}
                     src="/static/ic_1.jpg"
-                  />
+               />*/}
                 <Box>
                   <Typography
                     variant="h4"
@@ -121,11 +128,12 @@ function Features({ className, ...rest }) {
               className="gridBox"
             >
               <Box className={classes.featureBox} borderRadius={16} boxShadow={3} p={2} m={1} minHeight={250}>
-               <img
+               {/*<img
                   alt="Features"
                   className={classes.featureImage}
                     src="/static/ic_2.jpg"
-                  />
+               />*/}
+                <PublicContainer width="100%" height="65%" />
                 <Box>
                   <Typography
                     variant="h4"
@@ -146,11 +154,12 @@ function Features({ className, ...rest }) {
               className="gridBox"
             >
               <Box className={classes.featureBox} borderRadius={16} boxShadow={3} p={2} m={1} minHeight={250}>
-                <img
+               {/*} <img
                   alt="Features"
                   className={classes.featureImage}
                     src="/static/ic_3.jpg"
-                  />
+              />*/}
+               <ScanContainers width="100%" height="65%" />
                 <Box>
                   <Typography
                     variant="h4"
@@ -171,11 +180,12 @@ function Features({ className, ...rest }) {
               className="gridBox"
             >
               <Box className={classes.featureBox} borderRadius={16} boxShadow={3} p={2} m={1} minHeight={250}>
-                <img
+               {/*} <img
                   alt="Features"
                   className={classes.featureImage}
                     src="/static/ic_4.jpg"
-                  />
+            />*/}
+                <VirtualMachines width="100%" height="65%" />
                 <Box>
                   <Typography
                     variant="h4"

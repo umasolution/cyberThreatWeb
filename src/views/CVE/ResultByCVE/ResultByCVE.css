@@ -41,26 +41,26 @@
 body,.makeStyles-wrapper-8{background: #fafafc !important;}
 .mb-5{margin-bottom: 50px;}
 .mb-3{margin-bottom: 30px;}
-.cve-detail-main {margin-top: 50px;margin-bottom: 50px;}
+.cve-detail-main {margin-top: 20px;margin-bottom: 20px;}
 .box-shadow{box-shadow: 4px 0px 54px rgba(0,0,0,0.1);}
-.datepub-block > div{padding: 20px;border-radius: 5px;}
+.datepub-block > div{padding: 10px;border-radius: 5px;}
 .datepub-block > div > div{align-self: center;}
-.pubdate-title h2{color: #333333;font-size: 28px;font-weight: 600;margin-bottom: 15px; letter-spacing: 0.75px;}
+.pubdate-title h2{color: #333333;font-size: 30px;font-weight: 600;margin-bottom: 15px; letter-spacing: 0.75px;}
 .pubdate-title span{color: #333333;font-size: 18px;font-weight: 600;letter-spacing: 0.75px;}
 
-.pubdate-button h5{display: inline-block;vertical-align: middle;text-align: center;font-size: 19px;padding: 16px 40px;border-radius: 8px;background: #f3f3f3;border: 1px solid #dce0f1;color: #333;letter-spacing: 0.75px;font-weight: 600;min-width: 225px;margin-right: -10px;}
+.pubdate-button h5{display: inline-block;vertical-align: middle;text-align: center;font-size: 19px;padding: 8px 20px;border-radius: 8px;background: #f3f3f3;border: 1px solid #dce0f1;color: #333;letter-spacing: 0.75px;font-weight: 600;min-width: 225px;margin-right: -10px;}
 .pubdate-button h5.acce-vact{color: #fff;background: #027ae2;position: relative;border-color: #027ae2; }
 
 .baseScore-block .baseScore-block-inner{border: 1px solid #e7e8ee;border-radius: 8px; overflow: hidden;box-shadow: 0 5px 32px 0 rgba(0,0,0,0.05) ;padding: 0;margin: 0;}
 .baseScore-box{text-align: center;}
-.baseScore-box .baseScore-block-title{font-family: "Montserrat",sans-serif !important;color: #fff;font-size: 22px;letter-spacing: 0.75px;padding: 10px;background: #027ae2;border-radius: 8px 8px 0 0;font-weight: 600;}
+.baseScore-box .baseScore-block-title{font-family: "Montserrat",sans-serif !important;color: #fff;font-size: 16px;letter-spacing: 0.75px;padding: 10px;background: #027ae2;border-radius: 8px 8px 0 0;font-weight: 600;}
 
-.baseScore-box .base-score-value{background: none;font-size: 45px;letter-spacing: 0.75px;font-weight: 600;color: #333;display: inline-block;padding: 32px 10px;}
+.baseScore-box .base-score-value{background: none;font-size:16px;letter-spacing: 0.75px;font-weight: 600;color: #333;display: inline-block;padding: 20px 10px;}
 
 
-.cve-descp h5,.cve-title h5,.cve-detail-main h5,.cve-product-table h6 {font-size: 22px;color: #333;letter-spacing: 0.75px;margin-bottom: 15px;font-weight: 600;}
-.cve-descp p{font-size: 17px;color: #444444;letter-spacing: 0.2px;line-height: 30px;font-weight: 500;}
-
+.cve-descp h5,.cve-title h5,.cve-detail-main h5 {font-size: 16px;color: #333;letter-spacing: 0.75px;margin-bottom: 15px;font-weight: 600;}
+.cve-descp p{font-size: 14px;color: #444444;letter-spacing: 0.2px;line-height: 30px;font-weight: 500;}
+.cve-product-table h6 {font-size: 16px;color: #333;letter-spacing: 0.75px;margin-bottom: 5px;font-weight: 600;}
 /*.cve-product-table table{border: 1px solid #d6d6d7 !important;}*/
 /*.cve-product-table table thead tr td,.cve-product-table table thead tr th{background: #e8e7ea;color: #333333 !important;font-size: 18px !important; border-bottom: 0 !important;}
 .cve-product-table table thead tr th{background: #e8e7ea;border-bottom: 1px solid #d6d6d7 !important;}*/
@@ -69,7 +69,7 @@ body,.makeStyles-wrapper-8{background: #fafafc !important;}
 .accordian-block:before{display: none;}
 .accordian-block #references-header{border: 0;padding: 0 15px 0 50px;min-height: 66px;}
 
-.accordian-block #references-header .MuiTypography-h3{font-size: 18px;font-weight: 600;letter-spacing: 0.75px;}
+.accordian-block #references-header .MuiTypography-h3{font-size: 14px;font-weight: 600;letter-spacing: 0.75px;}
 .accordian-block #references-header.Mui-expanded .MuiTypography-h3{color: #027ae2;}
 .accordian-block .MuiIconButton-edgeEnd{position: absolute;left: 0;top: 10px;}
 .accordian-block .MuiSvgIcon-root{color: #027ae2;}
@@ -104,7 +104,7 @@ height: 50px;}*/
     background: none;
 }
 .cve-product-table table tr td {
-    font-size: 15px !important;
+    font-size: 14px !important;
     font-weight: 400 !important;
     padding: 10px 20px !important;
 }
