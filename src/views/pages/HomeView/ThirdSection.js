@@ -52,7 +52,8 @@ const useStyles = makeStyles((theme) => ({
       marginBottom:'25px'
     },
     '&:hover' : {
-      transform: 'translateY(-20px)'
+      transform: 'translateY(-20px)',
+      boxShadow:'0 1.5rem 2.5rem rgb(22 28 45 / 10%), 0 0.3rem 0.5rem -0.5rem rgb(22 28 45 / 5%)'
     }
 
   },

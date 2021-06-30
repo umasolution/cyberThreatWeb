@@ -91,7 +91,7 @@ width:100% !important;
 
 
 .vuldb-front .MuiContainer-root > .MuiGrid-container{box-shadow: 4px 0px 54px rgba(0,0,0,0.1);padding: 0px 0px;border-radius: 5px;}
-.vuldb-front .MuiContainer-root > .MuiGrid-container > .MuiContainer-root{max-width: 100%;box-shadow: none;border-radius: 0;padding: 35px;}
+.vuldb-front .MuiContainer-root > .MuiGrid-container > .MuiContainer-root{max-width: 100%;box-shadow: none;border-radius: 0;padding:5px;}
 
 .vuldb-front [class*='makeStyles-searchBox']{max-width: 100%;border-radius: 5px;box-shadow: none;}
 .vuldb-front .MuiInput-formControl.MuiInput-underline::before,.vuldb-front .MuiInput-formControl.MuiInput-underline::after {display: none;}
@@ -211,8 +211,8 @@ width:100% !important;
 
 
 /********************advance Search********************/
-.advanceboxnew > .MuiPaper-root{padding: 15px;}
-.advanceboxnew > div.MuiCard-root > .MuiCardHeader-root{border: 1px solid #e8e8f2; border-left: 4px solid rgb(2 125 231); padding: 8px 15px;border-radius: 5px;}
+.advanceboxnew > .MuiPaper-root{padding: 5px;}
+.advanceboxnew > div.MuiCard-root > .MuiCardHeader-root{border: 1px solid #e8e8f2; border-left: 4px solid rgb(2 125 231); padding: 2px 10px;border-radius: 5px;}
 .AdvanceSearchLeft .MuiFormGroup-root[role="radiogroup"]{flex-direction: inherit;}
 .AdvanceSearchLeft .MuiFormControlLabel-root{width: 25%;margin: 0;}
 .AdvanceSearchLeft .MuiFormControlLabel-root span.MuiFormControlLabel-label{font-size: 14px;font-weight: 500;}

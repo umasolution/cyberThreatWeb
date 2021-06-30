@@ -35,6 +35,8 @@ import {ReactComponent as ScanIcon} from '../icons/scan.svg';
 import {ReactComponent as VulnerabilityIcon} from '../icons/vulnerability.svg';
 import { SvgIcon } from '@material-ui/core';
 import DashboardSVG from '../icons/dashboardSVG';
+import Icon from '@material-ui/core/Icon';
+
 
 
 
@@ -204,7 +206,8 @@ export default function MinivariantNavBar() {
         
         <ListItem button onClick={handleDashboardClick}>
        <ListItemIcon className={classes.icon}>
-         <SvgIcon component={DashboardIcon} viewBox="0 0 600 476.6" fontSize="large" className={classes.svgIcon} />
+         <Icon><img src="/static/dashboard.png" /></Icon>
+        {/* <SvgIcon component={DashboardIcon} viewBox="0 0 600 476.6" fontSize="large" className={classes.svgIcon} /> */}
         </ListItemIcon>
                 
         <ListItemText> <Typography variant="h4" gutterBottom  className={classes.navText}>Dashboard</Typography></ListItemText>
@@ -249,8 +252,9 @@ export default function MinivariantNavBar() {
       </Link> */}
             <Link to='/app/vulDB' className={classes.linkText}>
             <ListItem button >
-            <ListItemIcon className={classes.icon}><SvgIcon component={VulnerabilityIcon} viewBox="0 0 600 476.6" fontSize="large" className={classes.svgIcon} /></ListItemIcon>
-                
+            {/*<ListItemIcon className={classes.icon}><SvgIcon component={VulnerabilityIcon} viewBox="0 0 600 476.6" fontSize="large" className={classes.svgIcon} /></ListItemIcon>
+   */}            
+   <ListItemIcon  className={classes.icon}><Icon><img src="/static/vulnerability.png" /></Icon></ListItemIcon> 
                 <ListItemText>
                     <Typography variant="h4" gutterBottom  className={classes.navText}>Vulnerabilities DB</Typography>
                 </ListItemText>
@@ -258,7 +262,9 @@ export default function MinivariantNavBar() {
             </Link>
             <Link to='/app/management/ProjectsReports/language' className={classes.linkText}>
             <ListItem button >
-            <ListItemIcon className={classes.icon}><SvgIcon component={ScanIcon} viewBox="0 0 600 476.6" fontSize="large" className={classes.svgIcon}/></ListItemIcon>
+           {/* <ListItemIcon className={classes.icon}><SvgIcon component={ScanIcon} viewBox="0 0 600 476.6" fontSize="large" className={classes.svgIcon}/></ListItemIcon>
+               */} 
+                <ListItemIcon  className={classes.icon}><Icon><img src="/static/myscans.png" /></Icon></ListItemIcon> 
                 <ListItemText>
                     <Typography variant="h4" gutterBottom  className={classes.navText}>My Scans</Typography>
                 </ListItemText>
@@ -266,7 +272,9 @@ export default function MinivariantNavBar() {
             </Link>
             <Link to='/app/management/Alerts' className={classes.linkText}>
             <ListItem button >
-                <ListItemIcon className={classes.icon}><SvgIcon component={AlertIcon} viewBox="0 0 600 476.6" fontSize="large" className={classes.svgIcon}/></ListItemIcon>
+                {/*<ListItemIcon className={classes.icon}><SvgIcon component={AlertIcon} viewBox="0 0 600 476.6" fontSize="large" className={classes.svgIcon}/></ListItemIcon>
+               */}
+                <ListItemIcon  className={classes.icon}><Icon><img src="/static/alert.png" /></Icon></ListItemIcon> 
                 <ListItemText>
                     <Typography variant="h4" gutterBottom  className={classes.navText}>Alerts</Typography>
                 </ListItemText>

@@ -93,7 +93,7 @@ const useStyles = makeStyles((theme) => ({
     searchbarArea: {
       width: '100%',
       bottom: -70,
-      margin: '38px auto',
+      margin: '20px auto',
       maxWidth: '100%',
       [theme.breakpoints.down('sm')]: {
         bottom: -90,
@@ -148,7 +148,7 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: 'initial'
     },
     advancecardsearch:{
-      width: '100% !Important'
+      width: '70% !Important'
     },
     expand: {
       transform: 'rotate(0deg)',
@@ -1927,7 +1927,7 @@ export const Vuldb = (/* {   } */) => {
               > 
               <Container maxWidth="lg" className={classes.searchbar}> 
 
-                <Box mt={3}
+                <Box 
                   display="flex"
                   justifyContent="center"
                   alignItems="center"
@@ -2018,7 +2018,7 @@ export const Vuldb = (/* {   } */) => {
                         <ExpandMoreIcon />
                       </IconButton>
                     }
-                    title="Advance Search"
+                    title="Advanced Search"
                   />
                   <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <CardContent>
