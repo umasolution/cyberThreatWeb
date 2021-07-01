@@ -338,7 +338,7 @@ function Hero({ className, ...rest }) {
                 <div className={classes.image}>
                   <img
                     alt="Presentation"
-                    src="/static/home/first_slider.jpg"
+                    src="/static/home/homepage.jpg"
                   />
 
                 </div>

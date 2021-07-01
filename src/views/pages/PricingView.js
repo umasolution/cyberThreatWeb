@@ -36,7 +36,8 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.leavingScreen
     }),
     '&:hover': {
-      transform: 'scale(1.1)'
+      transform: 'scale(1.1)',
+      boxShadow:'0 1.5rem 2.5rem rgb(22 28 45 / 10%), 0 0.3rem 0.5rem -0.5rem rgb(22 28 45 / 5%)'
     }
   },
   productImage: {
@@ -62,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize:'16px',
     letterSpacing:'0.8px',
     boxShadow: '4px 0px 81px rgba(43, 40, 30, 0.11)',
-    '&:hover': {
+   '&:hover': {
       backgroundColor: '#00d1ce',
     }
   },
@@ -90,7 +91,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize:'16px',
     letterSpacing:'0.8px',
     boxShadow: '4px 0px 81px rgba(43, 40, 30, 0.11)',
-    '&:hover': {
+   '&:hover': {
       backgroundColor: '#ff9f00',
     }
   },
@@ -151,15 +152,15 @@ function PricingView() {
           </Typography>
         </Box>
       </Container>*/}
-      <Box mt="50px" mb="100px">
+      <Box mt="25px" mb="50px">
         <Container maxWidth="lg">
           <Grid
             container
-            spacing={4}
+            spacing={3}
           >
             <Grid
               item
-              md={4}
+              md={3}
               sm={6}
               xs={12}
             >
@@ -181,19 +182,21 @@ function PricingView() {
                       variant="overline"
                       color="textSecondary"
                     >
-                      Freelancer
+                      Free
                     </Typography>
-                    <div>
-                      <Typography
-                        component="span"
-                        display="inline"
-                        variant="h3"
-                        color="textPrimary"
-                        className="price-tag"
-                      >
-                        $5/
+                    </div>
+                {/*  <div>
+                    <Typography
+                      component="span"
+                      display="inline"
+                      variant="h3"
+                      color="textPrimary"
+                      className="price-tag"
+                    >
+                      Free
                       </Typography>
-                      <Typography
+                  
+                       <Typography
                         component="span"
                         display="inline"
                         variant="subtitle2"
@@ -201,8 +204,9 @@ function PricingView() {
                       >
                         month
                       </Typography>
-                    </div>
-                  </div>
+                  
+                  </div>*/}
+                  
 
                 </Box>
                 
@@ -211,9 +215,19 @@ function PricingView() {
                   color="textSecondary"
                   className={classes.user}
                 >
-                  Max 1 user
+                  Unlimited Users
                 </Typography>
                 <List className="services-list">
+                <ListItem alignItems="flex-start">
+                    <img
+                    alt="Product"
+                    className={classes.checkImage}
+                      src="/static/images/products/check1.png"
+                    />
+                    <ListItemText>
+                  Open Source Security
+                    </ListItemText>
+                  </ListItem>
                   <ListItem alignItems="flex-start">
                     <img
                     alt="Product"
@@ -221,7 +235,17 @@ function PricingView() {
                       src="/static/images/products/check1.png"
                     />
                     <ListItemText>
-                   20 proposals/month   
+                Container Security
+                    </ListItemText>
+                  </ListItem>
+                  <ListItem alignItems="flex-start">
+                    <img
+                    alt="Product"
+                    className={classes.checkImage}
+                      src="/static/images/products/check1.png"
+                    />
+                    <ListItemText>
+                   250 scans 
                     </ListItemText>
                   </ListItem>
                   <ListItem>
@@ -231,10 +255,10 @@ function PricingView() {
                       src="/static/images/products/check1.png"
                     />
                     <ListItemText>
-                   10 templates   
+                  Usage based billing
                     </ListItemText>
                   </ListItem>
-                  <ListItem>
+                 {/*<ListItem>
                     <img
                     alt="Product"
                     className={classes.checkImage}
@@ -253,7 +277,7 @@ function PricingView() {
                     <ListItemText>
                    Email alerts  
                     </ListItemText>
-                  </ListItem>
+                 </ListItem>*/}
                 </List>
                 <Button
                   variant="contained"
@@ -266,7 +290,7 @@ function PricingView() {
             </Grid>
             <Grid
               item
-              md={4}
+              md={3}
               sm={6}
               xs={12}
             >
@@ -287,9 +311,10 @@ function PricingView() {
                       variant="overline"
                       color="inherit"
                     >
-                      Agency
+                      Niah Lite
                     </Typography>
-                    <div>
+                    </div>
+                   {/*} <div>
                       <Typography
                         component="span"
                         display="inline"
@@ -307,17 +332,27 @@ function PricingView() {
                       >
                         month
                       </Typography>
-                    </div>
-                  </div>
+                </div>*/}
+                 
                 </Box>
                 <Typography
                   variant="overline"
                   color="inherit"
                   className={classes.user}
                 >
-                  Max 3 user
+               As per plan selections
                 </Typography>
                 <List className="services-list">
+                <ListItem alignItems="flex-start">
+                    <img
+                    alt="Product"
+                    className={classes.checkImage}
+                      src="/static/images/products/check2.png"
+                    />
+                    <ListItemText>
+                  Open Source Security
+                    </ListItemText>
+                  </ListItem>
                   <ListItem alignItems="flex-start">
                     <img
                     alt="Product"
@@ -325,7 +360,17 @@ function PricingView() {
                       src="/static/images/products/check2.png"
                     />
                     <ListItemText>
-                   20 proposals/month   
+                Container Security
+                    </ListItemText>
+                  </ListItem>
+                  <ListItem alignItems="flex-start">
+                    <img
+                    alt="Product"
+                    className={classes.checkImage}
+                      src="/static/images/products/check2.png"
+                    />
+                    <ListItemText>
+                    License Compliance  
                     </ListItemText>
                   </ListItem>
                   <ListItem>
@@ -335,29 +380,10 @@ function PricingView() {
                       src="/static/images/products/check2.png"
                     />
                     <ListItemText>
-                   10 templates   
+                    Unlimited Scans 
                     </ListItemText>
                   </ListItem>
-                  <ListItem>
-                    <img
-                    alt="Product"
-                    className={classes.checkImage}
-                      src="/static/images/products/check2.png"
-                    />
-                    <ListItemText>
-                   Analytics dashboard  
-                    </ListItemText>
-                  </ListItem>
-                  <ListItem>
-                    <img
-                    alt="Product"
-                    className={classes.checkImage}
-                      src="/static/images/products/check2.png"
-                    />
-                    <ListItemText>
-                   Email alerts  
-                    </ListItemText>
-                  </ListItem>
+                 
                 </List>
                 <Button
                   variant="contained"
@@ -370,7 +396,7 @@ function PricingView() {
             </Grid>
             <Grid
               item
-              md={4}
+              md={3}
               sm={12}
               xs={12}
             >
@@ -387,13 +413,14 @@ function PricingView() {
                   <div className="right-content">
                     <Typography
                       component="h3"
-                      gutterBottom
+                 
                       variant="overline"
                       color="textSecondary"
                     >
-                      Enterprise
+                    Enterprise
                     </Typography>
-                    <div>
+                    </div>
+                   {/*<div>
                       <Typography
                         component="span"
                         display="inline"
@@ -411,19 +438,19 @@ function PricingView() {
                       >
                         month
                       </Typography>
-                    </div>
-                  </div>
+                   </div>*/}
+                  
                 </Box>  
                 <Typography
                   variant="overline"
                   color="textSecondary"
                   className={classes.user}
                 >
-                  Unlimited
+                 As per plan Selections
                 </Typography>
                  
                  <List className="services-list">
-                  <ListItem alignItems="flex-start">
+                 {/*<ListItem alignItems="flex-start">
                     <img
                     alt="Product"
                     className={classes.checkImage}
@@ -432,7 +459,7 @@ function PricingView() {
                     <ListItemText>
                    All from above    
                     </ListItemText>
-                  </ListItem>
+                  </ListItem>*/}
                   <ListItem>
                    <img
                     alt="Product"
@@ -440,7 +467,7 @@ function PricingView() {
                       src="/static/images/products/check3.png"
                     />
                    <ListItemText> 
-                   Unlimited 24/7 support
+                   Application Stack Security
                    </ListItemText>
                   </ListItem>
                   <ListItem>
@@ -450,7 +477,7 @@ function PricingView() {
                       src="/static/images/products/check3.png"
                     />
                    <ListItemText>
-                    Personalised Page
+                   Operating System Security
                    </ListItemText> 
                   </ListItem>
                   <ListItem>
@@ -460,7 +487,7 @@ function PricingView() {
                       src="/static/images/products/check3.png"
                     />
                   <ListItemText>
-                    Advertise your profile
+                  Unlimited Scans
                   </ListItemText>  
                   </ListItem>
                 </List>
@@ -468,6 +495,112 @@ function PricingView() {
                   variant="contained"
                   fullWidth
                   className={classes.chooseButton3}
+                >
+                  Choose Plan
+                </Button>
+              </Paper>
+            </Grid>
+            <Grid
+              item
+              md={3}
+              sm={12}
+              xs={12}
+            >
+              <Paper
+                className={classes.product}
+                elevation={1}
+              >
+                <Box className="price-top">
+                  <img
+                    alt="Product"
+                    className={classes.productImage}
+                    src="/static/images/products/product_freelancer.png"
+                  />
+                  <div className="right-content">
+                    <Typography
+                      component="h3"
+                      gutterBottom
+                      variant="overline"
+                      color="textSecondary"
+                    >
+                     Niah Flexi
+                    </Typography>
+                    </div>
+                   {/*<div>
+                      <Typography
+                        component="span"
+                        display="inline"
+                        variant="h3"
+                        color="textPrimary"
+                        className="price-tag"
+                      >
+                        $259/
+                      </Typography>
+                      <Typography
+                        component="span"
+                        display="inline"
+                        variant="subtitle2"
+                        color="textSecondary"
+                      >
+                        month
+                      </Typography>
+                   </div>*/}
+                  
+                </Box>  
+                <Typography
+                  variant="overline"
+                  color="textSecondary"
+                  className={classes.user}
+                >
+                 As per plan Selections
+                </Typography>
+                 
+                 <List className="services-list">
+                 {/*<ListItem alignItems="flex-start">
+                    <img
+                    alt="Product"
+                    className={classes.checkImage}
+                      src="/static/images/products/check1.png"
+                    />
+                    <ListItemText>
+                   All from above    
+                    </ListItemText>
+                  </ListItem>*/}
+                  <ListItem>
+                   <img
+                    alt="Product"
+                    className={classes.checkImage}
+                      src="/static/images/products/check1.png"
+                    />
+                   <ListItemText> 
+                   Application Stack Security
+                   </ListItemText>
+                  </ListItem>
+                  <ListItem>
+                  <img
+                    alt="Product"
+                    className={classes.checkImage}
+                      src="/static/images/products/check1.png"
+                    />
+                   <ListItemText>
+                   Operating System Security
+                   </ListItemText> 
+                  </ListItem>
+                  <ListItem>
+                  <img
+                    alt="Product"
+                    className={classes.checkImage}
+                      src="/static/images/products/check1.png"
+                    />
+                  <ListItemText>
+                  Per credits purchased
+                  </ListItemText>  
+                  </ListItem>
+                </List>
+                <Button
+                  variant="contained"
+                  fullWidth
+                  className={classes.chooseButton1}
                 >
                   Choose Plan
                 </Button>

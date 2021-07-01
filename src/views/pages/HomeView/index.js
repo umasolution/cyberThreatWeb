@@ -30,7 +30,7 @@ function HomeView() {
         <Features />
         <ThirdSection />
         {/*<LeftRightImage />*/}
-        {/*<PricingView />*/}
+        <PricingView />
         <CTA />
       </FadeIn>
     </Page>
