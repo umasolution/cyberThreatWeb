@@ -30,6 +30,8 @@ function RegisterForm({ className, onSubmitSuccess, ...rest }) {
     setChecked((prev) => !prev);
   };
 
+
+
   return (
     <Formik
       initialValues={{
@@ -38,15 +40,14 @@ function RegisterForm({ className, onSubmitSuccess, ...rest }) {
         email: '',
         password: '',
         policy: false,
-        corpCode:''
+       
       }}
       validationSchema={Yup.object().shape({
         firstName: Yup.string().max(255).required('First name is required'),
         lastName: Yup.string().max(255).required('Last name is required'),
         email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
         password: Yup.string().min(7).max(255).required('Password is required'),
-        policy: Yup.boolean().oneOf([true], 'This field must be checked'),
-        corpCode: Yup.string().min(7).max(255).required('Code is required')
+        policy: Yup.boolean().oneOf([true], 'This field must be checked')
       })}
       onSubmit={async (values, {
         setErrors,
@@ -135,31 +136,7 @@ function RegisterForm({ className, onSubmitSuccess, ...rest }) {
             value={values.password}
             variant="outlined"
           />
-          <Box display="flex">
-          <FormControlLabel
-            control={<Switch checked={checked} onChange={handleCodeChange} />}
-            label="Already have a code?"
-          />
-           <div>
-          <Fade in={checked}>
-          <TextField
-            error={Boolean(touched.firstName && errors.firstName)}
-            fullWidth
-            helperText={touched.firstName && errors.firstName}
-            label="Corporate Code"
-            margin="normal"
-            name="corpCode"
-            className={classes.input}
-            onBlur={handleBlur}
-            onChange={handleChange}
-            type="firstName"
-            value={values.corpCode}
-            variant="outlined"
-          />
-          
-        </Fade>
-      </div>
-      </Box>
+       
           <Box
             alignItems="center"
             display="flex"
@@ -206,6 +183,7 @@ function RegisterForm({ className, onSubmitSuccess, ...rest }) {
               size="large"
               type="submit"
               variant="contained"
+            
             >
               Create account
             </Button>

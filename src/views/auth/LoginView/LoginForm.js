@@ -29,8 +29,9 @@ function LoginForm({ className, onSubmitSuccess, ...rest }) {
   const history=useHistory();
 
   const clientId= "Iv1.7e5a6deb9eb3dea8";
-  const clientSecret=" client secret:94fb4a262cd0254308f63995cea086ca5f09a382";
+  const clientSecret=" client secret:cc7b5b40332640779a46a1b7afa017b340470260";
   const redirectUri="http://localhost:3001/app/reports/dashboard";
+
 
   /*const gitHubLogin = () => {
     history.push('http://www.googl.com');

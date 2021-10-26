@@ -5,6 +5,7 @@ import notificationsReducer from './notificationsReducer';
 import chatReducer from './chatReducer';
 import mailReducer from './mailReducer';
 import kanbanReducer from './kanbanReducer';
+import pricingReducer from './pricingReducer';
 
 const rootReducer = combineReducers({
   account: accountReducer,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
   chat: chatReducer,
   mail: mailReducer,
   kanban: kanbanReducer,
-  form: formReducer
+  form: formReducer,
+  pricing : pricingReducer
 });
 
 export default rootReducer;

@@ -316,11 +316,11 @@ const routesConfig = [
         path: '/vulDB',
         component: lazy(() => import('src/views/Vuldb/Vuldb'))
       },
-      /* {
+      {
         exact: true,
         path: '/pricing',
-        component: lazy(() => import('src/views/pages/PricingView'))
-      }, */
+        component: lazy(() => import('src/views/pages/Pricing'))
+      }, 
 
       {
         component: () => <Redirect to="/404" />

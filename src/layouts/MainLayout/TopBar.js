@@ -149,6 +149,10 @@ function TopBar({ className, ...rest }) {
   const handleBookDemo = () => {
     history.push('/book-a-demo');
   };
+
+  const handlePricingClick = () => {
+   history.push('/pricing');
+  };
   
 
 
@@ -188,6 +192,16 @@ function TopBar({ className, ...rest }) {
         variant="body2"
       >
         Products
+      </Link>
+      <Link    
+        onClick = {handlePricingClick}
+        style={{ marginRight: '10px' }}
+        className={classes.link}
+        color="textSecondary"
+        underline="none"
+        variant="body2"
+      >
+        Pricing
       </Link>
       <Link className={classes.link}
         color="textSecondary"
