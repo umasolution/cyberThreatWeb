@@ -145,7 +145,7 @@ function LoginForm({ className, onSubmitSuccess, ...rest }) {
 
               </Grid>
               <Grid container item xs={6}>
-                <a href="https://github.com/login/oauth/authorize?client_id=Iv1.7e5a6deb9eb3dea8">
+                <a href="https://github.com/login/oauth/authorize?client_id=Iv1.cbf6b865ac4843fb">
                 <Button
                   variant="contained"
                   color="black"
