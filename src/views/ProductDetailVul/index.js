@@ -45,6 +45,7 @@ import VulDrawerComponent from './VulDrawerComponent';
 import AddAlertIcon from '@material-ui/icons/AddAlert';
 import NotificationsOffIcon from '@material-ui/icons/NotificationsOff';
 import {setAlert,delAlert} from '../../views/management/Alerts/AlertFunctions';
+import { useSelector } from 'react-redux';
 
 
 
@@ -149,6 +150,7 @@ const ProductDetailVul = () => {
 
     const location = useLocation();
     const classes = useStyles();
+    const type = useSelector((state) => state.sidebar.selectedSideBarItem);
 
     const [product, setProduct] = useState();
     const [loading, setLoading] = useState(false);
@@ -206,7 +208,7 @@ const ProductDetailVul = () => {
         const url = `/details/product`;
         // Below Data is hard coded as this is the only combination which has data. TODO
         //const response = await Axios.post(url, { type: "application", application: "tomcat", product: "tomcat" });
-        const response = await Axios.post(url, { /*type: location.state.selData*/type: "application", 
+        const response = await Axios.post(url, { /*type: location.state.selData*/type: type, 
                                                 application: location.state.name.split('@')[1], 
                                                 product: location.state.name.split('@')[0] });
         
