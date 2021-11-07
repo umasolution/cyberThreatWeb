@@ -73,8 +73,10 @@ function LatestProjects({ className, project_details,onClickRow, ...rest }) {
   const [selectedRow,setSelectedRow] =useState(null);
   const handleOnRowClick = (row) => {
     console.log(row);
-    onClickRow('key',row[`vulnerability`].split('/')[0]);
-    setSelectedRow(row.tableData.id);
+    const splittedArray = row.reportname.split('/');
+    window.open('http://'+window.location.host+'/app/productsreports/'+splittedArray[splittedArray.length-2]+'/'+splittedArray[splittedArray.length-1])
+   // onClickRow('key',row[`vulnerability`].split('/')[0]);
+   // setSelectedRow(row.tableData.id);
 
   };
 
