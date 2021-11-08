@@ -2,7 +2,7 @@ import { Container, Grid, LinearProgress, makeStyles, TextField,Typography,Box,
 ListItem,ListItemIcon,ListItemText,List,ExpansionPanel,ExpansionPanelSummary,ExpansionPanelDetails,
 Slider,Drawer,
 Paper,Table,TableBody,TableCell,TableContainer,TableHead,TablePagination,TableRow,
-Card,CardActionArea,CardActions,CardContent,CardMedia,Radio,RadioGroup,FormLabel,Chip,Icon,CardHeader,Collapse,Button
+Card,CardActionArea,CardActions,CardContent,CardMedia,Radio,RadioGroup,FormLabel,Chip,Icon,CardHeader,Collapse,Button, Select, MenuItem
 } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -43,6 +43,7 @@ import clsx from 'clsx';
 import VulDrawerComponent from '../ProductDetailVul/VulDrawerComponent';
 import { getBackgroundColorBySeverity, getFontColorBySeverity } from '../../Util/Util';
 import { capitalCase } from 'change-case';
+
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
@@ -226,7 +227,7 @@ export const VuldbLogin = (/* {   } */) => {
 
     const aurl = new URL(Axios.defaults.baseURL);
 
-    const apiparams = new URLSearchParams(aurl.search);
+    let apiparams = new URLSearchParams(aurl.search);
 
     const [apiurl, setApiUrl] = useState(apiparams);
 
@@ -358,7 +359,7 @@ export const VuldbLogin = (/* {   } */) => {
         setSearchType(value);
         if(value=='browse'){
           SetBrowseTab(false);
-          callApi_browse();
+         // callApi_browse();
           SetHomeTypeClass();
           SetBrowseTypeClass('active');
         } else {
@@ -503,7 +504,7 @@ export const VuldbLogin = (/* {   } */) => {
         } else {  
            apiurl.set('type', 'product');   
         }       
-        var url = `/scan/browse?${apiurl.toString()}`;  
+        var url = `/scan/browse?${apiparams.toString()}`;  
         let response = await Axios.get(url);  
         if(response) {  
           setTabsData(response.data); 
@@ -973,9 +974,21 @@ export const VuldbLogin = (/* {   } */) => {
       apiurl.delete('accessvector');
       apiurl.delete('producttype');
 
-      if(!isEmpty(searchProductType)){
-         apiurl.set('producttype', searchProductType);
+      apiparams = new URLSearchParams(aurl.search);
+      if(searchBrowseType == 'product'){
+        apiparams.set('type',searchBrowseType);
+        apiparams.set('product',searchProductType);
+        apiparams.set('producttype', typeData);
+        apiparams.set('year',year);
+      }else if(searchBrowseType == 'vulnerabilities'){
+        apiparams.set('type',searchBrowseType);
+        apiparams.set('cweid',cweid);
+      }else if(searchBrowseType == 'vendor'){
+        apiparams.set('type',searchBrowseType);
+        apiparams.set('vendor',vendorInput);
       }
+
+     
 
       callApi_browse();
     }
@@ -1739,7 +1752,7 @@ export const VuldbLogin = (/* {   } */) => {
                   />
                   <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <CardContent>
-                    { searchtype=='home'?
+                    { searchtype=='homeXXX'? // This is not needed for now. Remove XXX if needed later.
                     (<Grid container spacing={3}>
                          <Grid item xs={12} sm={6} className='AdvanceSearchLeft'>
                             <Grid
@@ -1908,14 +1921,11 @@ export const VuldbLogin = (/* {   } */) => {
                         <ListItem>
                           <RadioGroup aria-label="browseradio" name="browseradio" value={searchBrowseType} onChange={(e) => handleBrowseRadio(e)}>
                               <FormControlLabel value="product" control={<Radio />} label={capitalizeFirstLetter('product')} />
-                              {searchBrowseType=='product'?(<TextField
-                                  name="producttype"
-                                  type="producttype"
-                                  placeholder="e.g. os, application, hardware"
-                                  onChange={handleProductType}
-                                />):''}
+                              {searchBrowseType=='product'? getProductControls() :''}
                               <FormControlLabel value="vulnerabilities" control={<Radio />} label={capitalizeFirstLetter('vulnerabilities')} />
+                              {searchBrowseType=='vulnerabilities'? getVulnerabilityControls() :''}
                               <FormControlLabel value="vendor" control={<Radio />} label={capitalizeFirstLetter('vendor')} />
+                              {searchBrowseType=='vendor'? getVendorControls() :''}
                           </RadioGroup>
                         </ListItem>  
                       </List>
@@ -1945,6 +1955,104 @@ export const VuldbLogin = (/* {   } */) => {
           
           </>
        )   
+    }
+    const [typeData, setType] = useState('os');
+    const [year, setYear] = useState(new Date().getFullYear());
+    const [cweid, setCweId] = useState(0);
+    const [vendorInput, setVendor] = useState('');
+
+    let rollingYear = 1999;
+
+    const handleYearSelect = (event) => {
+      setYear(Number(event.target.innerText))
+    }
+  
+    const getProductControls = () => {
+      return (
+        <Grid container spacing={1}>
+          <Grid md = {4} item >
+            <TextField
+                  name="producttype"
+                  type="producttype"
+                  placeholder="e.g. os, application, hardware"
+                  onChange={handleProductType}
+                />
+          </Grid>
+          <Grid md = {4} item >
+            <Select
+              id="type"
+              label="Type"  
+              value = {typeData}
+              labelId="demo-simple-select-label"
+              variant = "outlined"
+            >
+           
+              <MenuItem value={'os'} onClick={()=>setType('os')} >OS</MenuItem>
+              <MenuItem value={'hardware'} onClick={()=>setType('hardware')}>Hardware</MenuItem>
+              <MenuItem value={'application'} onClick={()=>setType('application')}>Application</MenuItem>
+            </Select>
+          </Grid>
+          <Grid md = {4} item >
+            <Select
+                id="year"
+                label="Years"  
+                value = {year}
+                labelId="demo-simple-select-label"
+                variant = "outlined"
+              >
+               {getYears()}
+              </Select>
+          </Grid>
+        </Grid>
+      )
+    }
+
+
+    const getVulnerabilityControls = () => {
+      return (
+        <Grid container spacing={0}>
+          <Grid md= {1} className = "vulnerability">
+            <label>CWE-</label>
+          </Grid>
+          <Grid md = {4} item >
+          
+            <TextField
+                  name="cwe"
+                  type="cwe"
+                  placeholder="e.g. 787"
+                  onChange={(e)=>setCweId(e.target.value)}
+                />
+          </Grid>
+         </Grid>
+      )
+    }
+
+    const getVendorControls = () => {
+      return (
+        <Grid container >
+          <Grid md = {4} item >
+            <TextField
+                  name="vendor"
+                  type="vendor"
+                  placeholder="vendor"
+                  onChange={(e)=>setVendor(e.target.value)}
+                />
+          </Grid>
+         </Grid>
+      )
+    }
+
+    const getYears = () => {
+      const menuItems = [];
+      while(rollingYear < new Date().getFullYear()){
+        rollingYear = rollingYear + 1;
+        menuItems.push(<MenuItem value={rollingYear} onClick={handleYearSelect} >{rollingYear}</MenuItem>)
+      }
+      
+
+      return menuItems.map(item=> {
+        return item;
+      })
     }
     const getBrowseTab = (browseDa) => {
       return (
