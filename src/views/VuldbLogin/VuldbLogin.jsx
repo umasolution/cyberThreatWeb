@@ -484,6 +484,7 @@ export const VuldbLogin = (/* {   } */) => {
 
 
     const callApi_browse = async () => {  
+        SetBrowseTab(true); 
         setloadingRows(false);  
         setIsSearchLoadingHome(true); 
         setSingleRows();  
