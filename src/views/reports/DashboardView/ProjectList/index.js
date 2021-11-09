@@ -76,6 +76,12 @@ function ProjectList({ className, lib_details, ...rest }) {
   const rowHeight = 52;
   const width = 398;
   
+  const handleProjectClick = (report) => {
+    const splittedArray = report.split('/');
+    window.open('http://'+window.location.host+'/app/productsreports/'+splittedArray[splittedArray.length-2]+'/'+splittedArray[splittedArray.length-1])
+  }
+
+ 
 
   const rowRenderer = ({ index, isScrolling, key, style }) => {
     return searchedLibDetails && (
@@ -83,7 +89,7 @@ function ProjectList({ className, lib_details, ...rest }) {
           <TableCell style={{width: '50%'}}><Typography color="inherit"
             className="secondary"
           >
-             {searchedLibDetails[index].name}
+            <Link className = {classes.link} onClick={()=>handleProjectClick(searchedLibDetails[index].reportname)} >{searchedLibDetails[index].name}</Link>
           </Typography></TableCell>
           <TableCell style={{width: '10%'}}><Typography color="inherit"
             className="secondary"
