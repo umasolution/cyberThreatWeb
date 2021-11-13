@@ -12,12 +12,12 @@ function AuthGuard({ children }) {
 
   // Github
 
-  if(window.location.pathname == "/app/reports/dashboard" &&
-      window.location.search.indexOf('token') != -1){
+  if(window.location.pathname === "/app/reports/dashboard" &&
+      window.location.search.indexOf('token') !== -1){
 
         authService.setSession(query.get('token'));
 
-        if(query.get('user')){
+        if(Object.keys(query).length > 0 && query.get('user')){
           authService.setUserName(query.get('user'));
           dispatch({
             type: "@account/login-success",
@@ -32,7 +32,7 @@ function AuthGuard({ children }) {
         return children;
   }
 
-  if (!account.user) {
+  if (!account.user || account.user === null) {
     return <Redirect to="/login" />;
   }
 
