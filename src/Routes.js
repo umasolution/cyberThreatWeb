@@ -263,8 +263,29 @@ const routesConfig = [
         component: lazy(() => import('src/views/ProductDetailVul'))
       },
       {
+        exact: true,
+        path: '/app/dashboard/pricing',
+        component: lazy(() => import('src/views/pages/Pricing'))
+      },
+      {
+        exact: true,
+        path: '/app/dashboard/payment',
+        component: lazy(() => import('src/views/pages/Payment'))
+      },
+      {
+        exact: true,
+        path: '/app/dashboard/paymentresult',
+        component: lazy(() => import('src/views/pages/Payment/PaymentResult'))
+      },
+      {
+        exact: true,
+        path: '/app/dashboard/paymentresultfailure',
+        component: lazy(() => import('src/views/pages/Payment/PaymentResultFailure'))
+      },
+      {
         component: () => <Redirect to="/404" />
-      }
+      },
+      
     ]
   },
   {

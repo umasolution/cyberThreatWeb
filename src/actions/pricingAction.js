@@ -25,4 +25,25 @@ const getTotalCost = () => {
     }
 }
 
-export {setTotalScans, setUsers, setAlerts, getTotalCost};
+const setPricingConfigurations = (pricingData) => {
+    return {
+        type : "set_pricing_configurations",
+        payload : pricingData
+    }
+}
+
+const setSubscriptionModel = (model) =>{
+    return {
+        type : "set_model",
+        payload : model
+    }
+}
+
+const setCosts = (totalCost, annualCost) => {
+    return {
+        type : "update_costs",
+        payload : {totalCost, annualCost}
+    }
+}
+
+export {setTotalScans, setUsers, setAlerts, getTotalCost, setPricingConfigurations, setSubscriptionModel, setCosts};

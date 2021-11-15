@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Grid, Switch, Checkbox, Button, Paper, makeStyles } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import { setSubscriptionModel } from 'src/actions/pricingAction';
+import { setCosts, setSubscriptionModel } from 'src/actions/pricingAction';
 
 
 const useStyle = makeStyles({
@@ -24,7 +24,14 @@ const useStyle = makeStyles({
         marginTop : '5px'
     }
 });
-const TotalCost = () => {
+
+
+const NiahLite = () => {
+    useEffect(()=>{
+        dispatch(setCosts(200,2400))
+    });
+
+   
     const classes = useStyle();
     const history = useHistory();
     const dispatch = useDispatch();
@@ -41,7 +48,7 @@ const TotalCost = () => {
     }
 
     const onSubscribe = () => {
-        dispatch(setSubscriptionModel({displayName: 'Niah Flexi', model : 'NiahFlexi'}));
+        dispatch(setSubscriptionModel({displayName: 'Niah Lite', model : 'NiahLite'}));
         history.push('/app/dashboard/payment');
     }
 
@@ -59,14 +66,10 @@ const TotalCost = () => {
             <Grid container>
                 <Grid item xs={10}>
                     {
-                         getTextContent('Total Cost', Math.ceil(totalCost) , ' USD per month')
+                         getTextContent('Total Cost', '200' , ' USD per month')
                     }
-                    {
-                         getTextContent('Total Cost', Math.ceil(costPerDeveloper) , ' USD per month per developer')
-                    }
-                    {
-                         getTextContent('Total Costs after Discounts', Math.ceil(totalCostWithDiscount) , ' USD per month')
-                    }
+                   
+                   
                     <span style={{ display: "flex" }}>
                         <Switch
                             checked={checked}
@@ -75,8 +78,8 @@ const TotalCost = () => {
                             name="checkedB"
                         />
                         
-                        {checked ? getTextContent('billed monthly at ', Math.ceil(totalCost) , ' USD per month') :
-                                   getTextContent('billed annually at ', Math.ceil(annualCost) , ' USD per Annum')}
+                        {checked ? getTextContent('billed monthly at ', '200' , ' USD per month') :
+                                   getTextContent('billed annually at ', '2400' , ' USD per Annum')}
                       
 
                     </span>
@@ -101,4 +104,4 @@ const TotalCost = () => {
     )
 }
 
-export default TotalCost;
+export default NiahLite;

@@ -46,7 +46,7 @@ function CookiesNotification() {
     if (!consent) {
       setOpen(true);
     }
-  }, []);
+  });
 
   if (!open) {
     return null;

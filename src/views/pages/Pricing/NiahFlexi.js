@@ -1,12 +1,13 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Typography from '@material-ui/core/Typography';
 import PriceSlider from './PriceSlider';
 import TotalCost from './TotalCost';
 import {setAlerts, 
         setTotalScans,
         setUsers,
-        getTotalCost} from '../../../actions/pricingAction';
+        getTotalCost,
+        setCosts} from '../../../actions/pricingAction';
 import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core';
 
@@ -18,6 +19,9 @@ const useStyle = makeStyles({
 });
 
 const NiahFlexi = () => {
+    useEffect(()=>{
+        dispatch(setCosts(0,0))
+    });
     const dispatch = useDispatch();
     const classes = useStyle();
 
@@ -46,10 +50,10 @@ const NiahFlexi = () => {
                             max = {150}
                             footerText = {usersText}
                             callback = {onSliderChange}/>
-            <PriceSlider label = "Alerts" 
+           {/* <PriceSlider label = "Alerts" 
                             max = {100}
                             footerText = {alertsText}
-                            callback = {onSliderChange}/>
+                            callback = {onSliderChange}/> */}
             <Typography variant = "body2">
                 *Floating Limits are a combined total across all developers/accounts on Niah Security Premium. e.g. If you purchase 200 scans, all developers can run a combined total of 200 scans. It could be 200 scans from one account or 20 scans from 10 accounts.
             </Typography>
