@@ -27,6 +27,12 @@ function AuthGuard({ children }) {
           });
         }else{
           authService.setUserName("GIT_USER");
+          dispatch({
+            type: "@account/login-success",
+            payload: {
+              user :  "GIT_USER"
+            }
+          });
         }
 
         return children;
