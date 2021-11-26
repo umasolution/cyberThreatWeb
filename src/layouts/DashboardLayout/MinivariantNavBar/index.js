@@ -297,6 +297,16 @@ export default function MinivariantNavBar() {
               </ListItemText>
             </ListItem>
           </Link>
+          <Link to='/app/dashboard/integrations' className={classes.linkText}>
+            <ListItem button >
+              {/*<ListItemIcon className={classes.icon}><SvgIcon component={AlertIcon} viewBox="0 0 600 476.6" fontSize="large" className={classes.svgIcon}/></ListItemIcon>
+               */}
+              <ListItemIcon className={classes.icon}><Icon><img src="/static/alert.png" /></Icon></ListItemIcon>
+              <ListItemText>
+                <Typography variant="h4" gutterBottom className={classes.navText}>All Integrations</Typography>
+              </ListItemText>
+            </ListItem>
+          </Link>
         </List>
         
 

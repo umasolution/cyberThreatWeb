@@ -283,6 +283,11 @@ const routesConfig = [
         component: lazy(() => import('src/views/pages/Payment/PaymentResultFailure'))
       },
       {
+        exact: true,
+        path: '/app/dashboard/integrations',
+        component: lazy(() => import('src/views/Integrations'))
+      },
+      {
         component: () => <Redirect to="/404" />
       },
       
