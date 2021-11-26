@@ -69,29 +69,47 @@ const CreditCardInterface = ({subscription, users, scans, amount}) => {
                    Credit Card Details
                 </Typography>
             </Grid>
-            <Grid item xs={12}>
-                    <TextField className= {styles.txt} id="outlined-basic" label="Name in the Card" variant="outlined" 
+            {/* <Grid item xs={12}>
+                <TextField className= {styles.txt} id="outlined-basic" label="Name in the Card" variant="outlined" 
                             onChange={(event)=>onChangeCreditCardDetails(event.target.value,'name')} />
+            </Grid> */}
+            <Grid item xs={6}>
+                <TextField id="outlined-basic" label="Name in the Card" variant="outlined" required fullWidth
+                    InputLabelProps={{ shrink: true }} onChange={(event)=>onChangeCreditCardDetails(event.target.value,'name')} />
             </Grid>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
                     <TextField className= {styles.txt} id="outlined-basic" label="Credit Card Number" variant="outlined"
                      onChange={(event)=>onChangeCreditCardDetails(event.target.value,'cardnumber')} />
+            </Grid> */}
+            <Grid item xs={12} sm={6}>
+                <TextField label="Credit Card Number" id="outlined-basic" name="ccnumber" variant="outlined" required fullWidth
+                    InputLabelProps={{ shrink: true }} placeholder="1234 1234 1234 1234"
+                    onChange={(event)=>onChangeCreditCardDetails(event.target.value,'cardnumber')}
+                />
             </Grid>
-            <Grid item xs={12}>
-                    <TextField className= {styles.cvv} id="outlined-basic" label="CVV" variant="outlined" 
-                    onChange={(event)=>onChangeCreditCardDetails(event.target.value,'cardcodeno')}/>
-                    <TextField className= {styles.cvv} id="outlined-basic" label="Exp Month" variant="outlined" 
-                    onChange={(event)=>onChangeCreditCardDetails(event.target.value,'month')}/>
-                    <TextField className= {styles.cvv} id="outlined-basic" label="Exp Year" variant="outlined" 
-                     onChange={(event)=>onChangeCreditCardDetails(event.target.value,'year')}/>
+            <Grid item xs={3} >
+                <TextField id="outlined-basic" label="Exp Month" variant="outlined" required 
+                InputLabelProps={{ shrink: true }} placeholder="MM" 
+                onChange={(event)=>onChangeCreditCardDetails(event.target.value,'month')}/>
             </Grid>
+            <Grid item xs={3} >    
+                <TextField id="outlined-basic" label="Exp Year" variant="outlined" required
+                InputLabelProps={{ shrink: true }} InputProps={{ inputProps: { min: 0, max: 99 } }} placeholder="YY"
+                onChange={(event)=>onChangeCreditCardDetails(event.target.value,'year')}/>
+            </Grid>
+            <Grid item xs={6}>
+                <TextField id="outlined-basic" label="CVV" variant="outlined" required fullWidth
+                InputLabelProps={{ shrink: true }} placeholder="CVV"
+                onChange={(event)=>onChangeCreditCardDetails(event.target.value,'cardcodeno')}/>
+            </Grid>
+            
             <Grid item xs={12}>
                 <Typography variant="subtitle1" component="div">
                     Note : Your credit card details will not be stored in our system at any point in time.
                 </Typography>
             </Grid>
             <Grid item xs={12}>
-                <Button variant="container" size="large" onClick={onPay}>Pay</Button>
+                <Button variant="contained" color="Primary" size="large" onClick={onPay}>Pay</Button>
             </Grid>
            
         </Grid>

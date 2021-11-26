@@ -24,39 +24,27 @@ const Payment = () => {
              <Card className={styles.root}>
                 <CardContent>
                     <Grid container spacing={2}>
-                        <Grid item xs={12}>
+                        <Grid item xs={6}>
                             Your subscription details are as follows. Please confirm before payment.
-                        </Grid>
-                        <Grid item xs={12}>
                             <Typography variant="h6" component="div">
-                                            Subscription Type : {pricing.selectedSubscriptionModel}
-                                    </Typography>
-                            
-                        </Grid>
-                        <Grid item xs={12}>
+                                    Subscription Type : {pricing.selectedSubscriptionModel}
+                            </Typography>
                             <Typography variant="h6" component="div">
-                                        Total Users      : {pricing.users}
-                                    </Typography>
-                          
-                        </Grid>
-                        <Grid item xs={12}>
+                                Total Users      : {pricing.users}
+                            </Typography>
                             <Typography variant="h6" component="div">
-                                        Total Scans      : {pricing.totalScans}
-                                    </Typography>
-                          
-                        </Grid>
-                        <Grid item xs={12}>
+                                Total Scans      : {pricing.totalScans}
+                            </Typography>  
                             <Typography variant="h6" component="div">
-                                        Total Annual Amount      : {pricing.annualCost}
-                                    </Typography>
-                          
-                        </Grid>
-                        <Grid item xs={12}>
+                                Total Annual Amount      : {pricing.annualCost}
+                            </Typography>                                               
+                        </Grid>  
+                        <Grid item xs={6} style={{'box-shadow':'15px 0 30px 0 rgb(0 0 0 / 18%)'}}>
                             <CreditCardInterface subscription = {pricing.selectedSubscriptionModel} 
                             users = {pricing.users} scans = {pricing.totalScans} amount = {pricing.annualCost}/>
-                        </Grid>
-                      
-                        </Grid>
+                        </Grid>                                            
+                    </Grid>
+                    
                 </CardContent>
              
             </Card>

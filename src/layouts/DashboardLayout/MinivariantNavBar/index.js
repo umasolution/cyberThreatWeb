@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable jsx-a11y/alt-text */
 import React, { useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -49,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
   },
   appBar: {
-    //zIndex: theme.zIndex.drawer + 1,
+    // zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -222,10 +224,11 @@ export default function MinivariantNavBar() {
           </ListItem>
           <Collapse in={dashboardOpen} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <Link to='/app/reports/dashboard' className={classes.linkText} >
+              <Link to='/app/reports/dashboard' className={classes.linkText}>
                 <ListItem button onClick = {()=>onLinkTo('dependencies')}>
-                  <ListItemIcon className={classes.icon} style={{ marginLeft: "13px" }}> <AssignmentIcon fontSize="small" /> </ListItemIcon>
-                  <ListItemText ><Typography variant="h6" gutterBottom className={classes.dashboardText}>Dependencies</Typography></ListItemText>
+                  {/* <ListItemIcon className={classes.icon} style={{ marginLeft: "13px" }}> <AssignmentIcon fontSize="small" /> </ListItemIcon> */}
+                  <ListItemIcon className={classes.icon} style={{ marginLeft: "13px" }}><Icon><img src="/static/dependencies.png" /></Icon></ListItemIcon>
+                  <ListItemText><Typography variant="h6" gutterBottom className={classes.dashboardText}>Dependencies</Typography></ListItemText>
                 </ListItem>
               </Link>
             </List>
@@ -234,7 +237,7 @@ export default function MinivariantNavBar() {
                 <ListItem button onClick = {()=>onLinkTo('application')}>
 
                   <ListItemIcon className={classes.icon} style={{ marginLeft: "13px" }}> <NfcIcon fontSize="small" /> </ListItemIcon>
-                  <ListItemText ><Typography variant="h6" gutterBottom className={classes.dashboardText}>Application</Typography></ListItemText>
+                  <ListItemText><Typography variant="h6" gutterBottom className={classes.dashboardText}>Application</Typography></ListItemText>
 
                 </ListItem>
               </Link>
@@ -242,14 +245,15 @@ export default function MinivariantNavBar() {
             <List component="div" disablePadding>
               <Link to='/app/reports/dashboard?type=system' className={classes.linkText}>
                 <ListItem button onClick = {()=>onLinkTo('system')}>
-                  <ListItemIcon className={classes.icon} style={{ marginLeft: "13px" }}> < WebAssetIcon fontSize="small" /> </ListItemIcon>
-                  <ListItemText ><Typography variant="h6" gutterBottom className={classes.dashboardText}>System</Typography></ListItemText>
+                  {/* <ListItemIcon className={classes.icon} style={{ marginLeft: "13px" }}> < WebAssetIcon fontSize="small" /> </ListItemIcon> */}
+                  <ListItemIcon className={classes.icon} style={{ marginLeft: "13px" }}><Icon><img src="/static/system.png" /></Icon></ListItemIcon>
+                  <ListItemText><Typography variant="h6" gutterBottom className={classes.dashboardText}>System</Typography></ListItemText>
 
                 </ListItem>
               </Link>
             </List>
           </Collapse>
-          {/*} <Link to='/app/reports/dashboard' className={classes.linkText}>
+          {/* } <Link to='/app/reports/dashboard' className={classes.linkText}>
             <ListItem button >
                 <ListItemIcon className={classes.icon}><HomeIcon/></ListItemIcon>
                 <ListItemText>
@@ -259,7 +263,7 @@ export default function MinivariantNavBar() {
       </Link> */}
           <Link to='/app/vulDB' className={classes.linkText}>
             <ListItem button >
-              {/*<ListItemIcon className={classes.icon}><SvgIcon component={VulnerabilityIcon} viewBox="0 0 600 476.6" fontSize="large" className={classes.svgIcon} /></ListItemIcon>
+              {/* <ListItemIcon className={classes.icon}><SvgIcon component={VulnerabilityIcon} viewBox="0 0 600 476.6" fontSize="large" className={classes.svgIcon} /></ListItemIcon>
    */}
               <ListItemIcon className={classes.icon}><Icon><img src="/static/vulnerability.png" /></Icon></ListItemIcon>
               <ListItemText>
@@ -278,8 +282,8 @@ export default function MinivariantNavBar() {
             </ListItem>
           </Link>
           <Link to='/app/management/Alerts' className={classes.linkText}>
-            <ListItem button >
-              {/*<ListItemIcon className={classes.icon}><SvgIcon component={AlertIcon} viewBox="0 0 600 476.6" fontSize="large" className={classes.svgIcon}/></ListItemIcon>
+            <ListItem button>
+              {/* <ListItemIcon className={classes.icon}><SvgIcon component={AlertIcon} viewBox="0 0 600 476.6" fontSize="large" className={classes.svgIcon}/></ListItemIcon>
                */}
               <ListItemIcon className={classes.icon}><Icon><img src="/static/alert.png" /></Icon></ListItemIcon>
               <ListItemText>
@@ -289,9 +293,9 @@ export default function MinivariantNavBar() {
           </Link>
           <Link to='/app/dashboard/pricing' className={classes.linkText}>
             <ListItem button >
-              {/*<ListItemIcon className={classes.icon}><SvgIcon component={AlertIcon} viewBox="0 0 600 476.6" fontSize="large" className={classes.svgIcon}/></ListItemIcon>
+              {/* <ListItemIcon className={classes.icon}><SvgIcon component={AlertIcon} viewBox="0 0 600 476.6" fontSize="large" className={classes.svgIcon}/></ListItemIcon>
                */}
-              <ListItemIcon className={classes.icon}><Icon><img src="/static/alert.png" /></Icon></ListItemIcon>
+              <ListItemIcon className={classes.icon}><Icon><img src="/static/pricing.png" /></Icon></ListItemIcon>
               <ListItemText>
                 <Typography variant="h4" gutterBottom className={classes.navText}>Pricing</Typography>
               </ListItemText>
@@ -310,7 +314,7 @@ export default function MinivariantNavBar() {
         </List>
         
 
-        {/*} <List>
+        {/* } <List>
           {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
             <ListItem button key={text}>
               <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
@@ -326,7 +330,7 @@ export default function MinivariantNavBar() {
               <ListItemText primary={text} />
             </ListItem>
           ))}
-          </List>*/}
+          </List> */}
       </Drawer>
 
     </div>
