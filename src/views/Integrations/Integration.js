@@ -26,10 +26,14 @@ const Integration = ({ name, desc }) => {
         setOpen(true);
     }
 
+    const onClose = () => {
+        setOpen(false);
+    }
+
     return (
-        <Card className="card" onClick = {onOpen}>
-            <CardContent>
-                <div >
+        <Card className="card" >
+            <CardContent className="card-content">
+                <div onClick = {onOpen}>
                     <div>
                         <img src={"/static/integrations/"+name+".png"} onError = {(e)=> e.target.src = "/static/integrations/GitLab.png"}/>
                         
@@ -38,7 +42,7 @@ const Integration = ({ name, desc }) => {
                         {name}
                     </div>
                 </div>
-                <TransitionsModal openModal = {open} name = {name}/>
+                <TransitionsModal openModal = {open} name = {name} onClose = {onClose}/>
             </CardContent>
         </Card>
     )

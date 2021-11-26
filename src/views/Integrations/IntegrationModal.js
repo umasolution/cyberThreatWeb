@@ -7,6 +7,7 @@ import Fade from '@material-ui/core/Fade';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Grid, TextField, Divider, makeStyles } from '@material-ui/core';
+import { Component } from '@fullcalendar/core';
 
 
 
@@ -35,7 +36,7 @@ const useStyles = makeStyles(theme=>({
     }
 }));
 
-export default function TransitionsModal({ openModal, name }) {
+export default function TransitionsModal({ openModal, name, onClose }) {
     const styles = useStyles();
     const [open, setOpen] = React.useState(openModal);
 
@@ -43,7 +44,7 @@ export default function TransitionsModal({ openModal, name }) {
         setOpen(openModal);
     }, [openModal])
     const handleOpen = () => setOpen(open);
-    const handleClose = () => setOpen(false);
+    const handleClose = () => onClose(false);
 
     const modalContentsByType = [];
 
@@ -77,21 +78,100 @@ export default function TransitionsModal({ openModal, name }) {
         components: [{ label: "Username", type: 'txt' }, { label: "Password", type: 'txt' }, { label: "Container registry name", type: 'txt' }]
     };
     modalContentsByType['Quay'] = {
-        title: "ACR",
+        title: "Quay",
         desc : "Enter your account credentials below to connect Niah to your Quay account.",
         components: [{ label: "Username", type: 'txt' }, { label: "Password", type: 'txt' }, { label: "Container registry name", type: 'txt' }]
+    };
+    modalContentsByType['GitHub'] = {
+        title: "GitHub",
+        desc : "Enter your account credentials below to connect Niah to your Gitub account.",
+        components: [{ label: "Personal Access Token", type: 'txt' }]
+    };
+    modalContentsByType['DigitalOcean'] = {
+        title: "DigitalOcean",
+        desc : "Enter your account credentials below to connect Niah to your DigitalOcean account.",
+        components: [{ label: "Personal Access Token", type: 'txt' }]
+    };
+    modalContentsByType['Google Artifact Registry'] = {
+        title: "Google Artifact Registry",
+        desc : "Enter the registry hostname and a service account JSON key file which Niah should use to connect to your Google Artifact Registry account.",
+        components: [{ label: "Artifact Registry hostname", type: 'txt' }, { label: "JSON key file", type: 'txt' }]
+    };
+    modalContentsByType['Heroku'] = {
+        title: "Heroku",
+        desc : "Enter your account credentials below to connect Niah to your Heroku account. See our Heroku integration documentation for details about generating an API key.",
+        components: [{ label: "API Key", type: 'txt' }]
+    };
+    modalContentsByType['Google Artifact Registry'] = {
+        title: "Google Artifact Registry",
+        desc : "Enter the registry hostname and a service account JSON key file which Niah should use to connect to your Google Artifact Registry account.",
+        components: [{ label: "Artifact Registry hostname", type: 'txt' }, { label: "JSON key file", type: 'txt' }]
+    };
+    modalContentsByType['Cloud Foundry'] = {
+        title: "Cloud Foundry",
+        desc : "Enter your account credentials below to connect NIah to your Cloud Foundry account.",
+        components: [{ label: "You can find out your Cloud Foundry API URL by typing the following command:", type: 'lbl' }, 
+                     { label: "$ cf api", type: 'lbl', bold:true },
+                     { label: "API endpoint: https://api.example.com (API version: 2.2.0)", type: 'lbl', bold:true  },
+                     { label: "API URL", type: 'txt' },
+                     { label: "Username", type: 'txt' },
+                     { label: "Password", type: 'txt' }]
+    };
+    
+    modalContentsByType['Pivotal Web Services'] = {
+        title: "Pivotal Web Services",
+        desc : "Enter your account credentials below to connect Niah to your Pivotal Web Services account.",
+        components: [{ label: "Username", type: 'txt' }, { label: "Password", type: 'txt' },]
+    };
+
+    modalContentsByType['AWS Lambda'] = {
+        title: "AWS Lambda",
+        desc : "Enter IAM ARN below to connect Niah to your AWS Lambda account. See our AWS Lambda integration documentation for details about generating IAM ARN.",
+        components: [{ label: "ARN", type: 'txt' }, { label: "External ID", type: 'txt' }]
+    };
+
+    modalContentsByType['Azure Function'] = {
+        title: "Azure Functions",
+        desc : "Enter your account credentials below to connect Niah to your Azure Functions account. See our Azure Functions integration documentation for details about generating account credentials.",
+        components: [{ label: "Service Principal Name ('Client ID')", type: 'txt' }, { label: "Service Principal Password ('Secret')", type: 'txt' }, 
+                    { label: "Tenant ('Domain')", type: 'txt' }]
+    }
+
+    modalContentsByType['BitBucket'] = {
+        title: "BitBucket",
+        desc : "Enter your account credentials below to connect Niah to your BitBucket account.",
+        components: [{ label: "Username", type: 'txt' }, { label: "App Password", type: 'txt' },]
+    };
+
+    modalContentsByType['Azure Repos'] = {
+        title: "Azure Repos",
+        desc : "Enter your account credentials below to connect Snyk to your Azure Repos account.",
+        components: [{ label: "Organization", type: 'txt' }, { label: "Personal access token", type: 'txt' },]
     };
 
     const layoutComponents = (components) => {
         return components.map(component => {
-            return (
-                <Grid item xs={12}>
-                        <TextField className={styles.txt} label={component.label} variant="outlined"
-                                />
-                       
-                </Grid>
-            )
+            if(component.type == 'txt'){
+                return (
+                    <Grid item xs={12}>
+                            <TextField className={styles.txt} label={component.label} variant="outlined"
+                                    />
+                        
+                    </Grid>
+                )
+            }else if(component.type == 'lbl'){
+                return (
+                    <Grid item xs={12}>
+                            <label className={styles.txt}>{component.bold ? applyBold(component.label) : component.label}</label>        
+                    </Grid>
+                )
+            }
+                
         });
+    }
+
+    const applyBold = (txt) => {
+        return (<b>{txt} </b>);
     }
 
     const layout = ({title, desc, components}) => {

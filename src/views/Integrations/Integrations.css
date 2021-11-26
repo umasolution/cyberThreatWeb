@@ -1,4 +1,12 @@
 .card {
     width : 200px;
-    margin : 20px;
+    margin : 25px;
+}
+
+.card-content{
+    padding : 3px;
+}
+
+.MuiCardContent-root:last-child {
+    padding-bottom: 3px;
 }
