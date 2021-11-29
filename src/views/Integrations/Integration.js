@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const Integration = ({ name, desc }) => {
+const Integration = ({ data, group, index }) => {
 
     const styles = useStyles();
     const [open,setOpen] = useState(false);
@@ -35,14 +35,14 @@ const Integration = ({ name, desc }) => {
             <CardContent className="card-content">
                 <div onClick = {onOpen}>
                     <div>
-                        <img src={"/static/integrations/"+name+".png"} onError = {(e)=> e.target.src = "/static/integrations/GitLab.png"}/>
+                        <img src={"/static/integrations/"+data?.name+".png"} onError = {(e)=> e.target.src = "/static/integrations/GitLab.png"}/>
                         
                     </div>
                     <div className={styles.center}>
-                        {name}
+                        {data?.name}
                     </div>
                 </div>
-                <TransitionsModal openModal = {open} name = {name} onClose = {onClose}/>
+                <TransitionsModal openModal = {open} data={data} onClose = {onClose} group={group} index={index}/>
             </CardContent>
         </Card>
     )

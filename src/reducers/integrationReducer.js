@@ -1,0 +1,127 @@
+const initialState = {
+    modalContentsByType : [],
+    integrationDetails : []
+
+}
+
+initialState.modalContentsByType['GitLab'] = {
+    title: "GitLab",
+    desc : "Enter your account credentials below to connect Niah to your Gitlab account",
+    components: [{ label: "Personal Access Token", type: 'txt', key :"personal_access_token" }]
+  
+};
+
+initialState.modalContentsByType['Docker'] = {
+    title: "Docker",
+    desc : "Enter your account credentials below to connect Niah to your Docker account",
+    components: [{ label: "Username", type: 'txt', key : 'username' }, 
+                { label: "Access Token", type: 'txt', key : 'personal_access_token' }],
+   
+};
+
+initialState.modalContentsByType['GCR'] = {
+    title: "GCR",
+    desc : "Enter the registry hostname and a service account JSON key file which Niah should use to connect to your GCR account.",
+    components: [{ label: "GCR Hostname", type: 'txt', key :'hostname' }, 
+                { label: "JSON Key file", type: 'txt', key : "json_key_file" }]
+};
+
+initialState.modalContentsByType['ECR'] = {
+    title: "ECR",
+    desc : "Enter the Region and Role ARN which Niah should use to connect to your ECR account.",
+    components: [{ label: "AWS Region", type: 'txt', key :'region' },
+                 { label: "Role ARN", type: 'txt', key :'arn' }]
+};
+
+initialState.modalContentsByType['ACR'] = {
+    title: "ACR",
+    desc : "Enter your account credentials below to connect Niah to your ACR account.",
+    components: [{ label: "Username", type: 'txt', key :'username' },
+     { label: "Password", type: 'txt', key :'password' },
+      { label: "Container registry name", type: 'txt', key :'registry' }]
+};
+initialState.modalContentsByType['Quay'] = {
+    title: "Quay",
+    desc : "Enter your account credentials below to connect Niah to your Quay account.",
+    components: [{ label: "Username", type: 'txt' , key :'username' },
+     { label: "Password", type: 'txt', key :'password' }, 
+    { label: "Container registry name", type: 'txt',key :'registry' }]
+};
+initialState.modalContentsByType['GitHub'] = {
+    title: "GitHub",
+    desc : "Enter your account credentials below to connect Niah to your Gitub account.",
+    components: [{ label: "Login Name", type: 'txt', key :'loginname'},{ label: "Personal Access Token", type: 'txt', key :'personal_access_token' }]
+};
+initialState.modalContentsByType['DigitalOcean'] = {
+    title: "DigitalOcean",
+    desc : "Enter your account credentials below to connect Niah to your DigitalOcean account.",
+    components: [{ label: "Login Name", type: 'txt', key :'loginname'},{ label: "Personal Access Token", type: 'txt', key :'personal_access_token' }]
+};
+
+initialState.modalContentsByType['Heroku'] = {
+    title: "Heroku",
+    desc : "Enter your account credentials below to connect Niah to your Heroku account. See our Heroku integration documentation for details about generating an API key.",
+    components: [{ label: "API Key", type: 'txt', key :'api_key' }]
+};
+initialState.modalContentsByType['Google Artifact Registry'] = {
+    title: "Google Artifact Registry",
+    desc : "Enter the registry hostname and a service account JSON key file which Niah should use to connect to your Google Artifact Registry account.",
+    components: [{ label: "Artifact Registry hostname", type: 'txt', key :'registry' }, { label: "JSON key file", type: 'txt', key :'json_key_file' }]
+};
+initialState.modalContentsByType['Cloud Foundry'] = {
+    title: "Cloud Foundry",
+    desc : "Enter your account credentials below to connect NIah to your Cloud Foundry account.",
+    components: [{ label: "You can find out your Cloud Foundry API URL by typing the following command:", type: 'lbl' }, 
+                 { label: "$ cf api", type: 'lbl', bold:true },
+                 { label: "API endpoint: https://api.example.com (API version: 2.2.0)", type: 'lbl', bold:true  },
+                 { label: "API URL", type: 'txt', key :'api_url' },
+                 { label: "Username", type: 'txt', key :'username' },
+                 { label: "Password", type: 'txt', key :'password' }]
+};
+
+initialState.modalContentsByType['Pivotal Web Services'] = {
+    title: "Pivotal Web Services",
+    desc : "Enter your account credentials below to connect Niah to your Pivotal Web Services account.",
+    components: [{ label: "Username", type: 'txt', key :'username' }, { label: "Password", type: 'txt', key :'password' },]
+};
+
+initialState.modalContentsByType['AWS Lambda'] = {
+    title: "AWS Lambda",
+    desc : "Enter IAM ARN below to connect Niah to your AWS Lambda account. See our AWS Lambda integration documentation for details about generating IAM ARN.",
+    components: [{ label: "ARN", type: 'txt', key :'arn' }, { label: "External ID", type: 'txt', key :'external_id' }]
+};
+
+initialState.modalContentsByType['Azure Function'] = {
+    title: "Azure Functions",
+    desc : "Enter your account credentials below to connect Niah to your Azure Functions account. See our Azure Functions integration documentation for details about generating account credentials.",
+    components: [{ label: "Service Principal Name ('Client ID')", type: 'txt', key :'client_id' }, 
+                { label: "Service Principal Password ('Secret')", type: 'txt', key :'secret' }, 
+                { label: "Tenant ('Domain')", type: 'txt', key :'tenant' }]
+}
+
+initialState.modalContentsByType['BitBucket'] = {
+    title: "BitBucket",
+    desc : "Enter your account credentials below to connect Niah to your BitBucket account.",
+    components: [{ label: "Username", type: 'txt', key:'username' },
+     { label: "Login Name", type: 'txt', key:'loginname' },
+     { label: "App Password", type: 'txt', key : 'app_password' },]
+};
+
+initialState.modalContentsByType['Azure Repos'] = {
+    title: "Azure Repos",
+    desc : "Enter your account credentials below to connect Snyk to your Azure Repos account.",
+    components: [{ label: "Organization", type: 'txt', key :'organization' },
+             { label: "Personal access token", type: 'txt', key :'personal_access_token' }, 
+             { label: "Project Name", type: 'txt', key :'projectname' }]
+};
+
+const integrationReducer = (state = initialState, action) => {
+    switch(action.type){
+        case "setIntegrations":
+            return {...state, integrationDetails : Object.entries(action.payload)}
+        default : 
+            return state;
+    }
+}
+
+export default integrationReducer;
