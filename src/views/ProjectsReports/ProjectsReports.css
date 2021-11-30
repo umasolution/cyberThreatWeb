@@ -191,6 +191,15 @@ width:100% !important;
 
 .scan-report-list [class*='makeStyles-chip'] {border-radius: 5px;}
 
+.horizonX{
+	display : flex;
+
+}
+
+.scanBtn {
+	margin-left: 70%;
+}
+
 /*.scan-report-list .search-criteria [class*='makeStyles-chip'] {background: #FF9F00}*/
 
 .projectdetails-div .Name {font-size: 15px;font-weight: bold;}

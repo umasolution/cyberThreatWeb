@@ -812,7 +812,8 @@ const ProjectsReports = () => {
                                       html_url : null,
                                       label : scanData.table.project_details.Label,
                                       language : scanData.table.target_details[2].Language,
-                                      login : scanData.table.target_details[3].login
+                                      login : scanData.table.target_details[3].login,
+                                      projectId : scanData.option.scan_summary['Project Id']
                                     })
     }else{
      
@@ -958,7 +959,7 @@ const ProjectsReports = () => {
 
                                   {tabsData.columns[vkey].field == 'scan' ? (
                                         <Grid container spacing={1}>
-                                          <Button style={{width:'120px', padding:'5px'}} variant="contained" color="success" onClick={(e)=>onScan(e,row,rkey)}>{(scanStatuses[rkey] == "Completed" || !scanStatuses[rkey]) ? "Scan" : "Scanning ..."}</Button>
+                                          <Button style={{width:'120px', padding:'5px'}} className = "scanBtn" variant="contained" color="success" onClick={(e)=>onScan(e,row,rkey)}>{(scanStatuses[rkey] == "Completed" || !scanStatuses[rkey]) ? "Scan" : "Scanning ..."}</Button>
                                         </Grid>
                                   ):''}
                                   {tabsData.columns[vkey].field == 'vulnerability' ? (
@@ -1024,6 +1025,7 @@ const ProjectsReports = () => {
 
                                         </>) : ''
                                       ))}
+                                      <div className="horizonX">
                                       {Object.entries(row.table[`${tabsData.columns[vkey].field}`]).map((projectdetails) => (
                                         (projectdetails[0] != 'Name') ? (<>
 
@@ -1057,6 +1059,7 @@ const ProjectsReports = () => {
                                                   }
                                             </Box>
                                                 ))*/}
+                                      </div>
 
                                     </>
                                   ) : ''}
