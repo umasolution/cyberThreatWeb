@@ -4,6 +4,8 @@ import React from 'react';
 
 import moment from 'moment';
 import { setDateFormat } from './../../../Util/Util';
+import { Button } from '@material-ui/core';
+import Axios from 'axios';
 const useStyles = makeStyles((theme) => ({
   mainGrid: {
     display: 'flex',
@@ -29,11 +31,36 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     padding: theme.spacing(1)
   },
+  btnGrp : {
+    display : 'flex',
+    marginLeft : 'auto',
+    spacing : '10px'
+  },
+  reportBtn : {
+    marginLeft :  '5px',
+    height : '35px'
+  }
 }));
+
+
 
 const ReportHeader = ({ header }) => {
 
   const classes = useStyles();
+
+  const onClickReport = async (reportFormat) => {
+    const url = `/report/fetch`;
+    /*const url = `/report/project/reportname`;*/
+    const response = await Axios.post(url, {
+      projectId: header.projectId,
+      Date : header.Date,
+      team_id : header.team_id,
+      company_id : header.company_id,
+      fileType : reportFormat
+    });
+
+    console.log(response);
+  }
 
   return (<>
     <Grid
@@ -48,6 +75,11 @@ const ReportHeader = ({ header }) => {
       >
         SCAN REPORT FOR {header.Project.toUpperCase()}
       </Typography>
+      <div className={classes.btnGrp}>
+        <Button variant="outlined" className = {classes.reportBtn} onClick={()=>onClickReport('html')}>HTML</Button>
+        <Button variant="outlined" className = {classes.reportBtn} onClick={()=>onClickReport('pdf')}>PDF</Button>
+        <Button variant="outlined" className = {classes.reportBtn} onClick={()=>onClickReport('json')}>JSON</Button>
+      </div>
     </Grid>
     
     <Grid

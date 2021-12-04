@@ -338,7 +338,7 @@ const ProjectsReports = () => {
       setMainUrl(url);
       setApiUrl(apiparams);
       // check response exist
-      response.data.columns.splice(3,0,{field:'scan',title:'Scan'})
+      response.data.columns.splice(3,0,{field:'scan',title:''})
       setTabsData(response.data);
       setTabsColumns(response.data.columns);
       setTabsRows(response.data.results);
