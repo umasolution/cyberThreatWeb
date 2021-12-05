@@ -21,6 +21,7 @@ import DockerSummaries from './DockerSummaries/DockerSummaries';
 import DockerPackages from './DockerPackages/DockerPackages';
 import Page from 'src/components/Page';
 import './ProductsReports.css';
+import { Button } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,6 +38,12 @@ const useStyles = makeStyles((theme) => ({
     },
     paddingLeft: 45,
     paddingRight: 45 
+  },
+  scanBtn : {
+    marginLeft :'auto',
+    height : '35px',
+    marginBottom : '10px !important',
+    padding : '10px !important'
   }
 }));
 
@@ -51,6 +58,7 @@ const ProductsReports = () => {
   const [productReportResponse, setProductReportResponse] = useState();
   const [tabValue, setTabValue] = React.useState(0);
   const [isDocker, setIsDocker] = React.useState(false);
+  const [scanStatus,setScanStatus] = useState(false);
 
 
   const handleChange = (event, newValue) => {
@@ -103,6 +111,29 @@ const ProductsReports = () => {
     return null;
   }
 
+  const onScan = async () => {
+    setScanStatus(false);
+    console.log(productReportResponse);
+    let url = "/offline/scan";
+    let response = null;
+    if(productReportResponse.header.repoType != 'local'){
+      url = '/online/scan';
+      response = await Axios.post(url,
+                                    {
+                                      projectId : projectId
+                                    })
+    }else{
+     
+       response = await Axios.post(url,
+                                      {
+                                        //  reportname : scanData.option.scan_insights.reportname,
+                                          projectid : projectId
+                                        });
+    }
+
+    setScanStatus(false);
+  }
+
   const getDockerTabs = () => {
     return (
       <>
@@ -112,7 +143,9 @@ const ProductsReports = () => {
             <Tab label="Issues" />
             <Tab label={"Inventory"} />
           </Tabs>
+          
         </AppBar>
+        
         <TabPanel value={tabValue} index={0}>
           
         </TabPanel>
@@ -126,6 +159,7 @@ const ProductsReports = () => {
           />
 
         </TabPanel>
+        
       </>
     );
   }
@@ -140,7 +174,9 @@ const ProductsReports = () => {
             <Tab className="issue-tab" label="Issues" />
             <Tab className="inventory-tab" label="Inventory" />
             {((reportType === 'platform' || reportType === 'system' )) ? <Tab className="remediation-tab" label="Remediation" /> : ''}
+            <Button className={classes.scanBtn} variant="outlined" onClick={onScan}>{!scanStatus ? 'Scan' : 'Scanning...'}</Button>
           </Tabs>
+        
         </AppBar>
         <TabPanel value={tabValue} index={0}>
           {productReportResponse.summary ? (
@@ -194,7 +230,7 @@ const ProductsReports = () => {
           {productReportResponse ?
             (
               <>
-                <Box className="report-header-data"><ReportHeader header={productReportResponse.header} /></Box>
+                <Box className="report-header-data"><ReportHeader header={productReportResponse.header} projectId = {projectId} /></Box>
                 <Box className="report-tabs-data">{getTabs()}</Box>
               </>
             )

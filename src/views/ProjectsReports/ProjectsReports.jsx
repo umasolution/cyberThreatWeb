@@ -252,6 +252,9 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 9999,
     color: '#rgba(0, 0, 0, 0.1)',
   },
+  tableColumn : {
+    width:'80%'
+  }
 }));
 
 const ProjectsReports = () => {
@@ -379,6 +382,7 @@ const ProjectsReports = () => {
     var url = `${mainurl}?${apiurl.toString()}`;
     let response = await Axios.post(url);
     setPage(value);
+    response.data.columns.splice(3,0,{field:'scan',title:''})
     setTabsData(response.data);
     setisSearch(false);
     let totalpages = Math.ceil(response.data.total / perRow);
@@ -935,7 +939,7 @@ const ProjectsReports = () => {
                       <TableRow>
                         {
                           Object.keys(tabsData.columns).map((key, i) => (
-                            <><TableCell key={tabsData.columns[key].field}>
+                            <><TableCell key={tabsData.columns[key].field} className={classes.tableColumn}>
                               {tabsData.columns[key].title}
                             </TableCell></>
 

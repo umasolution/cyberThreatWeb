@@ -44,20 +44,56 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-const ReportHeader = ({ header }) => {
+const ReportHeader = ({ header,projectId }) => {
 
   const classes = useStyles();
+
+  const onClickReportJSON = async (reportFormat) => {
+    const url = `/report/fetch`;
+    /*const url = `/report/project/reportname`;*/
+    const response = await Axios.post(url, {
+      projectId: projectId,
+      Date : header.Date,
+      team_id : header.team_id,
+      company_id : header.company_id,
+      filetype : reportFormat
+    });
+
+    const file = new Blob([JSON.stringify(response.data)], { type: 'text/html' });
+    const fileURL = URL.createObjectURL(file);
+    window.open(fileURL);
+
+    console.log(response);
+  }
 
   const onClickReport = async (reportFormat) => {
     const url = `/report/fetch`;
     /*const url = `/report/project/reportname`;*/
     const response = await Axios.post(url, {
-      projectId: header.projectId,
+      projectId: projectId,
       Date : header.Date,
       team_id : header.team_id,
       company_id : header.company_id,
-      fileType : reportFormat
-    });
+      filetype : reportFormat
+    },
+    {
+      responseType: 'arraybuffer',
+      headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/pdf'
+      }
+  });
+
+    let file = undefined;
+    
+    if(reportFormat == 'pdf'){
+      file = new Blob([response.data], { type: 'application/pdf' });
+    }else if(reportFormat == 'html'){
+      file = new Blob([response.data], { type: 'text/html' });
+    }
+    
+    const fileURL = URL.createObjectURL(file);
+    window.open(fileURL);
 
     console.log(response);
   }
@@ -78,7 +114,7 @@ const ReportHeader = ({ header }) => {
       <div className={classes.btnGrp}>
         <Button variant="outlined" className = {classes.reportBtn} onClick={()=>onClickReport('html')}>HTML</Button>
         <Button variant="outlined" className = {classes.reportBtn} onClick={()=>onClickReport('pdf')}>PDF</Button>
-        <Button variant="outlined" className = {classes.reportBtn} onClick={()=>onClickReport('json')}>JSON</Button>
+        <Button variant="outlined" className = {classes.reportBtn} onClick={()=>onClickReportJSON('json')}>JSON</Button>
       </div>
     </Grid>
     
