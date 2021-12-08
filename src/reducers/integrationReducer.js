@@ -1,6 +1,9 @@
 const initialState = {
     modalContentsByType : [],
-    integrationDetails : []
+    integrationDetails : [],
+    connectorList : [],
+    connectedRepo : {data : []},
+    filteredRepo : {data : []}
 
 }
 
@@ -119,9 +122,35 @@ const integrationReducer = (state = initialState, action) => {
     switch(action.type){
         case "setIntegrations":
             return {...state, integrationDetails : Object.entries(action.payload)}
+        case "setConnectorList":
+            return {...state, connectorList : setConnectorList(action.payload)}
+        case "setConnectedRepos":
+                return {...state, connectedRepo : action.payload, filteredRepo : action.payload}
+        case "filterRepoByTxt" : 
+            return {...state, filteredRepo : filterRepoByTxt(action.payload, state.connectedRepo)}
         default : 
             return state;
     }
+}
+
+const setConnectorList = (connectorList) => {
+    const tempArr = [];
+    tempArr.push(connectorList);
+
+    return Array.isArray(connectorList) ? connectorList : tempArr;
+}
+
+
+const filterRepoByTxt = (searchTxt,connectedRepo) => {
+    const clonedRepos = {...connectedRepo};
+
+    if(searchTxt == '')
+        return clonedRepos
+    
+
+    clonedRepos.data = clonedRepos.data.filter(repo => repo[clonedRepos.search_header] == searchTxt);
+
+    return clonedRepos;
 }
 
 export default integrationReducer;

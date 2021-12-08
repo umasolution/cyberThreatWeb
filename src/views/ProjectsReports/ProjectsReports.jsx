@@ -43,6 +43,8 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import { BorderColor } from '@material-ui/icons';
 import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
 import { boolean } from 'yup';
+import CustomMenuDropdown from 'src/components/CustomMenuDropdown';
+import ProjectModal from '../Integrations/Project/ProjectListModal';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -139,6 +141,7 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: '1px',
     border: 0,
     fontSize: '16px',
+    marginLeft : '5px'
   },
   chippaper: {
     display: 'flex',
@@ -254,6 +257,9 @@ const useStyles = makeStyles((theme) => ({
   },
   tableColumn : {
     width:'80%'
+  },
+  addProjectBtn : {
+    marginLeft :  '5px'
   }
 }));
 
@@ -294,9 +300,15 @@ const ProjectsReports = () => {
 
   const [expanded, setExpanded] = React.useState(false);
 
+  const [open,setOpen] = useState(false);
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  const handleAddProjectModalClose = () => {
+    setOpen(false);
+  }
 
   const handleChipDelete = (chipToDelete) => () => {
     chipData.splice(chipToDelete, 1);
@@ -1599,6 +1611,7 @@ const ProjectsReports = () => {
                   placeholder="Search for a type:value"
                 />
                 <button onClick={addTagClick} className={classes.searchButton}>Add</button>
+                <button onClick={()=>setOpen(true)} className={classes.searchButton} >Add Project</button>
               </Box>
               {Object.keys(Object.fromEntries(apiurl)).length > 0 ? (<Box maxWidth="lg" className={classes.chipbar}>
                 <Grid
@@ -1858,7 +1871,7 @@ const ProjectsReports = () => {
           </Container>
 
         </Grid>
-
+        <ProjectModal open={open} onClose={handleAddProjectModalClose}/>
       </Container>
 
 
