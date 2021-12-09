@@ -33,7 +33,8 @@ initialState.modalContentsByType['ECR'] = {
     title: "ECR",
     desc : "Enter the Region and Role ARN which Niah should use to connect to your ECR account.",
     components: [{ label: "AWS Region", type: 'txt', key :'region' },
-                 { label: "Role ARN", type: 'txt', key :'arn' }]
+                 { label: "AWS Access Key Id", type: 'txt', key :'aws_access_key_id' },
+                 { label: "AWS Secret Access Key", type: 'txt', key :'aws_secret_access_key' }]
 };
 
 initialState.modalContentsByType['ACR'] = {
@@ -46,9 +47,9 @@ initialState.modalContentsByType['ACR'] = {
 initialState.modalContentsByType['Quay'] = {
     title: "Quay",
     desc : "Enter your account credentials below to connect Niah to your Quay account.",
-    components: [{ label: "Username", type: 'txt' , key :'username' },
-     { label: "Password", type: 'txt', key :'password' }, 
-    { label: "Container registry name", type: 'txt',key :'registry' }]
+    components: [{ label: "Access Token", type: 'txt', key : 'personal_access_token' },
+                 { label: "Hostname", type: 'txt', key :'hostname' }
+                ]
 };
 initialState.modalContentsByType['GitHub'] = {
     title: "GitHub",
@@ -110,12 +111,28 @@ initialState.modalContentsByType['BitBucket'] = {
      { label: "App Password", type: 'txt', key : 'app_password' },]
 };
 
-initialState.modalContentsByType['Azure Repos'] = {
-    title: "Azure Repos",
+initialState.modalContentsByType['Jira'] = {
+    title: "Jira",
     desc : "Enter your account credentials below to connect Snyk to your Azure Repos account.",
-    components: [{ label: "Organization", type: 'txt', key :'organization' },
+    components: [{ label: "Hostname", type: 'txt', key :'hostname' },
              { label: "Personal access token", type: 'txt', key :'personal_access_token' }, 
-             { label: "Project Name", type: 'txt', key :'projectname' }]
+             { label: "Project Key", type: 'txt', key :'project_key' }]
+};
+
+initialState.modalContentsByType['Bugzilla'] = {
+    title: "Bugzilla",
+    desc : "Enter your account credentials below to connect Snyk to your Azure Repos account.",
+    components: [{ label: "Hostname", type: 'txt', key :'hostname' },
+             { label: "Username", type: 'txt', key :'username' }, 
+             { label: "Password", type: 'txt', key :'password' }]
+};
+
+initialState.modalContentsByType['Pivotal Web Services'] = {
+    title: "Pivotal Web Services",
+    desc : "Enter your account credentials below to connect Snyk to your Azure Repos account.",
+    components: [
+             { label: "Username", type: 'txt', key :'username' }, 
+             { label: "Password", type: 'txt', key :'password' }]
 };
 
 const integrationReducer = (state = initialState, action) => {
