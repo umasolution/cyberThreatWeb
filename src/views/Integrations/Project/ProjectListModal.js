@@ -10,25 +10,27 @@ import { Grid, TextField, Divider, makeStyles, LinearProgress } from '@material-
 import { Component } from '@fullcalendar/core';
 import { useDispatch, useSelector } from 'react-redux';
 import Axios from 'axios';
-import { filterRepoByText, setConnectedRepos, setConnectorList, setIntegrations } from 'src/actions/integrationActions';
+import { filterRepoByText, setConnectedRepos, setConnectorList, setIntegrations, updateSelectedProject } from 'src/actions/integrationActions';
 import {
     Card,
     CardContent,
     CardHeader
 } from '@material-ui/core';
+import { useHistory } from 'react-router';
 
 
 
 
 const style = {
-    position: 'absolute',
-    top: '30%',
+    position: 'fixed',
+    top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: '90%',
     bgcolor: 'background.paper',
     roundedCorner: '5px',
     boxShadow: 10,
+   
     p: 4,
 }
 
@@ -60,7 +62,7 @@ const useStyles = makeStyles(theme => ({
     },
     connector: {
         width: '10%',
-        height: '100%',
+        height: '150px',
         cursor: 'pointer'
     },
     txt : {
@@ -78,6 +80,12 @@ const useStyles = makeStyles(theme => ({
     search:{
         backgroundColor : 'rgb(25, 118, 210)',
         color:'rgb(255, 255, 255)'
+    },
+    img:{
+        height: '100px',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        display: 'block'
     }
 }));
 
@@ -86,6 +94,7 @@ export default function ProjectModal({ open, onClose }) {
     const dispatch = useDispatch();
 
     const styles = useStyles();
+    const history = useHistory();
 
     const connectorList = useSelector(state => state.integrations.connectorList);
     const connectedRepos = useSelector(state => state.integrations.filteredRepo);
@@ -134,6 +143,19 @@ export default function ProjectModal({ open, onClose }) {
     const onSearch = () => {
         dispatch(filterRepoByText(searchTxt))
     }
+    
+
+    const onCheckProject = (event, project) => {
+        console.log(event);
+        dispatch(updateSelectedProject({project:project,mode:event.target.checked.toString()}));
+    }
+
+    const onPublish = async() => {
+        const url = "/publish/projects";
+        let response = await Axios.post(url,{data:connectedRepos.data});
+
+       onClose(true);
+    }
 
     const getContentBasedOnConnector = () => {
         if(!connectorClicked)
@@ -157,16 +179,18 @@ export default function ProjectModal({ open, onClose }) {
                                 <label>{connectedRepos.caption_text}</label>
                             </Grid>
                            
-                            <Grid item xs={12} className={styles.description}>
+                            
                                 {connectedRepos.data.map(repo => (
-                                        <div>
-                                            <input type='checkbox' className={styles.repoCheck}/>
+                                        <Grid item xs={3} className={styles.description}>
+                                            <input type='checkbox' className={styles.repoCheck} checked={(repo.mode === 'true')} onClick={event=>onCheckProject(event,repo)}/>
                                             <label>{repo[connectedRepos.display_header]}</label>
-                                        </div>
+                                        </Grid>
                                     )
                                 )}
+                          
+                          <Grid item xs={12} className={styles.description}>
+                                <Button className={styles.search} onClick={onPublish} >Publish</Button>
                             </Grid>
-
                         </Grid>
         )
         
@@ -202,18 +226,18 @@ export default function ProjectModal({ open, onClose }) {
                             {
                                 connectorList.map(connector => (
                                     <Card className="card" className={styles.connector} onClick={()=>onClickConnector(connector)}>
-                                        <CardContent className="card-content">
-                                            <div >
+                                      
+                                           
                                                 <div>
-                                                    <img src={"/static/integrations/ECR.png"} onError={(e) => e.target.src = "/static/integrations/GitLab.png"} />
+                                                    <img className={styles.img} src={"/static/integrations/ECR.png"} onError={(e) => e.target.src = "/static/integrations/GitLab.png"} />
 
                                                 </div>
                                                 <div className={styles.center}>
                                                     {connector.application}
                                                 </div>
-                                            </div>
+                                          
 
-                                        </CardContent>
+                                    
                                     </Card>
                                 ))
                             }

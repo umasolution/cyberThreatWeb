@@ -3,7 +3,8 @@ const initialState = {
     integrationDetails : [],
     connectorList : [],
     connectedRepo : {data : []},
-    filteredRepo : {data : []}
+    filteredRepo : {data : []},
+    filterTxt : ''
 
 }
 
@@ -113,7 +114,7 @@ initialState.modalContentsByType['BitBucket'] = {
 
 initialState.modalContentsByType['Jira'] = {
     title: "Jira",
-    desc : "Enter your account credentials below to connect Snyk to your Azure Repos account.",
+    desc : "Enter your account credentials below to connect Niah to your Azure Repos account.",
     components: [{ label: "Hostname", type: 'txt', key :'hostname' },
              { label: "Personal access token", type: 'txt', key :'personal_access_token' }, 
              { label: "Project Key", type: 'txt', key :'project_key' }]
@@ -121,7 +122,7 @@ initialState.modalContentsByType['Jira'] = {
 
 initialState.modalContentsByType['Bugzilla'] = {
     title: "Bugzilla",
-    desc : "Enter your account credentials below to connect Snyk to your Azure Repos account.",
+    desc : "Enter your account credentials below to connect Niah to your Azure Repos account.",
     components: [{ label: "Hostname", type: 'txt', key :'hostname' },
              { label: "Username", type: 'txt', key :'username' }, 
              { label: "Password", type: 'txt', key :'password' }]
@@ -129,7 +130,7 @@ initialState.modalContentsByType['Bugzilla'] = {
 
 initialState.modalContentsByType['Pivotal Web Services'] = {
     title: "Pivotal Web Services",
-    desc : "Enter your account credentials below to connect Snyk to your Azure Repos account.",
+    desc : "Enter your account credentials below to connect Niah to your Azure Repos account.",
     components: [
              { label: "Username", type: 'txt', key :'username' }, 
              { label: "Password", type: 'txt', key :'password' }]
@@ -144,7 +145,12 @@ const integrationReducer = (state = initialState, action) => {
         case "setConnectedRepos":
                 return {...state, connectedRepo : action.payload, filteredRepo : action.payload}
         case "filterRepoByTxt" : 
-            return {...state, filteredRepo : filterRepoByTxt(action.payload, state.connectedRepo)}
+            return {...state, filteredRepo : filterRepoByTxt(action.payload, state.connectedRepo), filterTxt : action.payload}
+        case "updateSelectedProject" :
+            return {...state, 
+                        connectedRepo : updateProjectSelection(action.payload.project, action.payload.mode,{...state.connectedRepo}),
+                            filteredRepo :  filterRepoByTxt(state.filterTxt,updateProjectSelection(action.payload.project, action.payload.mode,{...state.connectedRepo}))
+                    }
         default : 
             return state;
     }
@@ -155,6 +161,19 @@ const setConnectorList = (connectorList) => {
     tempArr.push(connectorList);
 
     return Array.isArray(connectorList) ? connectorList : tempArr;
+}
+
+const updateProjectSelection = (project,mode,repos) => {
+    
+    repos.data =  repos.data.map(repo => {
+                if(repo.projectname == project.projectname){
+                    repo.mode = mode
+                }
+
+                return repo;
+            })
+
+    return repos;
 }
 
 

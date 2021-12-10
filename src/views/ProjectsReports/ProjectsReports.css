@@ -198,6 +198,9 @@ width:100% !important;
 
 .scanBtn {
 	margin-left: 70%;
+	background-color : rgb(25, 118, 210);
+	color : rgb(255, 255, 255);
+	width:120px;
 }
 
 /*.scan-report-list .search-criteria [class*='makeStyles-chip'] {background: #FF9F00}*/

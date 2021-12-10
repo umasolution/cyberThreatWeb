@@ -45,6 +45,7 @@ import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
 import { boolean } from 'yup';
 import CustomMenuDropdown from 'src/components/CustomMenuDropdown';
 import ProjectModal from '../Integrations/Project/ProjectListModal';
+import { styles } from '@material-ui/pickers/views/Calendar/Calendar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -260,7 +261,14 @@ const useStyles = makeStyles((theme) => ({
   },
   addProjectBtn : {
     marginLeft :  '5px'
-  }
+  },
+  lblComp:{
+    marginRight : '10px'
+  },
+  btn:{
+    backgroundColor : 'rgb(25, 118, 210)',
+    color:'rgb(255, 255, 255)'
+},
 }));
 
 const ProjectsReports = () => {
@@ -306,8 +314,11 @@ const ProjectsReports = () => {
     setExpanded(!expanded);
   };
 
-  const handleAddProjectModalClose = () => {
+  const handleAddProjectModalClose = (refresh) => {
     setOpen(false);
+
+    if(refresh)
+      fetchProjectsList();
   }
 
   const handleChipDelete = (chipToDelete) => () => {
@@ -970,7 +981,14 @@ const ProjectsReports = () => {
 
                                   {tabsData.columns[vkey].field == 'scan' ? (
                                         <Grid container spacing={1}>
-                                          <Button style={{width:'120px', padding:'5px'}} className = "scanBtn" variant="contained" color="success" onClick={(e)=>onScan(e,row,rkey)}>{(scanStatuses[rkey] == "Completed" || !scanStatuses[rkey]) ? "Scan" : "Scanning ..."}</Button>
+                                          <Button  className = "scanBtn" 
+                                                  variant="contained" 
+                                                  color="success" 
+                                                  onClick={(e)=>onScan(e,row,rkey)}
+                                                  disabled = {row.table.project_details.status == 'enable' ? false : true}>
+                                          {(scanStatuses[rkey] == "Completed" || !scanStatuses[rkey]) ? "Scan" : "Scanning ..."}
+                                                  
+                                          </Button>
                                         </Grid>
                                   ):''}
                                   {tabsData.columns[vkey].field == 'vulnerability' ? (
@@ -1040,7 +1058,7 @@ const ProjectsReports = () => {
                                       {Object.entries(row.table[`${tabsData.columns[vkey].field}`]).map((projectdetails) => (
                                         (projectdetails[0] != 'Name') ? (<>
 
-                                          <Grid container justify="flex-start" spacing={2} style={{ margin: '3px' }}>
+                                          <div className={classes.lblComp}>
                                             <div className={classes.row}>
                                               <div className={classes.blueBox} >
                                                 <Typography className={classes.boxContent} align="center" variant="caption" >
@@ -1053,7 +1071,7 @@ const ProjectsReports = () => {
                                                 </Typography>
                                               </div>
                                             </div>
-                                          </Grid>
+                                          </div>
                                         </>) : ''
                                       ))}
                                       {/*Object.entries(row.table[`${tabsData.columns[vkey].field}`]).map((projectdetails) => (
@@ -1475,7 +1493,7 @@ const ProjectsReports = () => {
             className={classes.container}
           >
             <Container maxWidth="lg" className={classes.searchbar}>
-              <Card className={classes.cardsearch}>
+              {/*<Card className={classes.cardsearch}>
                 <CardHeader
                   action={
                     <IconButton
@@ -1590,7 +1608,7 @@ const ProjectsReports = () => {
                     </Box>
                   </CardContent>
                 </Collapse>
-              </Card>
+                </Card> */}
 
               <Box mt={3}
                 display="flex"

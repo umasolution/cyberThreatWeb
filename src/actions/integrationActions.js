@@ -26,4 +26,11 @@ const filterRepoByText= (filterRepoByTxt) => {
     }
 }
 
-export {setIntegrations,setConnectorList,setConnectedRepos, filterRepoByText};
+const updateSelectedProject = (payload) => {
+    return {
+        type : "updateSelectedProject",
+        payload : payload
+    }
+}
+
+export {setIntegrations,setConnectorList,setConnectedRepos, filterRepoByText, updateSelectedProject};
