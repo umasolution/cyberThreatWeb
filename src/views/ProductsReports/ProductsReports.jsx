@@ -188,7 +188,15 @@ const ProductsReports = () => {
           ) : ''}
         </TabPanel>
         <TabPanel value={tabValue} index={1}>
-          <Issues reportType={reportType} reportName={reportName} issues={productReportResponse.Issues} counter={productReportResponse.summary.counter} historydata={productReportResponse.summary.history} projectId={projectId}/>
+          <Issues reportType={reportType} 
+                  reportName={reportName} 
+                  issues={productReportResponse.Issues} 
+                  counter={productReportResponse.summary.counter} 
+                  historydata={productReportResponse.summary.history} 
+                  projectId={projectId}
+                  notification = {productReportResponse.notification}
+                  issueData = {productReportResponse.issue_data}/>
+                  
 
         </TabPanel>
         <TabPanel value={tabValue} index={2}>

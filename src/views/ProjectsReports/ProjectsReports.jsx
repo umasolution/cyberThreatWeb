@@ -1283,11 +1283,15 @@ const ProjectsReports = () => {
                               Scan Insights
                             </Typography>
                           </Box>
-                          <Box className="boxtitlecontent">
-                            <Typography variant="body2" color="textSecondary" component="div" className="scoreblock-div">
-                              <List component="ul" className="snapshotlist">
+                          
                                 {singlerows.scan_insights.map((scan_insight) => (
+                                  <Box className="boxtitlecontent">
+                                  <Typography variant="body2" color="textSecondary" component="div" className="scoreblock-div">
+                                    <List component="ul" className="snapshotlist">
                                   <>
+                                    <Typography gutterBottom variant="h6" component="h2">
+                                        <b>{scan_insight.header_slider}</b>
+                                    </Typography>
                                     {
                                       Object.entries(scan_insight).map((scan_insights)=>(
                                          
@@ -1359,12 +1363,13 @@ const ProjectsReports = () => {
                                       )) 
                                     }
                                   </>
+                                      </List>
+
+                                      </Typography>
+                                    </Box>
                                 ))}
 
-                              </List>
-
-                            </Typography>
-                          </Box>
+                          
                         </>
                       ) : ''}
                     </Box>

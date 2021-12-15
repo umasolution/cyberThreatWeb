@@ -117,7 +117,8 @@ initialState.modalContentsByType['Jira'] = {
     desc : "Enter your account credentials below to connect Niah to your Azure Repos account.",
     components: [{ label: "Hostname", type: 'txt', key :'hostname' },
              { label: "Personal access token", type: 'txt', key :'personal_access_token' }, 
-             { label: "Project Key", type: 'txt', key :'project_key' }]
+             { label: "Project Key", type: 'txt', key :'project_key' },
+             { label: "Username", type: 'txt', key:'username' }]
 };
 
 initialState.modalContentsByType['Bugzilla'] = {

@@ -111,7 +111,14 @@ const useStyles = makeStyles((theme) => ({
   
 }));
 
-const Issues = ({ issues, reportName, reportType,counter,historydata,projectId }) => {
+const Issues = ({ issues, 
+              reportName, 
+              reportType,
+              counter,
+              historydata,
+              projectId,
+              notification,
+              issueData}) => {
   let history = useHistory();
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
@@ -152,6 +159,10 @@ const Issues = ({ issues, reportName, reportType,counter,historydata,projectId }
   const [issuesvalue, setIssuesValue] = React.useState(issues.data);
 
   const [isSearchLoading, setIsSearchLoading] = React.useState(false);
+
+  const [issueCreated, setIssueCreated] = useState([]);
+
+  const [issuesDataState,setIssueDetails] = useState(issueData);
 
   const handleChipDelete = (chipToDelete) => () => {
     chipData.splice(chipToDelete, 1);
@@ -244,6 +255,26 @@ const Issues = ({ issues, reportName, reportType,counter,historydata,projectId }
      const handleChangeCVE = (event) => {
         setCVEInput(event.target.value);
     };
+
+    const onIssueCreateClick = async(issue,e) => {
+      e.stopPropagation();
+
+      try{
+        const response = await Axios.post('/create/case', {
+          application: notification[0].application,
+          conn_type : notification[0].conn_type,
+          projectId : projectId,
+          issue_details : [issue]
+        });
+        const res = response.data;
+        setIssueDetails([...issuesDataState,[res.caseid,res.case_url,issue.niahid]]);
+      }catch(e){
+        let issueMap = [...issueCreated];
+        issueMap[issue.niahid] = true;
+        setIssueCreated(issueMap)
+      }
+     
+    }
 
     const onSearchClicked = () => {
       if (cveInput) {
@@ -525,6 +556,9 @@ const Issues = ({ issues, reportName, reportType,counter,historydata,projectId }
                         
                       ))
                     }  
+                    <TableCell>
+                      
+                    </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -549,8 +583,20 @@ const Issues = ({ issues, reportName, reportType,counter,historydata,projectId }
                                     </>
                                 )  : row[`${issuesdata.display.table[vkey].field}`].replace(',', '\n')}
                               </TableCell>
+                             
                             )
                             )}
+                             <TableCell>
+                                  {issuesDataState.filter(d=>d[2] == row.niahid).length > 0 ? 
+                                   (
+                                    <button className={classes.searchButton} onClick={(e)=>{e.stopPropagation();window.open(issuesDataState.filter(d=>d[2] == row.niahid)[0][1])}} >{issuesDataState.filter(d=>d[2] == row.niahid)[0][0]}</button>
+                                    ) : 
+                                  (<span>
+                                    <button onClick={(e)=>onIssueCreateClick(row,e)} className={classes.searchButton}>Create Issue</button>
+                                    {issueCreated[row.niahid] ? 'Error issue creation' : ''}
+                                  </span>)
+                                 }
+                              </TableCell>
                         </TableRow>
                       ) }
                       )
