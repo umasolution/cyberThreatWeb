@@ -11,6 +11,7 @@ import { Component } from '@fullcalendar/core';
 import { useDispatch, useSelector } from 'react-redux';
 import Axios from 'axios';
 import { setIntegrations } from 'src/actions/integrationActions';
+import { LinearProgress } from '@material-ui/core';
 
 
 
@@ -112,6 +113,7 @@ export default function TransitionsModal({ openModal, data, onClose, group }) {
     }
 
     const onSave = async () => {
+        setLoadingData(true);
         const postData = {...cloned.auth_details};
         delete postData.connection;
 
@@ -126,8 +128,10 @@ export default function TransitionsModal({ openModal, data, onClose, group }) {
             }else{
                 refreshIntegrations();
             }
+            setLoadingData(false)
             
         }catch(e){
+            setLoadingData(false);
             console.log(e);
             setError('Please verify and enter the correct credentials to connect.')
         }
@@ -180,6 +184,8 @@ export default function TransitionsModal({ openModal, data, onClose, group }) {
         return (<b>{txt} </b>);
     }
 
+    const [isLoadingData,setLoadingData] = React.useState(false)
+
     const layout = ({title, description, components}) => {
         return (
             <Grid container xs={12} spacing={3}>
@@ -194,6 +200,7 @@ export default function TransitionsModal({ openModal, data, onClose, group }) {
                     <label>{error}</label>
                 </Grid>
                  <Grid item xs={12} >
+                    {isLoadingData ? <LinearProgress style={{ margin: '15px', width: '100%' }} /> : ''}
                     <Button variant="contained" className={styles.save} onClick={onSave}>Save</Button>
                 </Grid>
             </Grid>

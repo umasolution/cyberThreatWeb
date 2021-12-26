@@ -298,8 +298,8 @@ width:100% !important;
 .browse-wizard .browse-wizard-box .MuiCardContent-root{height: calc(100% - 110px);padding: 22px;}
 .browse-wizard .browse-wizard-box h6{font-weight: 700;color: #263238;margin-bottom: 5px;}
 .browse-wizard .browse-wizard-box ul.MuiList-root .browse-list{padding: 12px 0; font-family: "Montserrat",sans-serif !important;}
-.browse-wizard .browse-wizard-box ul.MuiList-root .browse-list > div{font-size: 14px; font-weight: 600;}
-.browse-wizard .browse-wizard-box ul.MuiList-root .browse-list > div:last-child{text-align: right;color: #017be0;}
+.browse-wizard .browse-wizard-box ul.MuiList-root .browse-list > div{font-size: 14px; font-weight: 500;}
+.browse-wizard .browse-wizard-box ul.MuiList-root .browse-list > div:last-child{text-align: right;color: #017be0; font-weight: 600;}
 .browse-wizard .browse-wizard-box .MuiCardActions-root{justify-content: center;padding: 10px 10px 5px 10px;border-top: 1px solid #ededef;margin-left: -5px; margin-right: -5px;}
 .browse-wizard .browse-wizard-box .MuiCardActions-root button{font-weight: 700;font-size: 18px;color: #017be0;letter-spacing: 0.5px;    text-transform: none;} 
 /********************advance Search********************/
@@ -333,4 +333,12 @@ width:100% !important;
 
 .vulnerability {
     padding-top: 10px;
+}
+
+.browse-list-sx{
+    border-bottom: rgb(201, 188, 188) 1px solid;
+}
+
+.link{
+    cursor: pointer;
 }

@@ -1285,13 +1285,12 @@ const ProjectsReports = () => {
                           </Box>
                           
                                 {singlerows.scan_insights.map((scan_insight) => (
-                                  <Box className="boxtitlecontent">
-                                  <Typography variant="body2" color="textSecondary" component="div" className="scoreblock-div">
+                                  <fieldset style={{borderRadius:'8px'}}>
+                                    <legend style={{marginLeft:'10px', fontSize:'16px', color:'#185d98'}}>{scan_insight.header_slider}</legend>
+                                  <Typography variant="body2" color="textSecondary" component="div">
                                     <List component="ul" className="snapshotlist">
                                   <>
-                                    <Typography gutterBottom variant="h6" component="h2">
-                                        <b>{scan_insight.header_slider}</b>
-                                    </Typography>
+                                  
                                     {
                                       Object.entries(scan_insight).map((scan_insights)=>(
                                          
@@ -1366,7 +1365,7 @@ const ProjectsReports = () => {
                                       </List>
 
                                       </Typography>
-                                    </Box>
+                                      </fieldset>
                                 ))}
 
                           

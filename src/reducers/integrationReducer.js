@@ -11,7 +11,8 @@ const initialState = {
 initialState.modalContentsByType['GitLab'] = {
     title: "GitLab",
     desc : "Enter your account credentials below to connect Niah to your Gitlab account",
-    components: [{ label: "Personal Access Token", type: 'txt', key :"personal_access_token" }]
+    components: [{ label: "Personal Access Token", type: 'txt', key :"personal_access_token" },
+    { label: "Host Name", type: 'txt', key :"hostname" }]
   
 };
 
@@ -71,7 +72,7 @@ initialState.modalContentsByType['Heroku'] = {
 initialState.modalContentsByType['Google Artifact Registry'] = {
     title: "Google Artifact Registry",
     desc : "Enter the registry hostname and a service account JSON key file which Niah should use to connect to your Google Artifact Registry account.",
-    components: [{ label: "Artifact Registry hostname", type: 'txt', key :'registry' }, { label: "JSON key file", type: 'txt', key :'json_key_file' }]
+    components: [{ label: "Project Name", type: 'txt', key :'projectname' }, { label: "JSON key file", type: 'txt', key :'json_key_file' }]
 };
 initialState.modalContentsByType['Cloud Foundry'] = {
     title: "Cloud Foundry",
@@ -81,7 +82,8 @@ initialState.modalContentsByType['Cloud Foundry'] = {
                  { label: "API endpoint: https://api.example.com (API version: 2.2.0)", type: 'lbl', bold:true  },
                  { label: "API URL", type: 'txt', key :'api_url' },
                  { label: "Username", type: 'txt', key :'username' },
-                 { label: "Password", type: 'txt', key :'password' }]
+                 { label: "Password", type: 'txt', key :'password' },
+                 {label: "Auth URL", type: 'txt', key :'auth_url' }]
 };
 
 initialState.modalContentsByType['Pivotal Web Services'] = {
@@ -93,7 +95,9 @@ initialState.modalContentsByType['Pivotal Web Services'] = {
 initialState.modalContentsByType['AWS Lambda'] = {
     title: "AWS Lambda",
     desc : "Enter IAM ARN below to connect Niah to your AWS Lambda account. See our AWS Lambda integration documentation for details about generating IAM ARN.",
-    components: [{ label: "ARN", type: 'txt', key :'arn' }, { label: "External ID", type: 'txt', key :'external_id' }]
+    components: [{ label: "AWS Access Key Id", type: 'txt', key :'aws_access_key_id' }, 
+                    { label: "AWS Secret Access Key", type: 'txt', key :'aws_secret_access_key' },
+                    { label: "Zone", type: 'txt', key :'zone' }]
 };
 
 initialState.modalContentsByType['Azure Function'] = {
@@ -135,6 +139,16 @@ initialState.modalContentsByType['Pivotal Web Services'] = {
     components: [
              { label: "Username", type: 'txt', key :'username' }, 
              { label: "Password", type: 'txt', key :'password' }]
+};
+
+initialState.modalContentsByType['Azure Repos'] = {
+    title: "Pivotal Web Services",
+    desc : "Enter your account credentials below to connect Niah to your Azure Repos account.",
+    components: [
+             { label: "Organization", type: 'txt', key :'organization' }, 
+             { label: "Personal Access Token", type: 'txt', key :'personal_access_token' },
+             { label: "Description", type: 'txt', key :'description' },
+             { label: "Name", type: 'txt', key :'name' }]
 };
 
 const integrationReducer = (state = initialState, action) => {

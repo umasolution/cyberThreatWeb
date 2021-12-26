@@ -44,6 +44,7 @@ import VulDrawerComponent from '../ProductDetailVul/VulDrawerComponent';
 import { getBackgroundColorBySeverity, getFontColorBySeverity } from '../../Util/Util';
 import { capitalCase } from 'change-case';
 
+
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
@@ -465,7 +466,7 @@ export const VuldbLogin = (/* {   } */) => {
         apiurl.delete('productname'); 
         apiurl.delete('offset');  
         apiurl.delete('limit'); 
-        var url = `${mainurl}?${apiurl.toString()}`;  
+        var url = `/scan/home?${apiurl.toString()}`;  
         let response = await Axios.get(url);  
         if(response) {  
           setTabsData(response.data); 
@@ -505,7 +506,7 @@ export const VuldbLogin = (/* {   } */) => {
         } else {  
            apiurl.set('type', 'product');   
         }       
-        var url = `/scan/browse?${apiparams.toString()}`;  
+        var url = (searchtype == 'home') ? `/scan/home?${apiparams.toString()}` : `/scan/browse?${apiparams.toString()}`;  
         let response = await Axios.get(url);  
         if(response) {  
           setTabsData(response.data); 
@@ -1039,6 +1040,46 @@ export const VuldbLogin = (/* {   } */) => {
       }
       callApi_home();
     }
+
+  const onClickLink = async (payload) => {
+    setloadingRows(false);  
+    setIsSearchLoadingHome(true); 
+    setSingleRows();  
+    setisSearch(true);  
+    setNoResult(true);  
+    
+    console.log(payload);
+    let url = '/scan/home';
+    let response = ''
+
+    if(payload.product && payload.vendor){
+      url = url+'?product='+payload.product+'&type=product&producttype='+payload.producttype;
+      response = await Axios.get(url);
+
+    }else if(payload.vendor){
+      url = url+'?vendor='+payload.vendor+'&type=vendor';
+      response = await Axios.get(url);
+
+    }else{
+      url = url+'?vulnerabilties='+payload.cwe_text+'&type=vulnerabilties';
+      response = await Axios.get(url);
+
+    }
+
+    if(response) {  
+      setTabsData(response.data); 
+      setPage(1);           
+      setperRow(response.data.rowlimit);  
+      let totalpages = Math.ceil(response.data.total/response.data.rowlimit); 
+      setTotalpages(totalpages);  
+      setisSearch(false); 
+      setIsSearchLoadingHome(false);                        
+    } else {  
+       setEmptyData(true);  
+       setIsSearchLoadingHome(false);   
+    } 
+
+  }
    
 
   const cvesearchcenter = (tabsData,col) => {
@@ -1169,7 +1210,11 @@ export const VuldbLogin = (/* {   } */) => {
                                               variant="h5"
                                               color="textSecondary"
                                             >
-                                              {row[`${tabsData.columns[vkey].field}`] }
+                                             {vkey != '0' ? row[`${tabsData.columns[vkey].field}`] :  
+                                              <Link className = 'link' onClick={()=>onClickLink(row)}
+                                                 >
+                                                  {row[`${tabsData.columns[vkey].field}`]}</Link>
+                                            }
                                             </Typography>
                                          </Box>
                                   </TableCell>
@@ -1677,25 +1722,7 @@ export const VuldbLogin = (/* {   } */) => {
                   </List>
                 </Box>
                  
-                <Box mt={3}
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                  className={classes.searchBox}>
-                  <TextField
-                  required
-                  value={cveInput}
-                  onKeyDown={keyPress}
-                  onChange={handleChangeCVE}
-                  style={{
-                    width: '100%',
-                    color:'#000'
-                  }}
-                  id="cve"
-                  placeholder="Search for a advisory:value, language:value, platform:value, plugin:value, severity:value, accessvector:value..."
-                />
-                <button onClick={addTagClick} className={classes.searchButton}>Add</button>
-                </Box>
+      
                 {Object.keys(Object.fromEntries(apiurl)).length > 0 ? (<Box maxWidth="lg" className={classes.chipbar}>
                 <Grid
                       container
@@ -1972,29 +1999,38 @@ export const VuldbLogin = (/* {   } */) => {
       return (
         <Grid container spacing={1}>
           <Grid md = {4} item >
-            <TextField
-                  name="producttype"
-                  type="producttype"
-                  placeholder="e.g. os, application, hardware"
-                  onChange={handleProductType}
-                />
+            <div style={{display:'flex'}}>
+              <label style={{ margin: '5px',marginTop: '16px',fontWeight: '600',  fontSize: '14px'}}>Product:</label>
+              <TextField
+                    name="producttype"
+                    type="producttype"
+                    placeholder="e.g. os, application, hardware"
+                    onChange={handleProductType}
+                  />
+            </div>
+            
           </Grid>
-          <Grid md = {4} item >
-            <Select
-              id="type"
-              label="Type"  
-              value = {typeData}
-              labelId="demo-simple-select-label"
-              variant = "outlined"
-            >
-           
-              <MenuItem value={'os'} onClick={()=>setType('os')} >OS</MenuItem>
-              <MenuItem value={'hardware'} onClick={()=>setType('hardware')}>Hardware</MenuItem>
-              <MenuItem value={'application'} onClick={()=>setType('application')}>Application</MenuItem>
-            </Select>
+          <Grid md = {2} item >
+          <div style={{display:'flex'}}>
+          <label style={{ margin: '5px',marginTop: '16px',fontWeight: '600',  fontSize: '14px'}}>Type:</label>
+              <Select
+                id="type"
+                label="Type"  
+                value = {typeData}
+                labelId="demo-simple-select-label"
+                variant = "outlined"
+              >
+            
+                <MenuItem value={'os'} onClick={()=>setType('os')} >OS</MenuItem>
+                <MenuItem value={'hardware'} onClick={()=>setType('hardware')}>Hardware</MenuItem>
+                <MenuItem value={'application'} onClick={()=>setType('application')}>Application</MenuItem>
+              </Select>
+            </div>
           </Grid>
-          <Grid md = {4} item >
-            <Select
+          <Grid md = {6} item >
+            <div style={{display:'flex'}}>
+            <label style={{ margin: '5px',marginTop: '16px',fontWeight: '600',  fontSize: '14px'}}>Year:</label>
+              <Select
                 id="year"
                 label="Years"  
                 value = {year}
@@ -2003,6 +2039,7 @@ export const VuldbLogin = (/* {   } */) => {
               >
                {getYears()}
               </Select>
+              </div>
           </Grid>
         </Grid>
       )
@@ -2012,17 +2049,17 @@ export const VuldbLogin = (/* {   } */) => {
     const getVulnerabilityControls = () => {
       return (
         <Grid container spacing={0}>
-          <Grid md= {1} className = "vulnerability">
-            <label>CWE-</label>
-          </Grid>
+         
           <Grid md = {4} item >
-          
-            <TextField
-                  name="cwe"
-                  type="cwe"
-                  placeholder="e.g. 787"
-                  onChange={(e)=>setCweId(e.target.value)}
-                />
+            <div style={{display:'flex'}}>
+              <label style={{ margin: '5px',marginTop: '16px',fontWeight: '600',  fontSize: '14px'}}>CWE-</label>
+                <TextField
+                      name="cwe"
+                      type="cwe"
+                      placeholder="e.g. 787"
+                      onChange={(e)=>setCweId(e.target.value)}
+                  />
+                </div>  
           </Grid>
          </Grid>
       )
@@ -2032,12 +2069,15 @@ export const VuldbLogin = (/* {   } */) => {
       return (
         <Grid container >
           <Grid md = {4} item >
+          <div style={{display:'flex'}}>
+              <label style={{ margin: '5px',marginTop: '16px',fontWeight: '600',  fontSize: '14px'}}>Vendor:</label>
             <TextField
                   name="vendor"
                   type="vendor"
                   placeholder="vendor"
                   onChange={(e)=>setVendor(e.target.value)}
                 />
+              </div>
           </Grid>
          </Grid>
       )
@@ -2079,7 +2119,7 @@ export const VuldbLogin = (/* {   } */) => {
                           <Typography variant="h6">{value.title}</Typography>
                            <List>
                            {Object.entries(value.data).map(([bkey, row]) => (
-                                  <Grid container className="browse-list">
+                                  <Grid container className="browse-list browse-list-sx" >
                                     {Object.entries(value.column).map(([browseColumnskey, browseColumns]) => (
                                       browseColumns=='name' || browseColumns=='product' || browseColumns=='vendor'?(
                                       <Grid

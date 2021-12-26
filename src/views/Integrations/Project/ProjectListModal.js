@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Grid, TextField, Divider, makeStyles, LinearProgress } from '@material-ui/core';
 import { Component } from '@fullcalendar/core';
-import { useDispatch, useSelector } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import Axios from 'axios';
 import { filterRepoByText, setConnectedRepos, setConnectorList, setIntegrations, updateSelectedProject } from 'src/actions/integrationActions';
 import {
@@ -17,6 +17,8 @@ import {
     CardHeader
 } from '@material-ui/core';
 import { useHistory } from 'react-router';
+import InfoIcon from '@material-ui/icons/Info';
+import TransitionsPopper from 'src/components/TransitionPopper';
 
 
 
@@ -86,6 +88,9 @@ const useStyles = makeStyles(theme => ({
         marginLeft: 'auto',
         marginRight: 'auto',
         display: 'block'
+    },
+    flex : {
+        display:'flex'
     }
 }));
 
@@ -126,22 +131,42 @@ export default function ProjectModal({ open, onClose }) {
         dispatch(setConnectorList(response.data));
 
     }
+    
+    const [search_api_with,setSearchAPIWith] = useState('');
+    const  [selectedConnector,setSelectedConnector] = useState('');
 
-    const onClickConnector = async (connector) => {
+    const onClickConnector = async (connector,fromSearch) => {
         setLoading(true);
-        
 
+        setSelectedConnector(connector);
+        
         const url = "/projects/details";
-        let response = await Axios.post(url,connector);
+        let connectorClone = '';
+        if(fromSearch && search_api_with){
+           /// const searchDetail = {[search_api_with]:searchTxt};
+            connectorClone = {...connector}
+            connectorClone[search_api_with] = searchTxt;
+        }else{
+            connectorClone = connector
+        }
+            
+        let response = await Axios.post(url,connectorClone);
 
         setLoading(false);
         setConnectorClicked(true);
+
+        setSearchAPIWith(response.data.search_api_with);
 
         dispatch(setConnectedRepos(response.data))
     }
 
     const onSearch = () => {
-        dispatch(filterRepoByText(searchTxt))
+        console.log(selectedConnector);
+        if(selectedConnector &&  search_api_with!= undefined){
+            onClickConnector(selectedConnector,true);
+        }
+        dispatch(filterRepoByText(searchTxt));
+
     }
     
 
@@ -181,9 +206,10 @@ export default function ProjectModal({ open, onClose }) {
                            
                             
                                 {connectedRepos.data.map(repo => (
-                                        <Grid item xs={3} className={styles.description}>
+                                        <Grid item xs={3} className={styles.description,styles.flex}>
                                             <input type='checkbox' className={styles.repoCheck} checked={(repo.mode === 'true')} onClick={event=>onCheckProject(event,repo)}/>
                                             <label>{repo[connectedRepos.display_header]}</label>
+                                            <TransitionsPopper callback={getPopOverData} data={repo}/>
                                         </Grid>
                                     )
                                 )}
@@ -196,12 +222,45 @@ export default function ProjectModal({ open, onClose }) {
         
     }
 
+    const getPopOverData = (data) => {
+        return (
+            <div>
+                <div>Creation Date : {data.creation_date}</div>
+                <div>Description : {data.details.description}</div>
+                <div>Kind : {data.details.kind}</div>
+                <div>Label : {data.details.label}</div>
+                <div>Language : {data.details.language}</div>
+                <div>Name : {data.details.name}</div>
+                <div>Namespace : {data.details.namespace}</div>
+                <div>Project : {data.details.project}</div>
+                <div>Scan Project : {data.details.scan_project}</div>
+                <div>Target : {data.details.target}</div> 
+            </div>
+        )
+    }
+
     const getLoader = () => {
         if (loading) {
             return <LinearProgress style={{ margin: '15px' }} />
         }
         return null;
     }
+
+    const imgMap = [];
+    imgMap['azure_function'] = 'Azure Function';
+    imgMap['aws_lambda'] = 'AWS Lambda';
+    imgMap['github'] = 'Github';
+    imgMap['bitbucket'] = 'BitBucket';
+    imgMap['gitlab'] = 'GitLab';
+    imgMap['heroku'] = 'Heroku';
+    imgMap['docker'] = 'Docker';
+    imgMap['gcr'] = 'GCR';
+    imgMap['ecr'] = 'ECR';
+    imgMap['acr'] = 'ACR';
+    imgMap['quay'] = 'Quay';
+    imgMap['github_container'] = 'Github';
+    imgMap['digitalocean'] = 'DigitalOcean';
+    imgMap['google_artifact_registry'] = 'Google Artifact Registry';
 
     return (
         <div>
@@ -229,7 +288,7 @@ export default function ProjectModal({ open, onClose }) {
                                       
                                            
                                                 <div>
-                                                    <img className={styles.img} src={"/static/integrations/ECR.png"} onError={(e) => e.target.src = "/static/integrations/GitLab.png"} />
+                                                    <img className={styles.img} src={"/static/integrations/"+imgMap[connector.application]+".png"} onError={(e) => e.target.src = "/static/integrations/GitLab.png"} />
 
                                                 </div>
                                                 <div className={styles.center}>
