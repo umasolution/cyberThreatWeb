@@ -1,3 +1,5 @@
+import Report from "@material-ui/icons/Report";
+
 const initialState = {
     modalContentsByType : [],
     integrationDetails : [],
@@ -147,8 +149,8 @@ initialState.modalContentsByType['Azure Repos'] = {
     components: [
              { label: "Organization", type: 'txt', key :'organization' }, 
              { label: "Personal Access Token", type: 'txt', key :'personal_access_token' },
-             { label: "Description", type: 'txt', key :'description' },
-             { label: "Name", type: 'txt', key :'name' }]
+             { label: "Project Name", type: 'txt', key :'projectname' }
+            ]
 };
 
 const integrationReducer = (state = initialState, action) => {
@@ -166,6 +168,12 @@ const integrationReducer = (state = initialState, action) => {
                         connectedRepo : updateProjectSelection(action.payload.project, action.payload.mode,{...state.connectedRepo}),
                             filteredRepo :  filterRepoByTxt(state.filterTxt,updateProjectSelection(action.payload.project, action.payload.mode,{...state.connectedRepo}))
                     }
+        case "updateSelectedTag" :
+                const updatedRepo = updateTagSelection(action.payload.project, action.payload.mode,{...state.connectedRepo},action.payload.tag);
+                return {...state, 
+                            connectedRepo : updatedRepo,
+                                filteredRepo :  filterRepoByTxt(state.filterTxt,updatedRepo)
+                        }
         default : 
             return state;
     }
@@ -182,8 +190,40 @@ const updateProjectSelection = (project,mode,repos) => {
     
     repos.data =  repos.data.map(repo => {
                 if(repo.projectname == project.projectname){
-                    repo.mode = mode
+                    repo.mode = mode;
+                    if(mode == 'true'){
+                        repo.available_tags = repo.details.tags;
+                        repo.project_tag = repo.details.tags;
+                    }else{
+                        repo.available_tags = [];
+                        repo.project_tag = [];
+                    }
                 }
+
+                return repo;
+            })
+
+    return repos;
+}
+
+const updateTagSelection = (project,mode,repos,tag) => {
+    let repoClone  = {};
+    repos.data =  repos.data.map(repo => {
+                if(repo.projectname == project.projectname){
+                    repoClone = {...repo}
+
+                    repoClone.project_tag = Array.isArray(repoClone.project_tag) ? repoClone.project_tag : [];
+
+                    if(mode == 'true'){
+                        repoClone.available_tags.push(tag);
+                        repoClone.project_tag.push(tag);
+                    }else{
+                        repoClone.available_tags.splice(repoClone.available_tags.indexOf(tag),1);
+                        repoClone.project_tag.splice(repoClone.available_tags.indexOf(tag),1);
+                    }
+                    repo= repoClone;
+                }
+                
 
                 return repo;
             })

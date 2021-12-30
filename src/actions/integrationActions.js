@@ -33,4 +33,11 @@ const updateSelectedProject = (payload) => {
     }
 }
 
-export {setIntegrations,setConnectorList,setConnectedRepos, filterRepoByText, updateSelectedProject};
+const updateSelectedTag = (payload) => {
+    return {
+        type: "updateSelectedTag",
+        payload : payload
+    }
+}
+
+export {setIntegrations,setConnectorList,setConnectedRepos, filterRepoByText, updateSelectedProject,updateSelectedTag};

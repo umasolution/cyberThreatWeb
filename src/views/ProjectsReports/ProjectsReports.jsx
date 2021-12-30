@@ -1354,7 +1354,7 @@ const ProjectsReports = () => {
                                           </>) : ''}
                                           {scan_insights[0] == 'reportname' ? (<>
                                             <Box className="view-report-btn">
-                                              <a target="_blank" rel="noopener noreferrer" href={`/app/productsreports/${singlerows.scan_summary['Project Id']}/${scan_insights[1]}`}>View Report</a>
+                                              <a target="_blank" rel="noopener noreferrer" href={`/app/productsreports/${scan_insight.projectId}/${scan_insights[1]}`}>View Report</a>
                                             </Box>
                                           </>) : ''}
                                         </ListItemText>

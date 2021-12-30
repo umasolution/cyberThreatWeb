@@ -10,7 +10,7 @@ import { Grid, TextField, Divider, makeStyles, LinearProgress } from '@material-
 import { Component } from '@fullcalendar/core';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import Axios from 'axios';
-import { filterRepoByText, setConnectedRepos, setConnectorList, setIntegrations, updateSelectedProject } from 'src/actions/integrationActions';
+import { filterRepoByText, setConnectedRepos, setConnectorList, setIntegrations, updateSelectedProject, updateSelectedTag } from 'src/actions/integrationActions';
 import {
     Card,
     CardContent,
@@ -32,7 +32,7 @@ const style = {
     bgcolor: 'background.paper',
     roundedCorner: '5px',
     boxShadow: 10,
-   
+
     p: 4,
 }
 
@@ -67,30 +67,39 @@ const useStyles = makeStyles(theme => ({
         height: '150px',
         cursor: 'pointer'
     },
-    txt : {
-        width : '100%'
+    txt: {
+        width: '100%'
     },
     description: {
-        marginTop:'10px'
+        marginTop: '10px'
     },
-    content:{
-        marginTop : '10px'
+    content: {
+        marginTop: '10px'
     },
-    repoCheck : {
-        marginRight : '10px'
+    contents: {
+        marginTop: '10px',
+        height:'300px',
+        overflowY: 'scroll'
     },
-    search:{
-        backgroundColor : 'rgb(25, 118, 210)',
-        color:'rgb(255, 255, 255)'
+    repoCheck: {
+        marginRight: '10px'
     },
-    img:{
+    search: {
+        backgroundColor: 'rgb(25, 118, 210)',
+        color: 'rgb(255, 255, 255)'
+    },
+    img: {
         height: '100px',
         marginLeft: 'auto',
         marginRight: 'auto',
         display: 'block'
     },
-    flex : {
-        display:'flex'
+    flex: {
+        display: 'flex'
+    },
+    tag:{
+        marginTop : '-30px',
+        marginLeft : '15px'
     }
 }));
 
@@ -107,7 +116,7 @@ export default function ProjectModal({ open, onClose }) {
     const [fade, setOpen] = React.useState(false);
     const [loading, setLoading] = useState(false);
     const [connectorClicked, setConnectorClicked] = useState(false);
-    const [searchTxt,setSearchTxt] = useState('');
+    const [searchTxt, setSearchTxt] = useState('');
 
 
     const handleClose = () => {
@@ -131,26 +140,26 @@ export default function ProjectModal({ open, onClose }) {
         dispatch(setConnectorList(response.data));
 
     }
-    
-    const [search_api_with,setSearchAPIWith] = useState('');
-    const  [selectedConnector,setSelectedConnector] = useState('');
 
-    const onClickConnector = async (connector,fromSearch) => {
+    const [search_api_with, setSearchAPIWith] = useState('');
+    const [selectedConnector, setSelectedConnector] = useState('');
+
+    const onClickConnector = async (connector, fromSearch) => {
         setLoading(true);
 
         setSelectedConnector(connector);
-        
+
         const url = "/projects/details";
         let connectorClone = '';
-        if(fromSearch && search_api_with){
-           /// const searchDetail = {[search_api_with]:searchTxt};
-            connectorClone = {...connector}
+        if (fromSearch && search_api_with) {
+            /// const searchDetail = {[search_api_with]:searchTxt};
+            connectorClone = { ...connector }
             connectorClone[search_api_with] = searchTxt;
-        }else{
+        } else {
             connectorClone = connector
         }
-            
-        let response = await Axios.post(url,connectorClone);
+
+        let response = await Axios.post(url, connectorClone);
 
         setLoading(false);
         setConnectorClicked(true);
@@ -162,64 +171,89 @@ export default function ProjectModal({ open, onClose }) {
 
     const onSearch = () => {
         console.log(selectedConnector);
-        if(selectedConnector &&  search_api_with!= undefined){
-            onClickConnector(selectedConnector,true);
+        if (selectedConnector && search_api_with != undefined) {
+            onClickConnector(selectedConnector, true);
         }
         dispatch(filterRepoByText(searchTxt));
 
     }
-    
+
 
     const onCheckProject = (event, project) => {
         console.log(event);
-        dispatch(updateSelectedProject({project:project,mode:event.target.checked.toString()}));
+        dispatch(updateSelectedProject({ project: project, mode: event.target.checked.toString() }));
     }
 
-    const onPublish = async() => {
-        const url = "/publish/projects";
-        let response = await Axios.post(url,{data:connectedRepos.data});
+    const onCheckTag = (event,project,tag) => {
+        dispatch(updateSelectedTag({ project: project, mode: event.target.checked.toString(),tag }))
+    }
 
-       onClose(true);
+    const onPublish = async () => {
+        const url = "/publish/projects";
+        let response = await Axios.post(url, { data: connectedRepos.data });
+
+        onClose(true);
     }
 
     const getContentBasedOnConnector = () => {
-        if(!connectorClicked)
+        if (!connectorClicked)
             return '';
 
-        return(
-            <Grid container spacing={1} className={styles.content}>
-                            <Grid item xs={11}>
-                                <TextField className={styles.txt}
-                                    variant="outlined"
-                                    label={connectedRepos.search_text}
-                                    onChange = {event=>setSearchTxt(event.target.value)}
-                                    value = {searchTxt}
-                                />
-                           
-                            </Grid>
-                            <Grid item xs={1} className={styles.description}>
-                                <Button variant="contained" className={styles.search} onClick={onSearch}>Search</Button>
-                            </Grid>
-                            <Grid item xs={12} className={styles.description}>
-                                <label>{connectedRepos.caption_text}</label>
-                            </Grid>
-                           
-                            
-                                {connectedRepos.data.map(repo => (
-                                        <Grid item xs={3} className={styles.description,styles.flex}>
-                                            <input type='checkbox' className={styles.repoCheck} checked={(repo.mode === 'true')} onClick={event=>onCheckProject(event,repo)}/>
-                                            <label>{repo[connectedRepos.display_header]}</label>
-                                            <TransitionsPopper callback={getPopOverData} data={repo}/>
-                                        </Grid>
-                                    )
-                                )}
-                          
-                          <Grid item xs={12} className={styles.description}>
-                                <Button className={styles.search} onClick={onPublish} >Publish</Button>
+        return (
+            <Grid container spacing={1} className={styles.contents}>
+                <Grid item xs={11}>
+                    <TextField className={styles.txt}
+                        variant="outlined"
+                        label={connectedRepos.search_text}
+                        onChange={event => setSearchTxt(event.target.value)}
+                        value={searchTxt}
+                    />
+
+                </Grid>
+                <Grid item xs={1} className={styles.description}>
+                    <Button variant="contained" className={styles.search} onClick={onSearch}>Search</Button>
+                </Grid>
+                <Grid item xs={12} className={styles.description}>
+                    <label>{connectedRepos.caption_text}</label>
+                </Grid>
+
+
+                {connectedRepos.data.map(repo => (
+                    <Grid item xs={3} className={styles.description}>
+                        <div className={styles.flex}>
+                            <input type='checkbox' className={styles.repoCheck} checked={(repo.mode === 'true')} onClick={event => onCheckProject(event, repo)} />
+                            <label>{repo[connectedRepos.display_header]}</label>
+                            <TransitionsPopper callback={getPopOverData} data={repo} />
+                        </div>
+                        <Grid container spacing={1} className={styles.content}>
+                            <Grid item xs={12} className={styles.description,styles.flex}>
+
+                                {
+                                    repo.details.tags.map(tag => (
+                                        (<Grid item xs={2} >
+                                            <div style={{display:'flex'}}>
+                                                <input type='checkbox' className={styles.repoCheck} 
+                                                                        checked={(repo.available_tags.indexOf(tag) != -1)} 
+                                                                        onClick={event => onCheckTag(event,repo, tag)} />
+                                                <div style={{marginTop:'-3px'}}>{tag}</div>
+                                            </div>
+                                            
+                                        </Grid>)
+                                    ))
+                                }
+
                             </Grid>
                         </Grid>
+                    </Grid>
+                )
+                )}
+
+                <Grid item xs={12} className={styles.description}>
+                    <Button className={styles.search} onClick={onPublish} >Publish</Button>
+                </Grid>
+            </Grid>
         )
-        
+
     }
 
     const getPopOverData = (data) => {
@@ -234,7 +268,7 @@ export default function ProjectModal({ open, onClose }) {
                 <div>Namespace : {data.details.namespace}</div>
                 <div>Project : {data.details.project}</div>
                 <div>Scan Project : {data.details.scan_project}</div>
-                <div>Target : {data.details.target}</div> 
+                <div>Target : {data.details.target}</div>
             </div>
         )
     }
@@ -275,6 +309,7 @@ export default function ProjectModal({ open, onClose }) {
                 BackdropProps={{
                     timeout: 500,
                 }}
+               
             >
                 <Fade in={fade}>
                     <Box sx={style}>
@@ -284,19 +319,19 @@ export default function ProjectModal({ open, onClose }) {
 
                             {
                                 connectorList.map(connector => (
-                                    <Card className="card" className={styles.connector} onClick={()=>onClickConnector(connector)}>
-                                      
-                                           
-                                                <div>
-                                                    <img className={styles.img} src={"/static/integrations/"+imgMap[connector.application]+".png"} onError={(e) => e.target.src = "/static/integrations/GitLab.png"} />
+                                    <Card className="card" className={styles.connector} onClick={() => onClickConnector(connector)}>
 
-                                                </div>
-                                                <div className={styles.center}>
-                                                    {connector.application}
-                                                </div>
-                                          
 
-                                    
+                                        <div>
+                                            <img className={styles.img} src={"/static/integrations/" + imgMap[connector.application] + ".png"} onError={(e) => e.target.src = "/static/integrations/GitLab.png"} />
+
+                                        </div>
+                                        <div className={styles.center}>
+                                            {connector.application}
+                                        </div>
+
+
+
                                     </Card>
                                 ))
                             }
