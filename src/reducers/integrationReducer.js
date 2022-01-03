@@ -29,7 +29,7 @@ initialState.modalContentsByType['Docker'] = {
 initialState.modalContentsByType['GCR'] = {
     title: "GCR",
     desc : "Enter the registry hostname and a service account JSON key file which Niah should use to connect to your GCR account.",
-    components: [{ label: "GCR Hostname", type: 'txt', key :'hostname' }, 
+    components: [{ label: "Project Name", type: 'txt', key :'projectname' }, 
                 { label: "JSON Key file", type: 'txt', key : "json_key_file" }]
 };
 
@@ -150,6 +150,52 @@ initialState.modalContentsByType['Azure Repos'] = {
              { label: "Organization", type: 'txt', key :'organization' }, 
              { label: "Personal Access Token", type: 'txt', key :'personal_access_token' },
              { label: "Project Name", type: 'txt', key :'projectname' }
+            ]
+};
+
+initialState.modalContentsByType['Azure Kubernetes'] = {
+    title: "Pivotal Web Services",
+    desc : "Enter your account credentials below to connect Niah to your Azure Kubernetes account.",
+    components: [
+             { label: "Cluster Name", type: 'txt', key :'clustername' }, 
+             { label: "Resource Group", type: 'txt', key :'resource-group' },
+             { label: "User Name", type: 'txt', key :'username' },
+             { label: "Password", type: 'txt', key :'password' },
+             { label: "Registry", type: 'txt', key :'registry' },
+           
+            ]
+};
+
+initialState.modalContentsByType['GCP Kubernetes'] = {
+    title: "Pivotal Web Services",
+    desc : "Enter your account credentials below to connect Niah to your Azure Repos account.",
+    components: [
+            { label: "Project Name", type: 'txt', key :'projectname' }, 
+             { label: "Cluster Name", type: 'txt', key :'clustername' }, 
+             { label: "Zone", type: 'txt', key :'zone' },
+             { label: "JSON Key File", type: 'txt', key :'json_key_file' },
+            ]
+};
+
+initialState.modalContentsByType['AWS Kubernetes'] = {
+    title: "Pivotal Web Services",
+    desc : "Enter your account credentials below to connect Niah to your Azure Repos account.",
+    components: [
+            { label: "Project Name", type: 'txt', key :'projectname' }, 
+             { label: "Cluster Name", type: 'txt', key :'clustername' }, 
+             { label: "Zone", type: 'txt', key :'zone' },
+             { label: "JSON Key File", type: 'txt', key :'json_key_file' },
+            ]
+};
+
+initialState.modalContentsByType['Kubernetes Standalone'] = {
+    title: "Pivotal Web Services",
+    desc : "Enter your account credentials below to connect Niah to your Azure Repos account.",
+    components: [
+            { label: "Server URL", type: 'txt', key :'server_url' }, 
+             { label: "Cluster Name", type: 'txt', key :'clustername' }, 
+             { label: "SA User", type: 'txt', key :'sa_user' },
+             { label: "Secret Name", type: 'txt', key :'secretname' },
             ]
 };
 

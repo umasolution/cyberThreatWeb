@@ -8,6 +8,7 @@ import kanbanReducer from './kanbanReducer';
 import pricingReducer from './pricingReducer';
 import sideBarReducer from './sidebarReducer';
 import integrationReducer from './integrationReducer';
+import advisoryReducer from './advisoryReducer';
 
 const rootReducer = combineReducers({
   account: accountReducer,
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
   form: formReducer,
   pricing : pricingReducer,
   sidebar : sideBarReducer,
-  integrations : integrationReducer
+  integrations : integrationReducer,
+  advisor : advisoryReducer
 });
 
 export default rootReducer;

@@ -92,18 +92,18 @@ function RealTime({ className, lib_details,headtitle, selData,...rest }) {
   const width = 398;
   
 
-  const rowRenderer = ({ index, isScrolling, key, style }) => {
+  const rowRenderer = (details) => {
     return searchedLibDetails && (
         <TableRow className="odd-even-background">
           <TableCell style={{width: '50%'}}><Typography color="inherit"
             className="secondary"
           >
-             <Link className = {classes.link} onClick={()=>onProductClick(searchedLibDetails[index],selData)} >{searchedLibDetails[index].name}</Link>
+             <Link className = {classes.link} onClick={()=>onProductClick(details,selData)} >{details.name}</Link>
           </Typography></TableCell>
           <TableCell style={{width: '10%'}}><Typography color="inherit"
             className="secondary"
           >
-            {searchedLibDetails[index].value}
+            {details.value}
           </Typography></TableCell>
         </TableRow>
     )
@@ -119,7 +119,7 @@ function RealTime({ className, lib_details,headtitle, selData,...rest }) {
   const onProductClick = (product,selData) => {
    /* history.push( '/app/dashboard/productDetailVul',
                   product,selData);*/
-      history.push({pathname:"/app/dashboard/productDetailVul",state: {name: product.name, selData: selData}}) ;           
+      history.push({pathname:"/app/dashboard/productDetailVul",state: {name: product.name, selData: selData, product : product}}) ;           
   }
 
   return (
@@ -154,17 +154,11 @@ function RealTime({ className, lib_details,headtitle, selData,...rest }) {
       
       <Divider />
       <Table>
-        <TableBody>
-      {searchedLibDetails && (
-        <VirtualizedList
-          rowCount={searchedLibDetails.length}
-          width={width}
-          height={height}
-          rowHeight={rowHeight}
-          rowRenderer={rowRenderer}
-          overscanRowCount={3}
-        />
-      )}
+        <TableBody style={{width:width, height:height}}>
+          {
+            searchedLibDetails.map((details)=>rowRenderer(details))
+          }
+     
        </TableBody>
       </Table>
     </Card>

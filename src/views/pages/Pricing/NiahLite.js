@@ -4,6 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { setCosts, setSubscriptionModel } from 'src/actions/pricingAction';
+import AdvisoryModal from 'src/views/Advisor';
 
 
 const useStyle = makeStyles({
@@ -48,8 +49,9 @@ const NiahLite = () => {
     }
 
     const onSubscribe = () => {
-        dispatch(setSubscriptionModel({displayName: 'Niah Lite', model : 'NiahLite'}));
-        history.push('/app/dashboard/payment');
+        setOpen(true);
+       // dispatch(setSubscriptionModel({displayName: 'Niah Lite', model : 'NiahLite'}));
+       // history.push('/app/dashboard/payment');
     }
 
     const getTextContent = (first,middle, end) => {
@@ -61,6 +63,13 @@ const NiahLite = () => {
             </div>
         )
     }
+
+    const [open,setOpen] = useState(false);
+
+    const onAdvisoryClose = () => {
+        setOpen(false);
+    }
+
     return (
         <Paper className={classes.root}>
             <Grid container>
@@ -99,6 +108,7 @@ const NiahLite = () => {
             </Button>
 
             </Grid>
+            <AdvisoryModal open={open} onClose={onAdvisoryClose} />
         </Paper>
 
     )

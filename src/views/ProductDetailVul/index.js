@@ -4,6 +4,7 @@ import { useLocation } from 'react-router';
 import {
     Container,
     makeStyles,
+    Button,
     Grid,
     Drawer,
     Typography,
@@ -45,7 +46,9 @@ import VulDrawerComponent from './VulDrawerComponent';
 import AddAlertIcon from '@material-ui/icons/AddAlert';
 import NotificationsOffIcon from '@material-ui/icons/NotificationsOff';
 import {setAlert,delAlert} from '../../views/management/Alerts/AlertFunctions';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import AdvisoryModal from '../Advisor';
+import { setSelectedProduct } from 'src/actions/advisorAction';
 
 
 
@@ -176,12 +179,15 @@ const ProductDetailVul = () => {
     
 
 
-
+    const dispatch = useDispatch();
 
     useEffect(() => {
         // API call
         fetchProductVulnerabilities();
         setAlertStatus(location.state.name);
+
+        //setProduct
+        dispatch(setSelectedProduct(location.state.product));
        
     }, []);
 
@@ -275,7 +281,16 @@ const ProductDetailVul = () => {
         setOpenDrawer(false);
     };
 
-    
+    const onNiahAdvisoryClick = () => {
+        setOpen(true);
+    }
+
+    const [open,setOpen] = useState(false);
+
+
+    const handleAdvisoryModalClose = () =>{
+        setOpen(false);
+    }
 
     const getBody = () => {
         return (
@@ -299,6 +314,7 @@ const ProductDetailVul = () => {
                             </Tooltip>
                            }
                            </div>
+                           <Button style={{float:'right'}} onClick={onNiahAdvisoryClick} >Niah Advisory</Button>
                            
                         </CardContent>
                     </Card>
@@ -517,6 +533,7 @@ const ProductDetailVul = () => {
                 className={classes.container}>
                 {loading ? getLoader() : getBody()}
             </Container>
+            <AdvisoryModal open={open} onClose={handleAdvisoryModalClose} />
         </Page>
 
     );
