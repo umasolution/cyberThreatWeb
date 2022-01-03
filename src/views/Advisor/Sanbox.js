@@ -23,7 +23,7 @@ const Sandbox = () => {
                             aria-controls="panel1a-content"
                             id="panel1a-header"
                         >
-                            <Typography>Sandbox {version[0]}</Typography>
+                            <Typography>{version[0]}</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
                         <Grid container>

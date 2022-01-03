@@ -144,6 +144,11 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: '10px',
         color: '#3949ab' 
 
+    },
+    btn:{
+        backgroundColor : 'rgb(25, 118, 210)',
+        color:'rgb(255, 255, 255)',
+        float:'right'
     }
 
 }));
@@ -302,19 +307,29 @@ const ProductDetailVul = () => {
                 >
 
                     <Card className={classes.card}>
-                        <CardContent style={{display:"inline-flex"}}>
-                            <Typography gutterBottom variant="h5" component="h2">
-                                Showing vulnerabilities in  {convertFirstLetterToCaps((location.state.name).split('@')[1])}
-                            </Typography>
-                            <div>
-                            {alertsOn?<Tooltip title="Remove Alert">
-                                <NotificationsOffIcon className={classes.alertIcon} onClick={() => {delAlert(location.state.name,"product");setAlertsOn(false);}}/>
-                            </Tooltip>:<Tooltip title="Set Alert">
-                                <AddAlertIcon className={classes.alertIcon} onClick={() => {setAlert(location.state.name,"product");setAlertsOn(true);}}/>
-                            </Tooltip>
-                           }
-                           </div>
-                           <Button style={{float:'right'}} onClick={onNiahAdvisoryClick} >Niah Advisory</Button>
+                        <CardContent style={{display:"inline-flex",width:'100%'}}>
+                            <Grid container >
+                                    <Grid item xs={10} style={{display : 'flex'}}>
+                                        <Typography gutterBottom variant="h5" component="h2">
+                                            Showing vulnerabilities in  {convertFirstLetterToCaps((location.state.name).split('@')[1])}
+                                        </Typography>
+                                        <div>
+                                        {alertsOn?<Tooltip title="Remove Alert">
+                                            <NotificationsOffIcon className={classes.alertIcon} onClick={() => {delAlert(location.state.name,"product");setAlertsOn(false);}}/>
+                                        </Tooltip>:<Tooltip title="Set Alert">
+                                            <AddAlertIcon className={classes.alertIcon} onClick={() => {setAlert(location.state.name,"product");setAlertsOn(true);}}/>
+                                        </Tooltip>
+                                        }
+                                        </div>
+                                    </Grid>
+                                    <Grid item xs={2}>
+                                        <Button className={classes.btn} onClick={onNiahAdvisoryClick} >Niah Advisory</Button>
+                                    </Grid>
+                            </Grid>
+                               
+                          
+                            
+                           
                            
                         </CardContent>
                     </Card>

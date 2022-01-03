@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { useDispatch, useSelector } from 'react-redux';
 import Axios from 'axios';
-import { Button } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 import Info from './Info';
 import Version from './Version';
 import Sanbox from './Sanbox';
@@ -106,7 +106,12 @@ export default function AdvisoryTabNav() {
 
   return (
     <Box sx={{ width: '100%',height:'600px' }}>
-      <Button onClick={onScan}>{advisor.scanning ? 'Scanning' : 'Scan' }</Button>
+      <Grid container style={{display:'flex', justifyContent:'end'}}>
+
+        <Button style={{ backgroundColor : 'rgb(25, 118, 210)',color:'rgb(255, 255, 255)',color:'rgb(255, 255, 255)'}} onClick={onScan}>{advisor.scanning ? 'Scanning' : 'Scan' }</Button>
+
+      </Grid>
+      
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab label="Info" {...a11yProps(0)} />

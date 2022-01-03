@@ -87,25 +87,30 @@ function RealTime({ className, lib_details,headtitle, selData,...rest }) {
     }
   ];
 
-  const height = 375;
+  const height = 420;
   const rowHeight = 52;
   const width = 398;
   
 
   const rowRenderer = (details) => {
     return searchedLibDetails && (
-        <TableRow className="odd-even-background">
-          <TableCell style={{width: '50%'}}><Typography color="inherit"
-            className="secondary"
-          >
-             <Link className = {classes.link} onClick={()=>onProductClick(details,selData)} >{details.name}</Link>
-          </Typography></TableCell>
-          <TableCell style={{width: '10%'}}><Typography color="inherit"
-            className="secondary"
-          >
+        <div className="odd-even-background" style={{display:'flex', 
+                                                   
+                                                    color:'#551A8B',
+                                                    paddingTop:'12px',
+                                                    paddingTop:'12px',
+                                                    paddingLeft:'10px',
+                                                    paddingRight:'10px',
+                                                    fontWeight:'700',
+                                                    cursor:'pointer',
+                                                    height:rowHeight}}>
+          <div style={{width: '90%',fontWeight:'700px',color:'#551A8B !important'}}>
+             <Link onClick={()=>onProductClick(details,selData)} >{details.name}</Link>
+       </div>
+          <div style={{width: '10%',fontWeight:'700px',color:'#444444'}}>
             {details.value}
-          </Typography></TableCell>
-        </TableRow>
+         </div>
+        </div>
     )
       ;
   };
@@ -153,14 +158,14 @@ function RealTime({ className, lib_details,headtitle, selData,...rest }) {
           </IconButton> : null }
       
       <Divider />
-      <Table>
-        <TableBody style={{width:width, height:height}}>
+     
+        <div style={{width:'420px',height:'370px', overflowY:'auto'}}>
           {
             searchedLibDetails.map((details)=>rowRenderer(details))
           }
      
-       </TableBody>
-      </Table>
+       </div>
+     
     </Card>
   );
 }

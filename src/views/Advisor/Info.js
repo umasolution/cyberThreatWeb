@@ -64,7 +64,23 @@ const Info = () => {
                                 if(key == 'requires_dist'){
                                     return value.map(
                                         val=>{
-                                            return (<Chip label={val} color="success" style={{marginRight:'5px',marginBottom:'5px'}}/>)
+                                            return (<Chip label={val} color="success" style={{marginRight:'5px',
+                                                                    marginBottom:'5px',backgroundColor:'#1976D2', color:'rgb(255, 255, 255)'}}/>)
+                                        }
+                                    )
+                                     
+                                }
+                        })}
+                    </Grid>
+                    <Grid item xs={1} style={{overflowY:'auto' , fontWeight:'600'}}>Depended For :</Grid>
+                    <Grid item xs={11} style={{overflowY:'auto'}}>
+                        {
+                            Object.entries(infos).map(([key, value]) => {
+                                if(key == 'depended_for'){
+                                    return value.map(
+                                        val=>{
+                                            return (<Chip label={val} color="success" style={{marginRight:'5px',
+                                                                    marginBottom:'5px',backgroundColor:'#9C82E5', color:'rgb(255, 255, 255)'}}/>)
                                         }
                                     )
                                      

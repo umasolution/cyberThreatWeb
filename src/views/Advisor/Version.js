@@ -12,7 +12,7 @@ import { splitAndSpaceStr } from './advisorUtil';
 
 const Version = () => {
 
-    const versions = useSelector(state=>Object.entries(state.advisor.advisoryResults.analysis.releases));
+    const versions = useSelector(state=>Object.entries(state.advisor.advisoryResults.analysis.releases).reverse());
     return (<div style={{overflowY:'auto', height:'500px'}}>
         {
             versions.map(version=>{
