@@ -6,7 +6,8 @@ const initialState = {
     connectorList : [],
     connectedRepo : {data : []},
     filteredRepo : {data : []},
-    filterTxt : ''
+    filterTxt : '',
+    machineList : []
 
 }
 
@@ -220,6 +221,9 @@ const integrationReducer = (state = initialState, action) => {
                             connectedRepo : updatedRepo,
                                 filteredRepo :  filterRepoByTxt(state.filterTxt,updatedRepo)
                         }
+        case "setMachineList" :
+                        return {...state, machineList : action.payload}
+                
         default : 
             return state;
     }

@@ -40,4 +40,11 @@ const updateSelectedTag = (payload) => {
     }
 }
 
-export {setIntegrations,setConnectorList,setConnectedRepos, filterRepoByText, updateSelectedProject,updateSelectedTag};
+const setMachineList = (payload) => {
+    return {
+        type: "setMachineList",
+        payload : payload
+    }
+}
+
+export {setIntegrations,setConnectorList,setConnectedRepos, filterRepoByText, updateSelectedProject,updateSelectedTag,setMachineList};

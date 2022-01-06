@@ -7,6 +7,7 @@ import {
 } from '@material-ui/core';
 import './Integrations.css';
 import TransitionsModal from './IntegrationModal';
+import MachineModal from './MachineModal';
 
 
 const useStyles = makeStyles(theme => ({
@@ -21,14 +22,29 @@ const Integration = ({ data, group, index }) => {
 
     const styles = useStyles();
     const [open,setOpen] = useState(false);
+    const [machineOpen,setMachineOpen] = useState(false);
 
     const onOpen = () => {
-        setOpen(true);
+        console.log(data);
+        console.log(group);
+        console.log(index);
+        if(data.application == 'machines'){
+            setMachineOpen(true);
+        }else{
+            setOpen(true);
+        }
+        
     }
 
     const onClose = () => {
         setOpen(false);
     }
+
+    const onMachineClose = () => {
+        setMachineOpen(false);
+    }
+
+
 
     return (
         <Card className="card" >
@@ -43,6 +59,7 @@ const Integration = ({ data, group, index }) => {
                     </div>
                 </div>
                 <TransitionsModal openModal = {open} data={data} onClose = {onClose} group={group} index={index}/>
+                <MachineModal openModal = {machineOpen} data={data} onClose = {onMachineClose} group={group} index={index}/>
             </CardContent>
         </Card>
     )

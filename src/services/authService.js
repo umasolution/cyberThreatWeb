@@ -35,7 +35,7 @@ class AuthService {
   }
 
   registerUser = (values) => new Promise((resolve, reject) => {
-    axios.post('/user/register',
+    axios.post('/user/signup',
       { fName: values.firstName, lName: values.lastName, emailAdd: values.email, passWord: values.password })
       .then((response) => {
         if (response.data.response) {

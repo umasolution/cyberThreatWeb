@@ -159,7 +159,7 @@ function RealTime({ className, lib_details,headtitle, selData,...rest }) {
       
       <Divider />
      
-        <div style={{width:'420px',height:'370px', overflowY:'auto'}}>
+        <div style={{width:'100%',height:'370px', overflowY:'auto'}}>
           {
             searchedLibDetails.map((details)=>rowRenderer(details))
           }
