@@ -47,4 +47,11 @@ const setMachineList = (payload) => {
     }
 }
 
-export {setIntegrations,setConnectorList,setConnectedRepos, filterRepoByText, updateSelectedProject,updateSelectedTag,setMachineList};
+const updateSelectedSpecialCase = (payload) => {
+    return {
+        type: "updateSelectedSpecialCase",
+        payload : payload
+    }
+}
+
+export {setIntegrations,setConnectorList,setConnectedRepos, filterRepoByText, updateSelectedProject,updateSelectedTag,setMachineList,updateSelectedSpecialCase};

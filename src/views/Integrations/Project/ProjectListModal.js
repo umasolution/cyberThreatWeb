@@ -6,11 +6,11 @@ import Modal from '@material-ui/core/Modal';
 import Fade from '@material-ui/core/Fade';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { Grid, TextField, Divider, makeStyles, LinearProgress } from '@material-ui/core';
+import { Grid, TextField, Divider, makeStyles, LinearProgress,List,ListItem, ListItemText } from '@material-ui/core';
 import { Component } from '@fullcalendar/core';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import Axios from 'axios';
-import { filterRepoByText, setConnectedRepos, setConnectorList, setIntegrations, updateSelectedProject, updateSelectedTag } from 'src/actions/integrationActions';
+import { filterRepoByText, setConnectedRepos, setConnectorList, setIntegrations, updateSelectedProject, updateSelectedSpecialCase, updateSelectedTag } from 'src/actions/integrationActions';
 import {
     Card,
     CardContent,
@@ -78,7 +78,7 @@ const useStyles = makeStyles(theme => ({
     },
     contents: {
         marginTop: '10px',
-        height:'300px',
+        height: '300px',
         overflowY: 'scroll'
     },
     repoCheck: {
@@ -97,9 +97,13 @@ const useStyles = makeStyles(theme => ({
     flex: {
         display: 'flex'
     },
-    tag:{
-        marginTop : '-30px',
-        marginLeft : '15px'
+    tag: {
+        marginTop: '-30px',
+        marginLeft: '15px'
+    },
+    list : {
+       
+        marginRight : '20px'
     }
 }));
 
@@ -181,26 +185,44 @@ export default function ProjectModal({ open, onClose }) {
 
     const onCheckProject = (event, project) => {
         console.log(event);
-        dispatch(updateSelectedProject({ project: project, mode: event.target.checked.toString() }));
+        if(project.conn_type == 'machines'){
+            dispatch(updateSelectedSpecialCase(project.projectname));
+        }else{
+            dispatch(updateSelectedProject({ project: project, mode: event.target.checked.toString() }));
+        }
+        
     }
 
-    const onCheckTag = (event,project,tag) => {
-        dispatch(updateSelectedTag({ project: project, mode: event.target.checked.toString(),tag }))
+    const onCheckSpecialTag = (event, selectedSystem, tag) => {
+        console.log(event);
+        dispatch(updateSelectedSpecialCase(tag));
+    }
+
+    const onCheckTag = (event, project, tag) => {
+        dispatch(updateSelectedTag({ project: project, mode: event.target.checked.toString(), tag }))
     }
 
     const onPublish = async () => {
         const url = "/publish/projects";
-        let response = await Axios.post(url, { data: connectedRepos.data });
+        let response = undefined;
+
+        if(connectedRepos.application == 'gcp_kubernetes' || connectedRepos.application == 'machines'){
+          response   = await Axios.post(url, connectedRepos);
+        }else{
+            response = await Axios.post(url, {data:connectedRepos.data});
+        }
+       
 
         onClose(true);
     }
+
 
     const getContentBasedOnConnector = () => {
         if (!connectorClicked)
             return '';
 
         return (
-            <Grid container spacing={1} className={styles.contents}>
+            <Grid container spacing={1} >
                 <Grid item xs={11}>
                     <TextField className={styles.txt}
                         variant="outlined"
@@ -213,41 +235,16 @@ export default function ProjectModal({ open, onClose }) {
                 <Grid item xs={1} className={styles.description}>
                     <Button variant="contained" className={styles.search} onClick={onSearch}>Search</Button>
                 </Grid>
-                <Grid item xs={12} className={styles.description}>
-                    <label>{connectedRepos.caption_text}</label>
-                </Grid>
+                <Grid item xs={12} className={styles.contents}>
 
-
-                {connectedRepos.data.map(repo => (
-                    <Grid item xs={3} className={styles.description}>
-                        <div className={styles.flex}>
-                            <input type='checkbox' className={styles.repoCheck} checked={(repo.mode === 'true')} onClick={event => onCheckProject(event, repo)} />
-                            <label>{repo[connectedRepos.display_header]}</label>
-                            <TransitionsPopper callback={getPopOverData} data={repo} />
-                        </div>
-                        <Grid container spacing={1} className={styles.content}>
-                            <Grid item xs={12} className={styles.description,styles.flex}>
-
-                                {
-                                    repo.details.tags.map(tag => (
-                                        (<Grid item xs={2} >
-                                            <div style={{display:'flex'}}>
-                                                <input type='checkbox' className={styles.repoCheck} 
-                                                                        checked={(repo.available_tags.indexOf(tag) != -1)} 
-                                                                        onClick={event => onCheckTag(event,repo, tag)} />
-                                                <div style={{marginTop:'-3px'}}>{tag}</div>
-                                            </div>
-                                            
-                                        </Grid>)
-                                    ))
-                                }
-
-                            </Grid>
-                        </Grid>
+                    <Grid item xs={12} className={styles.description}>
+                        <label>{connectedRepos.caption_text}</label>
                     </Grid>
-                )
-                )}
 
+                    {connectedRepos.application == "gcp_kubernetes"  ? getSpecialLayOut() : getRegularLayout()}
+
+
+                </Grid>
                 <Grid item xs={12} className={styles.description}>
                     <Button className={styles.search} onClick={onPublish} >Publish</Button>
                 </Grid>
@@ -258,19 +255,23 @@ export default function ProjectModal({ open, onClose }) {
 
     const getPopOverData = (data) => {
         return (
+       
             <div>
-                <div>Creation Date : {data.creation_date}</div>
-                <div>Description : {data.details.description}</div>
-                <div>Kind : {data.details.kind}</div>
-                <div>Label : {data.details.label}</div>
-                <div>Language : {data.details.language}</div>
-                <div>Name : {data.details.name}</div>
-                <div>Namespace : {data.details.namespace}</div>
-                <div>Project : {data.details.project}</div>
-                <div>Scan Project : {data.details.scan_project}</div>
-                <div>Target : {data.details.target}</div>
+                {
+                    Object.entries(data).map(([key, value]) => {
+                        return (<div>{splitAndSpaceStr(key)} : {value} </div>)
+                    })
+                }
             </div>
         )
+    }
+
+    const capitalizeFirstLetter = (str) => {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+      }
+    
+    const splitAndSpaceStr = (str) => {
+        return str.split('_').length > 1 ? capitalizeFirstLetter(str.split('_')[0])+' '+capitalizeFirstLetter(str.split('_')[1]) : capitalizeFirstLetter(str);
     }
 
     const getLoader = () => {
@@ -280,66 +281,141 @@ export default function ProjectModal({ open, onClose }) {
         return null;
     }
 
-    const imgMap = [];
-    imgMap['azure_function'] = 'Azure Function';
-    imgMap['aws_lambda'] = 'AWS Lambda';
-    imgMap['github'] = 'Github';
-    imgMap['bitbucket'] = 'BitBucket';
-    imgMap['gitlab'] = 'GitLab';
-    imgMap['heroku'] = 'Heroku';
-    imgMap['docker'] = 'Docker';
-    imgMap['gcr'] = 'GCR';
-    imgMap['ecr'] = 'ECR';
-    imgMap['acr'] = 'ACR';
-    imgMap['quay'] = 'Quay';
-    imgMap['github_container'] = 'Github';
-    imgMap['digitalocean'] = 'DigitalOcean';
-    imgMap['google_artifact_registry'] = 'Google Artifact Registry';
-
-    return (
-        <div>
-
-            <Modal
-                aria-labelledby="transition-modal-title"
-                aria-descriptionribedby="transition-modal-descriptionription"
-                open={fade}
-                onClose={handleClose}
-                closeAfterTransition
-                BackdropComponent={Backdrop}
-                BackdropProps={{
-                    timeout: 500,
-                }}
-               
-            >
-                <Fade in={fade}>
-                    <Box sx={style}>
-                        <Grid container spacing={1} >
+    const [selectedSystem, setSelectedSystem] = useState('default');
 
 
+    const getSpecialLayOut = () => {
+        return (
+            <Grid xs={12} item className={styles.flex}>
+                <Grid xs={2} item className={styles.list}>
+
+                    {Object.entries(connectedRepos.data).map(([key, value]) => {
+                        return (<List sx={style} component="nav" aria-label="mailbox folders">
+                                    <ListItem button onClick={()=>setSelectedSystem(key)}>
+                                        <ListItemText primary={key} />
+                                        </ListItem>
+                                        <Divider />
+                                    </List>)
+                    }
+                    )}
+
+                </Grid>
+                <Grid xs={10} item>
+                    {
+                        connectedRepos.data[selectedSystem].map(sys => {
+                            return (<div style={{ display: 'flex' }}>
+                                <input type='checkbox' className={styles.repoCheck} 
+                                onClick={event => onCheckSpecialTag(event, selectedSystem, sys.pod_name)}
+                                checked={(connectedRepos.available_tags.indexOf(sys.pod_name) != -1)}/>
+
+
+                                <div style={{ marginTop: '-3px' }}>{sys.pod_name}</div>
+                                <TransitionsPopper callback={getPopOverData} data={sys} />
+                            </div>
+                            )
+                        })
+                    }
+                </Grid>
+
+            </Grid>
+                )
+    }
+
+
+    const getRegularLayout = () => {
+
+        return connectedRepos.data.map(repo => (
+                <Grid item xs={3} className={styles.description}>
+                    <div className={styles.flex}>
+                        <input type='checkbox' className={styles.repoCheck} checked={connectedRepos.application == 'machines' ? 
+                                                    (connectedRepos.available_tags.indexOf(repo.projectname) != -1):(repo.mode === 'true')} onClick={event => onCheckProject(event, repo)} />
+                        <label>{repo[connectedRepos.display_header]}</label>
+                        <TransitionsPopper callback={getPopOverData} data={repo.details} />
+                    </div>
+                    <Grid container spacing={1} className={styles.content}>
+                        <Grid item xs={12} className={styles.description, styles.flex}>
 
                             {
-                                connectorList.map(connector => (
-                                    <Card className="card" className={styles.connector} onClick={() => onClickConnector(connector)}>
-
-
-                                        <div>
-                                            <img className={styles.img} src={"/static/integrations/" + imgMap[connector.application] + ".png"} onError={(e) => e.target.src = "/static/integrations/GitLab.png"} />
-
-                                        </div>
-                                        <div className={styles.center}>
-                                            {connector.application}
+                                repo.details.tags.map(tag => (
+                                    (<Grid item xs={2} >
+                                        <div style={{ display: 'flex' }}>
+                                            <input type='checkbox' className={styles.repoCheck}
+                                                checked={(repo.available_tags.indexOf(tag) != -1)}
+                                                onClick={event => onCheckTag(event, repo, tag)} />
+                                            <div style={{ marginTop: '-3px' }}>{tag}</div>
                                         </div>
 
-
-
-                                    </Card>
+                                    </Grid>)
                                 ))
                             }
+
                         </Grid>
-                        {loading ? getLoader() : getContentBasedOnConnector()}
-                    </Box>
-                </Fade>
-            </Modal>
-        </div>
-    );
+                    </Grid>
+                </Grid>
+                )
+                )
+    }
+
+                const imgMap = [];
+                imgMap['azure_function'] = 'Azure Function';
+                imgMap['aws_lambda'] = 'AWS Lambda';
+                imgMap['github'] = 'Github';
+                imgMap['bitbucket'] = 'BitBucket';
+                imgMap['gitlab'] = 'GitLab';
+                imgMap['heroku'] = 'Heroku';
+                imgMap['docker'] = 'Docker';
+                imgMap['gcr'] = 'GCR';
+                imgMap['ecr'] = 'ECR';
+                imgMap['acr'] = 'ACR';
+                imgMap['quay'] = 'Quay';
+                imgMap['github_container'] = 'Github';
+                imgMap['digitalocean'] = 'DigitalOcean';
+                imgMap['google_artifact_registry'] = 'Google Artifact Registry';
+
+                return (
+                <div>
+
+                    <Modal
+                        aria-labelledby="transition-modal-title"
+                        aria-descriptionribedby="transition-modal-descriptionription"
+                        open={fade}
+                        onClose={handleClose}
+                        closeAfterTransition
+                        BackdropComponent={Backdrop}
+                        BackdropProps={{
+                            timeout: 500,
+                        }}
+
+                    >
+                        <Fade in={fade}>
+                            <Box sx={style}>
+                                <Grid container spacing={1} >
+
+
+
+                                    {
+                                        connectorList.map(connector => (
+                                            <Card className="card" className={styles.connector} onClick={() => onClickConnector(connector)}>
+
+
+                                                <div>
+                                                    <img className={styles.img} src={"/static/integrations/" + imgMap[connector.application] + ".png"} onError={(e) => e.target.src = "/static/integrations/GitLab.png"} />
+
+                                                </div>
+                                                <div className={styles.center}>
+                                                    {connector.application}
+                                                </div>
+
+
+
+                                            </Card>
+                                        ))
+                                    }
+                                </Grid>
+                                {loading ? getLoader() : getContentBasedOnConnector()}
+                            </Box>
+                        </Fade>
+                    </Modal>
+                </div>
+                );
 }

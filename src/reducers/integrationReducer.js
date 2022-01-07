@@ -223,10 +223,29 @@ const integrationReducer = (state = initialState, action) => {
                         }
         case "setMachineList" :
                         return {...state, machineList : action.payload}
+
+        case "updateSelectedSpecialCase" :
+                        const updatedRepoForSpecialCase =  updateSpecialCaseTags(state.connectedRepo, action.payload);
+                        return {...state,   connectedRepo : updatedRepoForSpecialCase,
+                        filteredRepo :  filterRepoByTxt(state.filterTxt,updatedRepoForSpecialCase)}
                 
         default : 
             return state;
     }
+}
+
+const updateSpecialCaseTags = (repos, tag) => {
+    const repoClone = {...repos};
+
+    if(repoClone.available_tags.indexOf(tag) == -1){
+        repoClone.available_tags.push(tag);
+    }else{
+        repoClone.available_tags.splice(repoClone.available_tags.indexOf(tag),1);
+    }
+
+    
+
+    return repoClone;
 }
 
 const setConnectorList = (connectorList) => {
