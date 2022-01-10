@@ -33,7 +33,7 @@ const style = {
     bgcolor: 'background.paper',
     roundedCorner: '5px',
     boxShadow: 10,
-
+    height:'92%',
     p: 4,
 }
 
@@ -149,7 +149,7 @@ export default function AdvisoryModal({ open, onClose }) {
                 BackdropProps={{
                     timeout: 500,
                 }}
-                height = "300vh"
+                height = "700px"
                
             >
                 <Fade in={open}>

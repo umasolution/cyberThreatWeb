@@ -26,5 +26,12 @@ const setPollingId = (resultId) => {
     }
 }
 
+const setSearchTerm = (searchTerm) => {
+    return {
+        type: 'setSearchTerm',
+        payload : searchTerm
+    }
+}
 
-export {setSelectedProduct, setAdvisoryResults, setScanning, setPollingId}
+
+export {setSelectedProduct, setAdvisoryResults, setScanning, setPollingId,setSearchTerm}

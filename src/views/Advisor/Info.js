@@ -6,6 +6,7 @@ import ShowMoreText from "react-show-more-text";
 
 const Info = () => {
     const infos = useSelector(state=>state.advisor.advisoryResults.analysis.info);
+    const searchTerm = useSelector(state=>state.advisor.advisoryResults.searchTerm);
 
     const showMoreComponents = ['description'];
 
@@ -15,6 +16,9 @@ const Info = () => {
                     <Grid item xs={12} >
                         {
                             Object.entries(infos).map(([key, value]) => {
+                                if(searchTerm && searchTerm.indexOf(value) == -1){
+                                    return;
+                                }
                                 if(showMoreComponents.indexOf(key) != -1){
                                     return (
                                         <div style={{display:'flex'}}>

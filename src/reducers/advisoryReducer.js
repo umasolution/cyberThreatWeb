@@ -62,7 +62,8 @@ const initialState = {
         "community":""
      },
      result_id:'',
-     scanning : false
+     scanning : false,
+     searchTerm  : ''
 }
 
 const advisoryReducer = (state = initialState, action) => {
@@ -75,6 +76,8 @@ const advisoryReducer = (state = initialState, action) => {
             return {...state, result_id:action.payload}
         case "setScanning" :
             return {...state, scanning : action.payload}
+        case "setSearchTerm" :
+            return {...state, searchTerm : action.payload}
         
             default:
                 return state;
