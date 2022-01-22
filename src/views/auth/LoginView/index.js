@@ -2,21 +2,17 @@ import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import { styled } from '@mui/material/styles';
-import { Icon } from '@iconify/react';
-import githubFill from '@iconify/icons-eva/github-fill';
-import facebookFill from '@iconify/icons-eva/facebook-fill';
 import './Login.css';
 import {
-  Button,
   Container,
   Card,
-  Divider,
   Link,
   Typography,
   Stack,
 } from '@mui/material';
 import Page from 'src/components/Page';
 import Logo from 'src/components/Logo';
+import AuthSocial from '../AuthSocial';
 import LoginForm from './LoginForm';
 
 const RootStyle = styled(Page)(({ theme }) => ({
@@ -57,18 +53,17 @@ function LoginView() {
   return (
     <RootStyle title="Login">
       <p>
-      <header className="logoContent">
+        <header className="logoContent">
           <RouterLink to="/">
             <Logo className='login-logo-bedge' />
           </RouterLink>
-        <p className="start">
-          Don’t have an account? &nbsp;
-          <Link underline="none" variant="subtitle2" component={RouterLink} to="/register">
-            Get started
-          </Link>
-        </p>
-      </header>
-        
+          <p className="start">
+            Don’t have an account? &nbsp;
+            <Link underline="none" variant="subtitle2" component={RouterLink} to="/register">
+              Get started
+            </Link>
+          </p>
+        </header> 
       </p>
 
       <p width="mdDown">
@@ -88,22 +83,7 @@ function LoginView() {
             </Typography>
             <Typography sx={{ color: 'text.secondary' }}>Enter your details below.</Typography>
           </Stack>
-          <Stack direction="row" spacing={2}>
-            
-            <Button fullWidth size="large" color="inherit" variant="outlined">
-              <Icon icon={facebookFill} color="#1877F2" height={24} />
-            </Button>
-
-            <Button fullWidth size="large" color="inherit" variant="outlined" href="https://github.com/login/oauth/authorize?client_id=Iv1.cbf6b865ac4843fb">
-              <Icon icon={githubFill} color="#1C9CEA" height={24} />
-            </Button>
-          </Stack>
-
-          <Divider sx={{ my: 3 }}>
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              OR
-            </Typography>
-          </Divider>
+          <AuthSocial />
 
           <LoginForm onSubmitSuccess={handleSubmitSuccess} />
 

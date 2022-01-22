@@ -7,19 +7,13 @@ import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import {
   Box,
-  Button,
   TextField,
   FormHelperText,
   makeStyles,
-  Grid,
-  Link,
-  // Stack,
   InputAdornment,
   IconButton
 } from '@material-ui/core';
 import { login } from 'src/actions/accountActions';
-import FacebookIcon from '@material-ui/icons/Facebook';
-import GitHubIcon from '@material-ui/icons/GitHub';
 import { Icon } from '@iconify/react';
 import eyeFill from '@iconify/icons-eva/eye-fill';
 import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
@@ -44,7 +38,7 @@ function LoginForm({ className, onSubmitSuccess, ...rest }) {
     setShowPassword((show) => !show);
   };
 
-  /*const gitHubLogin = () => {
+  /* const gitHubLogin = () => {
     history.push('http://www.googl.com');
     //https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}
   }
@@ -69,6 +63,7 @@ function LoginForm({ className, onSubmitSuccess, ...rest }) {
           await dispatch(login(values.email, values.password));
           onSubmitSuccess();
         } catch (error) {
+          // eslint-disable-next-line no-console
           console.error(error);
           const message = error || 'Something went wrong';
           // const message = (error.response && error.response.data.message) || 'Something went wrong';

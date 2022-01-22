@@ -15,13 +15,13 @@
 }
 
 .welcome{
-    /* margin: 80px 0px 40px; */
+    margin: 80px 0px 40px;
     font-weight: 700;
     line-height: 1.5;
     font-size: 1.8rem;
     font-family: "Public Sans", sans-serif;
-    /* padding-left: 40px;
-    padding-right: 40px; */
+    padding-left: 40px;
+    padding-right: 40px;
 }
 
 .start{
@@ -30,4 +30,33 @@
     font-size: 0.875rem;
     font-family: "Public Sans", sans-serif;
     font-weight: 400;
+}
+
+.registerImg{
+    background-color: rgb(255, 255, 255);
+    color: rgb(33, 43, 54);
+    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    background-image: none;
+    overflow: hidden;
+    box-shadow: rgb(145 158 171 / 24%) 0px 0px 2px 0px, rgb(145 158 171 / 24%) 0px 16px 32px -4px;
+    border-radius: 16px;
+    position: relative;
+    z-index: 0;
+    width: 100%;
+    max-width: 464px;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    justify-content: center;
+    margin: 16px 0px 16px 16px;
+}
+
+.registerTerms{
+    margin: 24px 0px 0px;
+    line-height: 1.57143;
+    font-size: 0.875rem;
+    font-family: "Public Sans", sans-serif;
+    font-weight: 400;
+    text-align: center;
+    color: rgb(99, 115, 129);
 }
