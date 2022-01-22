@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {useHistory} from 'react-router';
 import { useDispatch } from 'react-redux';
 import clsx from 'clsx';
@@ -12,18 +12,11 @@ import {
   FormHelperText,
   makeStyles,
   Grid,
-  Link,
-  // Stack,
-  InputAdornment,
-  IconButton
+  Link
 } from '@material-ui/core';
 import { login } from 'src/actions/accountActions';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import GitHubIcon from '@material-ui/icons/GitHub';
-import { Icon } from '@iconify/react';
-import eyeFill from '@iconify/icons-eva/eye-fill';
-import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
-import { LoadingButton } from '@mui/lab';
 
 const useStyles = makeStyles(() => ({
   root: {}
@@ -38,11 +31,7 @@ function LoginForm({ className, onSubmitSuccess, ...rest }) {
   const clientId= "Iv1.7e5a6deb9eb3dea8";
   const clientSecret=" client secret:cc7b5b40332640779a46a1b7afa017b340470260";
   const redirectUri="http://localhost:3001/app/reports/dashboard";
-  const [showPassword, setShowPassword] = useState(false);
 
-  const handleShowPassword = () => {
-    setShowPassword((show) => !show);
-  };
 
   /*const gitHubLogin = () => {
     history.push('http://www.googl.com');
@@ -93,7 +82,6 @@ function LoginForm({ className, onSubmitSuccess, ...rest }) {
           onSubmit={handleSubmit}
           {...rest}
         >
-          <p spacing={3}>
           <TextField
             error={Boolean(touched.email && errors.email)}
             fullWidth
@@ -108,42 +96,30 @@ function LoginForm({ className, onSubmitSuccess, ...rest }) {
             value={values.email}
             variant="outlined"
           />
-          
           <TextField
+            error={Boolean(touched.password && errors.password)}
             fullWidth
-            type={showPassword ? 'text' : 'password'}
+            helperText={touched.password && errors.password}
             label="Password"
+            margin="normal"
+            name="password"
             onBlur={handleBlur}
             onChange={handleChange}
+            type="password"
             value={values.password}
             variant="outlined"
-            name="password"
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={handleShowPassword} edge="end">
-                    <Icon icon={showPassword ? eyeFill : eyeOffFill} />
-                  </IconButton>
-                </InputAdornment>
-              )
-            }}
-            error={Boolean(touched.password && errors.password)}
-            helperText={touched.password && errors.password}
           />
-          </p>
           <Box mt={2}>
-            <LoadingButton
-              // color="secondary"
+            <Button
+              color="secondary"
               disabled={isSubmitting}
               fullWidth
               size="large"
               type="submit"
               variant="contained"
-              loading={isSubmitting}
             >
-              Login
-            </LoadingButton>
-            
+              Log In
+            </Button>
             {errors.submit && (
               <Box mt={3}>
                 <FormHelperText error>
@@ -152,7 +128,40 @@ function LoginForm({ className, onSubmitSuccess, ...rest }) {
               </Box>
             )}
           </Box>
-          
+          <Box mt={2}>
+            
+            <Grid container spacing={1}>
+              <Grid container item xs={6} >
+                 <Button
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  style={{width:'100%'}}
+                  className={classes.button}
+                  startIcon={<FacebookIcon />}
+                >
+                  Facebook
+                </Button>
+
+              </Grid>
+              <Grid container item xs={6}>
+                <a href="https://github.com/login/oauth/authorize?client_id=Iv1.cbf6b865ac4843fb">
+                <Button
+                  variant="contained"
+                  color="black"
+                  size="large"
+                  style={{width:'100%'}}
+                  className={classes.button}
+                  startIcon={<GitHubIcon />}
+              
+                >
+                  GitHub
+                </Button>
+                </a>
+              </Grid>
+              
+            </Grid>
+          </Box>
         </form>
       )}
     </Formik>

@@ -1,80 +1,53 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useHistory } from 'react-router';
+import { styled } from '@mui/material/styles';
+import { Icon } from '@iconify/react';
+import githubFill from '@iconify/icons-eva/github-fill';
+import facebookFill from '@iconify/icons-eva/facebook-fill';
+import './Login.css';
 import {
-  Avatar,
   Button,
-  Box,
   Container,
   Card,
-  CardContent,
-  CardMedia,
   Divider,
   Link,
   Typography,
-  colors,
-  makeStyles
-} from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
-import LockIcon from '@material-ui/icons/Lock';
+  Stack,
+} from '@mui/material';
 import Page from 'src/components/Page';
 import Logo from 'src/components/Logo';
 import LoginForm from './LoginForm';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    justifyContent: 'center',
-    backgroundColor: theme.palette.background.dark,
+const RootStyle = styled(Page)(({ theme }) => ({
+  [theme.breakpoints.up('md')]: {
     display: 'flex',
-    height: '100%',
-    minHeight: '100%',
-    flexDirection: 'column',
-    paddingBottom: 80,
-    paddingTop: 80
-  },
-  backButton: {
-    marginLeft: theme.spacing(2)
-  },
-  card: {
-    overflow: 'visible',
-    display: 'flex',
-    position: 'relative',
-    '& > *': {
-      flexGrow: 1,
-      flexBasis: '50%',
-      width: '50%'
-    }
-  },
-  content: {
-    padding: theme.spacing(8, 4, 3, 4)
-  },
-  icon: {
-    backgroundColor: colors.green[500],
-    color: theme.palette.common.white,
-    borderRadius: theme.shape.borderRadius,
-    padding: theme.spacing(1),
-    position: 'absolute',
-    top: -32,
-    left: theme.spacing(3),
-    height: 64,
-    width: 64
-  },
-  media: {
-    borderTopRightRadius: 4,
-    borderBottomRightRadius: 4,
-    padding: theme.spacing(3),
-    color: theme.palette.common.white,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-end',
-    [theme.breakpoints.down('md')]: {
-      display: 'none'
-    }
+    background: '#FFFFFF',
   }
 }));
 
+const SectionStyle = styled(Card)(({ theme }) => ({
+  width: '100%',
+  maxWidth: 464,
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  margin: theme.spacing(2, 0, 2, 2),
+  height: '100%'
+}));
+
+const ContentStyle = styled('div')(({ theme }) => ({
+  maxWidth: 480,
+  margin: 'auto',
+  display: 'flex',
+  minHeight: '100vh',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  padding: theme.spacing(12, 0)
+}));
+
+
 function LoginView() {
-  const classes = useStyles();
   const history = useHistory();
 
   const handleSubmitSuccess = () => {
@@ -82,70 +55,62 @@ function LoginView() {
   };
 
   return (
-    <Page
-      className={classes.root}
-      title="Login"
-    >
-      <Container maxWidth="md">
-        <Box
-          mb={8}
-          display="flex"
-          alignItems="center"
-        >
+    <RootStyle title="Login">
+      <p>
+      <header className="logoContent">
           <RouterLink to="/">
-            <Logo className='login-logo-bedge'/>
+            <Logo className='login-logo-bedge' />
           </RouterLink>
-          <Button
-            component={RouterLink}
-            to="/"
-            className={classes.backButton}
-          >
-            Back to home
-          </Button>
-        </Box>
-        <Card className={classes.card}>
-          <CardContent className={classes.content}>
-            <Avatar className={classes.icon}>
-              <LockIcon fontSize="large" />
-            </Avatar>
-            <Typography
-              variant="h2"
-              color="textPrimary"
-            >
+        <p className="start">
+          Don’t have an account? &nbsp;
+          <Link underline="none" variant="subtitle2" component={RouterLink} to="/register">
+            Get started
+          </Link>
+        </p>
+      </header>
+        
+      </p>
+
+      <p width="mdDown">
+        <SectionStyle>
+          <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
+            <p className="welcome">Hi, Welcome Back</p>
+          </Typography>
+          <img src="/static/illustration_login.png" alt="login" />
+        </SectionStyle>
+      </p>
+
+      <Container maxWidth="sm">
+        <ContentStyle>
+          <Stack sx={{ mb: 5 }}>
+            <Typography variant="h4" gutterBottom>
               Sign in
             </Typography>
-            <Typography
-              variant="subtitle1"
-              color="textSecondary"
-            >
-              Sign in on the internal platform
+            <Typography sx={{ color: 'text.secondary' }}>Enter your details below.</Typography>
+          </Stack>
+          <Stack direction="row" spacing={2}>
+            
+            <Button fullWidth size="large" color="inherit" variant="outlined">
+              <Icon icon={facebookFill} color="#1877F2" height={24} />
+            </Button>
+
+            <Button fullWidth size="large" color="inherit" variant="outlined" href="https://github.com/login/oauth/authorize?client_id=Iv1.cbf6b865ac4843fb">
+              <Icon icon={githubFill} color="#1C9CEA" height={24} />
+            </Button>
+          </Stack>
+
+          <Divider sx={{ my: 3 }}>
+            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+              OR
             </Typography>
-            <Box mt={3}>
-              <LoginForm onSubmitSuccess={handleSubmitSuccess} />
-            </Box>
-            <Box my={2}>
-              <Divider />
-            </Box>
-            <Link
-              component={RouterLink}
-              to="/register"
-              variant="body2"
-              color="textSecondary"
-            >
-              Create new account
-            </Link>
-          </CardContent>
-          <CardMedia
-            className={classes.media}
-            image="/static/images/auth.png"
-            title="Cover"
-          >
-            
-            
-          </CardMedia>
-        </Card>
+          </Divider>
+
+          <LoginForm onSubmitSuccess={handleSubmitSuccess} />
+
+        </ContentStyle>
       </Container>
-    </Page>
+    </RootStyle>
+    
   );
 }
 
