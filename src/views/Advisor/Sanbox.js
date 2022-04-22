@@ -14,6 +14,7 @@ import { Box, Paper, makeStyles, Divider, TextField } from '@material-ui/core';
 const Sandbox = () => {
 
     const versions = useSelector(state => Object.entries(state.advisor.advisoryResults.analysis.sandboxing));
+    const searchTerm = useSelector(state=>state.advisor.searchTerm);
 
     const content = (value) => {
 
@@ -43,6 +44,9 @@ const Sandbox = () => {
     return (<div style={{ overflowY: 'auto', height: '500px' }}>
         {
             versions.map(version => {
+                if(searchTerm  && (typeof version[0] == 'string') && version[0].indexOf(searchTerm) == -1){
+                    return;
+                }
                 return (
                     <Accordion>
                         <AccordionSummary

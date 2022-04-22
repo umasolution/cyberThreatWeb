@@ -13,9 +13,14 @@ import { splitAndSpaceStr } from './advisorUtil';
 const Version = () => {
 
     const versions = useSelector(state=>Object.entries(state.advisor.advisoryResults.analysis.releases).reverse());
+    const searchTerm = useSelector(state=>state.advisor.searchTerm);
+
     return (<div style={{overflowY:'auto', height:'500px'}}>
         {
             versions.map(version=>{
+                if(searchTerm  && (typeof version[0] == 'string') && version[0].indexOf(searchTerm) == -1){
+                    return;
+                }
                 return (
                     <Accordion>
                         <AccordionSummary

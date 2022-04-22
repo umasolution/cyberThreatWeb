@@ -6,7 +6,7 @@ import ShowMoreText from "react-show-more-text";
 
 const Info = () => {
     const infos = useSelector(state=>state.advisor.advisoryResults.analysis.info);
-    const searchTerm = useSelector(state=>state.advisor.advisoryResults.searchTerm);
+    const searchTerm = useSelector(state=>state.advisor.searchTerm);
 
     const showMoreComponents = ['description'];
 
@@ -16,7 +16,7 @@ const Info = () => {
                     <Grid item xs={12} >
                         {
                             Object.entries(infos).map(([key, value]) => {
-                                if(searchTerm && searchTerm.indexOf(value) == -1){
+                                if(searchTerm  && (typeof value == 'string') && value.indexOf(searchTerm) == -1){
                                     return;
                                 }
                                 if(showMoreComponents.indexOf(key) != -1){
@@ -54,6 +54,9 @@ const Info = () => {
                                 if(boxComponents.indexOf(key) != -1){
                                     return value.map(
                                         val=>{
+                                            if(searchTerm  && (typeof val == 'string') && val.indexOf(searchTerm) == -1){
+                                                return;
+                                            }
                                             return (<Chip label={val} color="primary"  style={{marginRight:'5px',marginBottom:'5px'}} />)
                                         }
                                     )
@@ -68,6 +71,9 @@ const Info = () => {
                                 if(key == 'requires_dist'){
                                     return value.map(
                                         val=>{
+                                            if(searchTerm  && (typeof val == 'string') && val.indexOf(searchTerm) == -1){
+                                                return;
+                                            }
                                             return (<Chip label={val} color="success" style={{marginRight:'5px',
                                                                     marginBottom:'5px',backgroundColor:'#1976D2', color:'rgb(255, 255, 255)'}}/>)
                                         }
@@ -83,6 +89,9 @@ const Info = () => {
                                 if(key == 'depended_for'){
                                     return value.map(
                                         val=>{
+                                            if(searchTerm  && (typeof val == 'string') && val.indexOf(searchTerm) == -1){
+                                                return;
+                                            }
                                             return (<Chip label={val} color="success" style={{marginRight:'5px',
                                                                     marginBottom:'5px',backgroundColor:'#9C82E5', color:'rgb(255, 255, 255)'}}/>)
                                         }

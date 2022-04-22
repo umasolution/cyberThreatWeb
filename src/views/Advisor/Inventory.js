@@ -38,12 +38,16 @@ const useStyles = makeStyles((theme) => ({
 const Inventory = () => {
     const styles = useStyles();
     const inventories = useSelector(state => state.advisor.advisoryResults.analysis.vulnerability.inventory);
+    const searchTerm = useSelector(state=>state.advisor.searchTerm);
 
     return (
         <Grid container >
             {
                 inventories.map(inventory => {
                     return Object.entries(inventory).map(([key, value]) => {
+                        if(searchTerm  && (typeof value == 'string') && value.indexOf(searchTerm) == -1){
+                            return;
+                        }
                         return <Grid item={1}>
                              <Paper className={styles.paper} elevation={8}>
                                 <div className={styles.header}>{splitAndSpaceStr(key)}</div>

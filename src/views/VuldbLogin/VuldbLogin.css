@@ -271,8 +271,8 @@ width:100% !important;
 .AdvanceSearchLeft .input-box .MuiInput-formControl input{border: 1px solid #e8e8f2; padding: 8px 15px; font-size: 14px;}
 
 .vuldb-login .AdvanceSearchRight .cvesearchslider{margin-left: 8px;}
-.vuldb-login .AdvanceSearchRight .cvesearchslider-box{background: #f8f8fa;padding: 15px 25px;border-radius: 5px;}
-.vuldb-login .AdvanceSearchRight .cvesearchslider-box h2{font-size: 15px;letter-spacing: 0.5px;color: #333;}
+.cvesearchslider-box{background: #f8f8fa;padding: 15px 25px;border-radius: 5px;}
+.cvesearchslider-box h2{font-size: 15px;letter-spacing: 0.5px;color: #333;}
 .vuldb-login .AdvanceSearchRight ul li{padding-left: 0;padding-right: 0;}
 .vuldb-login .AdvanceSearchRight ul li span.MuiListItemText-primary{font-size: 16px;font-weight: 500;}
 .searchBoxTop ul{margin-bottom: 15px;}

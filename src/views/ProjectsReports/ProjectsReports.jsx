@@ -1299,7 +1299,7 @@ const ProjectsReports = () => {
                                           {scan_insights[0] == 'date' ? (<>
                                             <Box className="date-block">
                                               <Box className="snapshot-title">Report Date: </Box>
-                                              <Box className="snapshot-content">{moment(setDateFormat(scan_insights[1])).format('MMM DD, YYYY')}</Box> </Box></>) : ''}
+                                              <Box className="snapshot-content">{moment(setDateFormat(new Date(scan_insights[1]))).format('MMM DD, YYYY')}</Box> </Box></>) : ''}
                                           {scan_insights[0] == 'vulnerabilities' ? (<>
                                             <Box className="snapshot-content">
                                               <Box className="scoreblock-vulnerabilities-div">
@@ -1394,7 +1394,7 @@ const ProjectsReports = () => {
                                     <ListItem>
                                       <ListItemText>
                                         <Box className="snapshot-title">{scan_summary[0]} : </Box>
-                                        <Box className="snapshot-content">{moment(setDateFormat(scan_summary[1])).format('MMM DD, YYYY hh:mm a')}</Box>
+                                        <Box className="snapshot-content">{moment(setDateFormat(new Date(scan_summary[1]))).format('MMM DD, YYYY hh:mm a')}</Box>
                                       </ListItemText>
                                     </ListItem>  </>) : (<><ListItem>
                                       <ListItemText>

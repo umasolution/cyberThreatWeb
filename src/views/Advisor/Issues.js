@@ -13,9 +13,14 @@ import { splitAndSpaceStr } from './advisorUtil';
 const Issues = () => {
 
     const versions = useSelector(state=>state.advisor.advisoryResults.analysis.vulnerability.Issues.data);
+    const searchTerm = useSelector(state=>state.advisor.searchTerm);
+    
     return (<div style={{overflowY:'auto', height:'500px'}}>
         {
             versions.map(version=>{
+                if(searchTerm  && (typeof version.CVEID == 'string') && version.CVEID.indexOf(searchTerm) == -1){
+                    return;
+                }
                 return (
                     <Accordion>
                         <AccordionSummary

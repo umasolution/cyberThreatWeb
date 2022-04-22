@@ -29,6 +29,7 @@ const style = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: '90%',
+    overflowY : "hidden",
     bgcolor: 'background.paper',
     roundedCorner: '5px',
     boxShadow: 10,
@@ -121,6 +122,7 @@ export default function ProjectModal({ open, onClose }) {
     const [loading, setLoading] = useState(false);
     const [connectorClicked, setConnectorClicked] = useState(false);
     const [searchTxt, setSearchTxt] = useState('');
+    const [status, setStatus] = React.useState(false);
 
 
     const handleClose = () => {
@@ -148,10 +150,21 @@ export default function ProjectModal({ open, onClose }) {
     const [search_api_with, setSearchAPIWith] = useState('');
     const [selectedConnector, setSelectedConnector] = useState('');
 
+    const checkStatus = async(application) => {
+        const statusResponse = await Axios.post('http://niahsecurity.online/api/connectors/check', {application});
+
+        if(statusResponse.data.status != "1"){
+            setStatus(true);
+        }
+    }
+
     const onClickConnector = async (connector, fromSearch) => {
         setLoading(true);
+        setStatus(false);
 
         setSelectedConnector(connector);
+
+       const status = await checkStatus(connector.application)
 
         const url = "/projects/details";
         let connectorClone = '';
@@ -241,12 +254,16 @@ export default function ProjectModal({ open, onClose }) {
                         <label>{connectedRepos.caption_text}</label>
                     </Grid>
 
+                    <Grid item xs={12} className = {styles.flex}>
                     {connectedRepos.application == "gcp_kubernetes"  ? getSpecialLayOut() : getRegularLayout()}
-
+                    </Grid>
 
                 </Grid>
                 <Grid item xs={12} className={styles.description}>
                     <Button className={styles.search} onClick={onPublish} >Publish</Button>
+                    {
+                        status ? <span style= {{margin : '5px', color:'red'}}> Token or credentials has expired. Please check. </span>: ""
+                    }
                 </Grid>
             </Grid>
         )
@@ -259,6 +276,9 @@ export default function ProjectModal({ open, onClose }) {
             <div>
                 {
                     Object.entries(data).map(([key, value]) => {
+                        if(typeof value != 'string'){
+                            return;
+                        }
                         return (<div>{splitAndSpaceStr(key)} : {value} </div>)
                     })
                 }
@@ -325,10 +345,10 @@ export default function ProjectModal({ open, onClose }) {
     const getRegularLayout = () => {
 
         return connectedRepos.data.map(repo => (
-                <Grid item xs={3} className={styles.description}>
+                <Grid item xs={4} className={styles.description} style={{margin:'10px'}}>
                     <div className={styles.flex}>
                         <input type='checkbox' className={styles.repoCheck} checked={connectedRepos.application == 'machines' ? 
-                                                    (connectedRepos.available_tags.indexOf(repo.projectname) != -1):(repo.mode === 'true')} onClick={event => onCheckProject(event, repo)} />
+                                                    (repo.available_tags.indexOf(repo.projectname) != -1):(repo.mode === 'true')} onClick={event => onCheckProject(event, repo)} />
                         <label>{repo[connectedRepos.display_header]}</label>
                         <TransitionsPopper callback={getPopOverData} data={repo.details} />
                     </div>

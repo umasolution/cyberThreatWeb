@@ -54,11 +54,14 @@ export default function TransitionsModal({ openModal, data, onClose, group }) {
     const styles = useStyles();
     const [open, setOpen] = React.useState(openModal);
     const [cloned,setCloned] = React.useState({...data});
+
+    const [status, setStatus] = React.useState(false)
     const dispatch = useDispatch();
 
     useEffect(() => {
         setOpen(openModal);
         setError('');
+        checkStatus();
     }, [openModal])
     const handleOpen = () => setOpen(open);
     const handleClose = () => onClose(false);
@@ -67,6 +70,16 @@ export default function TransitionsModal({ openModal, data, onClose, group }) {
     const integrationDetails = useSelector(state => state.integrations.integrationDetails);
 
     const [error,setError] = React.useState('');
+
+    const checkStatus = async() => {
+        const statusResponse = await Axios.post('http://niahsecurity.online/api/connectors/check', {application : data.application});
+
+        if(statusResponse.data.status != "1"){
+            setStatus(true);
+        }
+
+
+    }
 
     
 
@@ -219,6 +232,9 @@ export default function TransitionsModal({ openModal, data, onClose, group }) {
                 }
                  <Grid item xs={12} >
                     <Button variant="contained" className={styles.disconnect} onClick={onDisconnect}>Disconnect</Button>
+                    {
+                        status ? <span style= {{margin : '5px', color:'red'}}> Token or credentials has expired. Please check. </span>: ""
+                    }
                 </Grid>
             </Grid>
         )
