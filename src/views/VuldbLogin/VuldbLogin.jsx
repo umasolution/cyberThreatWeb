@@ -1813,7 +1813,7 @@ export const VuldbLogin = (/* {   } */) => {
                 display="flex"
                 justifyContent="center"
                 alignItems="center"
-                className={classes.searchAdvanceBox} className='advanceboxnew'>
+                className={`${classes.searchAdvanceBox} advanceboxnew`}>
                 <Card className={classes.advancecardsearch}>
                   <CardHeader
                     action={
@@ -2333,7 +2333,7 @@ export const VuldbLogin = (/* {   } */) => {
 
   const getYears = () => {
     const menuItems = [];
-    menuItems.push(<MenuItem value="1" onClick={handleYearSelect} >All</MenuItem>)
+    menuItems.push(<MenuItem value="All" onClick={handleYearSelect} >All</MenuItem>)
     while (rollingYear < new Date().getFullYear()) {
       rollingYear = rollingYear + 1;
       menuItems.push(<MenuItem value={rollingYear} onClick={handleYearSelect} >{rollingYear}</MenuItem>)
