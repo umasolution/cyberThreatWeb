@@ -1774,7 +1774,7 @@ export const VuldbLogin = (/* {   } */) => {
                   </ListItem>
                   <ListItem className={browseTypeClass}>
                     <ListItemText>
-                      <Button  value="browse" onClick={() => { handleSearchType('browse') }} >Browse</Button>
+                      <Button  value="browse" disabled={loadingTabs? true : false} onClick={() => { handleSearchType('browse') }} >Browse</Button>
                     </ListItemText>
                   </ListItem>
                 </List>
