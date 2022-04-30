@@ -248,21 +248,16 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
             >
               CVSS Score Details 
             </Typography>
-            <ExpansionPanel
+            <div style={{ display: "flex"}}>
+            <div
                     key='References'
                     style={{ width: '100%' }}
                     className="accordian-block"
                   > 
-                  <ExpansionPanelSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls="references-content"
-                      id="references-header"
-                    >
-                    <Typography variant="h3" component="h2">
+                    <Typography variant="h3" className='typograpghy_header' component="h2">
                         CVSS 2.0 
                     </Typography>
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
+                    <div>
                        <TableContainer component={Paper}>
                           <Table className={classes.table} aria-label="simple table">
                             <TableBody>
@@ -277,23 +272,17 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                             </TableBody>
                           </Table>
                         </TableContainer>
-                    </ExpansionPanelDetails>
-               </ExpansionPanel>
-              <ExpansionPanel
+                    </div>
+               </div>
+              <div
                     key='References'
                     style={{ width: '100%' }}
                     className="accordian-block"
                   > 
-                  <ExpansionPanelSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls="references-content"
-                      id="references-header"
-                    >
-                    <Typography variant="h3" component="h2">
+                    <Typography variant="h3" className='typograpghy_header' component="h2">
                         CVSS 3.0 
                     </Typography>
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
+                    <div>
                        <TableContainer component={Paper}>
                           <Table className={classes.table} aria-label="simple table">
                             <TableBody>
@@ -308,9 +297,9 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                             </TableBody>
                           </Table>
                         </TableContainer>
-                    </ExpansionPanelDetails>
-               </ExpansionPanel> 
-            
+                    </div>
+               </div> 
+               </div>
         </Grid>                
         )
     }

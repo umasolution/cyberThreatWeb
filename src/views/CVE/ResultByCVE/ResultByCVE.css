@@ -117,3 +117,10 @@ height: 50px;}*/
     font-weight: 600 !important;
     padding: 10px 20px !important;
 }
+.typograpghy_header{
+  color: #027ae2;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.75px;
+  margin: 10px
+}
