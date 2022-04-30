@@ -1298,7 +1298,11 @@ const ProjectsReports = () => {
                           
                                 {singlerows.scan_insights.map((scan_insight) => (
                                   <fieldset style={{borderRadius:'8px'}}>
-                                    <legend style={{marginLeft:'10px', fontSize:'16px', color:'#185d98'}}>{scan_insight.header_slider}</legend>
+                                    <legend style={{marginLeft:'10px', fontSize:'16px', color:'#185d98'}}>
+                                      {scan_insight.header_slider != "" ?
+                                      scan_insight.header_slider : scan_insight.scanner_type
+                                      }
+                                    </legend>
                                   <Typography variant="body2" color="textSecondary" component="div">
                                     <List component="ul" className="snapshotlist">
                                   <>
