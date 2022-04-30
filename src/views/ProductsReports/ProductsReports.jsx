@@ -22,6 +22,7 @@ import DockerPackages from './DockerPackages/DockerPackages';
 import Page from 'src/components/Page';
 import './ProductsReports.css';
 import { Button } from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -60,6 +61,10 @@ const ProductsReports = () => {
   const [isDocker, setIsDocker] = React.useState(false);
   const [scanStatus,setScanStatus] = useState(false);
 
+  const tasks = useSelector(state=>state.tasks.tasks);
+
+  const dispatch = useDispatch();
+
 
   const handleChange = (event, newValue) => {
     setTabValue(newValue);
@@ -67,6 +72,11 @@ const ProductsReports = () => {
 
   useEffect(() => {
     fetchProductsReports();
+    dispatch({type:"POLL_DATA_SAGA"});
+
+    return function cleanUp(){
+      dispatch({type:"CANCEL_POLLING"});
+    }
   }, [reportName, projectId]);
 
   const fetchProductsReports = async () => {
@@ -174,7 +184,11 @@ const ProductsReports = () => {
             <Tab className="issue-tab" label="Issues" />
             <Tab className="inventory-tab" label="Inventory" />
             {((reportType === 'platform' || reportType === 'system' )) ? <Tab className="remediation-tab" label="Remediation" /> : ''}
-            <Button className={classes.scanBtn} variant="outlined" onClick={onScan}>{!scanStatus ? 'Scan' : 'Scanning...'}</Button>
+            <Button className={classes.scanBtn} 
+                    disabled = {!(tasks.findIndex(d => d.project_id == projectId) == -1) }
+                    variant="outlined" onClick={onScan}>
+                      { tasks.findIndex(d => d.project_id == projectId) == -1 ? 'Scan' : 'Scanning ...'}
+              </Button>
           </Tabs>
         
         </AppBar>

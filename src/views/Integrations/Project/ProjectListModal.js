@@ -344,6 +344,10 @@ export default function ProjectModal({ open, onClose }) {
 
     const getRegularLayout = () => {
 
+      if(!connectedRepos.data){
+          return;
+      }
+
         return connectedRepos.data.map(repo => (
                 <Grid item xs={4} className={styles.description} style={{margin:'10px'}}>
                     <div className={styles.flex}>

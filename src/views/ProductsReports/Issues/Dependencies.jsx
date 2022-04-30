@@ -534,12 +534,13 @@ const Dependencies = ({ issues, reportName, reportType,counter,historydata,proje
                                               variant="h5"
                                               color="textSecondary"
                                             >
-                                              {row[`${issues.column[vkey].field}`].replace(',', '\n') }
+                                              {row[`${issues.column[vkey].field}`] != undefined ? 
+                                                  row[`${issues.column[vkey].field}`].replace(',', '\n') : ""}
                                             </Typography>
 
                                          </Grid>
                                         </>
-                                    )  : row[`${issues.column[vkey].field}`].replace(',', '\n'))
+                                    )  : row[`${issues.column[vkey].field}`] != undefined ? row[`${issues.column[vkey].field}`].replace(',', '\n') : "")
                                     }
                                   </TableCell>
                                 )

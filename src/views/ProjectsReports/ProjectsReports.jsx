@@ -5,6 +5,7 @@ import {
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import authService from 'src/services/authService';
 import { useParams, Link } from 'react-router-dom';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -46,6 +47,7 @@ import { boolean } from 'yup';
 import CustomMenuDropdown from 'src/components/CustomMenuDropdown';
 import ProjectModal from '../Integrations/Project/ProjectListModal';
 import { styles } from '@material-ui/pickers/views/Calendar/Calendar';
+import { pollAction } from 'src/saga/rootSaga';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -310,6 +312,8 @@ const ProjectsReports = () => {
 
   const [open,setOpen] = useState(false);
 
+  const dispatch = useDispatch();
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -349,8 +353,16 @@ const ProjectsReports = () => {
 
   const [selecttype, setSelecttype] = useState([]);
 
+  const tasks = useSelector(state => state.tasks.tasks)
+
   useEffect(() => {
     fetchProjectsList();
+    dispatch({type:"POLL_DATA_SAGA"});
+
+    return function cleanUp() {
+      dispatch({type:"CANCEL_POLLING"})
+    }
+
   }, []);
 
   const fetchProjectsList = async () => {
@@ -985,8 +997,8 @@ const ProjectsReports = () => {
                                                   variant="contained" 
                                                   color="success" 
                                                   onClick={(e)=>onScan(e,row,rkey)}
-                                                  disabled = {row.table.project_details.status == 'enable' ? false : true}>
-                                          {(scanStatuses[rkey] == "Completed" || !scanStatuses[rkey]) ? "Scan" : "Scanning ..."}
+                                                  disabled = {!(tasks.findIndex(d => d.project_id == row.table.project_details.project_id) == -1) }>
+                                          {tasks.findIndex(d => d.project_id == row.table.project_details.project_id) == -1 ? "Scan" : "Scanning..."}
                                                   
                                           </Button>
                                         </Grid>

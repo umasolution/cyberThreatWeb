@@ -9,6 +9,7 @@ import pricingReducer from './pricingReducer';
 import sideBarReducer from './sidebarReducer';
 import integrationReducer from './integrationReducer';
 import advisoryReducer from './advisoryReducer';
+import taskReducer from './taskReducer';
 
 const rootReducer = combineReducers({
   account: accountReducer,
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
   pricing : pricingReducer,
   sidebar : sideBarReducer,
   integrations : integrationReducer,
-  advisor : advisoryReducer
+  advisor : advisoryReducer,
+  tasks : taskReducer
 });
 
 export default rootReducer;
