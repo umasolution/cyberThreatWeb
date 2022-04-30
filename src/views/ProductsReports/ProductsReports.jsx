@@ -183,6 +183,7 @@ const ProductsReports = () => {
             {productReportResponse.summary ? <Tab  className="summary-tab" label="Summary" /> : ''}
             <Tab className="issue-tab" label="Issues" />
             <Tab className="inventory-tab" label="Inventory" />
+            <Tab className="license-tab" label="License" />
             {((reportType === 'platform' || reportType === 'system' )) ? <Tab className="remediation-tab" label="Remediation" /> : ''}
             <Button className={classes.scanBtn} 
                     disabled = {!(tasks.findIndex(d => d.project_id == projectId) == -1) }
@@ -213,16 +214,17 @@ const ProductsReports = () => {
                   
 
         </TabPanel>
-        <TabPanel value={tabValue} index={2}>
-          {productReportResponse.inventory ? (<Dependencies issues={reportType === 'application' ? productReportResponse.inventory : productReportResponse.inventory} reportType={reportType} reportName={reportName} counter={productReportResponse.summary.counter} historydata={productReportResponse.summary.history} projectId={projectId}  />) : ''}             
+        <TabPanel value={tabValue} index={2}> {productReportResponse.inventory ? (<Dependencies issues={reportType === 'application' ? productReportResponse.inventory : productReportResponse.inventory} reportType={reportType} reportName={reportName} counter={productReportResponse.summary.counter} historydata={productReportResponse.summary.history} projectId={projectId}  />) : ''}             
         </TabPanel>
         <TabPanel value={tabValue} index={3}>
+          {productReportResponse.license ? (<Dependencies issues={reportType === 'application' ? productReportResponse.license : productReportResponse.license} reportType={reportType} reportName={reportName} counter={productReportResponse.summary.counter} historydata={productReportResponse.summary.history} projectId={projectId}  />) : ''}             
+        </TabPanel>
+        <TabPanel value={tabValue} index={4}>
           <Remediation remediation={productReportResponse.remediation} counter={productReportResponse.summary.counter} reportName={reportName} historydata={productReportResponse.summary.history} projectId={projectId} />
         </TabPanel>
       </>
     );
   }
-
   const getTabs = () => {
     return (
       <div className={classes.root}>
