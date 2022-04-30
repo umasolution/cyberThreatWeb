@@ -275,6 +275,7 @@ export const VuldbLogin = (/* {   } */) => {
 
   const closeDrawer = () => {
     setOpenDrawer(false);
+    setloadingRows(false);
   };
 
 
@@ -1730,7 +1731,12 @@ export const VuldbLogin = (/* {   } */) => {
       </>
     )
   }
-
+  const getSideBarLoader = () => {
+    if (loadingRows && !openDrawer) {
+      return <LinearProgress style={{ margin: '15px' }} />
+    }
+    return null;
+  }
   const getLoader = () => {
     if (loadingTabs) {
       return <LinearProgress style={{ margin: '15px' }} />
@@ -1768,7 +1774,7 @@ export const VuldbLogin = (/* {   } */) => {
                   </ListItem>
                   <ListItem className={browseTypeClass}>
                     <ListItemText>
-                      <Button value="browse" onClick={() => { handleSearchType('browse') }} >Browse</Button>
+                      <Button  value="browse" onClick={() => { handleSearchType('browse') }} >Browse</Button>
                     </ListItemText>
                   </ListItem>
                 </List>
@@ -2109,6 +2115,7 @@ export const VuldbLogin = (/* {   } */) => {
 
             </Container>
           </Grid>
+        {getSideBarLoader()}
         </Container>
 
       </>
