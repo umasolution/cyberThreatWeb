@@ -124,3 +124,7 @@ height: 50px;}*/
   letter-spacing: 0.75px;
   margin: 10px
 }
+.MuiContainer-maxWidthLg{
+  max-width: none;
+  margin: 0px;
+}
