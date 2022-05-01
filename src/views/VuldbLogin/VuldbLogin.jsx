@@ -1774,7 +1774,7 @@ export const VuldbLogin = (/* {   } */) => {
                   </ListItem>
                   <ListItem className={browseTypeClass}>
                     <ListItemText>
-                      <Button  value="browse" disabled={loadingTabs? true : false} onClick={() => { handleSearchType('browse') }} >Browse</Button>
+                      <Button  value="browse"  onClick={() => { handleSearchType('browse') }} >Browse</Button>
                     </ListItemText>
                   </ListItem>
                 </List>
@@ -2357,57 +2357,61 @@ export const VuldbLogin = (/* {   } */) => {
         <Container maxWidth className="browse-wizard">
           <Box  >
             <Grid container spacing={3}>
-              {Object.entries(browseDa).map(([key, value], index) => (
-                <>
-                  <Grid
-                    item
-                    xs={12}
-                    md={4}
-                    display="flex"
-                    justifyContent="center"
-                    className="browse-wizard-box"
-                  >
-                    <Card>
-                      <CardHeader
-                        title={value.header}
-                      />
-                      <CardContent>
-                        <Typography variant="h6">{value.title}</Typography>
-                        <List>
-                          {Object.entries(value.data).map(([bkey, row]) => (
-                            <Grid container className="browse-list browse-list-sx" >
-                              {Object.entries(value.column).map(([browseColumnskey, browseColumns]) => (
-                                browseColumns == 'name' || browseColumns == 'product' || browseColumns == 'vendor' ? (
-                                  <Grid
-                                    item
-                                    xs={12}
-                                    md={6}
+              {browseDa != undefined ?
+                Object.entries(browseDa).map(([key, value], index) => (
+                  <>
+                    <Grid
+                      item
+                      xs={12}
+                      md={4}
+                      display="flex"
+                      justifyContent="center"
+                      className="browse-wizard-box"
+                    >
+                      <Card>
+                        <CardHeader
+                          title={value.header}
+                        />
+                        <CardContent>
+                          <Typography variant="h6">{value.title}</Typography>
+                          <List>
+                            {Object.entries(value.data).map(([bkey, row]) => (
+                              <Grid container className="browse-list browse-list-sx" >
+                                {Object.entries(value.column).map(([browseColumnskey, browseColumns]) => (
+                                  browseColumns == 'name' || browseColumns == 'product' || browseColumns == 'vendor' ? (
+                                    <Grid
+                                      item
+                                      xs={12}
+                                      md={6}
 
-                                  >
-                                    {capitalCase(row[`${browseColumns}`])}
-                                  </Grid>) : ''
-                              ))}
-                              {Object.entries(value.column).map(([browseColumnskey, browseColumns]) => (
-                                browseColumns != 'name' && browseColumns != 'product' && browseColumns != 'vendor' ? (
-                                  <Grid
-                                    item
-                                    xs={12}
-                                    md={6}
-                                  >
-                                    {row[`${browseColumns}`]}
-                                  </Grid>) : ''
-                              ))}
-                            </Grid>
-                          ))}
-                        </List>
-                      </CardContent>
-                      <CardActions>
-                        <Button onClick={event => handleShowMore(event, index)} size="small">Show More</Button>
-                      </CardActions>
-                    </Card>
-                  </Grid>
-                </>
-              ))}
+                                    >
+                                      {capitalCase(row[`${browseColumns}`])}
+                                    </Grid>) : ''
+                                ))}
+                                {Object.entries(value.column).map(([browseColumnskey, browseColumns]) => (
+                                  browseColumns != 'name' && browseColumns != 'product' && browseColumns != 'vendor' ? (
+                                    <Grid
+                                      item
+                                      xs={12}
+                                      md={6}
+                                    >
+                                      {row[`${browseColumns}`]}
+                                    </Grid>) : ''
+                                ))}
+                              </Grid>
+                            ))}
+                          </List>
+                        </CardContent>
+                        <CardActions>
+                          <Button onClick={event => handleShowMore(event, index)} size="small">Show More</Button>
+                        </CardActions>
+                      </Card>
+                    </Grid>
+                  </>
+                ))
+                : <></>
+              }
+
 
 
             </Grid>
