@@ -108,7 +108,7 @@ export default function TransitionsModal({ openModal, data, onClose, group }) {
     }
 
     const onChangeTxtField = (event,key) => {
-        const cl = {...cloned}
+        const cl = {...data}
         cl.auth_details[key] = event.target.value;
         setCloned(cl);
     }
@@ -117,11 +117,11 @@ export default function TransitionsModal({ openModal, data, onClose, group }) {
         let resetted = {};
         for (let key in cloned) {
             if (cloned.hasOwnProperty(key)) {
-                if(key != 'connection')
+                if(key != 'connection'){
                     resetted[key] = ''
+                }
             }
         }
-
         return resetted;
     }
 
@@ -162,7 +162,6 @@ export default function TransitionsModal({ openModal, data, onClose, group }) {
         const response = await Axios.post('/delete/integrations', 
                                     {...postData, application : cloned.application, type : group}
         );
-
         setCloned(resetCloned);
         refreshIntegrations();
     }
