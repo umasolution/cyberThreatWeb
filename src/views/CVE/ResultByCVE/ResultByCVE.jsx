@@ -228,7 +228,7 @@ const ResultByCVE = ({ cveNVDDetails, cveTables, cve }) => {
                             variant="caption"
                             color="textSecondary"
                           >
-                            {References.split(',').map(url => <a target="_blank" style={{ display: 'inline-block', margin:"3px" }} href={url}>{url}</a>)}
+                            {References.split(',').map(url => <div><a target="_blank" style={{ display: 'inline-block', margin:"3px" }} href={url}>{url}</a></div>)}
                           </Typography>
                     </ExpansionPanelDetails>
                </ExpansionPanel>
