@@ -20,3 +20,4 @@ export NODE_OPTIONS=--openssl-legacy-provider
 npm run build
 date_now=$(date "+%F-%H-%M-%S")
 tar -cvf /tmp/niahweb_$date_now.tar build
+tar -cvf /tmp/latest.tar build
