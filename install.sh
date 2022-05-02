@@ -19,6 +19,4 @@ sudo apt install -y build-essential
 export NODE_OPTIONS=--openssl-legacy-provider
 npm run build
 date_now=$(date "+%F-%H-%M-%S")
-tar -cvf /tmp/$date_now.tar build
-sudo gsutil cp /tmp/$date_now.tar gs://niah-build/
-
+tar -cvf /tmp/niahweb_$date_now.tar build
