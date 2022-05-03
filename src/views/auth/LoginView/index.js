@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import { styled } from '@mui/material/styles';
@@ -14,6 +14,7 @@ import Page from 'src/components/Page';
 import Logo from 'src/components/Logo';
 import AuthSocial from '../AuthSocial';
 import LoginForm from './LoginForm';
+import Axios from 'axios';
 
 const RootStyle = styled(Page)(({ theme }) => ({
   [theme.breakpoints.up('md')]: {
@@ -49,6 +50,21 @@ function LoginView() {
   const handleSubmitSuccess = () => {
     history.push('/app');
   };
+
+  useEffect(() => {
+   getData()
+    },[])
+    
+    const getData = async () => {
+      try {
+        const url = "org/details";      
+        const response = await Axios.get(url);
+        console.log(response)
+         history.push('/create-company');
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
   return (
     <RootStyle title="Login">

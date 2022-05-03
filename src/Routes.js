@@ -48,6 +48,18 @@ const routesConfig = [
     path: '/register',
     component: lazy(() => import('src/views/auth/RegisterView'))
   },
+  {
+    exact: true,
+    guard: GuestGuard,
+    path: '/create-company',
+    component: lazy(() => import('src/views/auth/CreateCompany'))
+  },
+  {
+    exact: true,
+    guard: GuestGuard,
+    path: '/create-team',
+    component: lazy(() => import('src/views/auth/CreateTeam'))
+  },
   ,
   {
     path: '/app',
