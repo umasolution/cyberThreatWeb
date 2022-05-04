@@ -15,6 +15,8 @@ import Logo from 'src/components/Logo';
 import AuthSocial from '../AuthSocial';
 import LoginForm from './LoginForm';
 import Axios from 'axios';
+import data from '@iconify/icons-eva/github-fill';
+import { useDispatch } from 'react-redux';
 
 const RootStyle = styled(Page)(({ theme }) => ({
   [theme.breakpoints.up('md')]: {
@@ -46,6 +48,7 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 function LoginView() {
   const history = useHistory();
+  const dispatch = useDispatch()
 
   const handleSubmitSuccess = () => {
     history.push('/app');
@@ -59,8 +62,11 @@ function LoginView() {
       try {
         const url = "org/details";      
         const response = await Axios.get(url);
-        console.log(response)
+       /* if(data.length > 0){
          history.push('/create-company');
+        } */
+        history.push('/create-company');
+        console.log(response)
       } catch (error) {
         console.error(error);
       }

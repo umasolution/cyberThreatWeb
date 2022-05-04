@@ -1,0 +1,27 @@
+.main-div{
+    display: flex;
+    justify-content: center;
+}
+
+.content-div{
+    width: 50%;
+    display: inline-block;
+    text-align: center;
+    border-radius: 10px;
+    padding: 5%;
+    margin-top: 3%;
+    padding-top: 0;
+    background-color: white;
+}
+
+.title{
+    margin: 7%;
+}
+
+.sub-div{
+    display: flex;
+}
+
+.flex-contents{
+    margin-right: 5px;
+}
