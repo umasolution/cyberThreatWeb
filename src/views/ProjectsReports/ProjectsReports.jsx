@@ -997,7 +997,8 @@ const ProjectsReports = () => {
                                                   variant="contained" 
                                                   color="success" 
                                                   onClick={(e)=>onScan(e,row,rkey)}
-                                                  disabled = {!(tasks.findIndex(d => d.project_id == row.table.project_details.project_id) == -1) }>
+                                                  disabled = {(!(tasks.findIndex(d => d.project_id == row.table.project_details.project_id) == -1))
+                                                  ||!(row.table.project_details.status == 'enable' ) }>
                                           {tasks.findIndex(d => d.project_id == row.table.project_details.project_id) == -1 ? "Scan" : "Scanning..."}
                                                   
                                           </Button>
