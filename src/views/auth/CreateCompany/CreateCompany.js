@@ -53,7 +53,7 @@ const getData = async () => {
     const url = "org/details";      
     const response = await Axios.get(url);
     console.log(response)
-    if(!response.data.teams.length > 0){
+    if(!response.data[0].teams.length > 0){
      history.push('/create-team');
     }else{
         history.push('/login');
