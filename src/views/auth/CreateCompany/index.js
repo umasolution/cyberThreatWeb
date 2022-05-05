@@ -1,225 +1,103 @@
-import React, { useEffect, useState } from 'react'
-import {
-    Box,
-    TextField,
-    Typography
-  } from '@material-ui/core';
-import { LoadingButton } from '@mui/lab';
-import * as Yup from 'yup';
-import Axios from 'axios';
+import React, { useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import { useHistory } from 'react-router';
-import data from '@iconify/icons-eva/github-fill';
-import { Formik } from 'formik';
+import { styled } from '@mui/material/styles';
+import {
+  Box,
+  Container,
+  Link,
+  Typography,
+} from '@material-ui/core';
+import Page from 'src/components/Page';
+import Logo from 'src/components/Logo';
+import GenericDialog from 'src/views/Shared/GenericDialog';
+import AuthSocial from '../AuthSocial';
+import '../LoginView/Login.css'
 import './createCompany.css'
+import CreateCompany from './CreateCompany';
 
-export default function CreateCompany() {
- 
-    useEffect(() => {
-      getData()
-       },[])
-       
-       const getData = async () => {
-         try {
-           const url = "org/details";      
-           const response = await Axios.get(url);
-           /*if(!response.data.teams.length > 0){
-            history.push('/create-team');
-           }
-           */
-         } catch (error) {
-           console.error(error);
-         }
-       };
-   
-  const signUpSchema = Yup.object().shape({
-    companyName: Yup.string().required('Company name is required'),
-    email:Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-    address1: Yup.string().required('Address1 is required'),
-    address2: Yup.string().required('Address2 is required'),
-    state: Yup.string().required(' State is required'),
-    country: Yup.string().required('Country is required'),
-    city: Yup.string().required('City is required'),
-    phone: Yup.string().required('Phone is Required'),
-  })
+const RootStyle = styled(Page)(({ theme }) => ({
+  [theme.breakpoints.up('md')]: {
+    display: 'flex',
+    background: '#FFFFFF',
+  }
+}));
 
-const postData = async (values) => {
- try {
-   const response = await Axios.post('/org/register', 
-   {
-    companyname:  values.companyName,
-     emailid:  values.email,
-     address1: values.address1,
-     address2:  values.address2,
-     state:  values.state,
-     country:  values.country,
-     city:  values.city,
-     phone:  values.phone
-   }
-   )
-   console.log(response)
- } catch (error) {
-   console.error(error);
- }
-};
-return (
-  <Formik
-    initialValues={{
-      companyName: '',
-      email: '',
-     address1: '',
-     address2: '',
-     state: '',
-     country: '',
-     city: '',
-      phone: ''
-    }}
-    validationSchema={signUpSchema}
 
-    onSubmit={(values) => postData(values)}
-  >
-    {({
-      errors,
-      handleBlur,
-      handleChange,
-      handleSubmit,
-      touched,
-      values
-    }) => (
-      <form
-        onSubmit={handleSubmit}
-      >
-         <div className='main-div'>
-         <div className='content-div'>
-       <Typography variant="h2" gutterBottom className='title' >
-              Create Company
-            </Typography>
-       <TextField
-          fullWidth
-          label="Company Name"
-          margin="normal"
-          name="companyName"
-          type="text"
-          value={values.companyName}
-          onBlur={handleBlur}
-          onChange={handleChange}
-          variant="outlined"
-          error={Boolean(errors.companyName && touched.companyName)}
-          helperText={touched.companyName && errors.companyName}
-        />
-          <TextField
-          fullWidth
-          label="Email Address"
-          margin="normal"
-          name="email"
-          type="email"
-          value={values.email}
-          onBlur={handleBlur}
-          onChange={handleChange}
-          variant="outlined"
-          error={Boolean(errors.email && touched.email)}
-          helperText={touched.email && errors.email}
-        />
-         <TextField
-          fullWidth
-          label="Address 1"
-          margin="normal"
-          name="address1"
-          type="text"
-          value={values.address1}
-          onBlur={handleBlur}
-          onChange={handleChange}
-          variant="outlined"
-          error={Boolean(errors.address1 && touched.address1)}
-          helperText={touched.address1 && errors.address1}
-        />
-         <TextField
-          fullWidth
-          label="Address 2"
-          margin="normal"
-          name="address2"
-          type="text"
-          value={values.address2}
-          onBlur={handleBlur}
-          onChange={handleChange}
-          variant="outlined"
-          error={Boolean(errors.address2 && touched.address2)}
-          helperText={touched.address2 && errors.address2}
-        />
-        <div className='sub-div'>
-          <TextField
-          fullWidth
-          label="State"
-          margin="normal"
-          name="state"
-          type="text"
-          className='flex-contents'
-          value={values.state}
-          onBlur={handleBlur}
-          onChange={handleChange}
-          variant="outlined"
-          error={Boolean(errors.state && touched.state)}
-          helperText={touched.state && errors.state}
-        />
-          <TextField
-          fullWidth
-          label="Country"
-          margin="normal"
-          name="country"
-          type="text"
-          className='flex-contents'
-          value={values.country}
-          onBlur={handleBlur}
-          onChange={handleChange}
-          variant="outlined"
-          error={Boolean(errors.country && touched.country)}
-          helperText={touched.country && errors.country}
-        />
-        </div>
-        <div className='sub-div'>
-          <TextField
-          fullWidth
-          label="City"
-          margin="normal"
-          name="city"
-          type="text"
-          value={values.city}
-          className='flex-contents'
-          onBlur={handleBlur}
-          onChange={handleChange}
-          variant="outlined"
-          error={Boolean(errors.city && touched.city)}
-          helperText={touched.city && errors.city}
-        />
-          <TextField
-          fullWidth
-          label="Phone"
-          margin="normal"
-          name="phone"
-          type="number"
-          value={values.phone}
-          onBlur={handleBlur}
-          onChange={handleChange}
-          className='flex-contents'
-          variant="outlined"
-          error={Boolean(errors.phone && touched.phone)}
-          helperText={touched.phone && errors.phone}
-        />
-        </div>
-        <Box mt={2}>
-          <LoadingButton
-            fullWidth
-            size="large"
-            type="submit"
-            variant="contained"
-          >
-            Create Company
-          </LoadingButton>
-        </Box>
-        </div>
-        </div>
-      </form>
-    )}
-  </Formik>
-);
+const ContentStyle = styled('div')(({ theme }) => ({
+  maxWidth: 480,
+  margin: 'auto',
+  display: 'flex',
+  minHeight: '100vh',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  padding: theme.spacing(7, 0),
+  height: '100%'
+}));
 
+
+function RegisterView() {
+  const history = useHistory();
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const handleSubmitSuccess = () => {
+    setIsDialogOpen(true);
+  };
+
+  const dialogAgree = () => {
+    history.push('/app/login');
+  }
+
+  return (
+    <RootStyle title="Register">
+      <p>
+        <header className="logoContent">
+          <RouterLink to="/">
+            <Logo className='login-logo-bedge' />
+          </RouterLink>
+        </header>
+      </p>
+
+      <p className="registerImg" width="mdDown">
+        <p>
+          <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
+            <p className="welcome">DevOps to DevSecOps. Build confidently.</p>
+          </Typography>
+          <img alt="register" src="/static/illustration_register.png" />
+        </p>
+      </p>
+
+      <Container>
+        <ContentStyle>
+
+          <RootStyle title="Company">
+            <CreateCompany onSubmitSuccess={handleSubmitSuccess} />
+          </RootStyle>
+          <Typography className="registerTerms" variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
+            By registering, I agree to &nbsp;
+            <Link underline="always" sx={{ color: 'text.primary' }}>
+              Terms of Service
+            </Link>
+            &nbsp;and&nbsp;
+            <Link underline="always" sx={{ color: 'text.primary' }}>
+              Privacy Policy
+            </Link>
+            .
+          </Typography>
+
+        </ContentStyle>
+      </Container>
+      <GenericDialog
+        isOpen={isDialogOpen}
+        title="Verification Email Sent"
+        description="A verification link has been send to your email, Please click on the link to activate your account."
+        agreeActionText="Ok"
+        agreeAction={dialogAgree}
+        onCloseAction={dialogAgree}
+      />
+    </RootStyle>
+  );
 }
+
+export default RegisterView;

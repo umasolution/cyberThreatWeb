@@ -1,122 +1,98 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
+import { useHistory } from 'react-router';
+import { styled } from '@mui/material/styles';
 import {
-    Box,
-    TextField,
-    Typography
-  } from '@material-ui/core';
-import { LoadingButton } from '@mui/lab';
-import Axios from 'axios';
-import { Formik } from 'formik';
-import * as Yup from 'yup';
-import './createTeam.css'
+  Box,
+  Container,
+  Link,
+  Typography,
+} from '@material-ui/core';
+import Page from 'src/components/Page';
+import Logo from 'src/components/Logo';
+import GenericDialog from 'src/views/Shared/GenericDialog';
+import CreateTeam from './CreateTeam';
+import '../LoginView/Login.css'
+
+const RootStyle = styled(Page)(({ theme }) => ({
+  [theme.breakpoints.up('md')]: {
+    display: 'flex',
+    background: '#FFFFFF',
+  }
+}));
 
 
-export default function CreateTeam() {
- 
-  const [company, setCompany]= useState('')
-  useEffect(() => {
-    getData()
-     },[])
-     
-     const getData = async () => {
-       try {
-         const url = "org/details";      
-         const response = await Axios.get(url);
-      /*   if(response.data.teams.company_id){
-         setCompany(response.data.teams.company_id[0])
-         }
-         */
-         
-       } catch (error) {
-         console.error(error);
-       }
-     };
- 
+const ContentStyle = styled('div')(({ theme }) => ({
+  maxWidth: 480,
+  margin: 'auto',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  padding: theme.spacing(12, 0),
+}));
 
-  const signUpSchema = Yup.object().shape({
-    companyId: Yup.string().max(255).required('Company Id is required'),
-    teamName: Yup.string().max(255).required('Team name is required'),
-  })
-  const postData = async (values) => {
-    console.log(values)
-    try {
-      const response = await Axios.post('/team/register', 
-          {
-            company_id:  company!=''? company : values.companyId,
-            team_name:  values.teamName
-          }
-          )
-    } catch (error) {
-      console.error(error);
-    }
-   };
-     return(
-      <Formik
-      initialValues={{
-        companyId: '',
-        teamName: '',
-      }}
-      validationSchema={signUpSchema}
 
-      onSubmit={(values) => postData(values)}
-    >
-      {({
-        errors,
-        handleBlur,
-        handleChange,
-        handleSubmit,
-        touched,
-        values
-      }) => (
-        <form
-          onSubmit={handleSubmit}
-        >
-           <div className='main-div'>
-         <div className='content-div'>
-         <Typography variant="h2" gutterBottom className='title'>
-              Create Team
-            </Typography>
-              <TextField
-                error={Boolean(touched.companyId && errors.companyId)}
-                fullWidth
-                helperText={touched.companyId && errors.companyId}
-                label="Company Id"
-                margin="normal"
-                name="companyId"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                type="companyId"
-                value={company !='' ?company : values.companyId}
-                variant="outlined"
-              />
-              <TextField
-                error={Boolean(touched.teamName && errors.teamName)}
-                fullWidth
-                helperText={touched.teamName && errors.teamName}
-                label="Team Name"
-                margin="normal"
-                name="teamName"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                type="teamName"
-                value={values.teamName}
-                variant="outlined"
-              />
-       
-          <Box mt={2}>
-            <LoadingButton
-              fullWidth
-              size="large"
-              type="submit"
-              variant="contained"
-            >
-              Create Team
-            </LoadingButton>
-          </Box>
-          </div>
-          </div>
-        </form>
-      )}
-    </Formik>
-     )
+function RegisterView() {
+  const history = useHistory();
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const handleSubmitSuccess = () => {
+    setIsDialogOpen(true);
+  };
+
+  const dialogAgree = () => {
+    history.push('/app/login');
+  }
+
+  return (
+    <RootStyle title="Team">
+      <p>
+        <header className="logoContent">
+          <RouterLink to="/">
+            <Logo className='login-logo-bedge' />
+          </RouterLink>
+        </header>
+      </p>
+
+      <p className="registerImg" width="mdDown">
+        <p>
+          <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }} style={{paddingTop: "40px"}}>
+            <p className="welcome">DevOps to DevSecOps. Build confidently.</p>
+          </Typography>
+          <img alt="register" src="/static/illustration_register.png" />
+        </p>
+      </p>
+
+      <Container>
+        <ContentStyle>
+
+            <CreateTeam onSubmitSuccess={handleSubmitSuccess} />
+
+          <Typography className="registerTerms" variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
+            By registering, I agree to &nbsp;
+            <Link underline="always" sx={{ color: 'text.primary' }}>
+              Terms of Service
+            </Link>
+            &nbsp;and&nbsp;
+            <Link underline="always" sx={{ color: 'text.primary' }}>
+              Privacy Policy
+            </Link>
+            .
+          </Typography>
+
+        </ContentStyle>
+      </Container>
+      <GenericDialog
+        isOpen={isDialogOpen}
+        title="Verification Email Sent"
+        description="A verification link has been send to your email, Please click on the link to activate your account."
+        agreeActionText="Ok"
+        agreeAction={dialogAgree}
+        onCloseAction={dialogAgree}
+      />
+    </RootStyle>
+  );
 }
+
+export default RegisterView;

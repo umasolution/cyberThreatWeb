@@ -62,11 +62,9 @@ function LoginView() {
       try {
         const url = "org/details";      
         const response = await Axios.get(url);
-       /* if(data.length > 0){
+        if(!response.data.length > 0){
          history.push('/create-company');
-        } */
-        history.push('/create-company');
-        console.log(response)
+        } 
       } catch (error) {
         console.error(error);
       }
