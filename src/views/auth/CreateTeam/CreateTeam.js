@@ -8,11 +8,16 @@ import { LoadingButton } from '@mui/lab';
 import Axios from 'axios';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import { useHistory } from 'react-router';
 
 
 export default function CreateTeam() {
 
-    const [company, setCompany] = useState('')
+    const history = useHistory()
+
+    const [companyName, setCompanyName] = useState('')
+    const [companyId, setCompanyId] = useState('')
+
     useEffect(() => {
         getData()
     }, [])
@@ -21,9 +26,11 @@ export default function CreateTeam() {
         try {
             const url = "org/details";
             const response = await Axios.get(url);
-            if (response.data.teams.company_id) {
-                setCompany(response.data.teams.company_id[0])
+            if (response.data[0].companyname) {
+                setCompanyName(response.data[0].companyname)
+                setCompanyId(response.data[0].company_id)
             }
+            console.log(response)
         } catch (error) {
             console.error(error);
         }
@@ -35,14 +42,19 @@ export default function CreateTeam() {
         teamName: Yup.string().max(255).required('Team name is required'),
     })
     const postData = async (values) => {
-        console.log(values)
+     
         try {
             const response = await Axios.post('/team/register',
                 {
-                    company_id: company != '' ? company : values.companyId,
+                    company_id : companyId,
                     team_name: values.teamName
                 }
             )
+            const url = "org/details";
+            const getResponse = await Axios.get(url);
+            if(getResponse.data[0].teams.length > 0){
+               history.push('/login');
+               }
         } catch (error) {
             console.error(error);
         }
@@ -50,7 +62,7 @@ export default function CreateTeam() {
     return (
         <Formik
             initialValues={{
-                companyId: '',
+                companyname : companyName,
                 teamName: '',
             }}
             validationSchema={signUpSchema}
@@ -74,16 +86,14 @@ export default function CreateTeam() {
                                 Create Team
                             </Typography>
                             <TextField
-                                error={Boolean(touched.companyId && errors.companyId)}
                                 fullWidth
-                                helperText={touched.companyId && errors.companyId}
-                                label="Company Id"
+                                label="Company Name"
                                 margin="normal"
-                                name="companyId"
+                                name="companyname"
                                 onBlur={handleBlur}
                                 onChange={handleChange}
-                                type="companyId"
-                                value={company != '' ? company : values.companyId}
+                                type="companyname"
+                                value={companyName}
                                 variant="outlined"
                             />
                             <TextField
@@ -106,6 +116,7 @@ export default function CreateTeam() {
                                     size="large"
                                     type="submit"
                                     variant="contained"
+                                    onClick={() => postData(values)}
                                 >
                                     Create Team
                                 </LoadingButton>
