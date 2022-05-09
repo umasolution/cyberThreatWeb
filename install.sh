@@ -11,6 +11,9 @@
 
 var1=$1
 sed -i "s/Niahsecurity.online/$var1/g" src/index.js
+sed -i "s/niahsecurity.online/$var1/g" src/views/Integrations/Project/ProjectListModal.js
+sed -i "s/niahsecurity.online/$var1/g" src/views/Integrations/IntegrationModal.js
+sed -i "s/niahsecurity.online/$var1/g" src/saga/pollingSaga.js
 sudo apt-get install curl -y
 curl -sL https://deb.nodesource.com/setup_17.x -o /tmp/nodesource_setup.sh
 sudo bash /tmp/nodesource_setup.sh
