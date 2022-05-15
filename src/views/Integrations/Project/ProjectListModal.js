@@ -105,6 +105,9 @@ const useStyles = makeStyles(theme => ({
     list : {
        
         marginRight : '20px'
+    },
+    outline :{
+        border : '1px solid blue'
     }
 }));
 
@@ -127,12 +130,10 @@ export default function ProjectModal({ open, onClose }) {
 
     const handleClose = () => {
         onClose();
-
     }
 
     useEffect(() => {
         setOpen(open);
-
         if (open) {
             const connectors = getConnectorList();
             console.log(connectors);
@@ -149,6 +150,7 @@ export default function ProjectModal({ open, onClose }) {
 
     const [search_api_with, setSearchAPIWith] = useState('');
     const [selectedConnector, setSelectedConnector] = useState('');
+    const [outline, setOutline] = useState(false)
 
     const checkStatus = async(application) => {
         const statusResponse = await Axios.post('http://niahsecurity.online/api/connectors/check', {application});
@@ -161,7 +163,7 @@ export default function ProjectModal({ open, onClose }) {
     const onClickConnector = async (connector, fromSearch) => {
         setLoading(true);
         setStatus(false);
-
+        setOutline(true)
         setSelectedConnector(connector);
 
        const status = await checkStatus(connector.application)
@@ -305,6 +307,7 @@ export default function ProjectModal({ open, onClose }) {
 
 
     const getSpecialLayOut = () => {
+        console.log(connectedRepos)
         return (
             <Grid xs={12} item className={styles.flex}>
                 <Grid xs={2} item className={styles.list}>
@@ -343,7 +346,6 @@ export default function ProjectModal({ open, onClose }) {
 
 
     const getRegularLayout = () => {
-
       if(!connectedRepos.data){
           return;
       }
@@ -357,7 +359,7 @@ export default function ProjectModal({ open, onClose }) {
                         <TransitionsPopper callback={getPopOverData} data={repo.details} />
                     </div>
                     <Grid container spacing={1} className={styles.content}>
-                        <Grid item xs={12} className={styles.description, styles.flex}>
+                        <Grid item xs={12} className={`${styles.description} ${styles.flex}`}>
 
                             {
                                 repo.details.tags.map(tag => (
@@ -414,12 +416,11 @@ export default function ProjectModal({ open, onClose }) {
                         <Fade in={fade}>
                             <Box sx={style}>
                                 <Grid container spacing={1} >
-
-
-
                                     {
                                         connectorList.map(connector => (
-                                            <Card className="card" className={styles.connector} onClick={() => onClickConnector(connector)}>
+                                            <Card  className={outline && selectedConnector.application == connector.application ? `${styles.connector} ${styles.outline} card` :
+                                            `${styles.connector}  card`
+                                               } onClick={() => onClickConnector(connector)}>
 
 
                                                 <div>
