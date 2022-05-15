@@ -134,6 +134,9 @@ export default function ProjectModal({ open, onClose }) {
 
     useEffect(() => {
         setOpen(open);
+        setOutline(false)
+        setConnectorClicked(false);
+        dispatch(setConnectedRepos([]))
         if (open) {
             const connectors = getConnectorList();
             console.log(connectors);
