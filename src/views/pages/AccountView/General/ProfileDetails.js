@@ -19,6 +19,7 @@ import {
 } from '@material-ui/core';
 
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
+import { baseURL } from 'src';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -51,7 +52,7 @@ function ProfileDetails({ user, className, ...rest }) {
   const fetchImage = async () => {
     var aValue = localStorage.getItem("loginuserid");
     var aValues = sessionStorage.getItem("loginuserid");
-    var linki = 'http://cyberthreatinfo.ca/api/image/'
+    var linki =`${baseURL}/image`
     if(aValue!='undefined'){
         var linkmain = linki+aValue+'.png?'+Math.random(); 
         setAvatar(linkmain);

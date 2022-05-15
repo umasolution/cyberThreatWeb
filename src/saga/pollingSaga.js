@@ -1,5 +1,6 @@
 import Axios from 'axios';
 import { takeLatest, call, delay,take, race, put } from 'redux-saga/effects';
+import { baseURL } from 'src';
 import { pollAction } from './rootSaga';
 
 const POLLING_DELAY = 30000
@@ -24,7 +25,7 @@ export function* pollingWorker() {
 const callAPI = async () => {
     let data = "";
     try{
-        data = await Axios.post("http://niahsecurity.online/api/get/projects/tasks");
+        data = await Axios.post(`${baseURL}/get/projects/tasks`);
     }catch(e) {
         console.log(e);
         data = "Erorr from API"

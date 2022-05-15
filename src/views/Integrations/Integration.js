@@ -9,6 +9,7 @@ import './Integrations.css';
 import TransitionsModal from './IntegrationModal';
 import MachineModal from './MachineModal';
 import Axios from 'axios';
+import { baseURL } from 'src';
 
 
 const useStyles = makeStyles(theme => ({
@@ -47,7 +48,7 @@ const Integration = ({ data, group, index }) => {
     }
 
     const checkStatus = async() => {
-        const statusResponse = await Axios.post('http://niahsecurity.online/api/connectors/check', {application : data.application});
+        const statusResponse = await Axios.post(`${baseURL}/connectors/check`, {application : data.application});
         if(statusResponse.data.status != "1"){
             setStatus(true);
         }

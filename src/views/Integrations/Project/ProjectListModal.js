@@ -19,6 +19,7 @@ import {
 import { useHistory } from 'react-router';
 import InfoIcon from '@material-ui/icons/Info';
 import TransitionsPopper from 'src/components/TransitionPopper';
+import { baseURL } from 'src';
 
 
 
@@ -156,7 +157,7 @@ export default function ProjectModal({ open, onClose }) {
     const [outline, setOutline] = useState(false)
 
     const checkStatus = async(application) => {
-        const statusResponse = await Axios.post('http://niahsecurity.online/api/connectors/check', {application});
+        const statusResponse = await Axios.post(`${baseURL}/connectors/check`, {application});
 
         if(statusResponse.data.status != "1"){
             setStatus(true);
