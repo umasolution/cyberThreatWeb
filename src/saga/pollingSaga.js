@@ -2,7 +2,7 @@ import Axios from 'axios';
 import { takeLatest, call, delay,take, race, put } from 'redux-saga/effects';
 import { pollAction } from './rootSaga';
 
-const POLLING_DELAY = 2500
+const POLLING_DELAY = 30000
 
 export function* startPollingWorker() {
      yield race({
