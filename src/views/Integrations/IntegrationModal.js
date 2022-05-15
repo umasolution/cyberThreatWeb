@@ -50,18 +50,17 @@ const useStyles = makeStyles(theme=>({
     }
 }));
 
-export default function TransitionsModal({ openModal, data, onClose, group }) {
+export default function TransitionsModal({ openModal, data, onClose, group, status }) {
     const styles = useStyles();
     const [open, setOpen] = React.useState(openModal);
     const [cloned,setCloned] = React.useState({...data});
 
-    const [status, setStatus] = React.useState(false)
+   
     const dispatch = useDispatch();
 
     useEffect(() => {
         setOpen(openModal);
         setError('');
-        checkStatus();
     }, [openModal])
     const handleOpen = () => setOpen(open);
     const handleClose = () => onClose(false);
@@ -71,17 +70,6 @@ export default function TransitionsModal({ openModal, data, onClose, group }) {
 
     const [error,setError] = React.useState('');
 
-    const checkStatus = async() => {
-        const statusResponse = await Axios.post('http://niahsecurity.online/api/connectors/check', {application : data.application});
-
-        if(statusResponse.data.status != "1"){
-            setStatus(true);
-        }
-
-
-    }
-
-    
 
     const existingLayoutComponents = (components) => {
         return components.map(component => {

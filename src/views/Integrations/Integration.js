@@ -8,6 +8,7 @@ import {
 import './Integrations.css';
 import TransitionsModal from './IntegrationModal';
 import MachineModal from './MachineModal';
+import Axios from 'axios';
 
 
 const useStyles = makeStyles(theme => ({
@@ -23,6 +24,7 @@ const Integration = ({ data, group, index }) => {
     const styles = useStyles();
     const [open,setOpen] = useState(false);
     const [machineOpen,setMachineOpen] = useState(false);
+    const [status, setStatus] = useState(false)
 
     const onOpen = () => {
         console.log(data);
@@ -33,7 +35,7 @@ const Integration = ({ data, group, index }) => {
         }else{
             setOpen(true);
         }
-        
+        checkStatus()
     }
 
     const onClose = () => {
@@ -44,7 +46,14 @@ const Integration = ({ data, group, index }) => {
         setMachineOpen(false);
     }
 
+    const checkStatus = async() => {
+        const statusResponse = await Axios.post('http://niahsecurity.online/api/connectors/check', {application : data.application});
+        if(statusResponse.data.status != "1"){
+            setStatus(true);
+        }
 
+
+    }
 
     return (
         <Card className="card" >
@@ -58,7 +67,7 @@ const Integration = ({ data, group, index }) => {
                         {data?.name}
                     </div>
                 </div>
-                <TransitionsModal openModal = {open} data={data} onClose = {onClose} group={group} index={index}/>
+                <TransitionsModal openModal = {open} status={status} data={data} onClose = {onClose} group={group} index={index}/>
                 <MachineModal openModal = {machineOpen} data={data} onClose = {onMachineClose} group={group} index={index}/>
             </CardContent>
         </Card>
