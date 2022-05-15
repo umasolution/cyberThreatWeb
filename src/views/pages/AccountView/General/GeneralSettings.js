@@ -60,7 +60,9 @@ function GeneralSettings({ user, className, ...rest }) {
         team_name: user.team_name,
         state: state,
         company_id: user.company_id,
-        team_id:user.team_id
+        team_id:user.team_id,
+        city: user.city,
+        pincode: user.pincode
       }}
       validationSchema={Yup.object().shape({
         /*country: Yup.string().max(255).required('Country is required'),*/
@@ -281,6 +283,44 @@ function GeneralSettings({ user, className, ...rest }) {
                       disabled
                       type="team_name"
                       value={values.team_name}
+                      variant="outlined"
+                    />
+                  </Grid>
+                  <Grid
+                    item
+                    md={6}
+                    xs={12}
+                  >
+                    <TextField
+                      error={Boolean(touched.city && errors.city)}
+                      fullWidth
+                      helperText={touched.city && errors.city}
+                      label="City"
+                      name="city"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      required
+                      type="city"
+                      value={values.city}
+                      variant="outlined"
+                    />
+                  </Grid>
+                  <Grid
+                    item
+                    md={6}
+                    xs={12}
+                  >
+                    <TextField
+                      error={Boolean(touched.pincode && errors.pincode)}
+                      fullWidth
+                      helperText={touched.pincode && errors.pincode}
+                      label="Pincode"
+                      name="pincode"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      required
+                      type="pincode"
+                      value={values.pincode}
                       variant="outlined"
                     />
                   </Grid>
