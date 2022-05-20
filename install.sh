@@ -10,6 +10,7 @@
 
 
 var1=$1
+sed -i "s/niahsecurity.online/$var1/g" src/index.js
 sed -i "s/Niahsecurity.online/$var1/g" src/index.js
 sed -i "s/niahsecurity.online/$var1/g" src/views/Integrations/Project/ProjectListModal.js
 sed -i "s/niahsecurity.online/$var1/g" src/views/Integrations/IntegrationModal.js
