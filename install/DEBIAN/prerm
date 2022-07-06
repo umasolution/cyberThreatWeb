@@ -1,0 +1,12 @@
+#!/bin/bash
+# file name preinst
+# Pre-install script for tera. This removes old versions o tera.
+
+echo "uninstalled niah web..."
+
+sudo cp /etc/nginx/nginx.conf.org /etc/nginx/nginx.conf
+sudo service nginx restart
+
+sudo rm -rf /usr/share/niah-web
+sudo rm -rf /var/www/html/*
+

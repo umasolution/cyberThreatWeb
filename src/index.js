@@ -21,10 +21,10 @@ import Axios from 'axios';
 
 
 enableES5();
-export const baseURL='http://niahsecurity.online/api'
-  Axios.defaults.baseURL= 'http://Niahsecurity.online/api';
-/*Axios.defaults.baseURL = 'http://cyberthreatinfo.ca/api';*/
-/*Axios.defaults.baseURL = 'https://niah.smartcodders.com/';*/
+export const baseURL='http://niahsecurity.online:9182/api'
+  Axios.defaults.baseURL= 'http://Niahsecurity.online:9182/api';
+/*Axios.defaults.baseURL = 'http://cyberthreatinfo.ca:9182/api';*/
+/*Axios.defaults.baseURL = 'https://niah.smartcodders.com:9182/';*/
 
 const store = configureStore();
 const settings = restoreSettings();
