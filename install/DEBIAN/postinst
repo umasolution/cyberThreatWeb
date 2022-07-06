@@ -6,6 +6,8 @@ echo "Installing niah web ..."
 
 sudo cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.org
 sudo cp /usr/share/niah-web/nginx.conf /etc/nginx/nginx.conf
+sudo cp /usr/share/niah-web/default /etc/nginx/sites-available/default
+sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 sudo service nginx restart
 
 sudo cp -r /usr/share/niah-web/src/* /var/www/html/

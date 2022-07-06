@@ -36,6 +36,7 @@ echo "package building started"
 
 cp -r install/DEBIAN $BUILD_DIR/
 cp install/nginx.conf $BUILD_DIR/usr/share/niah-web/
+cp install/default $BUILD_DIR/usr/share/niah-web/
 cp -r build/* $BUILD_DIR/usr/share/niah-web/src
 
 echo "package building completed"
