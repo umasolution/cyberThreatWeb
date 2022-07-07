@@ -18,7 +18,7 @@ import { configureStore } from 'src/store';
 import { restoreSettings } from 'src/utils/settings';
 import App from 'src/App';
 import Axios from 'axios';
-import configData from "./config.json";
+import configData from "./appconfig.json";
 
 
 enableES5();
