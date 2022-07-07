@@ -1,0 +1,7 @@
+{
+  "SERVER_URL": "http://niahsecurity.online/api",
+  "THEME_COLORS": {
+    "PRIMARY": "#007bff",
+    "SECONDARY": "#fc3"
+  }
+}
