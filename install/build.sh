@@ -18,8 +18,8 @@ mkdir $BUILD_DIR/usr/share/niah-web/
 mkdir $BUILD_DIR/usr/share/niah-web/src
 
 echo "build niwhweb nodejs"
-sed -i "s/niahsecurity.online/$var1/g" src/config.json
-sed -i "s/Niahsecurity.online/$var1/g" src/config.json
+sed -i "s/niahsecurity.online/$var1/g" public/config.json
+sed -i "s/Niahsecurity.online/$var1/g" public/config.json
 sed -i "s/niahsecurity.online/$var1/g" src/index.js
 sed -i "s/Niahsecurity.online/$var1/g" src/index.js
 sed -i "s/niahsecurity.online/$var1/g" src/views/Integrations/Project/ProjectListModal.js
