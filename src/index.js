@@ -18,11 +18,15 @@ import { configureStore } from 'src/store';
 import { restoreSettings } from 'src/utils/settings';
 import App from 'src/App';
 import Axios from 'axios';
+import configData from "./config.json";
 
 
 enableES5();
-export const baseURL='http://niahsecurity.online:9182/api'
-  Axios.defaults.baseURL= 'http://Niahsecurity.online:9182/api';
+export const baseURL=configData.SERVER_URL
+  Axios.defaults.baseURL=configData.SERVER_URL;
+
+/*export const baseURL='http://niahsecurity.online:9182/api'*/
+/*  Axios.defaults.baseURL= 'http://Niahsecurity.online:9182/api';*/
 /*Axios.defaults.baseURL = 'http://cyberthreatinfo.ca:9182/api';*/
 /*Axios.defaults.baseURL = 'https://niah.smartcodders.com:9182/';*/
 
