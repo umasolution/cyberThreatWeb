@@ -18,12 +18,11 @@ import { configureStore } from 'src/store';
 import { restoreSettings } from 'src/utils/settings';
 import App from 'src/App';
 import Axios from 'axios';
-import configData from "./appconfig.json";
 
 
 enableES5();
-export const baseURL=configData.SERVER_URL
-  Axios.defaults.baseURL=configData.SERVER_URL;
+export const baseURL=window._env_.API_URL
+  Axios.defaults.baseURL=window._env_.API_URL;
 
 /*export const baseURL='http://niahsecurity.online:9182/api'*/
 /*  Axios.defaults.baseURL= 'http://Niahsecurity.online:9182/api';*/

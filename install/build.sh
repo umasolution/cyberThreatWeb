@@ -18,13 +18,10 @@ mkdir $BUILD_DIR/usr/share/niah-web/
 mkdir $BUILD_DIR/usr/share/niah-web/src
 
 echo "build niwhweb nodejs"
-sed -i "s/niahsecurity.online/$var1/g" public/config.json
-sed -i "s/Niahsecurity.online/$var1/g" public/config.json
-sed -i "s/niahsecurity.online/$var1/g" src/index.js
-sed -i "s/Niahsecurity.online/$var1/g" src/index.js
-sed -i "s/niahsecurity.online/$var1/g" src/views/Integrations/Project/ProjectListModal.js
-sed -i "s/niahsecurity.online/$var1/g" src/views/Integrations/IntegrationModal.js
-sed -i "s/niahsecurity.online/$var1/g" src/saga/pollingSaga.js
+sed -i "s/niahsecurity.online/$var1/g" public/env-config.js
+sed -i "s/Niahsecurity.online/$var1/g" public/env-config.js
+sed -i "s/niahsecurity.online/$var1/g" public/.env
+sed -i "s/Niahsecurity.online/$var1/g" public/.env
 sudo apt-get install curl -y
 curl -sL https://deb.nodesource.com/setup_17.x -o /tmp/nodesource_setup.sh
 sudo bash /tmp/nodesource_setup.sh
