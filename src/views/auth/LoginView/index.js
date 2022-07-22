@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import { styled } from '@mui/material/styles';
@@ -50,6 +50,8 @@ function LoginView() {
   const history = useHistory();
   const dispatch = useDispatch()
 
+  const [disableSignup, setDisableSignup] = useState(false)
+
   const handleSubmitSuccess = () => {
     history.push('/app');
   };
@@ -68,6 +70,12 @@ function LoginView() {
         if(!response.data[0].teams.length > 0){
           history.push('/create-team');
          } 
+
+         const signinUrl = "niah/profile/public"
+         const getResponse = await Axios.get(signinUrl);
+        if(getResponse.data.auto_signup == "no"){
+          setDisableSignup(true)
+        }
       } catch (error) {
         console.error(error);
       }
@@ -80,12 +88,17 @@ function LoginView() {
           <RouterLink to="/">
             <Logo className='login-logo-bedge' />
           </RouterLink>
-          <p className="start">
-            Don’t have an account? &nbsp;
-            <Link underline="none" variant="subtitle2" component={RouterLink} to="/register">
-              Get started
-            </Link>
-          </p>
+          {
+            !disableSignup ? (
+              <p className="start">
+              Don’t have an account? &nbsp;
+              <Link underline="none" variant="subtitle2" component={RouterLink} to="/register">
+                Get started
+              </Link>
+            </p>
+            ) : <></>
+          }
+        
         </header> 
       </p>
 
