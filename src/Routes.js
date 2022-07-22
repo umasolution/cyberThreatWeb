@@ -60,6 +60,12 @@ const routesConfig = [
     path: '/create-team',
     component: lazy(() => import('src/views/auth/CreateTeam'))
   },
+  {
+    exact: true,
+    guard: GuestGuard,
+    path: '/create-admin-user',
+    component: lazy(() => import('src/views/auth/CreateAdminUser'))
+  },
   ,
   {
     path: '/app',

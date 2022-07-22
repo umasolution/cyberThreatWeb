@@ -65,6 +65,9 @@ function LoginView() {
         if(!response.data.length > 0){
          history.push('/create-company');
         } 
+        if(!response.data[0].teams.length > 0){
+          history.push('/create-team');
+         } 
       } catch (error) {
         console.error(error);
       }

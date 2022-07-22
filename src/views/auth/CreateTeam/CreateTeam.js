@@ -53,7 +53,7 @@ export default function CreateTeam() {
             const url = "org/details";
             const getResponse = await Axios.get(url);
             if(getResponse.data[0].teams.length > 0){
-               history.push('/login');
+               history.push('/create-admin-user');
                }
         } catch (error) {
             console.error(error);
