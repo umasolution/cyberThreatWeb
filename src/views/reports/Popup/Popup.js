@@ -90,12 +90,9 @@ export default function PopUp(openPop) {
     }, [popupOpen])
 
     
-    const handleClose = async() => {
+    const handleClose = () => {
         setOpen(false);
         dispatch(setOpenPopup(false))
-        const profile_url = "/niah/profile"
-        const response = await Axios.get(profile_url);
-        dispatch(setPopUpDetails(response.data))
     };
 
 
