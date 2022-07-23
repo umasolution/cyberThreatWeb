@@ -11,6 +11,7 @@ export const REGISTER = '@account/register';
 export const REGISTER_SUCCESS = '@account/register-success';
 export const REGISTER_FAILURE = '@account/register-failure';
 export const UPDATE_PROFILE = '@account/update-profile';
+export const IS_ADMIN = '@account/is-admin';
 
 export function login(email, password) {
   return async (dispatch) => {
@@ -122,4 +123,12 @@ export function updatePassword(update) {
       payload: { user: authService.getUserName() }
     })
   };
+}
+export function setIsAdmin(user) {
+  return (dispatch) => dispatch({
+    type: IS_ADMIN,
+    payload: {
+      user
+    }
+  });
 }

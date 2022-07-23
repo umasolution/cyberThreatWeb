@@ -10,6 +10,7 @@ import sideBarReducer from './sidebarReducer';
 import integrationReducer from './integrationReducer';
 import advisoryReducer from './advisoryReducer';
 import taskReducer from './taskReducer';
+import popupReducer from './popupReducer';
 
 const rootReducer = combineReducers({
   account: accountReducer,
@@ -22,7 +23,8 @@ const rootReducer = combineReducers({
   sidebar : sideBarReducer,
   integrations : integrationReducer,
   advisor : advisoryReducer,
-  tasks : taskReducer
+  tasks : taskReducer,
+  popup : popupReducer
 });
 
 export default rootReducer;

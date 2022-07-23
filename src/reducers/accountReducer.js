@@ -6,11 +6,13 @@ import {
   LOGIN_FAILURE,
   LOGOUT,
   SILENT_LOGIN,
-  UPDATE_PROFILE
+  UPDATE_PROFILE,
+  IS_ADMIN
 } from 'src/actions/accountActions';
 
 const initialState = {
-  user: null
+  user: null,
+  isAdmin: 'no'
 };
 
 const accountReducer = (state = initialState, action) => {
@@ -58,6 +60,13 @@ const accountReducer = (state = initialState, action) => {
       });
     }
 
+    case IS_ADMIN: {
+      const { user } = action.payload;
+
+      return produce(state, (draft) => {
+        draft.isAdmin = user;
+      });
+    }
     default: {
       return state;
     }

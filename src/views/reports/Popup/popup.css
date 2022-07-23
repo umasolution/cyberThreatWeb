@@ -1,0 +1,40 @@
+
+.sub-div{
+    display: flex;
+}
+
+.flex-contents-select{
+    margin-right: 15px;
+    margin-left: 15px;
+}
+.flex-contents{
+    margin-right: 5px;
+}
+
+.select-groups{
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.css-140puxv-MuiTypography-root-MuiDialogTitle-root{
+    display: none;
+}
+
+.flex-contents-domain{
+    margin-right: 5px;
+    border: 1px solid black;
+    padding: 3px;
+    border-radius: 5px;
+}
+.hasError{
+    font-size: medium;
+    color: red;
+    font-weight: 300;
+    margin-right: 50px;
+}
+.noError{
+    font-size: medium;
+    color: green;
+    font-weight: 300;
+    margin-right: 50px;
+}

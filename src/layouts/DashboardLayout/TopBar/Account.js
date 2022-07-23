@@ -18,7 +18,8 @@ import {
   Typography,
   makeStyles
 } from '@material-ui/core';
-import { logout } from 'src/actions/accountActions';
+import { IS_ADMIN, logout, setIsAdmin } from 'src/actions/accountActions';
+import { setOpenPopup } from 'src/actions/popupAction';
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -74,6 +75,7 @@ function Account() {
       const url = `/getProfile`;        
       let response = await Axios.get(url); 
       setProfileResponse(response.data.general);
+      dispatch(setIsAdmin(response.data.general.admin));
      
     } catch (error) {
       console.error(error);
@@ -97,6 +99,9 @@ function Account() {
     }
   };
 
+  const enableDialogBox = () => {
+    dispatch(setOpenPopup(true))
+  }
   return (
     <>
       <Box
@@ -138,6 +143,9 @@ function Account() {
           to="/app/account"
         >
           Account
+        </MenuItem>
+        <MenuItem onClick={enableDialogBox}>
+          Preference
         </MenuItem>
         <MenuItem onClick={handleLogout}>
           Logout

@@ -33,6 +33,9 @@ import TodaysMoney from './TodaysMoney';
 import CONSTANTS from "../../../Util/Constants";
 import MySnackbar from "../../../Shared/Snackbar/MySnackbar";
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import PopUp from '../Popup/Popup';
+import { useDispatch, useSelector } from 'react-redux';
+import {  setOpenPopup, setPopUpDetails } from 'src/actions/popupAction';
 
 
 
@@ -62,6 +65,7 @@ function DashboardView() {
 
   let history = useHistory();
   let location = useLocation();
+  const dispatch = useDispatch()
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -71,13 +75,27 @@ function DashboardView() {
   const [selectData, setSelectData] = useState('dependancies');
   const [switchData, setSwitchData] = useState(false);
   const [countData, setCountData] = useState(false);
+  const [popupOpen, setPopupOpen] = useState(false)
   const query = new URLSearchParams(window.location.search);
   const dashboardType = query.get('type');
+  const isAdmin = useSelector(state => state.account.isAdmin)
+  const popup = useSelector(state => state.popup)
 
+  useEffect(() => {
+    const fetchProfileDetails = async () => {
+      const profile_url = "/niah/profile"
+      const response = await Axios.get(profile_url);
+      dispatch(setPopUpDetails(response.data))
+      dispatch(setOpenPopup(true))
+      setPopupOpen(true)
+    }
+    if (isAdmin == 'yes') {
+      fetchProfileDetails();
+    }
+  }, [isAdmin, popupOpen])
 
   useEffect(() => {
     setLoading(true);
-
     const updateSnackbar = (open, message) => {
       setSnackbarOpen(open);
       setSnackbarMessage(message)
@@ -188,6 +206,10 @@ function DashboardView() {
         className={classes.root}
         title="Dashboard"
       >
+        {
+          popupOpen ?
+          <PopUp openPop={popupOpen} /> : <></>
+        }
         <Container
           maxWidth={false}
           className={classes.container}
