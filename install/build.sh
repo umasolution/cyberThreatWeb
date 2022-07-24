@@ -43,7 +43,7 @@ echo "package building completed"
 echo "started deb package creation"
 dpkg-deb --build $BUILD_DIR $BUILD_NAME
 
-mkdir /var/www/html/build/niah-web/$1/$DATE
+mkdir /var/niah/build/niah-web/$1/$DATE
 
-cp $BUILD_NAME /var/www/html/build/niah-web/$1/$DATE
+cp $BUILD_NAME /var/niah/build/niah-web/$1/$DATE
 
