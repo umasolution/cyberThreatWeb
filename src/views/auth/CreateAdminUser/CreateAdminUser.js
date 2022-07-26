@@ -288,7 +288,7 @@ export default function CreateAdminUser() {
                                     label="Pincode"
                                     margin="normal"
                                     name="pincode"
-                                    type="number"
+                                    type="text"
                                     value={values.pincode}
                                     onBlur={handleBlur}
                                     onChange={handleChange}
