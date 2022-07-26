@@ -1,10 +1,11 @@
-import { ENABLE_POPUP, SET_OPEN_POPUP, UPDATE_POPUP_DETAILS } from "src/actions/popupAction";
+import { SET_CLOSE_BETWEEN_PAGES, ENABLE_POPUP, SET_OPEN_POPUP, UPDATE_POPUP_DETAILS } from "src/actions/popupAction";
 import produce from 'immer';
 
 const initialState = {
     details: {},
     open: false,
-    enable: true
+    enable: true,
+    close: false
 }
 
 
@@ -32,6 +33,14 @@ const popupReducer = (state = initialState, action) => {
 
             return produce(state, (draft) => {
                 draft.enable = details;
+            });
+        }
+
+        case SET_CLOSE_BETWEEN_PAGES: {
+            const { details } = action.payload;
+
+            return produce(state, (draft) => {
+                draft.close = details;
             });
         }
 

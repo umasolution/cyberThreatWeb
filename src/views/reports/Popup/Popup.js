@@ -26,7 +26,7 @@ import { LoadingButton } from '@mui/lab';
 import './popup.css'
 import Axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { setOpenPopup, setPopUpDetails } from 'src/actions/popupAction';
+import { closeBetweenPages, setOpenPopup, setPopUpDetails } from 'src/actions/popupAction';
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
         padding: theme.spacing(2),
@@ -93,11 +93,12 @@ export default function PopUp(openPop) {
             setCheckBox(profileDetails.niah_config_pop_up)
             setSSL(profileDetails.email_ssl)
         }
-    }, [popupOpen.open])
+    }, [popupOpen.open, popupOpen.close])
 
     
     const handleClose = () => {
         setOpen(false);
+        dispatch(closeBetweenPages(true))
         dispatch(setOpenPopup(false))
     };
 

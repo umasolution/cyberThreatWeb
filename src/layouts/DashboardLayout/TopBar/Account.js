@@ -19,7 +19,7 @@ import {
   makeStyles
 } from '@material-ui/core';
 import { IS_ADMIN, logout, setIsAdmin } from 'src/actions/accountActions';
-import { setOpenPopup } from 'src/actions/popupAction';
+import { closeBetweenPages, setOpenPopup } from 'src/actions/popupAction';
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -100,6 +100,7 @@ function Account() {
   };
 
   const enableDialogBox = () => {
+    dispatch(closeBetweenPages(false))
     dispatch(setOpenPopup(true))
   }
   return (
