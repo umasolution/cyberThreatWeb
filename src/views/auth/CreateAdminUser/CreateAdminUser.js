@@ -223,8 +223,6 @@ export default function CreateAdminUser() {
                                 onBlur={handleBlur}
                                 onChange={handleChange}
                                 variant="outlined"
-                                error={Boolean(errors.address2 && touched.address2)}
-                                helperText={touched.address2 && errors.address2}
                             />
                             <TextField
                                 fullWidth
