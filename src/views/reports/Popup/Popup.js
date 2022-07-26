@@ -65,7 +65,6 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function PopUp(openPop) {
-    console.log(openPop)
     const dispatch = useDispatch()
     const [open, setOpen] = React.useState(false);
     const [ssl, setSSL] = React.useState(false);
@@ -79,20 +78,22 @@ export default function PopUp(openPop) {
     const [responseMsg, setResponseMsg] = React.useState('');
     const [error, setError] = React.useState(false);
     const profileDetails = useSelector(state => state.popup.details)
-    const popupOpen = useSelector(state => state.popup.open)
+    const popupOpen = useSelector(state => state.popup)
 
     React.useEffect(() => {
-        setError(false)
-        setResponseMsg('')
-        setOpen(openPop)
-        setFireWare(profileDetails.auto_firware_update)
-        setSignup(profileDetails.auto_signup)
-        setActivate(profileDetails.activation_by_email)
-        setFeed(profileDetails.auto_update_feed_signature)
-        setDomain(profileDetails.allow_domains)
-        setCheckBox(profileDetails.niah_config_pop_up)
-        setSSL(profileDetails.email_ssl)
-    }, [popupOpen])
+        if(popupOpen.enable){
+            setError(false)
+            setResponseMsg('')
+            setOpen(popupOpen.open)
+            setFireWare(profileDetails.auto_firware_update)
+            setSignup(profileDetails.auto_signup)
+            setActivate(profileDetails.activation_by_email)
+            setFeed(profileDetails.auto_update_feed_signature)
+            setDomain(profileDetails.allow_domains)
+            setCheckBox(profileDetails.niah_config_pop_up)
+            setSSL(profileDetails.email_ssl)
+        }
+    }, [popupOpen.opn])
 
     
     const handleClose = () => {
