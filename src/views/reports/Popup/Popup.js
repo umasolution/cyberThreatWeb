@@ -93,7 +93,7 @@ export default function PopUp(openPop) {
             setCheckBox(profileDetails.niah_config_pop_up)
             setSSL(profileDetails.email_ssl)
         }
-    }, [popupOpen.opn])
+    }, [popupOpen.open])
 
     
     const handleClose = () => {

@@ -35,7 +35,7 @@ import MySnackbar from "../../../Shared/Snackbar/MySnackbar";
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import PopUp from '../Popup/Popup';
 import { useDispatch, useSelector } from 'react-redux';
-import {  setOpenPopup, setPopUpDetails } from 'src/actions/popupAction';
+import {  enablePopup, setOpenPopup, setPopUpDetails } from 'src/actions/popupAction';
 
 
 
@@ -85,14 +85,22 @@ function DashboardView() {
     const fetchProfileDetails = async () => {
       const profile_url = "/niah/profile"
       const response = await Axios.get(profile_url);
+      console.log(response.data)
+      
       dispatch(setPopUpDetails(response.data))
-      dispatch(setOpenPopup(true))
-      setPopupOpen(true)
+      if(response.data.niah_config_pop_up == "enable"){
+        dispatch(enablePopup(true))
+        dispatch(setOpenPopup(true))
+        setPopupOpen(true)
+      }else{
+        dispatch(enablePopup(false))
+      }
+      
     }
     if (isAdmin == 'yes') {
       fetchProfileDetails();
     }
-  }, [isAdmin, popupOpen])
+  }, [isAdmin])
 
   useEffect(() => {
     setLoading(true);

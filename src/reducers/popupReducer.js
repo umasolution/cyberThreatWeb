@@ -1,9 +1,10 @@
-import { SET_OPEN_POPUP, UPDATE_POPUP_DETAILS } from "src/actions/popupAction";
+import { ENABLE_POPUP, SET_OPEN_POPUP, UPDATE_POPUP_DETAILS } from "src/actions/popupAction";
 import produce from 'immer';
 
 const initialState = {
     details: {},
-    open: false
+    open: false,
+    enable: true
 }
 
 
@@ -23,6 +24,14 @@ const popupReducer = (state = initialState, action) => {
 
             return produce(state, (draft) => {
                 draft.open = details;
+            });
+        }
+
+        case ENABLE_POPUP: {
+            const { details } = action.payload;
+
+            return produce(state, (draft) => {
+                draft.enable = details;
             });
         }
 
