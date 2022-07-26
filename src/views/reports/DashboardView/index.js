@@ -88,7 +88,7 @@ function DashboardView() {
       console.log(response.data)
       
       dispatch(setPopUpDetails(response.data))
-      if(response.data.niah_config_pop_up == "enable"){
+      if(response.data.niah_config_pop_up == "enable"  && !popup.close){
         dispatch(enablePopup(true))
         dispatch(setOpenPopup(true))
         setPopupOpen(true)
