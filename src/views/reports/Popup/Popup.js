@@ -65,8 +65,10 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function PopUp(openPop) {
+    console.log(openPop)
     const dispatch = useDispatch()
     const [open, setOpen] = React.useState(false);
+    const [ssl, setSSL] = React.useState(false);
     const [fireware, setFireWare] = React.useState('');
     const [signup, setSignup] = React.useState('');
     const [activate, setActivate] = React.useState('');
@@ -80,13 +82,16 @@ export default function PopUp(openPop) {
     const popupOpen = useSelector(state => state.popup.open)
 
     React.useEffect(() => {
-        setOpen(popupOpen)
+        setError(false)
+        setResponseMsg('')
+        setOpen(openPop)
         setFireWare(profileDetails.auto_firware_update)
         setSignup(profileDetails.auto_signup)
         setActivate(profileDetails.activation_by_email)
         setFeed(profileDetails.auto_update_feed_signature)
         setDomain(profileDetails.allow_domains)
         setCheckBox(profileDetails.niah_config_pop_up)
+        setSSL(profileDetails.email_ssl)
     }, [popupOpen])
 
     
@@ -107,6 +112,9 @@ export default function PopUp(openPop) {
     }
     const handleChangeSignup = (event) => {
         setSignup(event.target.value)
+    }
+    const handleChangeSSL = (event) => {
+        setSSL(event.target.value)
     }
 
     const handleCheckbox = async (event) => {
@@ -152,7 +160,7 @@ export default function PopUp(openPop) {
                 email_port: values.email_port,
                 email_username: values.email_username,
                 email_password: values.email_password,
-                email_ssl: values.email_ssl,
+                email_ssl: ssl,
                 auto_update_feed_signature: feed,
                 auto_firware_update: fireware,
                 niah_config_pop_up: checkbox
@@ -209,19 +217,23 @@ export default function PopUp(openPop) {
                             >
                                 <div className='main-div'>
                                     <div className='content-div'>
-
-                                        <TextField
+                                        <div>
+                                            <h3 className='section-title'>Celery Setting</h3>
+                                            <div className='section-contents-input'>
+                                            <div className='sub-div'>
+                                    <TextField
                                             fullWidth
                                             label="Celery Ip"
                                             margin="normal"
                                             name="celery_ip"
                                             type="text"
+                                            className='flex-contents'
                                             value={values.celery_ip}
                                             onBlur={handleBlur}
                                             onChange={handleChange}
                                             variant="outlined"
-                                        //error={Boolean(errors.companyName && touched.companyName)}
-                                        //helperText={touched.companyName && errors.companyName}
+                                            //error={Boolean(errors.companyName && touched.companyName)}
+                                            //helperText={touched.companyName && errors.companyName}
                                         />
                                         <TextField
                                             fullWidth
@@ -229,18 +241,21 @@ export default function PopUp(openPop) {
                                             margin="normal"
                                             name="celery_username"
                                             type="text"
+                                            className='flex-contents'
                                             value={values.celery_username}
                                             onBlur={handleBlur}
                                             onChange={handleChange}
                                             variant="outlined"
                                         />
-                                        <TextField
+                                    </div>
+                                    <div className='sub-div'>
+                                    <TextField
                                             fullWidth
-                                            aria-readonly={false}
                                             label="Celery Password"
                                             margin="normal"
                                             name="celery_password"
                                             type="password"
+                                            className='flex-contents'
                                             value={values.celery_password}
                                             onBlur={handleBlur}
                                             onChange={handleChange}
@@ -252,13 +267,19 @@ export default function PopUp(openPop) {
                                             margin="normal"
                                             name="celery_vhost"
                                             type="text"
+                                            className='flex-contents'
                                             value={values.celery_vhost}
                                             onBlur={handleBlur}
                                             onChange={handleChange}
                                             variant="outlined"
                                         />
-
-                                        <TextField
+                                    </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h3 className='section-title'>Email Setting</h3>
+                                            <div className='section-contents-input'>
+                                            <TextField
                                             fullWidth
                                             label="Email Server"
                                             margin="normal"
@@ -275,7 +296,7 @@ export default function PopUp(openPop) {
                                                 label="Email Username"
                                                 margin="normal"
                                                 name="email_username"
-                                                type="email"
+                                                type="text"
                                                 className='flex-contents'
                                                 value={values.email_username}
                                                 onBlur={handleBlur}
@@ -308,24 +329,34 @@ export default function PopUp(openPop) {
                                                 onChange={handleChange}
                                                 variant="outlined"
                                             />
-                                            <TextField
-                                                fullWidth
-                                                label="Email SSL"
-                                                margin="normal"
-                                                name="email_ssl"
-                                                type="text"
-                                                className='flex-contents'
-                                                value={values.email_ssl}
-                                                onBlur={handleBlur}
-                                                onChange={handleChange}
-                                                variant="outlined"
-                                            />
+                                             <Box sx={{ minWidth: 240 }} className='flex-contents-select single-select'>
+                                                <FormControl fullWidth>
+                                                    <InputLabel id="demo-select-small"
+                                                    >Email SSL</InputLabel>
+                                                    <Select
+                                                        labelId="demo-select-small"
+                                                        id="demo-select-small"
+                                                        value={ssl}
+                                                        label="activation_by_email"
+                                                        onChange={(event) => handleChangeSSL(event)}
+                                                    >
+                                                        <MenuItem value={'true'}>True</MenuItem>
+                                                        <MenuItem value={'false'}>False</MenuItem>
+                                                    </Select>
+                                                </FormControl>
+                                            </Box>
                                         </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h3 className='section-title'>Signup Setting</h3>
+                                            <div className='section-contents-input'>
+                                                
                                         <div className='sub-div'>
                                             <TextField
                                                 label="Allow Domains"
                                                 margin="normal"
-                                                className='flex-contents'
+                                                className='flex-contents domain'
                                                 name="domain_input"
                                                 type="text"
                                                 value={domainInput}
@@ -343,18 +374,18 @@ export default function PopUp(openPop) {
                                                     Add
                                                 </LoadingButton>
                                             </Box>
-                                            <List className='flex-contents'>
-                                                <ListItem>
-                                                    {
+                                            <div className='flex-contents-allow'>
+                                            {
                                                         domain.map(val => (
-                                                            <ListItemText className='flex-contents-domain'
-                                                                primary={val}
-                                                            />
+                                                            <div className='flex-contents-domain'>
+                                                               {val} 
+                                                            <br></br>
+                                                            </div>
                                                         ))
                                                     }
 
-                                                </ListItem>
-                                            </List>
+                                            </div>
+                                            
                                         </div>
 
                                         <div className='sub-div select-groups'>
@@ -377,24 +408,6 @@ export default function PopUp(openPop) {
                                             <Box sx={{ minWidth: 240 }} className='flex-contents-select'>
                                                 <FormControl fullWidth>
                                                     <InputLabel id="demo-select-small"
-                                                    >Auto Fire Update</InputLabel>
-                                                    <Select
-                                                        labelId="demo-select-small"
-                                                        id="demo-select-small"
-                                                        value={fireware}
-                                                        label="auto_firware_update"
-                                                        onChange={(event) => handleChangeFireware(event)}
-                                                    >
-                                                        <MenuItem value={'yes'}>Yes</MenuItem>
-                                                        <MenuItem value={'no'}>No</MenuItem>
-                                                    </Select>
-                                                </FormControl>
-                                            </Box>
-                                        </div>
-                                        <div className='sub-div select-groups'>
-                                            <Box sx={{ minWidth: 240 }} className='flex-contents-select'>
-                                                <FormControl fullWidth>
-                                                    <InputLabel id="demo-select-small"
                                                     >Auto Signup</InputLabel>
                                                     <Select
                                                         labelId="demo-select-small"
@@ -402,6 +415,29 @@ export default function PopUp(openPop) {
                                                         value={signup}
                                                         label="auto_signup"
                                                         onChange={(event) => handleChangeSignup(event)}
+                                                    >
+                                                        <MenuItem value={'yes'}>Yes</MenuItem>
+                                                        <MenuItem value={'no'}>No</MenuItem>
+                                                    </Select>
+                                                </FormControl>
+                                            </Box>
+                                        </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h3 className='section-title'>Update Setting</h3>
+                                            <div className='section-contents-input'>
+                                            <div className='sub-div select-groups'>
+                                            <Box sx={{ minWidth: 240 }} className='flex-contents-select'>
+                                                <FormControl fullWidth>
+                                                    <InputLabel id="demo-select-small"
+                                                    >Auto Fire Update</InputLabel>
+                                                    <Select
+                                                        labelId="demo-select-small"
+                                                        id="demo-select-small"
+                                                        value={fireware}
+                                                        label="auto_firware_update"
+                                                        onChange={(event) => handleChangeFireware(event)}
                                                     >
                                                         <MenuItem value={'yes'}>Yes</MenuItem>
                                                         <MenuItem value={'no'}>No</MenuItem>
@@ -425,6 +461,10 @@ export default function PopUp(openPop) {
                                                 </FormControl>
                                             </Box>
                                         </div>
+                                            </div>
+                                       
+                                        </div>
+                                        
                                         <FormControlLabel control={<Checkbox 
                                         defaultChecked={profileDetails.niah_config_pop_up == "disable" ? false : true}
                                          />}

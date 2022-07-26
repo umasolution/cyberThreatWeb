@@ -21,7 +21,7 @@
 }
 
 .flex-contents-domain{
-    margin-right: 5px;
+    margin-bottom: 5px;
     border: 1px solid black;
     padding: 3px;
     border-radius: 5px;
@@ -30,11 +30,39 @@
     font-size: medium;
     color: red;
     font-weight: 300;
-    margin-right: 50px;
+    margin-right: 100px;
 }
 .noError{
     font-size: medium;
     color: green;
     font-weight: 300;
-    margin-right: 50px;
+    margin-right: 100px;
+}
+.single-select{
+    margin-top: 15px;
+}
+.section-title{
+    font-family: sans-serif;
+    font-weight: 500;
+    margin-top: 10px;
+}
+.section-contents{
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border: 1px solid black;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+.section-contents-input{
+    padding: 10px;
+    border: 1px solid black;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+.flex-contents-allow{
+    margin-top: 15px;
+    margin-left: 15px;
+}
+.domain{
+    margin-left: 10px;
 }

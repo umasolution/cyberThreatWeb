@@ -78,7 +78,7 @@ return (
     }}
     validationSchema={signUpSchema}
 
-    onSubmit={(values) => postData(values)}
+    //sonSubmit={(values) => postData(values)}
   >
     {({
       errors,
@@ -212,6 +212,7 @@ return (
             size="large"
             type="submit"
             variant="contained"
+            onClick={() =>postData(values)}
           >
             Create Company
           </LoadingButton>
