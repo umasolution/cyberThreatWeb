@@ -19,7 +19,7 @@ import {
   makeStyles
 } from '@material-ui/core';
 import { IS_ADMIN, logout, setIsAdmin } from 'src/actions/accountActions';
-import { closeBetweenPages, setOpenPopup } from 'src/actions/popupAction';
+import { closeBetweenPages, enablePopup, setOpenPopup } from 'src/actions/popupAction';
 
 const useStyles = makeStyles((theme) => ({
   avatar: {

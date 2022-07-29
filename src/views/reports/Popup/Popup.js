@@ -1,24 +1,17 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
-import IconButton from '@mui/material/IconButton';
 import { Formik } from 'formik';
 import {
     Box,
     InputLabel,
     Select,
     TextField,
-    Typography,
     FormControl,
     MenuItem,
-    ListItemText,
-    List,
-    ListItem,
     Checkbox,
     FormControlLabel
 } from '@material-ui/core';
@@ -26,7 +19,7 @@ import { LoadingButton } from '@mui/lab';
 import './popup.css'
 import Axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeBetweenPages, setOpenPopup, setPopUpDetails } from 'src/actions/popupAction';
+import { closeBetweenPages, enablePopup, setOpenPopup } from 'src/actions/popupAction';
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
         padding: theme.spacing(2),
@@ -36,55 +29,29 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     },
 }));
 
-const BootstrapDialogTitle = (props) => {
-    const { children, onClose, ...other } = props;
 
-    return (
-        <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
-            {children}
-            {onClose ? (
-                <IconButton
-                    aria-label="close"
-                    onClick={onClose}
-                    sx={{
-                        position: 'absolute',
-                        right: 8,
-                        top: 8,
-                        color: (theme) => theme.palette.grey[500],
-                    }}
-                >
-                </IconButton>
-            ) : null}
-        </DialogTitle>
-    );
-};
 
-BootstrapDialogTitle.propTypes = {
-    children: PropTypes.node,
-    onClose: PropTypes.func.isRequired,
-};
-
-export default function PopUp(openPop) {
+export default function PopUp() {
     const dispatch = useDispatch()
-    const [open, setOpen] = React.useState(false);
-    const [ssl, setSSL] = React.useState(false);
-    const [fireware, setFireWare] = React.useState('');
-    const [signup, setSignup] = React.useState('');
-    const [activate, setActivate] = React.useState('');
-    const [feed, setFeed] = React.useState('');
-    const [checkbox, setCheckBox] = React.useState('');
-    const [domain, setDomain] = React.useState([]);
-    const [domainInput, setDomainInput] = React.useState('');
-    const [responseMsg, setResponseMsg] = React.useState('');
-    const [error, setError] = React.useState(false);
+    const [open, setOpen] = useState(false);
+    const [ssl, setSSL] = useState(false);
+    const [fireware, setFireWare] = useState('');
+    const [signup, setSignup] = useState('');
+    const [activate, setActivate] = useState('');
+    const [feed, setFeed] = useState('');
+    const [checkbox, setCheckBox] = useState('');
+    const [domain, setDomain] = useState([]);
+    const [domainInput, setDomainInput] = useState('');
+    const [responseMsg, setResponseMsg] = useState('');
+    const [error, setError] = useState(false);
     const profileDetails = useSelector(state => state.popup.details)
-    const popupOpen = useSelector(state => state.popup)
-
-    React.useEffect(() => {
-        if(popupOpen.enable){
+    const popup = useSelector(state => state.popup)
+      
+    useEffect(() => {
+        if(popup.enable){
             setError(false)
             setResponseMsg('')
-            setOpen(popupOpen.open)
+            setOpen(popup.open)
             setFireWare(profileDetails.auto_firware_update)
             setSignup(profileDetails.auto_signup)
             setActivate(profileDetails.activation_by_email)
@@ -93,7 +60,7 @@ export default function PopUp(openPop) {
             setCheckBox(profileDetails.niah_config_pop_up)
             setSSL(profileDetails.email_ssl)
         }
-    }, [popupOpen.open, popupOpen.close])
+    }, [popup.open, popup.close, popup.enable])
 
     
     const handleClose = () => {
@@ -120,9 +87,9 @@ export default function PopUp(openPop) {
     }
 
     const handleCheckbox = async (event) => {
-        console.log(event.currentTarget.checked)
         if (event.currentTarget.checked == false) {
             setCheckBox('disable')
+            dispatch(enablePopup(false))
             const url = "niah/profile/pop_up"
             const response = await Axios.post(url,{
                 status: 'disable'
@@ -131,7 +98,7 @@ export default function PopUp(openPop) {
         }else {
             setCheckBox('enable')
             const url = "niah/profile/pop_up"
-            const response = await Axios.post(url,{
+            const resp = await Axios.post(url,{
                 status: 'enable'
             }
             )
@@ -179,10 +146,8 @@ export default function PopUp(openPop) {
                 onClose={handleClose}
                 aria-labelledby="customized-dialog-title"
                 open={open}
+                disableEnforceFocus
             >
-                <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-
-                </BootstrapDialogTitle>
                 <DialogContent dividers>
                    
                     <Formik
@@ -191,18 +156,10 @@ export default function PopUp(openPop) {
                             celery_username: profileDetails.celery_username,
                             celery_password: profileDetails.celery_password,
                             celery_vhost: profileDetails.celery_vhost,
-                            // auto_signup: profileDetails.auto_signup,
-                            // allow_domains: profileDetails.allow_domains,
-                            // activation_by_email: profileDetails.activation_by_email,
-                            email_server: profileDetails.celery_username,
-                            email_port: profileDetails.email_server,
+                            email_port: profileDetails.email_port,
+                            email_server: profileDetails.email_server,
                             email_username: profileDetails.email_username,
                             email_password: profileDetails.email_password,
-                            email_ssl: profileDetails.email_ssl,
-                            // auto_update_feed_signature: profileDetails.auto_update_feed_signature,
-                            // auto_firware_update: profileDetails.auto_firware_update,
-                            // niah_config_pop_up: profileDetails.niah_config_pop_up,
-                            celery_ip: profileDetails.celery_ip,
                         }}
 
                     >

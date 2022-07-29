@@ -82,26 +82,26 @@ function DashboardView() {
   const popup = useSelector(state => state.popup)
 
   useEffect(() => {
-    const fetchProfileDetails = async () => {
-      const profile_url = "/niah/profile"
-      const response = await Axios.get(profile_url);
-      console.log(response.data)
-      
-      dispatch(setPopUpDetails(response.data))
-      if(response.data.niah_config_pop_up == "enable"  && !popup.close){
-        dispatch(enablePopup(true))
-        dispatch(setOpenPopup(true))
-        setPopupOpen(true)
-      }else{
-        dispatch(enablePopup(false))
-      }
-      
-    }
     if (isAdmin == 'yes') {
       fetchProfileDetails();
     }
-  }, [isAdmin])
+  }, [isAdmin, popup.enable])
 
+  const fetchProfileDetails = async () => {
+    const profile_url = "/niah/profile"
+    const response = await Axios.get(profile_url);
+    
+    dispatch(setPopUpDetails(response.data))
+    if(response.data.niah_config_pop_up == "enable" ){
+      dispatch(enablePopup(true))
+      if(!popup.close){
+        dispatch(setOpenPopup(true))
+      setPopupOpen(true)
+      }
+    }else{
+      dispatch(enablePopup(false))
+    }
+  }
   useEffect(() => {
     setLoading(true);
     const updateSnackbar = (open, message) => {
@@ -214,10 +214,8 @@ function DashboardView() {
         className={classes.root}
         title="Dashboard"
       >
-        {
-          popupOpen ?
-          <PopUp openPop={popupOpen} /> : <></>
-        }
+       
+          <PopUp openPop={popupOpen} />
         <Container
           maxWidth={false}
           className={classes.container}
