@@ -18,6 +18,7 @@ import Security from './Security';
 import CONSTANTS from "../../../Util/Constants";
 import authService from "../../../services/authService";
 import MySnackbar from './../../../Shared/Snackbar/MySnackbar';
+import { useSelector } from 'react-redux';
 
 
 
@@ -34,9 +35,15 @@ function AccountView() {
   const classes = useStyles();
   const [currentTab, setCurrentTab] = useState('general');
   const [userProfileData, setUserProfileData] = useState();
-  const tabs = [
+  const isAdmin = useSelector(state => state.account.isAdmin)
+  const adminTabs = [
     { value: 'general', label: 'General' },
     { value: 'subscription', label: 'Subscription' },
+    { value: 'notifications', label: 'Notifications' },
+    { value: 'security', label: 'Security' }
+  ];
+  const tabs = [
+    { value: 'general', label: 'General' },
     { value: 'notifications', label: 'Notifications' },
     { value: 'security', label: 'Security' }
   ];
@@ -103,13 +110,21 @@ const updateSnackbar = (open, message) => {
             textColor="secondary"
             className={classes.tabs}
           >
-            {tabs.map((tab) => (
-              <Tab
-                key={tab.value}
-                label={tab.label}
-                value={tab.value}
-              />
-            ))}
+            {isAdmin ?
+              adminTabs.map((tab) => (
+                <Tab
+                  key={tab.value}
+                  label={tab.label}
+                  value={tab.value}
+                />
+              )) :
+              tabs.map((tab) => (
+                <Tab
+                  key={tab.value}
+                  label={tab.label}
+                  value={tab.value}
+                />
+              ))}
           </Tabs>
         </Box>
         <Divider />
