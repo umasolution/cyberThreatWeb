@@ -16,7 +16,8 @@ import AuthSocial from '../AuthSocial';
 import LoginForm from './LoginForm';
 import Axios from 'axios';
 import data from '@iconify/icons-eva/github-fill';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import LicenseDialog from './LicenseDialog';
 
 const RootStyle = styled(Page)(({ theme }) => ({
   [theme.breakpoints.up('md')]: {
@@ -51,6 +52,7 @@ function LoginView() {
   const dispatch = useDispatch()
 
   const [disableSignup, setDisableSignup] = useState(false)
+  const license = useSelector(state => state.license)
 
   const handleSubmitSuccess = () => {
     history.push('/app');
@@ -83,6 +85,8 @@ function LoginView() {
 
   return (
     <RootStyle title="Login">
+      
+      <LicenseDialog /> 
       <p>
         <header className="logoContent">
           <RouterLink to="/">

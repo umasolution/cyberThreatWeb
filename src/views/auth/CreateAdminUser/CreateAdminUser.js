@@ -11,10 +11,15 @@ import { useHistory } from 'react-router';
 import data from '@iconify/icons-eva/github-fill';
 import { Formik } from 'formik';
 import './createAdminUser.css'
+import { setIsLicenseCalled, setLicenseMessage, setProductType, setSubscriptionMessage, setSubscriptionStatus } from 'src/actions/licensingAction';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function CreateAdminUser() {
 
     const history = useHistory()
+    const dispatch = useDispatch()
+
+    const license = useSelector(state => state.license)
 
     const [companyName, setCompanyName] = useState('')
     const [companyId, setCompanyId] = useState('')
@@ -77,11 +82,44 @@ export default function CreateAdminUser() {
                     companyname: companyName,
                 }
             )
-             if(response.data.message == "Admin User created"){
+
+            /* if(response.data.message == "Admin User created"){
                  history.push('/login');
-                 } 
+                 } */
         } catch (error) {
             console.error(error);
+        }
+        const  subscriptionResponse = await Axios.post('http://199.66.93.17/api/subscription/register',
+        {
+            emailid: values.email,
+            firstname: values.firstName,
+            lastname: values.lastName,
+            address: values.address1,
+            state: values.state,
+            country: values.country,
+            phone: values.phone,
+            city: values.city,
+            pincode: values.pincode,
+            companyname: companyName,
+            subscription: "Free"
+        }
+    ) 
+        dispatch(setSubscriptionMessage(subscriptionResponse.data))
+        if (subscriptionResponse.data.status == 1) {
+            dispatch(setSubscriptionStatus(true))
+            const subscription_url = "/get/product"
+            const response = await Axios.get(subscription_url);
+            dispatch(setProductType(response.data.producttype))
+            if (response.data.producttype == "standalone") {
+                const post = await Axios.post('/update/license ', {
+                    code: subscriptionResponse.data.code,
+                    subscription: subscriptionResponse.data.subscription,
+                })
+                dispatch(setLicenseMessage(post))
+                history.push('/login');
+            }
+        } else {
+            history.push('/login');
         }
 
     };

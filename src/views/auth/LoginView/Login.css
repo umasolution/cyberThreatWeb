@@ -60,3 +60,12 @@
     text-align: center;
     color: rgb(99, 115, 129);
 }
+
+.hasError{
+    color: red;
+    font-weight: 400;
+}
+
+.noError{
+    font-weight: 400;
+}

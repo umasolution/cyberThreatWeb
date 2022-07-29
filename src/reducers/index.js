@@ -11,6 +11,7 @@ import integrationReducer from './integrationReducer';
 import advisoryReducer from './advisoryReducer';
 import taskReducer from './taskReducer';
 import popupReducer from './popupReducer';
+import licensingReducer from './licensingReducer';
 
 const rootReducer = combineReducers({
   account: accountReducer,
@@ -24,7 +25,8 @@ const rootReducer = combineReducers({
   integrations : integrationReducer,
   advisor : advisoryReducer,
   tasks : taskReducer,
-  popup : popupReducer
+  popup : popupReducer,
+  license: licensingReducer
 });
 
 export default rootReducer;
