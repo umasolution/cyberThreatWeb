@@ -12,6 +12,7 @@ export const REGISTER_SUCCESS = '@account/register-success';
 export const REGISTER_FAILURE = '@account/register-failure';
 export const UPDATE_PROFILE = '@account/update-profile';
 export const IS_ADMIN = '@account/is-admin';
+export const UPDATE_PROFILE_DETAILS = '@account/update-profile-details';
 
 export function login(email, password) {
   return async (dispatch) => {
@@ -129,6 +130,15 @@ export function setIsAdmin(user) {
     type: IS_ADMIN,
     payload: {
       user
+    }
+  });
+}
+
+export function updateProfileDetails(details) {
+  return (dispatch) => dispatch({
+    type: UPDATE_PROFILE_DETAILS,
+    payload: {
+      details
     }
   });
 }

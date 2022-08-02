@@ -13,6 +13,7 @@ import { Formik } from 'formik';
 import './createAdminUser.css'
 import { setIsLicenseCalled, setLicenseMessage, setProductType, setSubscriptionMessage, setSubscriptionStatus } from 'src/actions/licensingAction';
 import { useDispatch, useSelector } from 'react-redux';
+import { licenseURL } from 'src';
 
 export default function CreateAdminUser() {
 
@@ -89,7 +90,8 @@ export default function CreateAdminUser() {
         } catch (error) {
             console.error(error);
         }
-        const  subscriptionResponse = await Axios.post('http://199.66.93.17/api/subscription/register',
+        const  subscriptionResponse = await Axios.post(
+            `${licenseURL}subscription/register`,
         {
             emailid: values.email,
             firstname: values.firstName,

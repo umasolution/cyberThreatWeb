@@ -7,12 +7,14 @@ import {
   LOGOUT,
   SILENT_LOGIN,
   UPDATE_PROFILE,
-  IS_ADMIN
+  IS_ADMIN,
+  UPDATE_PROFILE_DETAILS
 } from 'src/actions/accountActions';
 
 const initialState = {
   user: null,
-  isAdmin: 'no'
+  isAdmin: 'no',
+  profileDetails :[]
 };
 
 const accountReducer = (state = initialState, action) => {
@@ -67,6 +69,15 @@ const accountReducer = (state = initialState, action) => {
         draft.isAdmin = user;
       });
     }
+
+    case UPDATE_PROFILE_DETAILS: {
+      const { details } = action.payload;
+
+      return produce(state, (draft) => {
+        draft.profileDetails = details;
+      });
+    }
+
     default: {
       return state;
     }

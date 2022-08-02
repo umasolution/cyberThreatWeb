@@ -18,7 +18,12 @@ import Security from './Security';
 import CONSTANTS from "../../../Util/Constants";
 import authService from "../../../services/authService";
 import MySnackbar from './../../../Shared/Snackbar/MySnackbar';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSubcriptionNew, setTotalScans, setUsers } from 'src/actions/pricingAction';
+import SubscriptionNew from '../Pricing/SubscriptionNew';
+import PricingView from '../PricingView';
+import { licenseURL } from 'src';
+import { setLicenseDetails } from 'src/actions/licensingAction';
 
 
 
@@ -33,9 +38,12 @@ const useStyles = makeStyles((theme) => ({
 
 function AccountView() {
   const classes = useStyles();
+  const dispatch = useDispatch()
   const [currentTab, setCurrentTab] = useState('general');
   const [userProfileData, setUserProfileData] = useState();
   const isAdmin = useSelector(state => state.account.isAdmin)
+  const profile = useSelector(state => state.account)
+  const subscription = useSelector(state => state.pricing.subscriptionNew)
   const adminTabs = [
     { value: 'general', label: 'General' },
     { value: 'subscription', label: 'Subscription' },
@@ -79,8 +87,35 @@ function AccountView() {
 
 
   const handleTabsChange = (event, value) => {
+    if(value == 'subscription'){
+      getSubscriptionValues()
+    }
     setCurrentTab(value);
   };
+
+  const getSubscriptionValues = async () => {
+    try{
+      const response = await Axios.get(`${licenseURL}get/subscription`)
+      dispatch(setSubcriptionNew(response.data))
+      const filterFlexi = response.data.filter(s => s.subscription_name == "NiahFlexi")[0]
+      dispatch(setTotalScans(filterFlexi.scans))
+      dispatch(setUsers(filterFlexi.users))
+      if(isAdmin == 'yes'){
+        try{
+          const response = await Axios.post(`${licenseURL}get/license`,
+          {
+            code : profile.profileDetails.code,
+            emailid :profile.profileDetails.email_id
+          })
+          dispatch(setLicenseDetails(response))
+        } catch(error){
+          console.log(error)
+        }
+      }
+    } catch(error){
+      console.log(error)
+    }
+  }
 
   const getLoader = () => {
     if (loading) {
@@ -130,7 +165,8 @@ const updateSnackbar = (open, message) => {
         <Divider />
         <Box mt={3}>
           {currentTab === 'general' && userProfileData && <General general={userProfileData.general} />}
-          {currentTab === 'subscription' && userProfileData && <Subscription subscription={userProfileData.subscription} />}
+          {/*currentTab === 'subscription' && userProfileData && <Subscription subscription={userProfileData.subscription} />*/}
+          {currentTab === 'subscription' && userProfileData && <SubscriptionNew subscription={subscription} />}
           {currentTab === 'notifications' && userProfileData && <Notifications general={userProfileData.general} notification={userProfileData.notification} />}
           {currentTab === 'security' && userProfileData && <Security security={userProfileData.Security} />}
         </Box>

@@ -3,7 +3,7 @@ import { Grid, Switch, Checkbox, Button, Paper, makeStyles } from '@material-ui/
 import Typography from '@material-ui/core/Typography';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import { setSubscriptionModel } from 'src/actions/pricingAction';
+import { openFlexiPopup, setSubscriptionModel } from 'src/actions/pricingAction';
 
 
 const useStyle = makeStyles({
@@ -42,7 +42,8 @@ const TotalCost = () => {
 
     const onSubscribe = () => {
         dispatch(setSubscriptionModel({displayName: 'Niah Flexi', model : 'NiahFlexi'}));
-        history.push('/app/dashboard/payment');
+        dispatch(openFlexiPopup(false))
+       // history.push('/app/dashboard/payment');
     }
 
     const getTextContent = (first,middle, end) => {

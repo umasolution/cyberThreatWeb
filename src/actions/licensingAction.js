@@ -1,7 +1,9 @@
+
 export const SET_PRODUCT_TYPE = '@license/set-product-type';
 export const SET_SUBSCRIPTION_MESSAGE = '@licens/set-subscription-message';
 export const SET_SUBSCRIPTION_STATUS = '@licens/set-subscription-status';
 export const SET_LICENSE_MESSAGE = '@licens/set-license-message';
+export const SET_LICENSE_DETAILS = '@license/set-license-details';
 
 export function setProductType(details) {
     return (dispatch) => dispatch({
@@ -38,3 +40,13 @@ export function setProductType(details) {
       }
     });
   }
+
+  export function setLicenseDetails(details) {
+    return {
+      type: SET_LICENSE_DETAILS,
+      payload: {
+        details
+      }
+    };
+  }
+  

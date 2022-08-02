@@ -10,9 +10,13 @@ const initialState = {
     niahFlexiScanPricing : {},
     niahEnterprisePricing : {},
     niahLitePricing : {},
-
     selectedSubscriptionModel : '',
-    selectedSubscriptionModelDisplayName : ''
+    selectedSubscriptionModelDisplayName : '',
+    subscriptionNew : [],
+    flexiPopup : false,
+    paymentPopup : false,
+    pricingPopup : false,
+    errorMsg : ''
 }
 
 
@@ -40,8 +44,22 @@ const pricingReducer = (state = initialState, action) => {
                             selectedSubscriptionModelDisplayName:action.payload.displayName}
         case "update_costs":
             return {...state,totalWithDiscount : action.payload.totalCost, annualCost : action.payload.annualCost }
-                 
-            default : 
+              
+         case "update_subscription" :
+            return {...state,subscriptionNew : action.payload};
+
+        case "open_flexiPopup":
+            return { ...state, flexiPopup: action.payload };
+        case "open_pricingPopup":
+            return { ...state, pricingPopup: action.payload };
+
+        case "open_paymentpopup":
+            return { ...state, paymentPopup: action.payload };
+
+        case "error_msg":
+            return { ...state, errorMsg: action.payload };
+
+        default:
             return state;
     }
 }
@@ -51,7 +69,7 @@ const getTotalCost = (state, isDiscount) => {
 }
 
 const getScansCost = (state,isDiscount) => {
-    return isDiscount  ? (state.niahFlexiScanPricing.amount.scans.amount*state.totalScans - applyDiscount(state.niahFlexiScanPricing.discount.scans.amount, 
+    return isDiscount  ? (state.niahFlexiScanPricing.amount.scans.amount*state.totalScans  - applyDiscount(state.niahFlexiScanPricing.discount.scans.amount, 
                                                                                                 state.niahFlexiScanPricing.discount.scans.numbers,
                                                                                                 state.totalScans    ) ): state.niahFlexiScanPricing.amount.scans.amount*state.totalScans;
                          ;

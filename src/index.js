@@ -22,8 +22,10 @@ import Axios from 'axios';
 
 enableES5();
 export const baseURL=window._env_.API_URL
+export const licenseURL= 'http://199.66.93.17/api/'
   Axios.defaults.baseURL=window._env_.API_URL;
-
+// Axios.defaults.baseURL= 'http://34.134.61.199:9182/api'
+ //Axios.defaults.baseURL= 'http://35.226.233.71:9182/api'
 /*export const baseURL='http://niahsecurity.online:9182/api'*/
 /*  Axios.defaults.baseURL= 'http://Niahsecurity.online:9182/api';*/
 /*Axios.defaults.baseURL = 'http://cyberthreatinfo.ca:9182/api';*/

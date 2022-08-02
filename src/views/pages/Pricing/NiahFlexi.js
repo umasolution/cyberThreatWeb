@@ -8,7 +8,7 @@ import {setAlerts,
         setUsers,
         getTotalCost,
         setCosts} from '../../../actions/pricingAction';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core';
 
 const useStyle = makeStyles({
@@ -19,10 +19,12 @@ const useStyle = makeStyles({
 });
 
 const NiahFlexi = () => {
+    const popup = useSelector(state => state.pricing.flexiPopup)
+    const dispatch = useDispatch();
+
     useEffect(()=>{
         dispatch(setCosts(0,0))
-    });
-    const dispatch = useDispatch();
+    },[]);
     const classes = useStyle();
 
     const totalScanText = "All scan types cost the same. Depedency Scan, Container Image, Operating system)";
@@ -41,15 +43,15 @@ const NiahFlexi = () => {
 
     }
     return (
-        <div className = {classes.root}>
+        <div className = {popup ? '' : classes.root}>
             <PriceSlider label="Total Scans / developer" 
                             max = {300} 
                             footerText = {totalScanText}
-                            callback = {onSliderChange} />
+                            callback = {() => onSliderChange()} />
             <PriceSlider label = "Users" 
                             max = {150}
                             footerText = {usersText}
-                            callback = {onSliderChange}/>
+                            callback = {() => onSliderChange()}/>
            {/* <PriceSlider label = "Alerts" 
                             max = {100}
                             footerText = {alertsText}

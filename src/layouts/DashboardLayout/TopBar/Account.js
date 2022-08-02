@@ -18,7 +18,7 @@ import {
   Typography,
   makeStyles
 } from '@material-ui/core';
-import { IS_ADMIN, logout, setIsAdmin } from 'src/actions/accountActions';
+import { IS_ADMIN, logout, setIsAdmin, updateProfileDetails } from 'src/actions/accountActions';
 import { closeBetweenPages, enablePopup, setOpenPopup } from 'src/actions/popupAction';
 
 const useStyles = makeStyles((theme) => ({
@@ -75,6 +75,7 @@ function Account() {
       const url = `/getProfile`;        
       let response = await Axios.get(url); 
       setProfileResponse(response.data.general);
+      dispatch(updateProfileDetails(response.data.general))
       dispatch(setIsAdmin(response.data.general.admin));
      
     } catch (error) {

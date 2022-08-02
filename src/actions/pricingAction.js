@@ -46,4 +46,51 @@ const setCosts = (totalCost, annualCost) => {
     }
 }
 
-export {setTotalScans, setUsers, setAlerts, getTotalCost, setPricingConfigurations, setSubscriptionModel, setCosts};
+const setSubcriptionNew = (details) => {
+    return {
+        type : "update_subscription",
+        payload : details
+    }
+}
+
+const openFlexiPopup = (details) => {
+    return {
+        type : "open_flexiPopup",
+        payload : details
+    }
+}
+
+const openPaymentPopup = (details) => {
+    return {
+        type : "open_paymentpopup",
+        payload : details
+    }
+}
+
+const openPricingPopup = (details) => {
+    return {
+        type : "open_pricingPopup",
+        payload : details
+    }
+}
+
+const setErrorMsg = (details) => {
+    return {
+        type : "error_msg",
+        payload : details
+    }
+}
+export {
+    setTotalScans,
+    setUsers,
+    setAlerts,
+    getTotalCost,
+    setPricingConfigurations,
+    setSubscriptionModel,
+    setCosts,
+    setSubcriptionNew,
+    openFlexiPopup,
+    openPaymentPopup,
+    setErrorMsg,
+    openPricingPopup
+};
