@@ -8,10 +8,13 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import NiahFlexi from './NiahFlexi';
 import Axios from 'axios';
-import { useDispatch } from 'react-redux';
-import { setPricingConfigurations } from 'src/actions/pricingAction';
+import { useDispatch, useSelector } from 'react-redux';
+import { setPricingConfigurations, setSubcriptionNew, setTotalScans, setUsers } from 'src/actions/pricingAction';
 import NiahLite from './NiahLite';
 import NiahEnterprise from './NiahEnterprise';
+import SubscriptionNew from './SubscriptionNew';
+import { licenseURL } from 'src';
+import { setLicenseDetails } from 'src/actions/licensingAction';
 
 
 function TabPanel(props) {
@@ -51,26 +54,55 @@ const Pricing = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [value, setValue] = React.useState(0);
+  const isAdmin = useSelector(state => state.account.isAdmin)
+  const profile = useSelector(state => state.account)
+  const subscription = useSelector(state => state.pricing.subscriptionNew)
 
   useEffect(() => {
 
+    getSubscriptionValues()
 
-    const getPricingData = async () => {
+  /*  const getPricingData = async () => {
       const pricingData = await Axios('/data/subscription');
       dispatch(setPricingConfigurations(pricingData));
     }
 
-    getPricingData();
+    getPricingData(); */
 
   }, []);
 
-
+  const getSubscriptionValues = async () => {
+    try{
+      const response = await Axios.get(`${licenseURL}get/subscription`)
+      dispatch(setSubcriptionNew(response.data))
+      const filterFlexi = response.data.filter(s => s.subscription_name == "NiahFlexi")[0]
+      dispatch(setTotalScans(filterFlexi.scans))
+      dispatch(setUsers(filterFlexi.users))
+      if(isAdmin == 'yes'){
+        try{
+          const response = await Axios.post(`${licenseURL}get/license`,
+          {
+            code : profile.profileDetails.code,
+            emailid :profile.profileDetails.email_id
+          })
+          dispatch(setLicenseDetails(response.data))
+        } catch(error){
+          console.log(error)
+        }
+      }
+    } catch(error){
+      console.log(error)
+    }
+  }
 const handleChange = (event, newValue) => {
   setValue(newValue);
 };
 return (
   <Page title="Pricing">
-    <div className={classes.root}>
+    <SubscriptionNew subscription={subscription} />
+    {
+      /*
+       <div className={classes.root}>
 
       <Tabs value={value} onChange={handleChange} aria-label="simple tabs example" centered>
         <Tab label="Free" />
@@ -92,6 +124,8 @@ return (
         <NiahFlexi />
       </TabPanel>
     </div>
+      */
+    }
   </Page>
 );
 }

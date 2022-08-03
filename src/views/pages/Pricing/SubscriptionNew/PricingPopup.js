@@ -38,6 +38,11 @@ export default function PricingPopup(licenseDetails) {
       <Dialog
         open={open}
         onClose={handleClose}
+        contentStyle={{
+          width: '80%',
+       }}
+       fullWidth={true}
+      maxWidth = {'md'}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >

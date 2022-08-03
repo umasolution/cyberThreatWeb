@@ -88,7 +88,7 @@ function AccountView() {
 
   const handleTabsChange = (event, value) => {
     if(value == 'subscription'){
-      getSubscriptionValues()
+      //getSubscriptionValues()
     }
     setCurrentTab(value);
   };
@@ -165,8 +165,8 @@ const updateSnackbar = (open, message) => {
         <Divider />
         <Box mt={3}>
           {currentTab === 'general' && userProfileData && <General general={userProfileData.general} />}
-          {/*currentTab === 'subscription' && userProfileData && <Subscription subscription={userProfileData.subscription} />*/}
-          {currentTab === 'subscription' && userProfileData && <SubscriptionNew subscription={subscription} />}
+          {currentTab === 'subscription' && userProfileData && <Subscription subscription={userProfileData.subscription} />}
+          {/*currentTab === 'subscription' && userProfileData && <SubscriptionNew subscription={subscription} />*/}
           {currentTab === 'notifications' && userProfileData && <Notifications general={userProfileData.general} notification={userProfileData.notification} />}
           {currentTab === 'security' && userProfileData && <Security security={userProfileData.Security} />}
         </Box>

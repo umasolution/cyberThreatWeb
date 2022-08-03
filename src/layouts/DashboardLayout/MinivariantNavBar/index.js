@@ -150,6 +150,7 @@ export default function MinivariantNavBar() {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const [dashboardOpen, setDashboardOpen] = useState(false);
+  const isAdmin = useSelector(state => state.account.isAdmin)
 
   const handleDrawer = () => {
     setOpen(!open);
@@ -291,7 +292,9 @@ export default function MinivariantNavBar() {
               </ListItemText>
             </ListItem>
           </Link>
-          <Link to='/app/dashboard/pricing' className={classes.linkText}>
+          {
+            isAdmin == 'yes' ?
+           ( <Link to='/app/dashboard/pricing' className={classes.linkText}>
             <ListItem button >
               {/* <ListItemIcon className={classes.icon}><SvgIcon component={AlertIcon} viewBox="0 0 600 476.6" fontSize="large" className={classes.svgIcon}/></ListItemIcon>
                */}
@@ -300,7 +303,8 @@ export default function MinivariantNavBar() {
                 <Typography variant="h4" gutterBottom className={classes.navText}>Pricing</Typography>
               </ListItemText>
             </ListItem>
-          </Link>
+          </Link>): <></>
+          }
           <Link to='/app/dashboard/integrations' className={classes.linkText}>
             <ListItem button >
               {/*<ListItemIcon className={classes.icon}><SvgIcon component={AlertIcon} viewBox="0 0 600 476.6" fontSize="large" className={classes.svgIcon}/></ListItemIcon>
