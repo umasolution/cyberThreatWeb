@@ -4,6 +4,7 @@ import Axios from 'axios';
 
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
+import { setErrorMsg } from 'src/actions/pricingAction';
 
 const useStyle = makeStyles({
     txt : {
@@ -28,7 +29,18 @@ const CreditCardInterface = ({subscription, users, scans, amount}) => {
                                             name:'', 
                                             cardcodeno : 0,
                                             month : '',
-                                            year : ''});
+                                            year : '',
+                                            firstname:'',
+                                            lastname:'',
+                                            emailid:'',
+                                            companyName:'',
+                                            address:'',
+                                            city:'',
+                                            country:'',
+                                            state:'',
+                                            pincode:'',
+                                            phone:'',
+                                        });
     
     console.log(card.name)
 
@@ -41,12 +53,33 @@ const CreditCardInterface = ({subscription, users, scans, amount}) => {
                 users ,
                 subscription,
                 scans ,
-                amount
+                amount,
+                firstname : card.firstname,
+                lastname : card.lastname,
+                companyname : card.companyName,
+                city : card.city,
+                state : card.state,
+                country : card.country,
+                phone : card.phone,
+                pincode : card.pincode,
+                emailid : card.emailid,
+                address : card.address
             });
 
-            if(payment.status){
+            if(payment.status == 1){
+                try{
+                    const updatePayment = await Axios.post('/auth/update/license',{
+                        code : 123,
+                        subscription: "NiahFlex"
+                    })
+                    if(updatePayment.data.meassage != ''){
+                        setErrorMsg(updatePayment.data.meassage)
+                    }
+                }catch(error){
+                    console.log(error)
+                }
                 history.push('/app/dashboard/paymentresult')
-            }else{
+            }else if(payment.status == 0){
                 history.push('/app/dashboard/paymentresultfailure')
             }
         }catch(error){
@@ -73,6 +106,76 @@ const CreditCardInterface = ({subscription, users, scans, amount}) => {
                 <TextField className= {styles.txt} id="outlined-basic" label="Name in the Card" variant="outlined" 
                             onChange={(event)=>onChangeCreditCardDetails(event.target.value,'name')} />
             </Grid> */}
+            <Grid item xs={6}>
+                <TextField id="outlined-basic"
+                    label="Firstname" variant="outlined" required fullWidth
+                    InputLabelProps={{ shrink: true }}
+                    onChange={(event)=>onChangeCreditCardDetails(event.target.value,'firstname')}
+                />
+            </Grid>
+            <Grid item xs={6}>
+                <TextField id="outlined-basic"
+                    label="Lastname" variant="outlined" required fullWidth
+                    InputLabelProps={{ shrink: true }}
+                    onChange={(event)=>onChangeCreditCardDetails(event.target.value,'lastname')}
+                />
+            </Grid>
+            <Grid item xs={6}>
+                <TextField id="outlined-basic"
+                    label="Email" variant="outlined" required fullWidth
+                    InputLabelProps={{ shrink: true }}
+                    onChange={(event)=>onChangeCreditCardDetails(event.target.value,'emailid')}
+                />
+            </Grid>
+            <Grid item xs={6}>
+                <TextField id="outlined-basic"
+                    label="Companyname" variant="outlined" required fullWidth
+                    InputLabelProps={{ shrink: true }}
+                    onChange={(event)=>onChangeCreditCardDetails(event.target.value,'companyName')}
+                />
+            </Grid>
+            <Grid item xs={6}>
+                <TextField id="outlined-basic"
+                    label="Address" variant="outlined" required fullWidth
+                    InputLabelProps={{ shrink: true }}
+                    onChange={(event)=>onChangeCreditCardDetails(event.target.value,'address')}
+                />
+            </Grid>
+            <Grid item xs={6}>
+                <TextField id="outlined-basic"
+                    label="City" variant="outlined" required fullWidth
+                    InputLabelProps={{ shrink: true }}
+                    onChange={(event)=>onChangeCreditCardDetails(event.target.value,'city')}
+                />
+            </Grid>
+            <Grid item xs={6}>
+                <TextField id="outlined-basic"
+                    label="State" variant="outlined" required fullWidth
+                    InputLabelProps={{ shrink: true }}
+                    onChange={(event)=>onChangeCreditCardDetails(event.target.value,'state')}
+                />
+            </Grid>
+            <Grid item xs={6}>
+                <TextField id="outlined-basic"
+                    label="Pincode" variant="outlined" required fullWidth
+                    InputLabelProps={{ shrink: true }}
+                    onChange={(event)=>onChangeCreditCardDetails(event.target.value,'pincode')}
+                />
+            </Grid>
+            <Grid item xs={6}>
+                <TextField id="outlined-basic"
+                    label="Phone" variant="outlined" required fullWidth
+                    InputLabelProps={{ shrink: true }}
+                    onChange={(event)=>onChangeCreditCardDetails(event.target.value,'phone')}
+                />
+            </Grid>
+            <Grid item xs={6}>
+                <TextField id="outlined-basic"
+                    label="Country" variant="outlined" required fullWidth
+                    InputLabelProps={{ shrink: true }}
+                    onChange={(event)=>onChangeCreditCardDetails(event.target.value,'country')}
+                />
+            </Grid>
             <Grid item xs={6}>
                 <TextField id="outlined-basic" label="Name in the Card" variant="outlined" required fullWidth
                     InputLabelProps={{ shrink: true }} onChange={(event)=>onChangeCreditCardDetails(event.target.value,'name')} />

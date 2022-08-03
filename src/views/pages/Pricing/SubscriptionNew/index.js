@@ -138,6 +138,8 @@ function SubscriptionNew(subscription) {
   const dispatch = useDispatch()
   const pricing = useSelector(state => state.pricing)
   const profile = useSelector(state => state.account)
+  const licenseDetails = useSelector(state => state.license.licenseDetails)
+
 
   const [value, setValue] = useState('')
 
@@ -155,9 +157,9 @@ function SubscriptionNew(subscription) {
       dispatch(openFlexiPopup(true))
     } else if(values.subscription_name == "NiahEnterprise"
     || values.subscription_name == "NiahLite" || values.subscription_name == "Free"){
-    //  const response = await Axios.get(`${licenseURL}get/licse`)
+       const response = await Axios.get(`${licenseURL}get/license`)
       setValue(values.subscription_name)
-     // dispatch(openPricingPopup(true))
+      dispatch(openPricingPopup(true))
     }
   }
 
@@ -178,7 +180,12 @@ function SubscriptionNew(subscription) {
       {
         pricing.flexiPopup ? <NiahFlexiPopup /> : <></>
       }
-    
+      {
+        pricing.paymentPopup ? <PaymentPopup /> : <></>
+      }
+      {
+        pricing.pricingPopup ? <PricingPopup type={value} details={licenseDetails}/> : <></>
+      }
       <Box mt="25px" mb="50px">
         <Container maxWidth="lg">
         <div style={{display: 'flex', marginBottom:"45px"}}>

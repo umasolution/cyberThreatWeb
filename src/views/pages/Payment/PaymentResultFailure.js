@@ -25,7 +25,7 @@ const PaymentResultFailure = ({response}) => {
              <Card className={styles.root}>
                 <CardContent>
                     <Grid container spacing={2}>
-                        <Grid item xs={12}>
+                        <Grid item xs={12} style={{color : 'red'}}>
                             Your transaction has failed. Please verify and enter the correct payment details.
                         </Grid>
                        </Grid>
