@@ -47,11 +47,11 @@ const NiahFlexi = () => {
             <PriceSlider label="Total Scans / developer" 
                             max = {300} 
                             footerText = {totalScanText}
-                            callback = {() => onSliderChange()} />
+                            callback = {onSliderChange} />
             <PriceSlider label = "Users" 
                             max = {150}
                             footerText = {usersText}
-                            callback = {() => onSliderChange()}/>
+                            callback = {onSliderChange}/>
            {/* <PriceSlider label = "Alerts" 
                             max = {100}
                             footerText = {alertsText}

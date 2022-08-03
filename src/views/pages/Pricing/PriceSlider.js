@@ -47,7 +47,7 @@ const PriceSlider = ({label,
                     </Grid>
                     <Grid item xs={4}>
                         <Slider value={typeof value === 'number' ? value : 0}
-                                onChange={handleSliderChange}
+                                onChange={(e,v) => handleSliderChange(e,v)}
                                 max = {max}/>
                     </Grid>
                     <Grid item xs={4} className = {classes.label}>

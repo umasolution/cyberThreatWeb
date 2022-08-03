@@ -157,7 +157,7 @@ function SubscriptionNew(subscription) {
       dispatch(openFlexiPopup(true))
     } else if(values.subscription_name == "NiahEnterprise"
     || values.subscription_name == "NiahLite" || values.subscription_name == "Free"){
-       const response = await Axios.get(`${licenseURL}get/license`)
+       //const response = await Axios.get(`${licenseURL}get/license`)
       setValue(values.subscription_name)
       dispatch(openPricingPopup(true))
     }
@@ -184,7 +184,7 @@ function SubscriptionNew(subscription) {
         pricing.paymentPopup ? <PaymentPopup /> : <></>
       }
       {
-        pricing.pricingPopup ? <PricingPopup type={value} details={licenseDetails}/> : <></>
+        pricing.pricingPopup ? <PricingPopup type={value} licenseDetails={licenseDetails}/> : <></>
       }
       <Box mt="25px" mb="50px">
         <Container maxWidth="lg">

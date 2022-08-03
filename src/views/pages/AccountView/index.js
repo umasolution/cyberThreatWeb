@@ -107,7 +107,7 @@ function AccountView() {
             code : profile.profileDetails.code,
             emailid :profile.profileDetails.email_id
           })
-          dispatch(setLicenseDetails(response))
+          dispatch(setLicenseDetails(response.data))
         } catch(error){
           console.log(error)
         }

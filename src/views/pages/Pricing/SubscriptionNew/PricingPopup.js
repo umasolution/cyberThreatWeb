@@ -17,7 +17,7 @@ import {
   Typography
 } from '@material-ui/core';
 
-export default function PricingPopup(details) {
+export default function PricingPopup(licenseDetails) {
   const dispatch = useDispatch()
   const [open, setOpen] = useState(false);
   const popup = useSelector(state => state.pricing.pricingPopup)
@@ -45,7 +45,7 @@ export default function PricingPopup(details) {
           <TextField
             id="outlined-name"
             label="Code"
-            value={details.code}
+            value={licenseDetails.licenseDetails.code}
             inputProps={
               { readOnly: true, }
             }
@@ -54,7 +54,7 @@ export default function PricingPopup(details) {
           <TextField
             id="outlined-name"
             label="Scans"
-            value={details.scans}
+            value={licenseDetails.licenseDetails.scans}
             inputProps={
               { readOnly: true, }
             }
@@ -63,7 +63,7 @@ export default function PricingPopup(details) {
           <TextField
             id="outlined-name"
             label="Status"
-            value={details.status}
+            value={licenseDetails.licenseDetails.status}
             inputProps={
               { readOnly: true, }
             }
@@ -73,7 +73,7 @@ export default function PricingPopup(details) {
           <TextField
             id="outlined-name"
             label="Subscription"
-            value={details.subscription}
+            value={licenseDetails.licenseDetails.subscription}
             inputProps={
               { readOnly: true, }
             }
@@ -82,7 +82,7 @@ export default function PricingPopup(details) {
           <TextField
             id="outlined-name"
             label="Users"
-            value={details.users}
+            value={licenseDetails.licenseDetails.users}
             inputProps={
               { readOnly: true, }
             }

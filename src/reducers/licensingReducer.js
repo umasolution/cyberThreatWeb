@@ -13,7 +13,7 @@ const initialState = {
     subscriptionMsg: {},
     licenseMsg: {},
     isLicense: false,
-    licenseDetails: []
+    licenseDetails: {}
 }
 
 
