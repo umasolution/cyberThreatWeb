@@ -40,6 +40,7 @@ import DashboardSVG from '../icons/dashboardSVG';
 import Icon from '@material-ui/core/Icon';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedSideBarItem } from 'src/actions/sideBarActions';
+import PopUp from 'src/views/reports/Popup/Popup';
 
 
 
@@ -317,7 +318,7 @@ export default function MinivariantNavBar() {
           </Link>
         </List>
         
-
+        <PopUp />
         {/* } <List>
           {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
             <ListItem button key={text}>

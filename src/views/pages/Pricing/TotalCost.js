@@ -60,15 +60,14 @@ const TotalCost = () => {
             <Grid container>
                 <Grid item xs={10}>
                     {
-                         getTextContent('Total Cost', Math.ceil(totalCost) , ' USD per month')
+                         getTextContent('Total Cost', Math.ceil(totalCost),'USD')
                     }
                     {
-                         getTextContent('Total Cost', Math.ceil(costPerDeveloper) , ' USD per month per developer')
+                         getTextContent('Total Costs after Discounts', Math.ceil(totalCostWithDiscount),'USD')
                     }
                     {
-                         getTextContent('Total Costs after Discounts', Math.ceil(totalCostWithDiscount) , ' USD per month')
-                    }
-                    <span style={{ display: "flex" }}>
+                        /*
+                         <span style={{ display: "flex" }}>
                         <Switch
                             checked={checked}
                             onChange={onToggle}
@@ -81,20 +80,9 @@ const TotalCost = () => {
                       
 
                     </span>
+                        */
+                    }
                 </Grid>
-                <Grid item xs={2}>
-                    <Typography variant="caption">
-                        Renew automatically
-                </Typography>
-                    <Checkbox
-                        defaultChecked
-                        color="primary"
-                        inputProps={{ 'aria-label': 'secondary checkbox' }}
-                    />
-                </Grid>
-                <Button variant="contained" color="primary" onClick={onSubscribe}>
-                    Continue with Subscription
-            </Button>
 
             </Grid>
         </Paper>

@@ -18,22 +18,15 @@ const useStyle = makeStyles({
 const PaymentResult = ({response}) => {
    
     const styles = useStyle();
-    const errorMsg = useSelector(state => state.pricing.errorMsg)
 
     return (
         <div className={styles.root}>
              <Card className={styles.root}>
                 <CardContent>
                     <Grid container spacing={2}>
-                        {
-                            errorMsg != '' ? (
-                                <Grid item xs={12} style={{color: 'red'}}>
-                                {errorMsg}
-                            </Grid>
-                            ) :  <Grid item xs={12} style={{color: 'green'}}>
+                        <Grid item xs={12} style={{color: 'green'}}>
                             Your transaction has successfully completed.
                         </Grid>
-                        }
                        </Grid>
                 </CardContent>
              

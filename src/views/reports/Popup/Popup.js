@@ -19,7 +19,7 @@ import { LoadingButton } from '@mui/lab';
 import './popup.css'
 import Axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeBetweenPages, enablePopup, setOpenPopup } from 'src/actions/popupAction';
+import { closeBetweenPages, enablePopup, setOpenPopup, setPopUpDetails } from 'src/actions/popupAction';
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
         padding: theme.spacing(2),
@@ -46,8 +46,16 @@ export default function PopUp() {
     const [error, setError] = useState(false);
     const profileDetails = useSelector(state => state.popup.details)
     const popup = useSelector(state => state.popup)
-      
+    const isAdmin = useSelector(state => state.account.isAdmin)
+
     useEffect(() => {
+        if (isAdmin == 'yes') {
+          fetchProfileDetails();
+        }
+       
+      }, [isAdmin, popup.enable])
+    
+      useEffect(() => {
         if(popup.enable){
             setError(false)
             setResponseMsg('')
@@ -60,9 +68,23 @@ export default function PopUp() {
             setCheckBox(profileDetails.niah_config_pop_up)
             setSSL(profileDetails.email_ssl)
         }
-    }, [popup.open, popup.close, popup.enable])
+      },[popup.enable, popup.open, popup.close])
+      const fetchProfileDetails = async () => {
+        const profile_url = "/niah/profile"
+        const response = await Axios.get(profile_url);
+        console.log(response)
+        dispatch(setPopUpDetails(response.data))
+        if(response.data.niah_config_pop_up == "enable" ){
+          dispatch(enablePopup(true))
+          if(!popup.close){
+            dispatch(setOpenPopup(true))
+          }
+        }else{
+          dispatch(enablePopup(false))
+        }
+      }
 
-    
+
     const handleClose = () => {
         setOpen(false);
         dispatch(closeBetweenPages(true))
@@ -139,7 +161,7 @@ export default function PopUp() {
         setResponseMsg(response.data.message)
 
     }
-
+ 
     return (
         <div>
             <BootstrapDialog
@@ -172,7 +194,6 @@ export default function PopUp() {
                             values
                         }) => (
                             <form
-                                onSubmit={handleSubmit}
                             >
                                 <div className='main-div'>
                                     <div className='content-div'>

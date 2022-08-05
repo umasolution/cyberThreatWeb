@@ -22,7 +22,7 @@ import NiahFlexi from '../NiahFlexi';
 import { useHistory } from 'react-router';
 import { licenseURL } from 'src';
 import { useDispatch, useSelector } from 'react-redux';
-import { openFlexiPopup, openPaymentPopup, openPricingPopup, setPricingConfigurations } from 'src/actions/pricingAction';
+import { getTotalCost, openFlexiPopup, openPaymentPopup, openPricingPopup, setPricingConfigurations, setSubscriptionModel, setTotalScans, setUsers } from 'src/actions/pricingAction';
 import NiahFlexiPopup from './NiahFlexiPopup';
 import PaymentPopup from '../../Payment/PaymentPopup';
 import PricingPopup from './PricingPopup';
@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
 
   },
   productImage1: {
-   
+   maxHeight:' 75px'
   },
   checkImage: {
 
@@ -140,36 +140,31 @@ function SubscriptionNew(subscription) {
   const profile = useSelector(state => state.account)
   const licenseDetails = useSelector(state => state.license.licenseDetails)
 
-
-  const [value, setValue] = useState('')
-
-  
-  console.log(subscription)
-
-
   const onGridClick = async (values) => {
    
     if(values.subscription_name == "NiahFlexi"){
-      console.log(values)
       const response = await Axios.get(`${licenseURL}data/subscription`)
-      console.log(response)
       dispatch(setPricingConfigurations(response))
       dispatch(openFlexiPopup(true))
     } else if(values.subscription_name == "NiahEnterprise"
     || values.subscription_name == "NiahLite" || values.subscription_name == "Free"){
-       //const response = await Axios.get(`${licenseURL}get/license`)
-      setValue(values.subscription_name)
       dispatch(openPricingPopup(true))
     }
   }
 
   const subscribePlan = (values, event) => {
     event.stopPropagation();
-    if(values.subscription_name == "NiahFlexi"){
+      dispatch(setSubscriptionModel({
+        displayName: values.subscription_name, model : values.subscription_name}));
       dispatch(openPaymentPopup(true))
-     // history.push('/app/dashboard/payment');
-    }
-    
+      if(values.subscription_name !="NiahFlexi"){
+        dispatch(setTotalScans(0));
+        dispatch(setUsers(0));
+        if(pricing.annualCost != 0){
+          dispatch(getTotalCost())
+          dispatch(getTotalCost())
+        }
+      }
   }
   return (
     <Page
@@ -183,45 +178,42 @@ function SubscriptionNew(subscription) {
       {
         pricing.paymentPopup ? <PaymentPopup /> : <></>
       }
-      {
-        pricing.pricingPopup ? <PricingPopup type={value} licenseDetails={licenseDetails}/> : <></>
-      }
       <Box mt="25px" mb="50px">
         <Container maxWidth="lg">
         <div style={{display: 'flex', marginBottom:"45px"}}>
-              <TextField
+            <TextField
               fullWidth
-                id="outlined-name"
-                label="Emailid"
-                value={profile.profileDetails.email_id}
-                inputProps={
-                  { readOnly: true, }
-                }
-                className='flex-contents'
-               // onChange={handleChange}
-              />
-               <TextField
-               fullWidth
-                id="outlined-name"
-                label="Subscription"
-                value={profile.profileDetails.subscription}
-                inputProps={
-                  { readOnly: true, }
-                }
-                className='flex-contents'
-               // onChange={handleChange}
-              />
-               <TextField
-               fullWidth
-                id="outlined-name"
-                label="Status"
-                value={profile.profileDetails.status}
-                inputProps={
-                  { readOnly: true, }
-                }
-                className='flex-contents'
-               // onChange={handleChange}
-              />
+              label="Emailid"
+              margin="normal"
+              name="Emailid"
+              type="text"
+              inputProps={{ readOnly: true }}
+              value={profile.profileDetails.email_id}
+              variant="outlined"
+              className='flex-contents'
+            />
+            <TextField
+              fullWidth
+              label="Subscription"
+              margin="normal"
+              name="Subscription"
+              type="text"
+              inputProps={{ readOnly: true }}
+              value={profile.profileDetails.subscription}
+              variant="outlined"
+              className='flex-contents'
+            />
+            <TextField
+              fullWidth
+              label="Status"
+              margin="normal"
+              name="Emailid"
+              type="text"
+              inputProps={{ readOnly: true }}
+              value={profile.profileDetails.status}
+              variant="outlined"
+              className='flex-contents'
+            />
             </div>
           <Grid
             container

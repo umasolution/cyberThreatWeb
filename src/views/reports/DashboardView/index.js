@@ -78,30 +78,8 @@ function DashboardView() {
   const [popupOpen, setPopupOpen] = useState(false)
   const query = new URLSearchParams(window.location.search);
   const dashboardType = query.get('type');
-  const isAdmin = useSelector(state => state.account.isAdmin)
-  const popup = useSelector(state => state.popup)
 
-  useEffect(() => {
-    if (isAdmin == 'yes') {
-      fetchProfileDetails();
-    }
-  }, [isAdmin, popup.enable])
 
-  const fetchProfileDetails = async () => {
-    const profile_url = "/niah/profile"
-    const response = await Axios.get(profile_url);
-    
-    dispatch(setPopUpDetails(response.data))
-    if(response.data.niah_config_pop_up == "enable" ){
-      dispatch(enablePopup(true))
-      if(!popup.close){
-        dispatch(setOpenPopup(true))
-      setPopupOpen(true)
-      }
-    }else{
-      dispatch(enablePopup(false))
-    }
-  }
   useEffect(() => {
     setLoading(true);
     const updateSnackbar = (open, message) => {
@@ -215,7 +193,6 @@ function DashboardView() {
         title="Dashboard"
       >
        
-          <PopUp openPop={popupOpen} />
         <Container
           maxWidth={false}
           className={classes.container}

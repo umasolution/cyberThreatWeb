@@ -7,3 +7,9 @@
 .flex-contents{
     margin-right: 15px;
 }
+#PricingView > div > .MuiContainer-maxWidthLg{
+    max-width: none;
+}
+.right-content{
+    max-height: 75px;
+}

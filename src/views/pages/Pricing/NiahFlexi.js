@@ -32,7 +32,7 @@ const NiahFlexi = () => {
     const alertsText = "How many vulnerability and product alerts would you like to subscribe? You can choose the maximum number of alerts your team can use as a floating limit.";
 
     const onSliderChange = (label,value) => {
-        if(label === "Total Scans / developer")
+        if(label === "Total Scans")
         dispatch(setTotalScans(value));
         else if (label === "Users")
         dispatch(setUsers(value));
@@ -44,7 +44,7 @@ const NiahFlexi = () => {
     }
     return (
         <div className = {popup ? '' : classes.root}>
-            <PriceSlider label="Total Scans / developer" 
+            <PriceSlider label="Total Scans" 
                             max = {300} 
                             footerText = {totalScanText}
                             callback = {onSliderChange} />

@@ -41,7 +41,11 @@ const PriceSlider = ({label,
                     <Grid item xs={4} >
                         <div className = {classes.label}>
                             <Typography variant="h4" gutterBottom>{label}</Typography>
-                            <Typography variant="body2" gutterBottom>per developer per month</Typography>
+                        {
+                            label == 'Total Scans' ?
+                                <Typography variant="body2" gutterBottom>per developer per month</Typography>
+                                : <></>
+                        }
                         </div>
                         
                     </Grid>

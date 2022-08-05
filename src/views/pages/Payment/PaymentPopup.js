@@ -13,6 +13,7 @@ export default function PaymentPopup() {
   const dispatch = useDispatch()
   const [open, setOpen] = useState(false);
   const popup = useSelector(state => state.pricing.paymentPopup)
+  const selectedModel = useSelector(state => state.pricing.selectedSubscriptionModel)
 
   useEffect(() =>{
     setOpen(popup)
@@ -34,7 +35,7 @@ export default function PaymentPopup() {
             width: '80%',
          }}
          fullWidth={true}
-        maxWidth = {'md'}
+        maxWidth = {selectedModel == 'Free' ? 'sm' : 'md'}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
