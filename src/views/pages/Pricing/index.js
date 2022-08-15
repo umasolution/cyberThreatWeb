@@ -57,11 +57,11 @@ const Pricing = () => {
   const isAdmin = useSelector(state => state.account.isAdmin)
   const profile = useSelector(state => state.account)
   const subscription = useSelector(state => state.pricing.subscriptionNew)
+  const update = useSelector(state => state.pricing.updateSubscription)
 
   useEffect(() => {
 
     getSubscriptionValues()
-
   /*  const getPricingData = async () => {
       const pricingData = await Axios('/data/subscription');
       dispatch(setPricingConfigurations(pricingData));
@@ -69,7 +69,7 @@ const Pricing = () => {
 
     getPricingData(); */
 
-  }, []);
+  }, [update]);
 
   const getSubscriptionValues = async () => {
     try{

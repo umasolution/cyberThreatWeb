@@ -7,7 +7,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useDispatch, useSelector } from 'react-redux';
 import NiahFlexiSubscription from './NiahFlexiSubscription';
-import { openFlexiPopup, openPricingPopup } from 'src/actions/pricingAction';
+import { getTotalCost, openFlexiPopup, openPricingPopup, setTotalScans, setUsers } from 'src/actions/pricingAction';
 import NiahLite from '../NiahLite';
 import NiahEnterprise from '../NiahEnterprise';
 import { TabPanel } from '@mui/lab';
@@ -21,6 +21,7 @@ export default function PricingPopup(licenseDetails) {
   const dispatch = useDispatch()
   const [open, setOpen] = useState(false);
   const popup = useSelector(state => state.pricing.pricingPopup)
+  const selectedModel = useSelector(state => state.pricing.selectedSubscriptionModel)
   useEffect(() => {
     setOpen(popup)
   }, [])
@@ -31,6 +32,10 @@ export default function PricingPopup(licenseDetails) {
   const handleClose = () => {
     setOpen(false);
     dispatch(openPricingPopup(false))
+    if(selectedModel == "Free" || selectedModel == "NiahEnterprise"){
+      dispatch(setTotalScans(0));
+    dispatch(setUsers(0));
+    }
   };
 
   return (

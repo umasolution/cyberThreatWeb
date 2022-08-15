@@ -26,6 +26,7 @@ import { getTotalCost, openFlexiPopup, openPaymentPopup, openPricingPopup, setPr
 import NiahFlexiPopup from './NiahFlexiPopup';
 import PaymentPopup from '../../Payment/PaymentPopup';
 import PricingPopup from './PricingPopup';
+import { Icon } from '@iconify/react';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -138,6 +139,7 @@ function SubscriptionNew(subscription) {
   const dispatch = useDispatch()
   const pricing = useSelector(state => state.pricing)
   const profile = useSelector(state => state.account)
+  const response = useSelector(state => state.pricing.transactionResponse)
   const licenseDetails = useSelector(state => state.license.licenseDetails)
 
   const onGridClick = async (values) => {
@@ -152,19 +154,28 @@ function SubscriptionNew(subscription) {
     }
   }
 
-  const subscribePlan = (values, event) => {
+  const subscribePlan = async (values, event) => {
     event.stopPropagation();
-      dispatch(setSubscriptionModel({
-        displayName: values.subscription_name, model : values.subscription_name}));
-      dispatch(openPaymentPopup(true))
-      if(values.subscription_name !="NiahFlexi"){
-        dispatch(setTotalScans(0));
-        dispatch(setUsers(0));
-        if(pricing.annualCost != 0){
-          dispatch(getTotalCost())
-          dispatch(getTotalCost())
-        }
+    dispatch(setSubscriptionModel({
+      displayName: values.subscription_name, model: values.subscription_name
+    }));
+    if (values.subscription_name != "NiahFlexi") {
+      dispatch(setTotalScans(0));
+      dispatch(setUsers(0));
+      if (pricing.annualCost != 0) {
+        dispatch(getTotalCost())
+        dispatch(getTotalCost())
       }
+    }
+    if (values.subscription_name == "NiahLite" || values.subscription_name == "Free") {
+      const response = await Axios.get(`${licenseURL}data/subscription`)
+      dispatch(setPricingConfigurations(response))
+      dispatch(setTotalScans(values.scans));
+      dispatch(getTotalCost());
+      dispatch(setUsers(values.users));
+      dispatch(getTotalCost());
+    }
+    dispatch(openPaymentPopup(true))
   }
   return (
     <Page
@@ -199,7 +210,7 @@ function SubscriptionNew(subscription) {
               name="Subscription"
               type="text"
               inputProps={{ readOnly: true }}
-              value={profile.profileDetails.subscription}
+              value={response.subscription !='' ? response.subscription : profile.profileDetails.subscription}
               variant="outlined"
               className='flex-contents'
             />
@@ -210,7 +221,7 @@ function SubscriptionNew(subscription) {
               name="Emailid"
               type="text"
               inputProps={{ readOnly: true }}
-              value={profile.profileDetails.status}
+              value={response.status !='' ? response.status : profile.profileDetails.status}
               variant="outlined"
               className='flex-contents'
             />
@@ -227,7 +238,7 @@ function SubscriptionNew(subscription) {
                 md={3}
                 sm={6}
                 xs={12}
-                onClick={() => onGridClick(values)}
+               
               >
                 <Paper
                   className={classes.product}
@@ -347,8 +358,14 @@ function SubscriptionNew(subscription) {
                       />
                       <ListItemText>
                         {
-                          values.subscription_name == "NiahFlexi" ?
-                          `${pricing.totalScans} scans` : `${values.scans} scans`
+                          values.subscription_name == "NiahFlexi" ?(
+                          <>
+                          {pricing.totalScans} scans
+                          <Icon icon="akar-icons:edit"
+                           style={{marginLeft: '5px', marginTop:'3px'}}
+                           onClick={() => onGridClick(values)}
+                          /></>
+                          )  : `${values.scans} scans`
                         }
                       </ListItemText>
                     </ListItem>
@@ -360,8 +377,14 @@ function SubscriptionNew(subscription) {
                       />
                       <ListItemText>
                       {
-                          values.subscription_name == "NiahFlexi" ?
-                          `${pricing.users} Users` : `${values.users} Users`
+                          values.subscription_name == "NiahFlexi" ?(
+                            <>
+                            {pricing.users} users
+                            <Icon icon="akar-icons:edit" 
+                            style={{marginLeft: '5px', marginTop:'3px'}}
+                             onClick={() => onGridClick(values)}
+                            /></>
+                            ) : `${values.users} Users`
                         }
                       </ListItemText>
                     </ListItem>

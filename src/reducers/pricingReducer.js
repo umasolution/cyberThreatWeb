@@ -16,7 +16,9 @@ const initialState = {
     flexiPopup : false,
     paymentPopup : false,
     pricingPopup : false,
-    errorMsg : ''
+    errorMsg : '',
+    transactionResponse : {},
+    updateSubscription: false
 }
 
 
@@ -58,6 +60,12 @@ const pricingReducer = (state = initialState, action) => {
 
         case "error_msg":
             return { ...state, errorMsg: action.payload };
+
+        case "transaction_response":
+            return { ...state, transactionResponse: action.payload };
+
+        case "update_subscription_value":
+            return { ...state, updateSubscription: action.payload };
 
         default:
             return state;

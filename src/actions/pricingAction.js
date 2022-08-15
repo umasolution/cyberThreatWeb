@@ -80,6 +80,20 @@ const setErrorMsg = (details) => {
         payload : details
     }
 }
+
+const setTransactionResponse = (details) => {
+    return {
+        type : "transaction_response",
+        payload : details
+    }
+}
+
+const updateSubscription = (details) => {
+    return {
+        type : "update_subscription_value",
+        payload : details
+    }
+}
 export {
     setTotalScans,
     setUsers,
@@ -92,5 +106,7 @@ export {
     openFlexiPopup,
     openPaymentPopup,
     setErrorMsg,
-    openPricingPopup
+    openPricingPopup,
+    setTransactionResponse,
+    updateSubscription
 };

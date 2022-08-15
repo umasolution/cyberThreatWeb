@@ -3,9 +3,10 @@ import { Grid, TextField, Typography, makeStyles, Button } from '@material-ui/co
 import Axios from 'axios';
 
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import { setErrorMsg } from 'src/actions/pricingAction';
+import { licenseURL } from 'src';
+import { setErrorMsg, setErrorStatus, setTransactionResponse } from 'src/actions/pricingAction';
 
 const useStyle = makeStyles({
     txt: {
@@ -24,8 +25,10 @@ const useStyle = makeStyles({
 
 const CreditCardInterface = ({ subscription, users, scans, amount }) => {
     const styles = useStyle();
-    const history = useHistory();
+    const dispatch = useDispatch();
+    const profile = useSelector(state => state.account.profileDetails)
     const selectedModel = useSelector(state => state.pricing.selectedSubscriptionModel)
+    const details = useSelector(state => state.pricing.transactionResponse)
 
     const [card, setCardDetails] = useState({
         cardnumber: 0,
@@ -33,22 +36,22 @@ const CreditCardInterface = ({ subscription, users, scans, amount }) => {
         cardcodeno: 0,
         month: '',
         year: '',
-        firstname: '',
-        lastname: '',
-        emailid: '',
-        companyName: '',
-        address: '',
-        city: '',
-        country: '',
-        state: '',
-        pincode: '',
-        phone: '',
+        firstname: profile.firstname,
+        lastname: profile.lastname,
+        emailid: profile.email_id,
+        companyName: profile.company_name,
+        address: profile.address1,
+        city: profile.city,
+        country: profile.country,
+        state: profile.state,
+        pincode: profile.pincode,
+        phone: profile.phone,
     });
 
 
     const onPay = async () => {
         try {
-            const payment = await Axios.post('/subscription/register', {
+            const payment = await Axios.post( `${licenseURL}subscription/register`, {
                 cardnumber: card.cardnumber,
                 cardcodeno: card.cardcodeno,
                 expiredate: card.year + '-' + card.month,
@@ -67,25 +70,25 @@ const CreditCardInterface = ({ subscription, users, scans, amount }) => {
                 emailid: card.emailid,
                 address: card.address
             });
+            console.log(payment.data)
+           dispatch(setTransactionResponse(payment.data))
 
-            if (payment.status == 1) {
+           if (payment.status == 1) {
                 try {
                     const updatePayment = await Axios.post('/auth/update/license', {
-                        code: 123,
-                        subscription: "NiahFlex"
+                        code: details.code,
+                        subscription: details.subscription
                     })
                     if (updatePayment.data.meassage != '') {
-                        setErrorMsg(updatePayment.data.meassage)
+
+                      //  dispatch(setErrorMsg(updatePayment.data.meassage))
                     }
                 } catch (error) {
                     console.log(error)
                 }
-                history.push('/app/dashboard/paymentresult')
-            } else if (payment.status == 0) {
-                history.push('/app/dashboard/paymentresultfailure')
             }
         } catch (error) {
-            history.push('/app/dashboard/paymentresultfailure')
+            console.log(error)
         }
 
 
@@ -117,6 +120,7 @@ const CreditCardInterface = ({ subscription, users, scans, amount }) => {
                                 <TextField id="outlined-basic"
                                     label="Firstname" variant="outlined" required fullWidth
                                     InputLabelProps={{ shrink: true }}
+                                    value={card.firstname}
                                     onChange={(event) => onChangeCreditCardDetails(event.target.value, 'firstname')}
                                 />
                             </Grid>
@@ -124,6 +128,7 @@ const CreditCardInterface = ({ subscription, users, scans, amount }) => {
                                 <TextField id="outlined-basic"
                                     label="Lastname" variant="outlined" required fullWidth
                                     InputLabelProps={{ shrink: true }}
+                                    value={card.lastname}
                                     onChange={(event) => onChangeCreditCardDetails(event.target.value, 'lastname')}
                                 />
                             </Grid>
@@ -131,6 +136,8 @@ const CreditCardInterface = ({ subscription, users, scans, amount }) => {
                                 <TextField id="outlined-basic"
                                     label="Email" variant="outlined" required fullWidth
                                     InputLabelProps={{ shrink: true }}
+                                    inputProps={{ readOnly: true }}
+                                    value={card.emailid}
                                     onChange={(event) => onChangeCreditCardDetails(event.target.value, 'emailid')}
                                 />
                             </Grid>
@@ -138,6 +145,7 @@ const CreditCardInterface = ({ subscription, users, scans, amount }) => {
                                 <TextField id="outlined-basic"
                                     label="Companyname" variant="outlined" required fullWidth
                                     InputLabelProps={{ shrink: true }}
+                                    value={card.companyName}
                                     onChange={(event) => onChangeCreditCardDetails(event.target.value, 'companyName')}
                                 />
                             </Grid>
@@ -145,6 +153,7 @@ const CreditCardInterface = ({ subscription, users, scans, amount }) => {
                                 <TextField id="outlined-basic"
                                     label="Address" variant="outlined" required fullWidth
                                     InputLabelProps={{ shrink: true }}
+                                    value={card.address}
                                     onChange={(event) => onChangeCreditCardDetails(event.target.value, 'address')}
                                 />
                             </Grid>
@@ -152,6 +161,7 @@ const CreditCardInterface = ({ subscription, users, scans, amount }) => {
                                 <TextField id="outlined-basic"
                                     label="City" variant="outlined" required fullWidth
                                     InputLabelProps={{ shrink: true }}
+                                    value={card.city}
                                     onChange={(event) => onChangeCreditCardDetails(event.target.value, 'city')}
                                 />
                             </Grid>
@@ -159,6 +169,7 @@ const CreditCardInterface = ({ subscription, users, scans, amount }) => {
                                 <TextField id="outlined-basic"
                                     label="State" variant="outlined" required fullWidth
                                     InputLabelProps={{ shrink: true }}
+                                    value={card.state}
                                     onChange={(event) => onChangeCreditCardDetails(event.target.value, 'state')}
                                 />
                             </Grid>
@@ -166,6 +177,7 @@ const CreditCardInterface = ({ subscription, users, scans, amount }) => {
                                 <TextField id="outlined-basic"
                                     label="Pincode" variant="outlined" required fullWidth
                                     InputLabelProps={{ shrink: true }}
+                                    value={card.pincode}
                                     onChange={(event) => onChangeCreditCardDetails(event.target.value, 'pincode')}
                                 />
                             </Grid>
@@ -173,6 +185,7 @@ const CreditCardInterface = ({ subscription, users, scans, amount }) => {
                                 <TextField id="outlined-basic"
                                     label="Phone" variant="outlined" required fullWidth
                                     InputLabelProps={{ shrink: true }}
+                                    value={card.phone}
                                     onChange={(event) => onChangeCreditCardDetails(event.target.value, 'phone')}
                                 />
                             </Grid>
@@ -180,6 +193,7 @@ const CreditCardInterface = ({ subscription, users, scans, amount }) => {
                                 <TextField id="outlined-basic"
                                     label="Country" variant="outlined" required fullWidth
                                     InputLabelProps={{ shrink: true }}
+                                    value={card.country}
                                     onChange={(event) => onChangeCreditCardDetails(event.target.value, 'country')}
                                 />
                             </Grid>
