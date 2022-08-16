@@ -22,7 +22,7 @@ import NiahFlexi from '../NiahFlexi';
 import { useHistory } from 'react-router';
 import { licenseURL } from 'src';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTotalCost, openFlexiPopup, openPaymentPopup, openPricingPopup, setPricingConfigurations, setSubscriptionModel, setTotalScans, setUsers } from 'src/actions/pricingAction';
+import { getTotalCost, openFlexiPopup, openPaymentPopup, openPricingPopup, setPricingConfigurations, setSubscriptionModel, setTotalScans, setTransactionResponse, setUsers } from 'src/actions/pricingAction';
 import NiahFlexiPopup from './NiahFlexiPopup';
 import PaymentPopup from '../../Payment/PaymentPopup';
 import PricingPopup from './PricingPopup';
@@ -156,6 +156,7 @@ function SubscriptionNew(subscription) {
 
   const subscribePlan = async (values, event) => {
     event.stopPropagation();
+    dispatch(setTransactionResponse({}))
     dispatch(setSubscriptionModel({
       displayName: values.subscription_name, model: values.subscription_name
     }));
@@ -210,7 +211,7 @@ function SubscriptionNew(subscription) {
               name="Subscription"
               type="text"
               inputProps={{ readOnly: true }}
-              value={response.subscription !='' ? response.subscription : profile.profileDetails.subscription}
+              value={licenseDetails.subscription ? licenseDetails.subscription : ''}
               variant="outlined"
               className='flex-contents'
             />
@@ -221,7 +222,7 @@ function SubscriptionNew(subscription) {
               name="Emailid"
               type="text"
               inputProps={{ readOnly: true }}
-              value={response.status !='' ? response.status : profile.profileDetails.status}
+              value={licenseDetails.status ? licenseDetails.status : ''}
               variant="outlined"
               className='flex-contents'
             />
