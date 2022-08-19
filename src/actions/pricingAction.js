@@ -94,6 +94,14 @@ const updateSubscription = (details) => {
         payload : details
     }
 }
+
+const setDisablePay = (details) => {
+    return {
+        type : "disable_pay",
+        payload : details
+    }
+}
+
 export {
     setTotalScans,
     setUsers,
@@ -108,5 +116,6 @@ export {
     setErrorMsg,
     openPricingPopup,
     setTransactionResponse,
-    updateSubscription
+    updateSubscription,
+    setDisablePay
 };

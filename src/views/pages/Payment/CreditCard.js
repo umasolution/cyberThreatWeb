@@ -6,7 +6,9 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { licenseURL } from 'src';
-import { setErrorMsg, setErrorStatus, setTransactionResponse } from 'src/actions/pricingAction';
+import './paymentPopup.css'
+import { setDisablePay, setErrorMsg, setErrorStatus, setTransactionResponse } from 'src/actions/pricingAction';
+import { setLicenseDetails } from 'src/actions/licensingAction';
 
 const useStyle = makeStyles({
     txt: {
@@ -29,6 +31,7 @@ const CreditCardInterface = ({ subscription, users, scans, amount }) => {
     const profile = useSelector(state => state.account.profileDetails)
     const selectedModel = useSelector(state => state.pricing.selectedSubscriptionModel)
     const details = useSelector(state => state.pricing.transactionResponse)
+    const disablePayButton = useSelector(state => state.pricing.disablePay)
 
     const [card, setCardDetails] = useState({
         cardnumber: 0,
@@ -50,6 +53,7 @@ const CreditCardInterface = ({ subscription, users, scans, amount }) => {
 
 
     const onPay = async () => {
+        dispatch(setDisablePay(true))
         try {
             const payment = await Axios.post( `${licenseURL}subscription/register`, {
                 cardnumber: card.cardnumber,
@@ -70,18 +74,18 @@ const CreditCardInterface = ({ subscription, users, scans, amount }) => {
                 emailid: card.emailid,
                 address: card.address
             });
-            console.log(payment.data)
            dispatch(setTransactionResponse(payment.data))
 
-           if (payment.status == 1) {
+           if (payment.data.status == 1) {
+
                 try {
                     const updatePayment = await Axios.post('/auth/update/license', {
-                        code: details.code,
-                        subscription: details.subscription
+                        code: payment.data.code,
+                        subscription: payment.data.subscription
                     })
                     if (updatePayment.data.meassage != '') {
 
-                      //  dispatch(setErrorMsg(updatePayment.data.meassage))
+                       dispatch(setErrorMsg(updatePayment.data))
                     }
                 } catch (error) {
                     console.log(error)
@@ -233,13 +237,29 @@ const CreditCardInterface = ({ subscription, users, scans, amount }) => {
                                 </Typography>
                             </Grid>
                             <Grid item xs={12}>
-                                <Button variant="contained" color="Primary" size="large" onClick={onPay}>Pay</Button>
+                                <Button
+                                    variant="contained"
+                                    color="Primary"
+                                    size="large"
+                                    className={disablePayButton ? 'disablePay' : ''}
+                                    onClick={onPay}
+                                >
+                                    Pay
+                                </Button>
                             </Grid>
 
                         </Grid></>
                 ) : <>
                     <Grid item xs={12}>
-                        <Button variant="contained" color="Primary" size="large" onClick={onPay}>Pay</Button>
+                        <Button
+                            variant="contained"
+                            color="Primary"
+                            size="large"
+                            className={disablePayButton ? 'disablePay' : ''}
+                            onClick={onPay}
+                        >
+                            Pay
+                        </Button>
                     </Grid>
                 </>
             }

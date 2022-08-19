@@ -6,7 +6,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTotalCost, openFlexiPopup, openPaymentPopup, setTotalScans, setUsers, updateSubscription } from 'src/actions/pricingAction';
+import { getTotalCost, openFlexiPopup, openPaymentPopup, setDisablePay, setErrorMsg, setTotalScans, setUsers, updateSubscription } from 'src/actions/pricingAction';
 import Payment from './index';
 import { useHistory } from 'react-router';
 import './paymentPopup.css'
@@ -17,8 +17,8 @@ export default function PaymentPopup() {
   const [open, setOpen] = useState(false);
   const popup = useSelector(state => state.pricing.paymentPopup)
   const error = useSelector(state => state.pricing.transactionResponse)
+  const licenseError = useSelector(state => state.pricing.errorMsg)
   const selectedModel = useSelector(state => state.pricing.selectedSubscriptionModel)
-console.log(error)
   useEffect(() =>{
     setOpen(popup)
   }, [])
@@ -27,6 +27,8 @@ console.log(error)
   };
 
   const handleClose = () => {
+    dispatch(setDisablePay(false))
+    dispatch(setErrorMsg({}))
     if(selectedModel == "Free" || selectedModel == "NiahLite"){
       dispatch(setTotalScans(0));
       dispatch(getTotalCost());
@@ -59,8 +61,11 @@ console.log(error)
             <Payment />
         </DialogContent>
         <DialogActions>
-        {error.status == 0 || error.status == 1 ? (
+        {error.status == 0 || error.status == 1  ? (
               <p className={error.status == 0 ? 'status0' : 'status1'} >{error.message}</p>
+          ) : <></>} <br></br>
+          {licenseError.status || !licenseError.status ? (
+              <p className={licenseError.status ? 'status0' : 'status1'} >{licenseError.message}</p>
           ) : <></>}
           <Button onClick={() =>handleClose()}>
             Close

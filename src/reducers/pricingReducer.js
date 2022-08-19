@@ -16,9 +16,10 @@ const initialState = {
     flexiPopup : false,
     paymentPopup : false,
     pricingPopup : false,
-    errorMsg : '',
+    errorMsg : {},
     transactionResponse : {},
-    updateSubscription: false
+    updateSubscription: false,
+    disablePay: false
 }
 
 
@@ -66,6 +67,9 @@ const pricingReducer = (state = initialState, action) => {
 
         case "update_subscription_value":
             return { ...state, updateSubscription: action.payload };
+
+        case "disable_pay":
+            return { ...state, disablePay: action.payload };
 
         default:
             return state;
