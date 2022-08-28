@@ -149,6 +149,16 @@ function Account() {
         <MenuItem onClick={enableDialogBox}>
           Preference
         </MenuItem>
+        {
+          account.isAdmin == 'yes' ? (
+            <MenuItem
+              component={RouterLink}
+              to="/app/user/master"
+            >
+              User Master
+            </MenuItem>
+          ) : <></>
+        }
         <MenuItem onClick={handleLogout}>
           Logout
         </MenuItem>

@@ -1,0 +1,60 @@
+.userbutton {
+    margin: 15px;
+    height: 15%;
+}
+
+.password-text {
+    display: grid;
+    margin-bottom: 3%;
+}
+
+.has-error {
+    color: red;
+    font-size: large;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 3%;
+}
+
+.no-error {
+    color: green;
+    font-size: large;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 3%;
+}
+
+.user-password>input::-ms-clear,
+input::-ms-reveal {
+    display: none;
+}
+
+.add-user {
+    margin: 5px;
+    float: right;
+    margin-bottom: 3%;
+}
+
+.userslist {
+    clear: both;
+}
+
+.user-details {
+    margin: 1%;
+}
+
+.user-textbox {
+    margin-bottom: 2%;
+}
+
+.sub-div {
+    display: flex;
+}
+
+.flex-contents {
+    margin-right: 3%;
+}
+
+.users {
+    display: flex;
+}
