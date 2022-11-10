@@ -36,6 +36,7 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import PopUp from '../Popup/Popup';
 import { useDispatch, useSelector } from 'react-redux';
 import {  enablePopup, setOpenPopup, setPopUpDetails } from 'src/actions/popupAction';
+import { setDashboardResponseData } from 'src/actions/dashboardAction';
 
 
 
@@ -100,6 +101,7 @@ function DashboardView() {
         /*const url = `/dashboard/${authService.getUserName()}`;*/
         const url = `/dashboard`;
         const response = await Axios.get(url);
+        dispatch(setDashboardResponseData(response.data))
         setMainData(response.data);
         const list = query.get('list');
         const type = query.get('type');

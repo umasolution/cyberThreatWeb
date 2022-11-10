@@ -159,6 +159,7 @@ const ProductDetailVul = () => {
     const location = useLocation();
     const classes = useStyles();
     const type = useSelector((state) => state.sidebar.selectedSideBarItem);
+    const dashboardResponseData = useSelector(state => state.dashboard.dashboardResponseData);
 
     const [product, setProduct] = useState();
     const [loading, setLoading] = useState(false);
@@ -214,15 +215,18 @@ const ProductDetailVul = () => {
 
     const fetchProductVulnerabilities = async () => {
         setLoading(true);
+        const selectedProduct = dashboardResponseData.dependancies.user.products_summary.filter(
+            product => product.name == location.state.name)[0];
         try {
            
         const url = `/details/product`;
         // Below Data is hard coded as this is the only combination which has data. TODO
         //const response = await Axios.post(url, { type: "application", application: "tomcat", product: "tomcat" });
-        const response = await Axios.post(url, { /*type: location.state.selData*/type: type, 
-                                                application: location.state.name.split('@')[1], 
-                                                product: location.state.name.split('@')[0] });
-        
+        // const response = await Axios.post(url, { /*type: location.state.selData*/type: type, 
+        //                                         application: location.state.name.split('@')[1], 
+        //                                         product: location.state.name.split('@')[0] });
+        const response = await Axios.post(url, selectedProduct.post_data);
+
 
         setProduct(response.data);
 
