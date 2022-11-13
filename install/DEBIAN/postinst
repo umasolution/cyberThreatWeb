@@ -15,6 +15,12 @@ sudo chmod 755 /var/www/html/ -R
 
 FILE=/home/niah/niah-api
 
+FILEG=/var/www/html/env-config.js.org
+
+if [ ! -f "$FILEG" ]; then
+    cp /var/www/html/env-config.js /var/www/html/env-config.js.org
+fi
+
 if [ -f "$FILE" ]; then
     API_IP=$(curl ifconfig.me)
     sed "s/127.0.0.1/$API_IP/g" /var/www/html/env-config.js.org > /var/www/html/env-config.js
