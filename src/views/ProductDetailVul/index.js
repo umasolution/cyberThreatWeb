@@ -215,8 +215,6 @@ const ProductDetailVul = () => {
 
     const fetchProductVulnerabilities = async () => {
         setLoading(true);
-        const selectedProduct = dashboardResponseData.dependancies.user.products_summary.filter(
-            product => product.name == location.state.name)[0];
         try {
            
         const url = `/details/product`;
@@ -225,7 +223,7 @@ const ProductDetailVul = () => {
         // const response = await Axios.post(url, { /*type: location.state.selData*/type: type, 
         //                                         application: location.state.name.split('@')[1], 
         //                                         product: location.state.name.split('@')[0] });
-        const response = await Axios.post(url, selectedProduct.post_data);
+        const response = await Axios.post(url, location.state.product.post_data);
 
 
         setProduct(response.data);
