@@ -6,6 +6,10 @@ import moment from 'moment';
 import { setDateFormat } from './../../../Util/Util';
 import { Button } from '@material-ui/core';
 import Axios from 'axios';
+import { useState } from 'react';
+import SBOMDialog from '../ReportSummary/SBOMDialog/SBOMDialog';
+import { useDispatch, useSelector } from 'react-redux';
+import { setShowSBOADialog } from 'src/actions/reportAction';
 const useStyles = makeStyles((theme) => ({
   mainGrid: {
     display: 'flex',
@@ -44,9 +48,11 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-const ReportHeader = ({ header,projectId }) => {
+const ReportHeader = ({ header,projectId, reportName }) => {
 
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const report = useSelector(state => state.report);
 
   const onClickReportJSON = async (reportFormat) => {
     const url = `/report/fetch`;
@@ -65,7 +71,6 @@ const ReportHeader = ({ header,projectId }) => {
 
     console.log(response);
   }
-
   const onClickReport = async (reportFormat) => {
     const url = `/report/fetch`;
     /*const url = `/report/project/reportname`;*/
@@ -98,6 +103,10 @@ const ReportHeader = ({ header,projectId }) => {
     console.log(response);
   }
 
+  const onClickReportSBOM = () => {
+   dispatch(setShowSBOADialog(true))
+  };
+
   return (<>
     <Grid
       container
@@ -112,6 +121,7 @@ const ReportHeader = ({ header,projectId }) => {
         SCAN REPORT FOR {header.Project.toUpperCase()}
       </Typography>
       <div className={classes.btnGrp}>
+        <Button variant="outlined" className = {classes.reportBtn} onClick={()=>onClickReportSBOM('sbom')}>SBOM</Button>
         <Button variant="outlined" className = {classes.reportBtn} onClick={()=>onClickReport('html')}>HTML</Button>
         <Button variant="outlined" className = {classes.reportBtn} onClick={()=>onClickReport('pdf')}>PDF</Button>
         <Button variant="outlined" className = {classes.reportBtn} onClick={()=>onClickReportJSON('json')}>JSON</Button>
@@ -167,7 +177,11 @@ const ReportHeader = ({ header,projectId }) => {
           </Card> </Grid>
           ) 
       ))}
-      
+      {
+        report.showSBOADialog ? (
+          <SBOMDialog report={report} projectId={projectId} reportName={reportName} />
+        ) : <></>
+      }
     </Grid>
   </>);
 };

@@ -254,7 +254,7 @@ const ProductsReports = () => {
           {productReportResponse ?
             (
               <>
-                <Box className="report-header-data"><ReportHeader header={productReportResponse.header} projectId = {projectId} /></Box>
+                <Box className="report-header-data"><ReportHeader header={productReportResponse.header} projectId = {projectId} reportName = {reportName} /></Box>
                 <Box className="report-tabs-data">{getTabs()}</Box>
               </>
             )
