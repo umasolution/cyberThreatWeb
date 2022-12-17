@@ -178,7 +178,7 @@ const ReportHeader = ({ header,projectId, reportName }) => {
           ) 
       ))}
       {
-        report.showSBOADialog ? (
+        report?.showSBOADialog ? (
           <SBOMDialog report={report} projectId={projectId} reportName={reportName} />
         ) : <></>
       }

@@ -14,6 +14,7 @@ import popupReducer from './popupReducer';
 import licensingReducer from './licensingReducer';
 import userMasterReducer from './userMasterReducer';
 import dashboardReducer from './dashboardReducer';
+import reportReducer from './reportReducer';
 
 const rootReducer = combineReducers({
   account: accountReducer,
@@ -30,7 +31,8 @@ const rootReducer = combineReducers({
   popup : popupReducer,
   license: licensingReducer,
   userMaster: userMasterReducer,
-  dashboard: dashboardReducer
+  dashboard: dashboardReducer,
+  report: reportReducer
 });
 
 export default rootReducer;
