@@ -244,7 +244,7 @@ function TopBar({ className, ...rest }) {
             fontWeight:'600',
             letterSpacing:'1px',
         }} onClick={handleBookDemo} className={classes.priceBTN} variant="contained" color="secondary">
-          Book a demoss
+          Book a demo
         </Button>
       </ScrollTo>  
         </Hidden>
