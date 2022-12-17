@@ -1,0 +1,31 @@
+.dragger-container{
+    margin-top: 3%;
+    margin-left: 9%;
+    width: 80%;
+    font-family: "Montserrat",sans-serif !important;;
+}
+.dragger{
+    margin: 3%;
+}
+.file-info{
+    display: flex;
+}
+.file-details{
+    margin: 5px;
+}
+.file-name{
+    text-align: center;
+    margin-bottom: 15px;
+}
+.title{
+    text-align: center;
+}
+.generate-btn{
+    color: #fff;
+    margin: 5px;
+    float: right;
+    background-color: #1976d2;
+}
+.dragger-container > .ant-upload-wrapper > .ant-upload-list{
+    display: none;
+}

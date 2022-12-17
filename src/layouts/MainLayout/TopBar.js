@@ -170,7 +170,17 @@ function TopBar({ className, ...rest }) {
         </RouterLink>
         </div>
         <Box flexGrow={2} />
-        <Hidden smDown>          
+        <Hidden smDown>       
+        <Link
+        className={classes.link}
+        color="textSecondary"
+        component={RouterLink}
+        to="/sbom"
+        underline="none"
+        variant="body2"
+      >
+        SBOM
+      </Link>   
       <Link className={classes.link}
         color="textSecondary"
         component={RouterLink}
@@ -234,7 +244,7 @@ function TopBar({ className, ...rest }) {
             fontWeight:'600',
             letterSpacing:'1px',
         }} onClick={handleBookDemo} className={classes.priceBTN} variant="contained" color="secondary">
-          Book a demo
+          Book a demoss
         </Button>
       </ScrollTo>  
         </Hidden>

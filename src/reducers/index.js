@@ -15,6 +15,7 @@ import licensingReducer from './licensingReducer';
 import userMasterReducer from './userMasterReducer';
 import dashboardReducer from './dashboardReducer';
 import reportReducer from './reportReducer';
+import generateSBOMReducer from './generateSBOMReducer';
 
 const rootReducer = combineReducers({
   account: accountReducer,
@@ -32,7 +33,8 @@ const rootReducer = combineReducers({
   license: licensingReducer,
   userMaster: userMasterReducer,
   dashboard: dashboardReducer,
-  report: reportReducer
+  report: reportReducer,
+  generateSBOM : generateSBOMReducer
 });
 
 export default rootReducer;

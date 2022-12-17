@@ -370,6 +370,11 @@ const routesConfig = [
         path: '/pricing',
         component: lazy(() => import('src/views/pages/Pricing'))
       }, 
+      {
+        exact: true,
+        path: '/sbom',
+        component: lazy(() => import('src/views/pages/SBOM'))
+      }, 
 
       {
         component: () => <Redirect to="/404" />
