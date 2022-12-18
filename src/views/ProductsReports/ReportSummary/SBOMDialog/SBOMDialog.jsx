@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import Axios from 'axios';
 import { useDispatch } from 'react-redux';
 import XMLViewer from 'react-xml-viewer'
+import JsonFormatter from 'react-json-formatter'
 import {  setSBOADataType, setSBOAGenerateData, setSBOAJsonResponeData, setSBOAXmlResponseData, setShowSBOADialog } from 'src/actions/reportAction';
 
 const SBOMDialog = ({ reportName, projectId, report }) => {
@@ -15,6 +16,12 @@ const SBOMDialog = ({ reportName, projectId, report }) => {
   useEffect(() => {
     getResponseData('xml');
   }, []);
+
+  const jsonStyle = {
+    propertyStyle: { color: 'red' },
+    stringStyle: { color: 'green' },
+    numberStyle: { color: 'darkorange' }
+  }
 
   const getResponseData = async (dataType, generate) => {
     const url = '/generate/sbom';
@@ -102,9 +109,18 @@ const SBOMDialog = ({ reportName, projectId, report }) => {
                       <p>
                         <XMLViewer xml={report.xmlResponseData.data} />
                       </p>
-                    ) : <></>
+                    ) : <>
+                        </>
                 ) : (
-                  <p>Json Response</p>
+                  
+                    report.jsonResponseData.data ? (<p>
+                                                      <JsonFormatter 
+                                                          json={JSON.stringify(report?.jsonResponseData?.data?.components)} 
+                                                          tabWith={4}
+                                                          jsonStyle = {jsonStyle} />
+                                                        </p>) : <></>
+                  
+                  
                 )
               }
             </div>
