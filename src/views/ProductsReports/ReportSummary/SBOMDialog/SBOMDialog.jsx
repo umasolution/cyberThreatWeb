@@ -4,6 +4,7 @@ import { Dialog, DialogContent, DialogTitle } from '@material-ui/core';
 import Button from '@mui/material/Button';
 import Axios from 'axios';
 import { useDispatch } from 'react-redux';
+import XMLViewer from 'react-xml-viewer'
 import {  setSBOADataType, setSBOAGenerateData, setSBOAJsonResponeData, setSBOAXmlResponseData, setShowSBOADialog } from 'src/actions/reportAction';
 
 const SBOMDialog = ({ reportName, projectId, report }) => {
@@ -99,7 +100,7 @@ const SBOMDialog = ({ reportName, projectId, report }) => {
                 report.dataType == 'xml' ? (
                     report.xmlResponseData.data ? (
                       <p>
-                        {report.xmlResponseData.data}
+                        <XMLViewer xml={report.xmlResponseData.data} />
                       </p>
                     ) : <></>
                 ) : (
