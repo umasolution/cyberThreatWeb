@@ -30,8 +30,8 @@ const DragAndDropFiles = () => {
             reader.onload = (e) => {
                 console.log(e.target.result);
             }
-            reader.readAsText(info.file);
-            setFileContent(reader)
+            //reader.readAsText(info.file);
+            setFileContent(info.file)
             if (allowedFileTypes.length <= 1) {
                 dispatch(setSBOMFileType(allowedFileTypes[0].name))
                 dispatch(setSBOMFileDetails(allowedFileTypes[0]))
@@ -52,14 +52,14 @@ const DragAndDropFiles = () => {
     const uploadFiles = async () => {
         if (Object.keys(fileUploadList.fileDetails).length > 0) {
             const url = `sbom/upload?language=${fileUploadList.fileType}&name=${fileUploadList.fileDetails.name}&tag=latest&project=${fileUploadList.fileDetails.name}`;
-            // const formData = new FormData();
-            // formData.append('file',fileContent.result)
+            const formData = new FormData();
+            formData.append('file',fileContent);
             const config = {
                 headers: {
-                    'content-type': 'multipart/form-data'
+                    'Content-Type': 'multipart/form-data'
                 }
             }
-            const response = await Axios.post(url, fileContent.result, config);
+            const response = await Axios.post(url, formData, config);
             console.log(response)
         }
     };
