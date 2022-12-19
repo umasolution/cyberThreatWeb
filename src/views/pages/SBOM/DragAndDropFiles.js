@@ -10,8 +10,9 @@ import {
     FormControl,
     MenuItem,
 } from '@material-ui/core';
-import { setSBOMFileDetails, setSBOMFileType } from 'src/actions/generateSBOMAction';
+import { setSBOMFileDetails, setSBOMFileLanguage, setSBOMFileType } from 'src/actions/generateSBOMAction';
 import Axios from 'axios';
+import { setShowSBOADialog } from 'src/actions/reportAction';
 
 const DragAndDropFiles = () => {
     const dispatch = useDispatch();
@@ -49,6 +50,9 @@ const DragAndDropFiles = () => {
             }
         }
     };
+    const onChangeLanguage = (e) => {
+       dispatch(setSBOMFileLanguage(e.target.value))
+    }
     const uploadFiles = async () => {
         if (Object.keys(fileUploadList.fileDetails).length > 0) {
             const url = `sbom/upload?language=${fileUploadList.fileType}&name=${fileUploadList.fileDetails.name}&tag=latest&project=${fileUploadList.fileDetails.name}`;
@@ -61,6 +65,9 @@ const DragAndDropFiles = () => {
             }
             const response = await Axios.post(url, formData, config);
             console.log(response)
+            // if(response.data){
+            //     dispatch(setShowSBOADialog(true));
+            // }
         }
     };
     return (
@@ -84,8 +91,13 @@ const DragAndDropFiles = () => {
                                 value={fileUploadList.fileType}
                                 displayEmpty
                                 inputProps={{ 'aria-label': 'Without label' }}
+                                onChange={(e) => onChangeLanguage(e)}
                             >
-                                <MenuItem value={fileUploadList.fileType}>{fileUploadList.fileType}</MenuItem>
+                                {
+                                    fileUploadList.fileOptions.map(file => (
+                                        <MenuItem key={file.id} value={file.language}>{file.language}</MenuItem>
+                                    ))
+                                }
                             </Select>
                         </FormControl>
                         <TextField

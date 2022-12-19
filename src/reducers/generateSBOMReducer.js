@@ -1,11 +1,29 @@
 import produce from "immer";
-import { SET_FILE_DETAILS, SET_FILE_TYPE } from "src/actions/generateSBOMAction";
+import { SET_FILE_DETAILS, SET_FILE_LANGUAGE, SET_FILE_TYPE } from "src/actions/generateSBOMAction";
 
 
 const initialState = {
     fileType: '',
-    fileDetails: {}
-}
+    fileDetails: {},
+    fileOptions: [
+        {
+            id: 1,
+            language: 'Java'
+        },
+        {
+            id: 1,
+            language: 'Python'
+        },
+        {
+            id: 1,
+            language: 'Javascript'
+        },
+        {
+            id: 1,
+            language: 'Php'
+        }
+    ]
+};
 
 const generateSBOMReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -34,6 +52,14 @@ const generateSBOMReducer = (state = initialState, action) => {
 
             return produce(state, (report) => {
                 report.fileDetails = details
+            })
+        };
+        case SET_FILE_LANGUAGE: {
+            const { details } = action.payload;
+            console.log(details)
+
+            return produce(state, (report) => {
+                report.fileType = details
             })
         };
         default: {
